@@ -1,9 +1,9 @@
 {
-  "name": "prismic-react",
+  "name": "prismic-reactjs",
   "description": "render prismic json fragments as React Component",
-  "main": "dist/prismic-react.min.js",
+  "main": "dist/prismic-reactjs.min.js",
   "license": "ISC",
-  "homepage": "https://github.com/prismicio/prismic-react",
+  "homepage": "https://github.com/prismicio/prismic-reactjs",
   "ignore": [
     "**/.*",
     "node_modules",

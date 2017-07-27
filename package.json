@@ -1,8 +1,8 @@
 {
-  "name": "prismic-react",
+  "name": "prismic-reactjs",
   "version": "1.0.0",
   "description": "render prismic rich text as React Element",
-  "main": "dist/prismic-react.min.js",
+  "main": "dist/prismic-reactjs.min.js",
   "scripts": {
     "build": "webpack --debug; webpack -p",
     "dev": "webpack -d --watch",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/prismicio/prismic-react.git"
+    "url": "git+https://github.com/prismicio/prismic-reactjs.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/prismicio/prismic-react/issues"
+    "url": "https://github.com/prismicio/prismic-reactjs/issues"
   },
-  "homepage": "https://github.com/prismicio/prismic-react#readme",
+  "homepage": "https://github.com/prismicio/prismic-reactjs#readme",
   "dependencies": {
     "prismic-helpers": "^1.0.0",
     "prismic-richtext": "*"

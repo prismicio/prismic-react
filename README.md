@@ -2,12 +2,12 @@
 
 !!! [UNDER DEVELOPEMENT] Fork from prismic-dom so it's not usable at this time !!!
 
-[![npm version](https://badge.fury.io/js/prismic-react.svg)](http://badge.fury.io/js/prismic-react)
-[![Build Status](https://api.travis-ci.org/prismicio/prismic-react.png)](https://travis-ci.org/prismicio/prismic-react)
+[![npm version](https://badge.fury.io/js/prismic-reactjs.svg)](http://badge.fury.io/js/prismic-reactjs)
+[![Build Status](https://api.travis-ci.org/prismicio/prismic-reactjs.png)](https://travis-ci.org/prismicio/prismic-reactjs)
 
-* The [source code](https://github.com/prismicio/prismic-react) is on Github.
-* The [Changelog](https://github.com/prismicio/prismic-react/releases) is on Github's releases tab.
-* The [API reference](https://prismicio.github.io/prismic-react/globals.html) is on Github.
+* The [source code](https://github.com/prismicio/prismic-reactjs) is on Github.
+* The [Changelog](https://github.com/prismicio/prismic-reactjs/releases) is on Github's releases tab.
+* The [API reference](https://prismicio.github.io/prismic-reactjs/globals.html) is on Github.
 
 It's meant to work in pair with the prismic-javascript library, a new javascript kit for the prismic API v2 available here:
 * [prismic-javascript](https://github.com/prismicio/prismic-javascript) is on Github.
@@ -24,20 +24,20 @@ apiEndpoint: your-repo-name.prismic.io/api/v2
 #### NPM
 
 ```sh
-npm install prismic-react --save
+npm install prismic-reactjs --save
 ```
 
 #### CDN
 
 ```
-https://unpkg.com/prismic-react
+https://unpkg.com/prismic-reactjs
 ```
 
 (You may need to adapt the version number)
 
 #### Downloadable version
 
-On our release page: [https://github.com/prismicio/prismic-react/releases](https://github.com/prismicio/prismic-react/releases).
+On our release page: [https://github.com/prismicio/prismic-reactjs/releases](https://github.com/prismicio/prismic-reactjs/releases).
 
 The kit is universal, it can be used:
 
@@ -49,7 +49,7 @@ The kit is universal, it can be used:
 
 * Import Prismic React or directly the helpers inside
 ``` javascript
-import {Link, RichText, Date} from 'prismic-react';
+import {Link, RichText, Date} from 'prismic-reactjs';
 ```
 
 Render a RichText:
