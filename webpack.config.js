@@ -46,6 +46,9 @@ var config = {
     },
     extensions: ['.js']
   },
+  externals: {
+  'react': 'react'
+  },
   plugins: plugins
 };
  

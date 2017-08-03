@@ -1,7 +1,5 @@
 ## JavaScript library with static helpers to render React Components with Prismic API V2 BETA
 
-!!! [UNDER DEVELOPEMENT] Fork from prismic-dom so it's not usable at this time !!!
-
 [![npm version](https://badge.fury.io/js/prismic-reactjs.svg)](http://badge.fury.io/js/prismic-reactjs)
 [![Build Status](https://api.travis-ci.org/prismicio/prismic-reactjs.png)](https://travis-ci.org/prismicio/prismic-reactjs)
 
@@ -56,7 +54,7 @@ Render a RichText:
 
  * As React Component
 ```javascript
-  RichText.asJsx(mydoc.data.myrichtext, linkResolver)
+  RichText.render(mydoc.data.myrichtext, linkResolver)
 ```
 
  * As Text
