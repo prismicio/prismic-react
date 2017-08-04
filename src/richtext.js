@@ -33,7 +33,7 @@ function propsWithUniqueKey(props) {
 }
 
 function serializeStandardTag(tag, element, children) {
-  const props = element.label ? Object.assign({}, {classList: element.label}) : {};
+  const props = element.label ? Object.assign({}, {className: element.label}) : {};
   return React.createElement(tag, propsWithUniqueKey(props), children);
 }
 
@@ -43,7 +43,7 @@ function serializeHyperlink(linkResolver, element, children) {
 }
 
 function serializeLabel(element, children) {
-  const props = element.data ? Object.assign({}, {classList: element.data}) : {};
+  const props = element.data ? Object.assign({}, {className: element.data}) : {};
   return React.createElement('span', propsWithUniqueKey(props), children);
 }
 
@@ -53,11 +53,11 @@ function serializeSpan(content) {
 
 function serializeImage(linkResolver, element) {
   const linkUrl = element.linkTo ? LinkHelper.url(element.linkTo, linkResolver) : null;
-  const img = React.createElement('img', {src: element.url , alt: element.alt || '', copyright: element.copyright || ''}, []);
+  const img = React.createElement('img', {src: element.url , alt: element.alt || ''});
   
-  return React.createElement('p', propsWithUniqueKey({classList: [element.label || '', 'block-img'].join('')}), [
-    linkUrl ? React.createElement('a', {href: linkUrl}, [img]) : img
-  ]);
+  return React.createElement('p', propsWithUniqueKey({className: [element.label || '', 'block-img'].join('')}),
+    linkUrl ? React.createElement('a', {href: linkUrl}, img) : img
+  );
 }
 
 function serializeEmbed(element) {
@@ -65,11 +65,11 @@ function serializeEmbed(element) {
     "data-oembed": element.embed_url,
     "data-oembed-type": element.type,
     "data-oembed-provider": element.provider_name,
-  }, element.label ? {classList: element.label} : {});
+  }, element.label ? {className: element.label} : {});
 
-  const embedHtml = React.createElement('div', {setDangerouslyInnerHTML: {__html: element.oembed.html}}, []);
+  const embedHtml = React.createElement('div', {dangerouslySetInnerHTML: {__html: element.oembed.html}});
 
-  return React.createElement('div', propsWithUniqueKey(props), [embedHtml]);
+  return React.createElement('div', propsWithUniqueKey(props), embedHtml);
 }
 
 export default {

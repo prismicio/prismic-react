@@ -20,7 +20,7 @@
   "homepage": "https://github.com/prismicio/prismic-reactjs#readme",
   "dependencies": {
     "prismic-helpers": "^1.0.0",
-    "prismic-richtext": "^0.2.1",
+    "prismic-richtext": "^0.2.2",
     "react": "^15.6.1"
   },
   "devDependencies": {
