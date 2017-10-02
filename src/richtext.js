@@ -48,15 +48,18 @@ function serializeLabel(element, children) {
 }
 
 function serializeSpan(content) {
-  const children = content.split("\n").reduce((acc, p) => {
-    if (acc.length === 0) {
-      return [p];
-    } else {
-      const br = React.createElement('br');
-      return acc.concat([br, p]);
-    }
-  }, []);
-  return children;
+  if (content) {
+    return content.split("\n").reduce((acc, p) => {
+      if (acc.length === 0) {
+        return [p];
+      } else {
+        const br = React.createElement('br');
+        return acc.concat([br, p]);
+      }
+    }, []);
+  } else {
+    return null;
+  }
 }
 
 function serializeImage(linkResolver, element) {
