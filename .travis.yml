@@ -10,5 +10,4 @@ os:
 before_script:
   - npm install -g tape
 script:
-  - npm run lint
   - npm run build
