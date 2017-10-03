@@ -39,7 +39,8 @@ function serializeStandardTag(tag, element, children) {
 
 function serializeHyperlink(linkResolver, element, children) {
   const targetAttr = element.data.target ? { target: element.data.target } : {};
-  const props = Object.assign({ href: LinkHelper.url(element.data, linkResolver) }, targetAttr);
+  const relAttr = element.data.target ? { rel: 'noopener' } : {};
+  const props = Object.assign({ href: LinkHelper.url(element.data, linkResolver) }, targetAttr, relAttr);
   return React.createElement('a', propsWithUniqueKey(props), children);
 }
 
@@ -66,12 +67,13 @@ function serializeSpan(content) {
 function serializeImage(linkResolver, element) {
   const linkUrl = element.linkTo ? LinkHelper.url(element.linkTo, linkResolver) : null;
   const linkTarget = (element.linkTo && element.linkTo.target) ? { target: element.linkTo.target } : {};
+  const relAttr = linkTarget.target ? { rel: 'noopener' } : {};
   const img = React.createElement('img', { src: element.url , alt: element.alt || '' });
   
   return React.createElement(
     'p',
     propsWithUniqueKey({ className: [element.label || '', 'block-img'].join('') }),
-    linkUrl ? React.createElement('a', Object.assign({ href: linkUrl }, linkTarget), img) : img
+    linkUrl ? React.createElement('a', Object.assign({ href: linkUrl }, linkTarget, relAttr), img) : img
   );
 }
 
