@@ -1,6 +1,6 @@
 {
   "name": "prismic-reactjs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "render prismic rich text as React Element",
   "main": "dist/prismic-reactjs.js",
   "scripts": {
