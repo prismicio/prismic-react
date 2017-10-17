@@ -97,5 +97,7 @@ export default {
   render(richText, linkResolver, htmlSerializer) {
     const serializedChildren = PrismicRichText.serialize(richText, serialize.bind(null, linkResolver), htmlSerializer);
     return React.createElement('div', propsWithUniqueKey(), serializedChildren);
-  }
+  },
+  
+  Elements : Elements
 }
