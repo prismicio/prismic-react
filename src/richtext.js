@@ -45,7 +45,7 @@ function serializeHyperlink(linkResolver, element, children) {
 }
 
 function serializeLabel(element, children) {
-  const props = element.data ? Object.assign({}, { className: element.data }) : {};
+  const props = element.data ? Object.assign({}, { className: element.data.label }) : {};
   return React.createElement('span', propsWithUniqueKey(props), children);
 }
 
@@ -72,16 +72,16 @@ function serializeImage(linkResolver, element) {
   
   return React.createElement(
     'p',
-    propsWithUniqueKey({ className: [element.label || '', 'block-img'].join('') }),
+    propsWithUniqueKey({ className: [element.label || '', 'block-img'].join(' ') }),
     linkUrl ? React.createElement('a', Object.assign({ href: linkUrl }, linkTarget, relAttr), img) : img
   );
 }
 
 function serializeEmbed(element) {
   const props = Object.assign({
-    "data-oembed": element.embed_url,
-    "data-oembed-type": element.type,
-    "data-oembed-provider": element.provider_name,
+    "data-oembed": element.oembed.embed_url,
+    "data-oembed-type": element.oembed.type,
+    "data-oembed-provider": element.oembed.provider_name,
   }, element.label ? {className: element.label} : {});
 
   const embedHtml = React.createElement('div', {dangerouslySetInnerHTML: {__html: element.oembed.html}});
