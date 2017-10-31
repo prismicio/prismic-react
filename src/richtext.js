@@ -55,7 +55,7 @@ function serializeSpan(content) {
       if (acc.length === 0) {
         return [p];
       } else {
-        const br = React.createElement('br');
+        const br = React.createElement('br', propsWithUniqueKey());
         return acc.concat([br, p]);
       }
     }, []);
