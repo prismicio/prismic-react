@@ -5,7 +5,7 @@
 
 * The [source code](https://github.com/prismicio/prismic-reactjs) is on Github.
 * The [Changelog](https://github.com/prismicio/prismic-reactjs/releases) is on Github's releases tab.
-* The [API reference](https://prismicio.github.io/prismic-reactjs/globals.html) is on Github.
+* The [API reference](https://prismicio.github.io/prismic-javascript/globals.html) is on Github.
 
 It's meant to work in pair with the prismic-javascript library, a new javascript kit for the prismic API v2 available here:
 * [prismic-javascript](https://github.com/prismicio/prismic-javascript) is on Github.
