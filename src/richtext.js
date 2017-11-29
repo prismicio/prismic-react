@@ -1,61 +1,60 @@
 import PrismicRichText, {Elements} from 'prismic-richtext';
 import React from 'react';
-import uuid from './uuid';
 import { Link as LinkHelper } from 'prismic-helpers';
 
-function serialize(linkResolver, type, element, content, children) {
+function serialize(linkResolver, type, element, content, children, index) {
   switch(type) {
-    case Elements.heading1: return serializeStandardTag('h1', element, children);
-    case Elements.heading2: return serializeStandardTag('h2', element, children);
-    case Elements.heading3: return serializeStandardTag('h3', element, children);
-    case Elements.heading4: return serializeStandardTag('h4', element, children);
-    case Elements.heading5: return serializeStandardTag('h5', element, children);
-    case Elements.heading6: return serializeStandardTag('h6', element, children);
-    case Elements.paragraph: return serializeStandardTag('p', element, children);
-    case Elements.preformatted: return serializeStandardTag('pre', element, children);
-    case Elements.strong: return serializeStandardTag('strong', element, children);
-    case Elements.em: return serializeStandardTag('em', element, children);
-    case Elements.listItem: return serializeStandardTag('li', element, children);
-    case Elements.oListItem: return serializeStandardTag('li', element, children);
-    case Elements.list: return serializeStandardTag('ul', element, children);
-    case Elements.oList: return serializeStandardTag('ol', element, children);
-    case Elements.image: return serializeImage(linkResolver, element);
-    case Elements.embed: return serializeEmbed(element);
-    case Elements.hyperlink: return serializeHyperlink(linkResolver, element, children);
-    case Elements.label: return serializeLabel(element, children);
-    case Elements.span: return serializeSpan(content);
+    case Elements.heading1: return serializeStandardTag('h1', element, children, index);
+    case Elements.heading2: return serializeStandardTag('h2', element, children, index);
+    case Elements.heading3: return serializeStandardTag('h3', element, children, index);
+    case Elements.heading4: return serializeStandardTag('h4', element, children, index);
+    case Elements.heading5: return serializeStandardTag('h5', element, children, index);
+    case Elements.heading6: return serializeStandardTag('h6', element, children, index);
+    case Elements.paragraph: return serializeStandardTag('p', element, children, index);
+    case Elements.preformatted: return serializeStandardTag('pre', element, children, index);
+    case Elements.strong: return serializeStandardTag('strong', element, children, index);
+    case Elements.em: return serializeStandardTag('em', element, children, index);
+    case Elements.listItem: return serializeStandardTag('li', element, children, index);
+    case Elements.oListItem: return serializeStandardTag('li', element, children, index);
+    case Elements.list: return serializeStandardTag('ul', element, children, index);
+    case Elements.oList: return serializeStandardTag('ol', element, children, index);
+    case Elements.image: return serializeImage(linkResolver, element, index);
+    case Elements.embed: return serializeEmbed(element, index);
+    case Elements.hyperlink: return serializeHyperlink(linkResolver, element, children, index);
+    case Elements.label: return serializeLabel(element, children, index);
+    case Elements.span: return serializeSpan(content, index);
     default: return null;
   }
 }
 
-function propsWithUniqueKey(props) {
-  return Object.assign(props || {}, {key: uuid()});
+function propsWithUniqueKey(props, key) {
+  return Object.assign(props || {}, { key });
 }
 
-function serializeStandardTag(tag, element, children) {
+function serializeStandardTag(tag, element, children, key) {
   const props = element.label ? Object.assign({}, {className: element.label}) : {};
-  return React.createElement(tag, propsWithUniqueKey(props), children);
+  return React.createElement(tag, propsWithUniqueKey(props, key), children);
 }
 
-function serializeHyperlink(linkResolver, element, children) {
+function serializeHyperlink(linkResolver, element, children, key) {
   const targetAttr = element.data.target ? { target: element.data.target } : {};
   const relAttr = element.data.target ? { rel: 'noopener' } : {};
   const props = Object.assign({ href: LinkHelper.url(element.data, linkResolver) }, targetAttr, relAttr);
-  return React.createElement('a', propsWithUniqueKey(props), children);
+  return React.createElement('a', propsWithUniqueKey(props, key), children);
 }
 
-function serializeLabel(element, children) {
+function serializeLabel(element, children, key) {
   const props = element.data ? Object.assign({}, { className: element.data.label }) : {};
-  return React.createElement('span', propsWithUniqueKey(props), children);
+  return React.createElement('span', propsWithUniqueKey(props, key), children);
 }
 
-function serializeSpan(content) {
+function serializeSpan(content, key) {
   if (content) {
     return content.split("\n").reduce((acc, p) => {
       if (acc.length === 0) {
         return [p];
       } else {
-        const br = React.createElement('br', propsWithUniqueKey());
+        const br = React.createElement('br', propsWithUniqueKey({}, key));
         return acc.concat([br, p]);
       }
     }, []);
@@ -64,7 +63,7 @@ function serializeSpan(content) {
   }
 }
 
-function serializeImage(linkResolver, element) {
+function serializeImage(linkResolver, element, key) {
   const linkUrl = element.linkTo ? LinkHelper.url(element.linkTo, linkResolver) : null;
   const linkTarget = (element.linkTo && element.linkTo.target) ? { target: element.linkTo.target } : {};
   const relAttr = linkTarget.target ? { rel: 'noopener' } : {};
@@ -72,12 +71,12 @@ function serializeImage(linkResolver, element) {
   
   return React.createElement(
     'p',
-    propsWithUniqueKey({ className: [element.label || '', 'block-img'].join(' ') }),
+    propsWithUniqueKey({ className: [element.label || '', 'block-img'].join(' ') }, key),
     linkUrl ? React.createElement('a', Object.assign({ href: linkUrl }, linkTarget, relAttr), img) : img
   );
 }
 
-function serializeEmbed(element) {
+function serializeEmbed(element, key) {
   const props = Object.assign({
     "data-oembed": element.oembed.embed_url,
     "data-oembed-type": element.oembed.type,
@@ -86,7 +85,7 @@ function serializeEmbed(element) {
 
   const embedHtml = React.createElement('div', {dangerouslySetInnerHTML: {__html: element.oembed.html}});
 
-  return React.createElement('div', propsWithUniqueKey(props), embedHtml);
+  return React.createElement('div', propsWithUniqueKey(props, key), embedHtml);
 }
 
 export default {
