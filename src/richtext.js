@@ -22,7 +22,7 @@ function serialize(linkResolver, type, element, content, children, index) {
     case Elements.embed: return serializeEmbed(element, index);
     case Elements.hyperlink: return serializeHyperlink(linkResolver, element, children, index);
     case Elements.label: return serializeLabel(element, children, index);
-    case Elements.span: return serializeSpan(content, index);
+    case Elements.span: return serializeSpan(content);
     default: return null;
   }
 }
@@ -48,13 +48,14 @@ function serializeLabel(element, children, key) {
   return React.createElement('span', propsWithUniqueKey(props, key), children);
 }
 
-function serializeSpan(content, key) {
+function serializeSpan(content) {
   if (content) {
     return content.split("\n").reduce((acc, p) => {
       if (acc.length === 0) {
         return [p];
       } else {
-        const br = React.createElement('br', propsWithUniqueKey({}, key));
+        const brIndex = (acc.length + 1)/2 - 1;
+        const br = React.createElement('br', propsWithUniqueKey({}, brIndex));
         return acc.concat([br, p]);
       }
     }, []);

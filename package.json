@@ -21,7 +21,7 @@
   "homepage": "https://github.com/prismicio/prismic-reactjs#readme",
   "dependencies": {
     "prismic-helpers": "^1.0.0",
-    "prismic-richtext": "^0.4.0",
+    "prismic-richtext": "^0.4.1",
     "react": "^15.6.1"
   },
   "devDependencies": {
