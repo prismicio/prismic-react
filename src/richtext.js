@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react';
-import { isValidElementType } from 'react-is';
-import { func } from 'prop-types';
 import PrismicRichText, { Elements } from 'prismic-richtext';
 import { Link as LinkHelper } from 'prismic-helpers';
 
