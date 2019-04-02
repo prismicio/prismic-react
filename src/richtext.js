@@ -1,5 +1,7 @@
-import PrismicRichText, {Elements} from 'prismic-richtext';
-import React from 'react';
+import React, { Fragment } from 'react';
+import { isValidElementType } from 'react-is';
+import { func } from 'prop-types';
+import PrismicRichText, { Elements } from 'prismic-richtext';
 import { Link as LinkHelper } from 'prismic-helpers';
 
 function serialize(linkResolver, type, element, content, children, index) {
@@ -69,7 +71,7 @@ function serializeImage(linkResolver, element, key) {
   const linkTarget = (element.linkTo && element.linkTo.target) ? { target: element.linkTo.target } : {};
   const relAttr = linkTarget.target ? { rel: 'noopener' } : {};
   const img = React.createElement('img', { src: element.url , alt: element.alt || '' });
-  
+
   return React.createElement(
     'p',
     propsWithUniqueKey({ className: [element.label || '', 'block-img'].join(' ') }, key),
@@ -89,15 +91,9 @@ function serializeEmbed(element, key) {
   return React.createElement('div', propsWithUniqueKey(props, key), embedHtml);
 }
 
-export default {
-  asText(structuredText) {
-    return PrismicRichText.asText(structuredText);
-  },
+export const asText = structuredText => PrismicRichText.asText(structuredText)
 
-  render(richText, linkResolver, htmlSerializer) {
-    const serializedChildren = PrismicRichText.serialize(richText, serialize.bind(null, linkResolver), htmlSerializer);
-    return React.createElement('div', propsWithUniqueKey(), serializedChildren);
-  },
-  
-  Elements : Elements
+export const renderRichText = (richText, linkResolver, htmlSerializer, Component = Fragment) => {
+  const serializedChildren = PrismicRichText.serialize(richText, serialize.bind(null, linkResolver), htmlSerializer);
+  return React.createElement(Component, propsWithUniqueKey(), serializedChildren);
 }
