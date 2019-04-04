@@ -20,7 +20,7 @@ function serialize(linkResolver, type, element, content, children, index) {
     case Elements.oList: return serializeStandardTag('ol', element, children, index);
     case Elements.image: return serializeImage(linkResolver, element, index);
     case Elements.embed: return serializeEmbed(element, index);
-    case Elements.hyperlink: return serializeHyperlink(linkResolver, element, children, index);
+    // case Elements.hyperlink: { console.log('richtext hyperlink called'); return serializeHyperlink(linkResolver, element, children, index) };
     case Elements.label: return serializeLabel(element, children, index);
     case Elements.span: return serializeSpan(content);
     default: return null;
@@ -38,6 +38,8 @@ function serializeStandardTag(tag, element, children, key) {
 
 function serializeHyperlink(linkResolver, element, children, key) {
   const targetAttr = element.data.target ? { target: element.data.target } : {};
+
+  // Did they specify that the link was for the outside web?
   const relAttr = element.data.target ? { rel: 'noopener' } : {};
   const props = Object.assign({ href: LinkHelper.url(element.data, linkResolver) }, targetAttr, relAttr);
   return React.createElement('a', propsWithUniqueKey(props, key), children);
