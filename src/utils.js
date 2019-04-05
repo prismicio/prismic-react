@@ -40,16 +40,12 @@ export const validateComponent = (Component) =>
   componentPropType({ Component }, 'Component', 'renderRichText') === null
 
 
-// Create HTML Serializer from serialize[:tag] methods, etc.
-const addSerializer = (bucket, _case, fn) => {
-   bucket[_case] = fn;
+export const createHtmlSerializer = (bucket = {}, serializers = []) => {
+  const processors = serializers.reduce((acc, { type, fn }) => {
+    return Object.assign({}, acc, { [type]: fn })
+  }, {});
+  return (type, ...args) => processors[type] ? processors[type](type, ...args) : null;
 }
-
-export const createHtmlSerializer = (bucket, serializers) => {
-  serializers.forEach(({ type, fn }) => addSerializer(bucket, type, fn));
-  return (type, ...args) => bucket[type] ? bucket[type](type, ...args) : null;
-}
-
 
 
 // Errors
@@ -58,6 +54,3 @@ export const componentError =
 
 export const richTextError =
   'Rich text argument is not formatted correctly. Make sure you\'re correctly passing the argument to `render` method';
-
-export const renderWarning = 'RichText.render: Method deprecated, use RichText component instead!';
-export const asTextWarning = 'RichText.asText: Method deprecated, use RichText component instead!';

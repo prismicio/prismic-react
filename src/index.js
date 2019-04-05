@@ -25,17 +25,12 @@ const RichText = (props) => {
     return null;
   }
 
-  let maybeSerializer;
-
-  if (htmlSerializer) {
-    maybeSerializer = htmlSerializer;
-  } else if (serializeHyperlink) {
-    let bucket = {};
-    maybeSerializer = createHtmlSerializer(bucket, [{
+  const maybeSerializer = htmlSerializer || (serializeHyperlink &&
+    createHtmlSerializer(bucket, [{
       type: Elements.hyperlink,
       fn: serializeHyperlink
-    }]);
-  }
+    }])
+  );
 
   return render ?
     renderRichText(render, linkResolver, maybeSerializer, Component)
@@ -46,9 +41,9 @@ RichText.propTypes = richTextPropTypes;
 RichText.displayName = 'RichText';
 
 module.exports = {
-  asText: (...args) => console.warn(asTextWarning) || asText(...args),
+  asText: asText,
   Date: PrismicHelpers.Date,
   Link: PrismicHelpers.Link,
-  render: (...args) => console.warn(renderWarning) || renderRichText(...args),
+  render: renderRichText,
   RichText,
 };
