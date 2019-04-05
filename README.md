@@ -147,7 +147,7 @@ Out of the box, RichText wraps your content in a `React.fragment`. But you can p
 
 ## Deprecation
 In earlier versions of Prismic React, rich text rendering was deferred to 2 static methods called `render` and `asText`.
-Although these methods are still accessible, they don't seem to offer any advantage over a React component. If you disagree, please let us know!
+Although these methods are still accessible, they don't seem to offer any advantage over a RichText component. We may be deprecating them in a future version - if you disagree, please let us know! By the meantime, here is a [guide to update your code base](/UPDATE-FROM-V0.md).
 
 #### example use
 
