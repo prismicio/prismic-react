@@ -1,33 +1,28 @@
-export function createScript({ property, d, s, src, id, setWindow }) {
+export function createScript({ property, src, id }) {
   if (!window) {
     return
   }
-  const res = (function(d, s, src, id) {
-    var js, fjs = d.getElementsByTagName(s)[0],
+  (function(src, id) {
+    var js, fjs = document.getElementsByTagName('script')[0],
       t = window[property] || {};
-    if (d.getElementById(id)) {
+    if (document.getElementById(id)) {
       return t;
     }
-    js = d.createElement(s);
+    js = document.createElement('script');
     js.id = id;
-    js.src = src
+    js.src = src;
     fjs.parentNode.insertBefore(js, fjs);
     t._e = [];
     t.ready = function(f) {
       t._e.push(f);
     };
     return t;
-  }(d, s, src, id));
-
-  if (setWindow) {
-    window[property] = res;
-  }
+  }(src, id));
 }
 
 export const embeds = {
   Twitter: {
     property: 'twttr',
-    setWindow: true,
     src: 'https://platform.twitter.com/widgets.js',
     id: 'twitter-wjs',
     load: function() {
@@ -39,7 +34,6 @@ export const embeds = {
   Facebook: {
     property: 'FB',
     src: 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3',
-    setWindow: false,
     id: 'fb-wjs',
     load: (ref) => {
       if (window && window.FB) {
@@ -49,7 +43,6 @@ export const embeds = {
   },
   Instagram: {
     property: 'instgrm',
-    setWindow: false,
     src: 'https://www.instagram.com/embed.js',
     id: 'insta-wjs',
     load: () => {

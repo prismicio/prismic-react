@@ -1,5 +1,5 @@
 import PrismicRichText, { Elements } from 'prismic-richtext';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Link as LinkHelper } from 'prismic-helpers';
 import { createScript, embeds } from './embeds';
 
@@ -80,19 +80,11 @@ function serializeImage(linkResolver, element, key) {
 }
 
 function serializeEmbed(element, key) {
-
   if (embeds[element.oembed.provider_name]) {
-    const { property, src, id } = embeds[element.oembed.provider_name];
-    createScript({
-      property,
-      src,
-      id,
-      d: document,
-      s: 'script',
-    });
+    createScript(embeds[element.oembed.provider_name]);
   }
 
-  const className = `embed-${element.oembed.provider_name.toLowerCase()}`
+  const className = `embed embed-${element.oembed.provider_name.toLowerCase()}`
   const props = Object.assign({
     "data-oembed": element.oembed.embed_url,
     "data-oembed-type": element.oembed.type,
