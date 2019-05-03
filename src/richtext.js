@@ -1,4 +1,4 @@
-import PrismicRichText, {Elements} from 'prismic-richtext';
+import PrismicRichText, { Elements } from 'prismic-richtext';
 import React, { Fragment, useState } from 'react';
 import { Link as LinkHelper } from 'prismic-helpers';
 import { createScript, embeds } from './embeds';
@@ -118,6 +118,4 @@ export default {
     const serializedChildren = PrismicRichText.serialize(richText, serialize.bind(null, linkResolver), htmlSerializer);
     return React.createElement('div', propsWithUniqueKey(), serializedChildren);
   },
-
-  Elements : Elements
 }
