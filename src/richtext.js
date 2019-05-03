@@ -1,37 +1,7 @@
 import PrismicRichText, {Elements} from 'prismic-richtext';
 import React, { Fragment, useState } from 'react';
 import { Link as LinkHelper } from 'prismic-helpers';
-
-
-function createScript(property, d, s, src, id) {
-  if (!window) {
-    return
-  }
-  window[property] = (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0],
-      t = window[property] || {};
-    if (d.getElementById(id)) return t;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = src
-    fjs.parentNode.insertBefore(js, fjs);
-
-    t._e = [];
-    t.ready = function(f) {
-      t._e.push(f);
-    };
-
-    return t;
-  }(d, s, src, id));
-}
-
-const embeds = {
-  Twitter: {
-    load: (ref) => {
-      window && window.twttr && window.twttr.widgets && window.twttr.widgets.load()
-    }
-  }
-}
+import { createScript, embeds } from './embeds';
 
 
 function serialize(linkResolver, type, element, content, children, index) {
@@ -110,7 +80,19 @@ function serializeImage(linkResolver, element, key) {
 }
 
 function serializeEmbed(element, key) {
-  createScript('twttr', document, "script", "https://platform.twitter.com/widgets.js", "twitter-wjs")
+
+  if (embeds[element.oembed.provider_name]) {
+    const { property, src, id } = embeds[element.oembed.provider_name];
+    createScript({
+      property,
+      src,
+      id,
+      d: document,
+      s: 'script',
+    });
+  }
+
+  const className = `embed-${element.oembed.provider_name.toLowerCase()}`
   const props = Object.assign({
     "data-oembed": element.oembed.embed_url,
     "data-oembed-type": element.oembed.type,
@@ -120,7 +102,7 @@ function serializeEmbed(element, key) {
         embeds[element.oembed.provider_name].load(ref)
       }
     },
-  }, element.label ? { className: element.label } : {});
+  }, element.label ? { className: `${className} ${element.label}` } : { className });
 
   const embedHtml = React.createElement('div', { dangerouslySetInnerHTML: { __html: element.oembed.html }});
 
