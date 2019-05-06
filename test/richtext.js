@@ -1,5 +1,5 @@
 import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+import Adapter from 'enzyme-adapter-react-16';
 import { it, describe } from 'mocha';
 import { expect } from 'chai';
 import { Elements } from 'prismic-richtext';
@@ -17,7 +17,7 @@ describe('richtext', () => {
     }];
     const wrapper = shallow(rt.render(richText));
 
-    expect(wrapper.key()).to.equal(undefined);
+    expect(wrapper.key()).to.equal(null);
   });
 
   it('renders a simple element with key zero', () => {
