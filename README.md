@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/prismic-reactjs.svg)](http://badge.fury.io/js/prismic-reactjs)
 [![Build Status](https://api.travis-ci.org/prismicio/prismic-reactjs.png)](https://travis-ci.org/prismicio/prismic-reactjs)
 
-# Prismic 💰💰💰 Text, but for React
+# Prismic Rich (💰) Text, but for React
 ### A simple utility to render Rich Text with Prismic API V2
 
 Prismic provides content writers with a WYSIWYG editor. It's awesome for formatting text but harder to deal with on client side. Fortunately, Prismic React provides utilities to tackle this exact issue!
@@ -136,7 +136,7 @@ const myCustomLink = (type, element, content, children, index) => (
 
 #### Passing your own serializer
 If `serializeHyperlink` is not enough, you can alternatively pass an `htmlSerializer` function.
-Full example and all accessible elements can be found [here](https://prismic.io/docs/javascript/beyond-the-api/html-serializer).
+Full example and all accessible elements can be found [here](https://prismic.io/docs/javascript/beyond-the-api/html-serializer). If you need examples or help on this, feel free to open an issue!
 
 
 #### Wrapping your rich text in a React component
@@ -146,49 +146,39 @@ Out of the box, RichText wraps your content in a `React.fragment`. But you can p
 ```
 
 ## Deprecation
-In earlier versions of Prismic React, rich text rendering was deferred to 2 static methods called `render` and `asText`.
-Although these methods are still accessible, they don't seem to offer any advantage over a RichText component. We may be deprecating them in a future version - if you disagree, please let us know! By the meantime, here is a [guide to update your code base](/UPDATE-FROM-V0.md).
+In earlier versions of Prismic React, rich text rendering was deferred to 2 methods called `render` and `asText`.
+Although these methods are still accessible, they don't seem to offer any advantage over a React component. If you disagree, please let me know!
 
 #### example use
 
 ```javascript
 
-import { asText, render } from 'prismic-reactjs';
+import { RichText } from 'prismic-reactjs';
 
 const Header = (myDoc) => (
     <header>
-        {render(myDoc.data.title)}
-        <span>{asText(myDoc.data.subTitle)}</span>
+        {RichText.render(myDoc.data.title)}
+        <span>{RichText.asText(myDoc.data.subTitle)}</span>
     </header>
 );
 ```
-👆 Please note that we changed some named exports and that these methods are not part of RichText anymore.
-Basically and only if you're upgrading, you should change each of your imports to reflect this change.
+👆 Please note that these methods are now static properties of `RichText` component.
 
 
 ## Install the kit locally
 
-Source files are in the `src/` directory. You only need [Node.js and npm](http://www.joyent.com/blog/installing-node-and-npm/)
-to work on the codebase.
+Source files are in the `src/` directory. You only need [Node.js and npm](http://www.joyent.com/blog/installing-node-and-npm/) to work on the codebase.
 
 ```
 npm install
 npm run dev
 ```
 
-#### Documentation
-
-Please document any new feature or bugfix using the [JSDoc](http://usejsdoc.org/) syntax. You don't need to generate the documentation, we'll do that.
-
-If you feel an existing area of code is lacking documentation, feel free to write it; but please do so on its own branch and pull-request.
-
-If you find existing code that is not optimally documented and wish to make it better, we really appreciate it; but you should document it on its own branch and its own pull request.
-
 ### License
 
 This software is licensed under the Apache 2 license, quoted below.
 
-Copyright 2013-2017 Prismic.io (http://prismic.io).
+Copyright 2013-2019 Prismic.io (http://prismic.io).
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this project except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
 
