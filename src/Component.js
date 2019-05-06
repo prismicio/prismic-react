@@ -3,7 +3,7 @@ import { isValidElementType } from 'react-is';
 import { func } from 'prop-types';
 
 import { Elements } from 'prismic-richtext';
-import { renderRichText, asText } from './richText';
+import { renderRichText, asText } from './richtext';
 
 import { componentPropType, richTextPropTypes } from './utils';
 
