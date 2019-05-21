@@ -1,8 +1,13 @@
+import React, { Fragment } from 'react';
 import PrismicRichText, { Elements } from 'prismic-richtext';
-import React, { Fragment } from 'react';
 import { Link as LinkHelper } from 'prismic-helpers';
 import { createScript, embeds } from './embeds';
-
+import {
+  componentError,
+  richTextError,
+  validateRichText,
+  validateComponent,
+} from './utils';
 
 function serialize(linkResolver, type, element, content, children, index) {
   switch(type) {
@@ -101,13 +106,17 @@ function serializeEmbed(element, key) {
   return React.createElement('div', propsWithUniqueKey(props, key), embedHtml);
 }
 
-export default {
-  asText(structuredText) {
-    return PrismicRichText.asText(structuredText);
-  },
+export const asText = structuredText => PrismicRichText.asText(structuredText)
 
-  render(richText, linkResolver, htmlSerializer) {
-    const serializedChildren = PrismicRichText.serialize(richText, serialize.bind(null, linkResolver), htmlSerializer);
-    return React.createElement('div', propsWithUniqueKey(), serializedChildren);
-  },
+export const renderRichText = (richText, linkResolver, htmlSerializer, Component = Fragment) => {
+  if (!validateRichText(richText)) {
+    console.warn(richTextError);
+    return null;
+  }
+  if (!validateComponent(Component)) {
+    console.warn(componentError);
+    return null;
+  }
+  const serializedChildren = PrismicRichText.serialize(richText, serialize.bind(null, linkResolver), htmlSerializer);
+  return React.createElement(Component, propsWithUniqueKey(), serializedChildren);
 }
