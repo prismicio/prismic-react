@@ -1,6 +1,8 @@
-import PrismicRichText, {Elements} from 'prismic-richtext';
-import React from 'react';
+import PrismicRichText, { Elements } from 'prismic-richtext';
+import React, { Fragment } from 'react';
 import { Link as LinkHelper } from 'prismic-helpers';
+import { createScript, embeds } from './embeds';
+
 
 function serialize(linkResolver, type, element, content, children, index) {
   switch(type) {
@@ -27,8 +29,8 @@ function serialize(linkResolver, type, element, content, children, index) {
   }
 }
 
-function propsWithUniqueKey(props, key) {
-  return Object.assign(props || {}, { key });
+function propsWithUniqueKey(props = {}, key) {
+  return Object.assign(props, { key });
 }
 
 function serializeStandardTag(tag, element, children, key) {
@@ -69,7 +71,7 @@ function serializeImage(linkResolver, element, key) {
   const linkTarget = (element.linkTo && element.linkTo.target) ? { target: element.linkTo.target } : {};
   const relAttr = linkTarget.target ? { rel: 'noopener' } : {};
   const img = React.createElement('img', { src: element.url , alt: element.alt || '' });
-  
+
   return React.createElement(
     'p',
     propsWithUniqueKey({ className: [element.label || '', 'block-img'].join(' ') }, key),
@@ -78,13 +80,23 @@ function serializeImage(linkResolver, element, key) {
 }
 
 function serializeEmbed(element, key) {
+  if (embeds[element.oembed.provider_name]) {
+    createScript(embeds[element.oembed.provider_name]);
+  }
+
+  const className = `embed embed-${element.oembed.provider_name.toLowerCase()}`
   const props = Object.assign({
     "data-oembed": element.oembed.embed_url,
     "data-oembed-type": element.oembed.type,
     "data-oembed-provider": element.oembed.provider_name,
-  }, element.label ? {className: element.label} : {});
+    ref: (ref) => {
+      if (embeds[element.oembed.provider_name]) {
+        embeds[element.oembed.provider_name].load(ref)
+      }
+    },
+  }, element.label ? { className: `${className} ${element.label}` } : { className });
 
-  const embedHtml = React.createElement('div', {dangerouslySetInnerHTML: {__html: element.oembed.html}});
+  const embedHtml = React.createElement('div', { dangerouslySetInnerHTML: { __html: element.oembed.html }});
 
   return React.createElement('div', propsWithUniqueKey(props, key), embedHtml);
 }
@@ -98,6 +110,4 @@ export default {
     const serializedChildren = PrismicRichText.serialize(richText, serialize.bind(null, linkResolver), htmlSerializer);
     return React.createElement('div', propsWithUniqueKey(), serializedChildren);
   },
-  
-  Elements : Elements
 }

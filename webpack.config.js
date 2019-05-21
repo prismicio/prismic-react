@@ -5,16 +5,18 @@ var webpack = require('webpack'),
 var libraryName = 'PrismicReactjs',
     fileName = 'prismic-reactjs',
     plugins = [],
+    mode = 'development',
     outputFile;
  
 if (yargs.argv.p) {
-  plugins.push(new webpack.optimize.UglifyJsPlugin({ minimize: true }));
+  mode = 'production';
   outputFile = fileName + '.min.js';
 } else {
   outputFile = fileName + '.js';
 }
  
 var config = {
+  mode: mode,
   entry: [
     __dirname + '/src/index.js'
   ],
@@ -23,7 +25,8 @@ var config = {
     filename: outputFile,
     library: libraryName,
     libraryTarget: 'umd',
-    umdNamedDefine: true
+    umdNamedDefine: true,
+    globalObject: "typeof self !== 'undefined' ? self : this"
   },
   module: {
     rules: [
