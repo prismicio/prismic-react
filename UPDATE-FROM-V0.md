@@ -83,22 +83,13 @@ If you were previously using a custom `htmlSerializer`, simply pass it to your R
 
 ## 4. Change your imports
 
-If you don't want to adopt the component approach _now_, you can alternatively keep using `render` and `asText`. But you will have to change the way you import them:
+If you don't want to adopt the component approach _now_, you can alternatively keep using `render` and `asText`.
 
-#### Before:
 ```javascript
 import { RichText } from 'prismic-reactjs';
 
 const title = RichText.render(data.title);
 const text = RichText.asText(data.text);
-```
-
-#### After:
-```javascript
-import { render, asText } from 'prismic-reactjs';
-
-const title = render(data.title);
-const text = asText(data.text);
 ```
 
 Questions, remarks? Let us know! 🙌
