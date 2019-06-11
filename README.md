@@ -107,7 +107,7 @@ This is the most basic way to make it work, where `myDoc.data.title` is (obvious
 
 #### As text
 
-Some time to time, you don't want to render a component, but a simple string.
+Occasionally, you may require to render not a component, but a simple string.
 Use RichText's static property `asText` to do so:
 ```javascript
   const Title = (myDoc) => (
