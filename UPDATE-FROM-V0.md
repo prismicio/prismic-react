@@ -2,9 +2,9 @@
 
 If you've been using prismic-reactjs before V1, here is a simple guide to update your code base ✌️
 
-## 1. Replace your calls to render and asText
+## 1. Replace your calls to render
 
-Our library now exposes a RichText component that you should use in place of your `render` and `asText` calls:
+Our library now exposes a RichText component that you should use in place of your `render` calls:
 
 #### Before:
 ```javascript
@@ -27,7 +27,7 @@ import { RichText } from 'prismic-reactjs';
 const MyText = (myDoc) => (
     <div>
         <RichText render={myDoc.data.myTitle} />
-        <RichText renderAsText={myDoc.data.myText} />
+        <span>{RichText.asText(myDoc.data.myText)}</span>
     </div>
 );
 ```
