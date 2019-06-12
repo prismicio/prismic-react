@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/prismic-reactjs.svg)](http://badge.fury.io/js/prismic-reactjs)
 [![Build Status](https://api.travis-ci.org/prismicio/prismic-reactjs.png)](https://travis-ci.org/prismicio/prismic-reactjs)
 
-# Prismic Rich (💰) Text, but for React
+# Prismic Rich (💰) Text, for React
 ### A simple utility to render Rich Text with Prismic API V2
 
 Prismic provides content writers with a WYSIWYG editor. It's awesome for formatting text but harder to deal with on client side. Fortunately, Prismic React provides utilities to tackle this exact issue!
@@ -51,7 +51,7 @@ The kit is universal, it can be used:
 
 # Usage
 
-Prismic React exposes 3 utilities.
+Although this package is mainly about RichText, Prismic React exposes 3 utilities.
 Import them in your project this way:
 
 
@@ -77,7 +77,7 @@ Link.url(mydoc.data.mylink, ctx.linkResolver)
 
 ## RichText Component
 
-RichText is a simple React component used to _render_ or _renderAsText_ a Rich Text.
+RichText is a simple React component used to _render_ a Rich Text.
 If you've been used to work with `RichText.render`, you're pretty much good to go!
 
 #### Basic example
@@ -105,13 +105,14 @@ This is the most basic way to make it work, where `myDoc.data.title` is (obvious
   export default Header;
 ```
 
-#### Rendering as text
+#### As text
 
-Some time to time, you don't want to render a component, but simply some good old text:
+Occasionally, you may require to render not a component, but a simple string.
+Use RichText's static property `asText` to do so:
 ```javascript
   const Title = (myDoc) => (
     <h1>
-        <RichText renderAsText={myDoc.data.title} />
+        {RichText.asText(myDoc.data.title)}
     </h1>
   )
 ```
@@ -126,12 +127,12 @@ const myCustomLink = (type, element, content, children, index) => (
   </Link>
 );
   const MyComponent = (myDoc) => (
-    <h1>
+    <div>
         <RichText
-            renderAsText={myDoc.data.textWithLinks}
+            render={myDoc.data.textWithLinks}
             serializeHyperlink={myCustomLink}
         />
-    </h1>
+    </div>
 ```
 
 #### Passing your own serializer
@@ -146,8 +147,8 @@ Out of the box, RichText wraps your content in a `React.fragment`. But you can p
 ```
 
 ## Deprecation
-In earlier versions of Prismic React, rich text rendering was deferred to 2 methods called `render` and `asText`.
-Although these methods are still accessible, they don't seem to offer any advantage over a React component. If you disagree, please let me know!
+In earlier versions of Prismic React, rich text rendering was deferred to a method called `render`.
+This method is still accessible, although it doesn't seem to offer any advantage over a React component. If you disagree, please let me know!
 
 #### example use
 
@@ -158,11 +159,10 @@ import { RichText } from 'prismic-reactjs';
 const Header = (myDoc) => (
     <header>
         {RichText.render(myDoc.data.title)}
-        <span>{RichText.asText(myDoc.data.subTitle)}</span>
     </header>
 );
 ```
-👆 Please note that these methods are now static properties of `RichText` component.
+👆 Please note that this method is now a static property of `RichText` component.
 
 
 ## Install the kit locally

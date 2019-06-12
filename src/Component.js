@@ -14,20 +14,14 @@ const createHtmlSerializer = (bucket = {}, serializers = []) => {
   return (type, ...args) => processors[type] ? processors[type](type, ...args) : null;
 }
 
-const RichText = (props) => {
-  const {
-    Component,
-    htmlSerializer,
-    linkResolver,
-    render,
-    renderAsText,
-    serializeHyperlink,
-  }  = props;
-
-  if (!render && !renderAsText) {
-    return null;
-  }
-
+const RichText = ({
+  Component,
+  htmlSerializer,
+  linkResolver,
+  render,
+  renderAsText,
+  serializeHyperlink,
+}) => {
   const maybeSerializer = htmlSerializer || (serializeHyperlink &&
     createHtmlSerializer({}, [{
       type: Elements.hyperlink,
@@ -37,7 +31,7 @@ const RichText = (props) => {
 
   return render ?
     renderRichText(render, linkResolver, maybeSerializer, Component)
-    : asText(renderAsText);
+    : null;
 }
 
 RichText.propTypes = {
@@ -50,13 +44,8 @@ RichText.propTypes = {
     }
   },
   render: (props, _, componentName) => {
-    if (!props.render && !props.renderAsText) {
-      return new Error(`One of props 'render' or 'renderAsText' was not specified in '${componentName}'.`);
-    }
-  },
-  renderAsText: (props, _, componentName) => {
-    if (!props.renderAsText && !props.render) {
-      return new Error(`One of props 'render' or 'renderAsText' was not specified in '${componentName}'.`);
+    if (!props.render) {
+      return new Error(`Prop 'render' was not specified in '${componentName}'.`);
     }
   },
 };
