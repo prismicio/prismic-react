@@ -1,20 +1,20 @@
 var webpack = require('webpack'),
     path = require('path'),
     yargs = require('yargs');
- 
+
 var libraryName = 'PrismicReactjs',
     fileName = 'prismic-reactjs',
     plugins = [],
     mode = 'development',
     outputFile;
- 
+
 if (yargs.argv.p) {
   mode = 'production';
   outputFile = fileName + '.min.js';
 } else {
   outputFile = fileName + '.js';
 }
- 
+
 var config = {
   mode: mode,
   entry: [
@@ -32,7 +32,7 @@ var config = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        // exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader'
         }
@@ -54,5 +54,5 @@ var config = {
   },
   plugins: plugins
 };
- 
+
 module.exports = config;
