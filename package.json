@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/prismicio/prismic-reactjs#readme",
   "dependencies": {
+    "es6-object-assign": "^1.1.0",
+    "es6-promise": "^4.2.8",
     "prismic-helpers": "^1.0.0",
-    "prismic-richtext": "^1.0.1",
+    "prismic-richtext": "^1.0.3",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
