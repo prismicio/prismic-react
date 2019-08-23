@@ -4,7 +4,7 @@ import { it, describe } from 'mocha';
 import { expect } from 'chai';
 import { Elements } from 'prismic-richtext';
 
-import rt from '../src/richtext';
+import { renderRichText } from '../src/richtext';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -15,7 +15,7 @@ describe('richtext', () => {
       text: 'Heading',
       spans: [],
     }];
-    const wrapper = shallow(rt.render(richText));
+    const wrapper = shallow(renderRichText(richText, null, null, 'div'));
 
     expect(wrapper.key()).to.equal(null);
   });
@@ -26,7 +26,7 @@ describe('richtext', () => {
       text: 'Heading',
       spans: [],
     }];
-    const wrapper = shallow(rt.render(richText));
+    const wrapper = shallow(renderRichText(richText, null, null, 'div'));
 
     expect(wrapper.find('h2').key()).to.equal('0');
   });
@@ -44,36 +44,12 @@ describe('richtext', () => {
         spans: [],
       },
     ];
-    const wrapper = shallow(rt.render(richText));
+    const wrapper = shallow(renderRichText(richText, null, null, 'div'));
     const list = wrapper.find('ul');
     const items = list.find('li');
 
     expect(list.key()).to.equal('0');
     expect(items.at(0).key()).to.equal('0');
     expect(items.at(1).key()).to.equal('1');
-  });
-
-
-  // A bit of a smoke test for all types, as there isn't any pre-existing testing here
-  // Real tests should be added to test out rendering
-  const types = {
-    [Elements.embed]: {
-      oembed: {},
-    },
-    [Elements.hyperlink]: {
-      data: {},
-      spans: [],
-      text: '',
-    },
-    default: {
-      text: '',
-      spans: [],
-    },
-  };
-  Object.keys(Elements).forEach(type => {
-    it(`renders ${type} successfully`, () => {
-      const richText = [Object.assign({}, types[type] || types.default, { type })];
-      shallow(rt.render(richText));
-    });
   });
 });
