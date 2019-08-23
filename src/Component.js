@@ -1,11 +1,8 @@
 import React, { Fragment } from 'react';
-import { isValidElementType } from 'react-is';
-import { func } from 'prop-types';
+import { func, node } from 'prop-types';
 
 import { Elements } from 'prismic-richtext';
 import { renderRichText, asText } from './richtext';
-
-import { componentPropType, richTextPropTypes } from './utils';
 
 const createHtmlSerializer = (bucket = {}, serializers = []) => {
   const processors = serializers.reduce((acc, { type, fn }) => {
@@ -20,7 +17,7 @@ const RichText = ({
   linkResolver,
   render,
   renderAsText,
-  serializeHyperlink,
+  serializeHyperlink
 }) => {
   const maybeSerializer = htmlSerializer || (serializeHyperlink &&
     createHtmlSerializer({}, [{
@@ -35,7 +32,7 @@ const RichText = ({
 }
 
 RichText.propTypes = {
-  Component: componentPropType,
+  Component: node,
   linkResolver: func,
   htmlSerializer: func,
   serializeHyperlink: (props, _, componentName) => {
@@ -47,7 +44,7 @@ RichText.propTypes = {
     if (!props.render) {
       return new Error(`Prop 'render' was not specified in '${componentName}'.`);
     }
-  },
+  }
 };
 
 RichText.asText = asText;

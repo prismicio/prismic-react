@@ -1,13 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { createElement, Fragment } from 'react';
 import PrismicRichText, { Elements } from 'prismic-richtext';
 import { Link as LinkHelper } from 'prismic-helpers';
 import { createScript, embeds } from './embeds';
-import {
-  componentError,
-  richTextError,
-  validateRichText,
-  validateComponent,
-} from './utils';
 
 function serialize(linkResolver, type, element, content, children, index) {
   switch(type) {
@@ -40,19 +34,19 @@ function propsWithUniqueKey(props = {}, key) {
 
 function serializeStandardTag(tag, element, children, key) {
   const props = element.label ? Object.assign({}, {className: element.label}) : {};
-  return React.createElement(tag, propsWithUniqueKey(props, key), children);
+  return createElement(tag, propsWithUniqueKey(props, key), children);
 }
 
 function serializeHyperlink(linkResolver, element, children, key) {
   const targetAttr = element.data.target ? { target: element.data.target } : {};
   const relAttr = element.data.target ? { rel: 'noopener' } : {};
   const props = Object.assign({ href: LinkHelper.url(element.data, linkResolver) }, targetAttr, relAttr);
-  return React.createElement('a', propsWithUniqueKey(props, key), children);
+  return createElement('a', propsWithUniqueKey(props, key), children);
 }
 
 function serializeLabel(element, children, key) {
   const props = element.data ? Object.assign({}, { className: element.data.label }) : {};
-  return React.createElement('span', propsWithUniqueKey(props, key), children);
+  return createElement('span', propsWithUniqueKey(props, key), children);
 }
 
 function serializeSpan(content) {
@@ -61,8 +55,8 @@ function serializeSpan(content) {
       if (acc.length === 0) {
         return [p];
       } else {
-        const brIndex = (acc.length + 1)/2 - 1;
-        const br = React.createElement('br', propsWithUniqueKey({}, brIndex));
+        const brIndex = ((acc.length + 1) / 2) - 1;
+        const br = createElement('br', propsWithUniqueKey({}, brIndex));
         return acc.concat([br, p]);
       }
     }, []);
@@ -75,12 +69,12 @@ function serializeImage(linkResolver, element, key) {
   const linkUrl = element.linkTo ? LinkHelper.url(element.linkTo, linkResolver) : null;
   const linkTarget = (element.linkTo && element.linkTo.target) ? { target: element.linkTo.target } : {};
   const relAttr = linkTarget.target ? { rel: 'noopener' } : {};
-  const img = React.createElement('img', { src: element.url , alt: element.alt || '' });
+  const img = createElement('img', { src: element.url , alt: element.alt || '' });
 
-  return React.createElement(
+  return createElement(
     'p',
     propsWithUniqueKey({ className: [element.label || '', 'block-img'].join(' ') }, key),
-    linkUrl ? React.createElement('a', Object.assign({ href: linkUrl }, linkTarget, relAttr), img) : img
+    linkUrl ? createElement('a', Object.assign({ href: linkUrl }, linkTarget, relAttr), img) : img
   );
 }
 
@@ -101,22 +95,18 @@ function serializeEmbed(element, key) {
     },
   }, element.label ? { className: `${className} ${element.label}` } : { className });
 
-  const embedHtml = React.createElement('div', { dangerouslySetInnerHTML: { __html: element.oembed.html }});
+  const embedHtml = createElement('div', { dangerouslySetInnerHTML: { __html: element.oembed.html }});
 
-  return React.createElement('div', propsWithUniqueKey(props, key), embedHtml);
+  return createElement('div', propsWithUniqueKey(props, key), embedHtml);
 }
 
 export const asText = structuredText => PrismicRichText.asText(structuredText)
 
 export const renderRichText = (richText, linkResolver, htmlSerializer, Component = Fragment) => {
-  if (!validateRichText(richText)) {
-    console.warn(richTextError);
-    return null;
-  }
-  if (!validateComponent(Component)) {
-    console.warn(componentError);
+  if (Object.prototype.toString.call(richText) !== '[object Array]') {
+    console.warn(`Rich text argument should be an Array. Received ${typeof richtext}`);
     return null;
   }
   const serializedChildren = PrismicRichText.serialize(richText, serialize.bind(null, linkResolver), htmlSerializer);
-  return React.createElement(Component, propsWithUniqueKey(), serializedChildren);
+  return createElement(Component, propsWithUniqueKey(), serializedChildren);
 }

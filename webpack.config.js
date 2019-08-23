@@ -2,6 +2,8 @@ var webpack = require("webpack"),
   path = require("path"),
   yargs = require("yargs");
 
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 var libraryName = "PrismicReactjs",
   fileName = "prismic-reactjs",
   plugins = [],
@@ -13,6 +15,10 @@ if (yargs.argv.p) {
   outputFile = fileName + ".min.js";
 } else {
   outputFile = fileName + ".js";
+}
+
+if (yargs.argv.analyze) {
+  plugins.push(new BundleAnalyzerPlugin())
 }
 
 var config = {
