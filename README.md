@@ -25,6 +25,10 @@ Your `prismic-configuration.js` (or equivalent) should probably contain a line l
 apiEndpoint: your-repo-name.prismic.io/api/v2
 ```
 
+Consider polyfilling:
+- [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+- [Object spread](https://babeljs.io/docs/en/babel-plugin-proposal-object-rest-spread)
+
 #### NPM
 👇 Prismic React is on npm...
 ```sh

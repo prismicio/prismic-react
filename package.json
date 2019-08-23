@@ -5,6 +5,7 @@
   "main": "dist/prismic-reactjs.js",
   "scripts": {
     "build": "webpack --debug; webpack -p",
+    "analyze": "webpack -p --analyze",
     "dev": "webpack -d --watch",
     "prepublish": "npm run build",
     "test": "mocha --require @babel/register test"
@@ -20,8 +21,6 @@
   },
   "homepage": "https://github.com/prismicio/prismic-reactjs#readme",
   "dependencies": {
-    "es6-object-assign": "^1.1.0",
-    "es6-promise": "^4.2.8",
     "prismic-helpers": "^1.0.0",
     "prismic-richtext": "^1.0.3",
     "prop-types": "^15.7.2"
@@ -34,6 +33,7 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/register": "^7.4.0",
     "babel-loader": "^8.0.5",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "chai": "^4.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
@@ -42,6 +42,7 @@
     "react-dom": "^16.8.6",
     "react-test-renderer": "^16.8.6",
     "webpack": "^4.29.6",
+    "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.3.0",
     "yargs": "^13.2.2"
   }
