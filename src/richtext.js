@@ -1,7 +1,8 @@
 import React, { createElement, Fragment } from 'react';
 import PrismicRichText, { Elements } from 'prismic-richtext';
 import { Link as LinkHelper } from 'prismic-helpers';
-import { createScript, embeds } from './embeds';
+import { embeds } from './embeds';
+const createScript = typeof window !== `undefined` ? require("./embeds").createScript : () => {}
 
 function serialize(linkResolver, type, element, content, children, index) {
   switch(type) {
