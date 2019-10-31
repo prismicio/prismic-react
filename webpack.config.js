@@ -24,6 +24,8 @@ if (yargs.argv.analyze) {
 var config = {
   mode: mode,
   entry: [__dirname + "/src/index.js"],
+  node: { global: false },
+  devtool: yargs.argv.p ? 'source-map': false,
   output: {
     path: path.join(__dirname, "/dist"),
     filename: outputFile,
