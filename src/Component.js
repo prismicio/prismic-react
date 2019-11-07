@@ -17,7 +17,8 @@ const RichText = ({
   linkResolver,
   render,
   renderAsText,
-  serializeHyperlink
+  serializeHyperlink,
+  ...rest
 }) => {
   const maybeSerializer = htmlSerializer || (serializeHyperlink &&
     createHtmlSerializer({}, [{
@@ -27,7 +28,7 @@ const RichText = ({
   );
 
   return render ?
-    renderRichText(render, linkResolver, maybeSerializer, Component)
+    renderRichText(render, linkResolver, maybeSerializer, Component, rest)
     : null;
 }
 
