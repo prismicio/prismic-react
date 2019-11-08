@@ -52,4 +52,20 @@ describe('richtext', () => {
     expect(items.at(0).key()).to.equal('0');
     expect(items.at(1).key()).to.equal('1');
   });
+
+  it('renders an HTML element with attribute corresponding to any given args', () => {
+    const richText = [{
+      type: 'heading2',
+      text: 'Heading',
+      spans: [],
+    }];
+
+    const args = {
+      className: "definedClassName",
+      width: 250,
+    }
+    const wrapper = shallow(renderRichText(richText, null, null, 'div', args));
+    expect(wrapper.prop('width')).to.equal(250);
+    expect(wrapper.prop('className')).to.equal('definedClassName');
+  })
 });
