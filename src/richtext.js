@@ -115,7 +115,7 @@ export const asText = structuredText => PrismicRichText.asText(structuredText)
 
 export const renderRichText = (richText, linkResolver, htmlSerializer, Component = Fragment, elements = {}, args = {}) => {
   if (Object.prototype.toString.call(richText) !== '[object Array]') {
-    console.warn(`Rich text argument should be an Array. Received ${typeof richtext}`);
+    console.warn(`Rich text argument should be an Array. Received ${typeof richText}`);
     return null;
   }
   const serializedChildren = PrismicRichText.serialize(
