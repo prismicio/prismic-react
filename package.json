@@ -45,5 +45,6 @@
     "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.3.0",
     "yargs": "^13.2.2"
-  }
+  },
+  "typings": "typings/index.d.ts"
 }
