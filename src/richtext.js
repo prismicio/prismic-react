@@ -6,7 +6,7 @@ const createScript = typeof window !== `undefined` ? require("./embeds").createS
 
 function serialize(linkResolver, elements, type, element, content, children, index) {
   if (elements[type]) {
-    return serializeElement(type, elements[type], children, index)
+    return serializeElement(elements[type], type, element, content, children, index)
   }
   switch(type) {
     case Elements.heading1: return serializeStandardTag('h1', element, children, index);
@@ -36,10 +36,12 @@ function propsWithUniqueKey(props = {}, key) {
   return Object.assign(props, { key });
 }
 
-function serializeElement(type, Element, children, index) {
+function serializeElement(Element, type, props, content, children, index) {
   return createElement(Element, {
     key: `element-${type}-${index + 1}`,
-    children
+    ...props,
+    children: children && children.length ? children : undefined,
+    ...(type === 'image' ? { src: props.url, url: undefined } : null)
   });
 }
 
