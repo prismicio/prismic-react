@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, node, object } from "prop-types";
+import { func, elementType, object } from "prop-types";
 
 import { Elements } from 'prismic-richtext';
 import { renderRichText, asText } from './richtext';
@@ -34,7 +34,7 @@ const RichText = ({
 }
 
 RichText.propTypes = {
-  Component: node,
+  Component: elementType,
   linkResolver: func,
   htmlSerializer: func,
   elements: object,
