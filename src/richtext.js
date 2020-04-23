@@ -4,7 +4,10 @@ import { Link as LinkHelper } from 'prismic-helpers';
 import { embeds } from './embeds';
 const createScript = typeof window !== `undefined` ? require("./embeds").createScript : () => {}
 
-function serialize(linkResolver, type, element, content, children, index) {
+function serialize(linkResolver, elements, type, element, content, children, index) {
+  if (elements[type]) {
+    return serializeElement(elements[type], type, element, content, children, index)
+  }
   switch(type) {
     case Elements.heading1: return serializeStandardTag('h1', element, children, index);
     case Elements.heading2: return serializeStandardTag('h2', element, children, index);
@@ -33,8 +36,17 @@ function propsWithUniqueKey(props = {}, key) {
   return Object.assign(props, { key });
 }
 
+function serializeElement(Element, type, props, content, children, index) {
+  return createElement(Element, {
+    key: `element-${type}-${index + 1}`,
+    ...props,
+    children: children && children.length ? children : undefined,
+    ...(type === 'image' ? { src: props.url, url: undefined } : null)
+  });
+}
+
 function serializeStandardTag(tag, element, children, key) {
-  const props = element.label ? Object.assign({}, {className: element.label}) : {};
+  const props = element.label ? Object.assign({}, { className: element.label }) : {};
   return createElement(tag, propsWithUniqueKey(props, key), children);
 }
 
@@ -103,11 +115,15 @@ function serializeEmbed(element, key) {
 
 export const asText = structuredText => PrismicRichText.asText(structuredText)
 
-export const renderRichText = (richText, linkResolver, htmlSerializer, Component = Fragment, args = {}) => {
+export const renderRichText = (richText, linkResolver, htmlSerializer, Component = Fragment, elements = {}, args = {}) => {
   if (Object.prototype.toString.call(richText) !== '[object Array]') {
-    console.warn(`Rich text argument should be an Array. Received ${typeof richtext}`);
+    console.warn(`Rich text argument should be an Array. Received ${typeof richText}`);
     return null;
   }
-  const serializedChildren = PrismicRichText.serialize(richText, serialize.bind(null, linkResolver), htmlSerializer);
+  const serializedChildren = PrismicRichText.serialize(
+    richText,
+    serialize.bind(null, linkResolver, elements),
+    htmlSerializer
+  );
   return createElement(Component, args, serializedChildren);
 }
