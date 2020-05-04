@@ -115,7 +115,7 @@ function serializeEmbed(element, key) {
 
 export const asText = (structuredText) => {
   if (Object.prototype.toString.call(structuredText) !== '[object Array]') {
-    console.warn(`Rich text argument should be an Array. Received ${typeof richText}`);
+    console.warn(`Rich text argument should be an Array. Received ${typeof structuredText}`);
     return null;
   }
   return PrismicRichText.asText(structuredText)
