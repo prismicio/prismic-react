@@ -55,14 +55,14 @@ interface Link {
   url(link: any, linkResolver?: (doc: any) => string): string;
 }
 
-export const RichText: RichText;
+export const RichText: Richtext;
 export const Link: Link;
 export const HTMLSerializer: HTMLSerializer<string>;
 export const Date: Date = <string>(): Date => { };
 
 
 declare const _default: {
-  RichText: RichText,
+  RichText: Richtext,
   Elements: ElementType,
   Link: Link,
   Date: Date = <string>(): Date => { },
