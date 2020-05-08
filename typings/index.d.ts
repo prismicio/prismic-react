@@ -1,26 +1,24 @@
-interface Elements {
-  heading1: 'heading1';
-  heading2: 'heading2';
-  heading3: 'heading3';
-  heading4: 'heading4';
-  heading5: 'heading5';
-  heading6: 'heading6';
-  paragraph: 'paragraph';
-  preformatted: 'preformatted';
-  strong: 'strong';
-  em: 'em';
-  listItem: 'list-item';
-  oListItem: 'o-list-item';
-  list: 'group-list-item';
-  oList: 'group-o-list-item';
-  image: 'image';
-  embed: 'embed';
-  hyperlink: 'hyperlink';
-  label: 'label';
-  span: 'span';
-}
-
-type ElementType = Elements[keyof Elements];
+enum Elements {
+  heading1 = 'heading1',
+  heading2 = 'heading2',
+  heading3 = 'heading3',
+  heading4 = 'heading4',
+  heading5 = 'heading5',
+  heading6 = 'heading6',
+  paragraph = 'paragraph',
+  preformatted = 'preformatted',
+  strong = 'strong',
+  em = 'em',
+  listItem = 'list-item',
+  oListItem = 'o-list-item',
+  list = 'group-list-item',
+  oList = 'group-o-list-item',
+  image = 'image',
+  embed = 'embed',
+  hyperlink = 'hyperlink',
+  label = 'label',
+  span = 'span',
+};
 
 type HTMLSerializer<T> = (
   type: ElementType,
@@ -63,7 +61,7 @@ export const Date: Date = <string>(): Date => { };
 
 declare const _default: {
   RichText: RichText,
-  Elements: ElementType,
+  Elements: Elements,
   Link: Link,
   Date: Date = <string>(): Date => { },
 };
