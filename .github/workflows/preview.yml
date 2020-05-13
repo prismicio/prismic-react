@@ -16,6 +16,6 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm install
-      - run: npm publish --yes --canary --no-push --no-git-tag-version --dist-tag alpha
+      - run: npm publish --tag alpha
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
