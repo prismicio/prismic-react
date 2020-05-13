@@ -113,7 +113,13 @@ function serializeEmbed(element, key) {
   return createElement('div', propsWithUniqueKey(props, key), embedHtml);
 }
 
-export const asText = structuredText => PrismicRichText.asText(structuredText)
+export const asText = (structuredText) => {
+  if (Object.prototype.toString.call(structuredText) !== '[object Array]') {
+    console.warn(`Rich text argument should be an Array. Received ${typeof structuredText}`);
+    return null;
+  }
+  return PrismicRichText.asText(structuredText)
+}
 
 export const renderRichText = (richText, linkResolver, htmlSerializer, Component = Fragment, elements = {}, args = {}) => {
   if (Object.prototype.toString.call(richText) !== '[object Array]') {
