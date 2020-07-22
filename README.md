@@ -67,8 +67,11 @@ import {Date, Link, RichText} from 'prismic-reactjs';
 
 Like `Link`, `Date` is directly imported from [prismic-helpers](https://github.com/prismicio/prismic-helpers). It converts a Date string received from the API, to an ISO (8601) Javascript Date (ie. something you're used to work with):
 ```javascript
-Date(mydoc.data.mydate)
+import { Date as ParseDate } from 'prismic-reactjs'
+ParseDate(mydoc.data.mydate)
 ```
+⚠️ Make sure you rename the import to not override the built-in Date type.
+In a near future, we might rename it at package level.
 
 ## Link utility
 
