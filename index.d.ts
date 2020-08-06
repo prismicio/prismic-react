@@ -25,7 +25,7 @@ declare module "prismic-reactjs" {
 	export type RichTextSpan = {
 		start: number;
 		end: number;
-		type: "strong" | "hyperlink";
+		type: Elements.strong | Elements.hyperlink | Elements.em;
 		data?: {
 			link_type: string;
 			url: string;
@@ -35,12 +35,16 @@ declare module "prismic-reactjs" {
 
 	export type RichTextBlock = {
 		type: Elements;
-		text: string;
-		spans: RichTextSpan[];
+		text?: string;
+		spans?: RichTextSpan[];
+		alt?: string
+		copyright?: string
+		dimensions?: { width: number, height: number }
+		url?: string
 	};
 
 	export type HTMLSerializer<T> = (
-		type: React.ElementType,
+		type: Elements,
 		element: any,
 		content: string,
 		children: T[],
@@ -51,7 +55,7 @@ declare module "prismic-reactjs" {
 		Component?: React.ReactNode;
 		elements?: {};
 		htmlSerializer?: HTMLSerializer<React.ReactNode>;
-		linkResolver?: () => string;
+		linkResolver?: LinkResolver;
 		render?: RichTextBlock[];
 		renderAsText?: any;
 		serializeHyperlink?: () => React.ReactNode;
@@ -63,12 +67,14 @@ declare module "prismic-reactjs" {
 		displayName: "RichText";
 	};
 
+	export type LinkResolver = (doc: any) => string
+
 	interface LinkProps {
-		url(link: any, linkResolver?: (doc: any) => string): string;
+		url(link: any, linkResolver?: LinkResolver): string;
 	}
 
 	export const Link: React.FC<LinkProps> & {
-		url: (link: any, linkResolver?: (doc: any) => string) => string;
+		url: (link: any, linkResolver?: LinkResolver) => string;
 	};
 
 	interface PrismicDate {
