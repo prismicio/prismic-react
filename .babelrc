@@ -1,6 +1,9 @@
 {
   "presets": ["@babel/preset-env"],
   "env": {
+    "esm": {
+      "presets": [["@babel/preset-env", { "modules": false }]],
+    },
     "production": {
       "plugins": ["transform-react-remove-prop-types"]
     }

@@ -2,9 +2,10 @@
   "name": "prismic-reactjs",
   "version": "1.3.2",
   "description": "render prismic rich text as React Element",
-  "main": "dist/prismic-reactjs.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
-    "build": "webpack --debug; webpack -p",
+    "build": "webpack --debug; webpack -p; babel src -d dist/cjs; BABEL_ENV=esm babel src -d dist/esm",
     "analyze": "webpack -p --analyze",
     "dev": "webpack -d --watch",
     "prepublish": "npm run build",
@@ -29,9 +30,10 @@
     "react": ">=16.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/register": "^7.9.0",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/register": "^7.10.5",
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "chai": "^4.2.0",
