@@ -22,35 +22,42 @@ declare module "prismic-reactjs" {
 		span = "span",
 	}
 
+	type Link = {
+		link_type?: "Web" | "Document" | "Media" | "Any"
+		url?: string
+		target?: string
+		id?: string
+		uid?: string
+		isBroken?: boolean
+		lang?: string
+		slug?: string
+		tags?: string[]
+		type?: string
+		height?: string
+		kind?: string
+		name?: string
+		size?: string
+		width?: string
+	}
+
 	export type RichTextSpan = {
 		start: number;
 		end: number;
 		type: Elements.strong | Elements.hyperlink | Elements.em | Elements.label;
-		data?: {
-			link_type?: "Document" | "Web" | "Media" | "Any"
-			url?: string
-			id?: string
-			lang?: string
-			slug?: string
-			tags?: string[]
-			type?: string
-			uid?: string
-			isBroken?: boolean
-			target?: string
-			label?: string
-			data?: any
-		};
+		data?: Link & { label?: string }
 	};
 
 	export type RichTextBlock = {
 		type: Elements;
 		text?: string;
 		spans?: RichTextSpan[];
-		alt?: string
-		copyright?: string
+		alt?: string | null
+		copyright?: string | null
 		dimensions?: { width: number, height: number }
 		url?: string
-	};
+		linkTo?: Link
+		oembed?: any
+	}
 
 	export type HTMLSerializer<T> = (
 		type: Elements,
