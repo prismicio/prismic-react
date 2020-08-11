@@ -25,7 +25,7 @@ declare module "prismic-reactjs" {
 	export type RichTextSpan = {
 		start: number;
 		end: number;
-		type: Elements.strong | Elements.hyperlink | Elements.em;
+		type: Elements.strong | Elements.hyperlink | Elements.em | Elements.label;
 		data?: {
 			link_type: string;
 			url: string;
