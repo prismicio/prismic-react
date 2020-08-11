@@ -27,9 +27,18 @@ declare module "prismic-reactjs" {
 		end: number;
 		type: Elements.strong | Elements.hyperlink | Elements.em | Elements.label;
 		data?: {
-			link_type: string;
-			url: string;
-			target?: string;
+			link_type?: "Document" | "Web" | "Media" | "Any"
+			url?: string
+			id?: string
+			lang?: string
+			slug?: string
+			tags?: string[]
+			type?: string
+			uid?: string
+			isBroken?: boolean
+			target?: string
+			label?: string
+			data?: any
 		};
 	};
 
