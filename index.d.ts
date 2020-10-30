@@ -1,29 +1,29 @@
-export { Document as PrismicDocument } from 'prismic-javascript/types/documents'
-
 declare module "prismic-reactjs" {
-  enum Elements {
-    heading1 = "heading1",
-    heading2 = "heading2",
-    heading3 = "heading3",
-    heading4 = "heading4",
-    heading5 = "heading5",
-    heading6 = "heading6",
-    paragraph = "paragraph",
-    preformatted = "preformatted",
-    strong = "strong",
-    em = "em",
-    listItem = "list-item",
-    oListItem = "o-list-item",
-    list = "group-list-item",
-    oList = "group-o-list-item",
-    image = "image",
-    embed = "embed",
-    hyperlink = "hyperlink",
-    label = "label",
-    span = "span",
-  }
+	export { Document } from 'prismic-javascript/types/documents';
 
-  type Link = {
+	export enum Elements {
+		heading1 = "heading1",
+		heading2 = "heading2",
+		heading3 = "heading3",
+		heading4 = "heading4",
+		heading5 = "heading5",
+		heading6 = "heading6",
+		paragraph = "paragraph",
+		preformatted = "preformatted",
+		strong = "strong",
+		em = "em",
+		listItem = "list-item",
+		oListItem = "o-list-item",
+		list = "group-list-item",
+		oList = "group-o-list-item",
+		image = "image",
+		embed = "embed",
+		hyperlink = "hyperlink",
+		label = "label",
+		span = "span",
+	}
+
+	type Link = {
     link_type?: "Web" | "Document" | "Media" | "Any";
     url?: string;
     target?: string;
@@ -39,7 +39,8 @@ declare module "prismic-reactjs" {
     name?: string;
     size?: string;
     width?: string;
-  };
+	};
+	
 
 	export type RichTextElement = {
     type: Elements;
