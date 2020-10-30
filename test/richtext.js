@@ -64,7 +64,10 @@ describe('richtext', () => {
       className: "definedClassName",
       width: 250,
     }
-    const wrapper = shallow(renderRichText(richText, null, null, 'div', args));
+    const wrapper = shallow(renderRichText(richText, null, null, 'div', Elements, args));
+    /** also works
+     *  const wrapper = shallow(renderRichText(richText, null, null, 'div', {}, args));
+     * */ 
     expect(wrapper.prop('width')).to.equal(250);
     expect(wrapper.prop('className')).to.equal('definedClassName');
   })
