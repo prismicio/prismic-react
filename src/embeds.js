@@ -26,7 +26,7 @@ export const embeds = {
     src: 'https://platform.twitter.com/widgets.js',
     id: 'twitter-wjs',
     load: function() {
-      if (window && window.twttr) {
+      if (window && window.twttr && window.twttr.widgets) {
         window.twttr.widgets.load();
       }
     }
