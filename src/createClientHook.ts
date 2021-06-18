@@ -8,7 +8,7 @@ type PrismicClientError =
 	| prismic.ParsingError
 	| prismic.ForbiddenError;
 
-const enum StateMachineStateType {
+export const enum PrismicHookState {
 	IDLE,
 	PENDING,
 	SUCCEEDED,
@@ -16,7 +16,7 @@ const enum StateMachineStateType {
 }
 
 export type StateMachineState<TData> = {
-	state: StateMachineStateType;
+	state: PrismicHookState;
 	data?: TData;
 	error?: PrismicClientError;
 };
@@ -31,17 +31,17 @@ const reducer = <TData>(
 	action: StateMachineAction<TData>,
 ): StateMachineState<TData> => {
 	if (action[0] === "start") {
-		return { state: StateMachineStateType.PENDING };
+		return { state: PrismicHookState.PENDING };
 	} else if (action[0] === "succeed") {
-		return { state: StateMachineStateType.SUCCEEDED, data: action[1] };
+		return { state: PrismicHookState.SUCCEEDED, data: action[1] };
 	} else if (action[0] === "fail") {
-		return { ...state, state: StateMachineStateType.FAILED, error: action[1] };
+		return { ...state, state: PrismicHookState.FAILED, error: action[1] };
 	}
 
 	return state;
 };
 
-const initialState = { state: StateMachineStateType.IDLE } as const;
+const initialState = { state: PrismicHookState.IDLE } as const;
 
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 

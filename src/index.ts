@@ -9,6 +9,8 @@ export type { PrismicLinkProps, LinkProps } from "./PrismicLink";
 export { PrismicToolbar } from "./PrismicToolbar";
 export type { PrismicToolbarProps } from "./PrismicToolbar";
 
+export { PrismicHookState } from "./createClientHook";
+
 export {
 	useAllPrismicDocuments,
 	useAllPrismicDocumentsByIDs,
