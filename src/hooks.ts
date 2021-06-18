@@ -1,80 +1,10 @@
-import * as React from "react";
 import * as prismic from "@prismicio/client";
 
-import { usePrismicClient } from "./usePrismicClient";
 import {
-	StateMachineState,
-	usePrismicClientStateMachine,
-} from "./usePrismicClientStateMachine";
-
-type ClientPrototype = typeof prismic.Client.prototype;
-
-type ClientMethodParameters<MethodName extends keyof ClientPrototype> =
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	ClientPrototype[MethodName] extends (...args: any[]) => any
-		? Parameters<ClientPrototype[MethodName]>
-		: never;
-
-type HookOnlyParameters = {
-	client?: prismic.Client;
-};
-
-const getParamHookDependencies = (
-	params: ClientMethodParameters<"get">[0] = {},
-) => {
-	return [
-		params.ref,
-		params.lang,
-		params.page,
-		params.after,
-		params.fetch,
-		params.pageSize,
-		params.orderings,
-		params.fetchLinks,
-		params.graphQuery,
-		params.predicates,
-		params.accessToken,
-	];
-};
-
-const createClientHook = <
-	TMethod extends (...args: any[]) => Promise<any>,
-	TArgs extends Parameters<TMethod>,
->(
-	method: TMethod,
-) => {
-	return (
-		...args: TArgs
-	): [
-		data: StateMachineState<ReturnType<TMethod>>["data"],
-		state: Pick<StateMachineState<ReturnType<TMethod>>, "state" | "error">,
-	] => {
-		const params:
-			| (ClientMethodParameters<"get">[0] & HookOnlyParameters)
-			| undefined = args[args.length - 1];
-		const client = usePrismicClient(params?.client);
-		const [state, actions] =
-			usePrismicClientStateMachine<ReturnType<TMethod>>();
-
-		React.useEffect(
-			() => {
-				actions.start();
-				method
-					.apply(client, args)
-					.then((result) => actions.succeed(result))
-					.catch((error) => actions.fail(error));
-			},
-			// We must disable exhaustive-deps to optimize providing `params` deps.
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			[actions, client, ...args.slice(-1), ...getParamHookDependencies(params)],
-		);
-
-		return React.useMemo(
-			() => [state.data, { state: state.state, error: state.error }],
-			[state],
-		);
-	};
-};
+	ClientMethodParameters,
+	HookOnlyParameters,
+	createClientHook,
+} from "./createClientHook";
 
 const proto = prismic.Client.prototype;
 
