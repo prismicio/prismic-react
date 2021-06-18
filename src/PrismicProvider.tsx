@@ -8,6 +8,7 @@ export type PrismicContextValue = {
 	richTextComponents?: Record<string, string | React.ComponentType>;
 	internalLinkComponent?: string | React.ComponentType;
 	externalLinkComponent?: string | React.ComponentType;
+	children?: React.ReactNode;
 };
 
 export const PrismicContext = React.createContext<PrismicContextValue>({});
@@ -24,6 +25,7 @@ export const PrismicProvider = ({
 	richTextComponents,
 	internalLinkComponent,
 	externalLinkComponent,
+	children,
 }: PrismicProviderProps): JSX.Element => {
 	const value = React.useMemo<PrismicContextValue>(
 		() => ({
@@ -42,5 +44,7 @@ export const PrismicProvider = ({
 		],
 	);
 
-	return <PrismicContext.Provider value={value}></PrismicContext.Provider>;
+	return (
+		<PrismicContext.Provider value={value}>{children}</PrismicContext.Provider>
+	);
 };
