@@ -63,9 +63,12 @@ export const PrismicLink = <
 		"";
 
 	const target =
-		(props.field && "target" in props.field && props.target) || undefined;
+		props.target ||
+		(props.field && "target" in props.field && props.field.target) ||
+		undefined;
 
-	const rel = target === "_blank" ? "noopener noreferrer" : undefined;
+	const rel =
+		props.rel || target === "_blank" ? "noopener noreferrer" : undefined;
 
 	const InternalComponent =
 		props.internalComponent ||
