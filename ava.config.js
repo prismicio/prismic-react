@@ -1,6 +1,6 @@
 export default {
-	extensions: ["ts"],
-	files: ["./test/**/*.test.ts"],
+	extensions: ["ts", "tsx"],
+	files: ["./test/**/*.test.ts", "./test/**/*.test.tsx"],
 	require: ["ts-eager/register"],
 	verbose: true,
 };
