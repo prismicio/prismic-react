@@ -22,7 +22,8 @@
  * SOFTWARE.
  */
 
-const isProduction: boolean = process.env.NODE_ENV === "production";
+import { __PRODUCTION__ } from "../dev";
+
 const prefix = "Invariant failed";
 
 // Throw an error if the condition fails
@@ -38,7 +39,7 @@ export function invariant(
 	// Condition not passed
 
 	// In production we strip the message but still throw
-	if (isProduction) {
+	if (__PRODUCTION__) {
 		throw new Error(prefix);
 	}
 

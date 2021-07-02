@@ -6,6 +6,14 @@ export { usePrismicClient } from "./usePrismicClient";
 export { PrismicLink } from "./PrismicLink";
 export type { PrismicLinkProps, LinkProps } from "./PrismicLink";
 
+export { SliceZone, MissingSliceComponent } from "./SliceZone";
+export type {
+	SliceZoneProps,
+	SliceLike,
+	SliceZoneLike,
+	SliceComponentProps,
+} from "./SliceZone";
+
 export { PrismicToolbar } from "./PrismicToolbar";
 export type { PrismicToolbarProps } from "./PrismicToolbar";
 
