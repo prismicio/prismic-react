@@ -59,7 +59,10 @@ export type SliceZoneProps<TSlice extends SliceLike, TContext> = {
 
 	/** A record mapping Slice types to React components. */
 	components: Partial<
-		Record<TSlice["slice_type"], React.ComponentType<SliceComponentProps>>
+		Record<
+			TSlice["slice_type"],
+			React.ComponentType<SliceComponentProps<TSlice, TContext>>
+		>
 	>;
 
 	/** The React component rendered if a component mapping from the `components` prop cannot be found. */
@@ -107,9 +110,10 @@ export const SliceZone = <TSlice extends SliceLike, TContext>({
 }: SliceZoneProps<TSlice, TContext>): JSX.Element => {
 	const renderedSlices = React.useMemo(() => {
 		return slices.map((slice, index) => {
-			const Comp: React.ComponentType<SliceComponentProps> =
-				components[slice.slice_type as keyof typeof components] ||
-				defaultComponent;
+			const Comp = (components[slice.slice_type as keyof typeof components] ||
+				defaultComponent) as React.ComponentType<
+				SliceComponentProps<TSlice, TContext>
+			>;
 			const key = JSON.stringify(slice);
 
 			return (
