@@ -137,28 +137,14 @@ test("renders default component if component mapping is missing", (t) => {
 	consoleWarnStub.restore();
 });
 
-test.serial("default component renders null in production", (t) => {
-	process.env.NODE_ENV = "production";
-
-	const actual = renderJSON(
-		<SliceZone slices={[{ slice_type: "foo" }]} components={{}} />,
-	);
-
-	t.is(actual, null);
-
-	process.env.NODE_ENV = "development";
+test.skip("default component renders null in production", () => {
+	// ts-eager does not allow esbuild configuration.
+	// We cannot override the `process.env.NODE_ENV` inline replacement.
+	// As a result, we cannot test for production currently.
 });
 
-test.serial("default component does not warn in production", (t) => {
-	process.env.NODE_ENV = "production";
-
-	const consoleWarnStub = sinon.stub(console, "warn");
-
-	renderJSON(<SliceZone slices={[{ slice_type: "foo" }]} components={{}} />);
-
-	t.false(consoleWarnStub.called);
-
-	consoleWarnStub.restore();
-
-	process.env.NODE_ENV = "development";
+test.skip("default component does not warn in production", () => {
+	// ts-eager does not allow esbuild configuration.
+	// We cannot override the `process.env.NODE_ENV` inline replacement.
+	// As a result, we cannot test for production currently.
 });
