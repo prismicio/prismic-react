@@ -8,6 +8,11 @@ module.exports = {
 		parser: "@typescript-eslint/parser",
 		ecmaVersion: 2020,
 	},
+	settings: {
+		react: {
+			version: "detect",
+		},
+	},
 	extends: [
 		"plugin:@typescript-eslint/eslint-recommended",
 		"plugin:@typescript-eslint/recommended",
