@@ -1,82 +1,83 @@
 {
-  "name": "@prismicio/react",
-  "version": "2.0.0-alpha.0",
-  "private": true,
-  "description": "React components and hooks to fetch and present Prismic content",
-  "keywords": [
-    "typescript",
-    "prismic",
-    "react",
-    "cms",
-    "hook"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "ssh://git@github.com/prismicio/prismic-reactjs.git"
-  },
-  "license": "Apache-2.0",
-  "author": "Prismic <contact@prismic.io> (https://prismic.io)",
-  "type": "module",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "scripts": {
-    "build": "siroc build",
-    "dev": "siroc build --watch",
-    "format": "prettier --write .",
-    "prepare": "npm run build",
-    "release": "npm run build && npm run test && standard-version && git push --follow-tags && npm run build && npm publish",
-    "release:dry": "standard-version --dry-run",
-    "release:alpha": "npm run build && npm run test && standard-version --release-as major --prerelease alpha && git push --follow-tags && npm run build && npm publish --tag alpha",
-    "release:alpha:dry": "standard-version --release-as major --prerelease alpha --dry-run",
-    "lint": "eslint --ext .js,.ts .",
-    "unit": "nyc --reporter=lcovonly --reporter=text --exclude-after-remap=false ava",
-    "test": "npm run lint && npm run unit"
-  },
-  "dependencies": {
-    "@prismicio/client": "^6.0.0-alpha.2",
-    "@prismicio/helpers": "^2.0.0-alpha.0",
-    "react": "^17.0.2",
-    "react-test-renderer": "^17.0.2"
-  },
-  "devDependencies": {
-    "@prismicio/types": "^0.1.0",
-    "@types/react": "^17.0.13",
-    "@types/react-test-renderer": "^17.0.1",
-    "@types/sinon": "^10.0.2",
-    "@typescript-eslint/eslint-plugin": "^4.28.1",
-    "@typescript-eslint/parser": "^4.28.1",
-    "ava": "^3.15.0",
-    "eslint": "^7.29.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "global-jsdom": "^8.1.0",
-    "jsdom": "^16.6.0",
-    "nyc": "^15.1.0",
-    "prettier": "^2.3.2",
-    "sinon": "^11.1.1",
-    "siroc": "^0.11.1",
-    "standard-version": "^9.3.0",
-    "ts-eager": "^2.0.2",
-    "typescript": "^4.3.5"
-  },
-  "engines": {
-    "node": ">=12.7.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+	"name": "@prismicio/react",
+	"version": "2.0.0-alpha.0",
+	"private": true,
+	"description": "React components and hooks to fetch and present Prismic content",
+	"keywords": [
+		"typescript",
+		"prismic",
+		"react",
+		"cms",
+		"hook"
+	],
+	"repository": {
+		"type": "git",
+		"url": "ssh://git@github.com/prismicio/prismic-reactjs.git"
+	},
+	"license": "Apache-2.0",
+	"author": "Prismic <contact@prismic.io> (https://prismic.io)",
+	"type": "module",
+	"exports": {
+		".": {
+			"require": "./dist/index.cjs",
+			"import": "./dist/index.mjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"main": "dist/index.cjs",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist",
+		"src"
+	],
+	"scripts": {
+		"build": "siroc build",
+		"dev": "siroc build --watch",
+		"format": "prettier --write .",
+		"prepare": "npm run build",
+		"release": "npm run build && npm run test && standard-version && git push --follow-tags && npm run build && npm publish",
+		"release:dry": "standard-version --dry-run",
+		"release:alpha": "npm run build && npm run test && standard-version --release-as major --prerelease alpha && git push --follow-tags && npm run build && npm publish --tag alpha",
+		"release:alpha:dry": "standard-version --release-as major --prerelease alpha --dry-run",
+		"lint": "eslint --ext .js,.ts .",
+		"unit": "nyc --reporter=lcovonly --reporter=text --exclude-after-remap=false ava",
+		"test": "npm run lint && npm run unit"
+	},
+	"dependencies": {
+		"@prismicio/client": "^6.0.0-alpha.2",
+		"@prismicio/helpers": "^2.0.0-alpha.5",
+		"react": "^17.0.2",
+		"react-test-renderer": "^17.0.2"
+	},
+	"devDependencies": {
+		"@prismicio/types": "^0.1.0",
+		"@testing-library/react": "^12.0.0",
+		"@types/react": "^17.0.11",
+		"@types/react-test-renderer": "^17.0.1",
+		"@types/sinon": "^10.0.2",
+		"@typescript-eslint/eslint-plugin": "^4.26.1",
+		"@typescript-eslint/parser": "^4.26.1",
+		"ava": "^3.15.0",
+		"eslint": "^7.29.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-prettier": "^3.4.0",
+		"eslint-plugin-react": "^7.24.0",
+		"eslint-plugin-react-hooks": "^4.2.0",
+		"global-jsdom": "^8.1.0",
+		"jsdom": "^16.6.0",
+		"nyc": "^15.1.0",
+		"prettier": "^2.3.2",
+		"sinon": "^11.1.1",
+		"siroc": "^0.11.1",
+		"standard-version": "^9.3.0",
+		"ts-eager": "^2.0.2",
+		"typescript": "^4.3.5"
+	},
+	"engines": {
+		"node": ">=12.7.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }
