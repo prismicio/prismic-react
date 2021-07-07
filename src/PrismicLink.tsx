@@ -63,7 +63,7 @@ export const PrismicLink = <
 		undefined;
 
 	const rel =
-		props.rel || target === "_blank" ? "noopener noreferrer" : undefined;
+		props.rel || (target === "_blank" ? "noopener noreferrer" : undefined);
 
 	const InternalComponent =
 		props.internalComponent ||
