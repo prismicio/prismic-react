@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@prismicio/client": "^6.0.0-alpha.2",
-    "@prismicio/helpers": "^2.0.0-alpha.2",
+    "@prismicio/helpers": "^2.0.0-alpha.5",
     "react": "^17.0.2"
   },
   "devDependencies": {

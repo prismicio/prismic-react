@@ -2,7 +2,6 @@ import * as React from "react";
 import * as prismicH from "@prismicio/helpers";
 import * as prismicT from "@prismicio/types";
 
-import { invariant } from "./lib/invariant";
 import { isInternalURL } from "./lib/isInternalURL";
 
 import { usePrismicContext } from "./PrismicProvider";
@@ -52,10 +51,6 @@ export const PrismicLink = <
 	const context = usePrismicContext();
 
 	const linkResolver = props.linkResolver || context.linkResolver;
-	invariant(
-		linkResolver,
-		'A Link Resolver is required. Provide one as a "linkResolver" prop or to a <PrismicProvider> higher in your component tree.',
-	);
 
 	const href =
 		props.href ||
