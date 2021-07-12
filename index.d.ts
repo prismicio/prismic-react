@@ -67,8 +67,7 @@ declare module "prismic-reactjs" {
 		key: string
 	) => T | null;
 
-	export interface RichTextProps {
-		Component?: React.ReactNode;
+	export interface RichTextPropsCommon {
 		elements?: {};
 		htmlSerializer?: HTMLSerializer<React.ReactNode>;
 		linkResolver?: LinkResolver;
@@ -76,6 +75,20 @@ declare module "prismic-reactjs" {
 		renderAsText?: any;
 		serializeHyperlink?: HTMLSerializer<React.ReactNode>;
 	}
+
+	export type RichTextPropsWithComponent =
+		|
+			{
+				Component?: false;
+				className?: never;
+			}
+		|
+			{
+				Component: React.ReactNode;
+				className?: string;
+			}
+
+	export type RichTextProps = RichTextPropsCommon & RichTextPropsWithComponent
 
 	export const RichText: React.FC<RichTextProps> & {
 		asText: (input: RichTextBlock[]) => string;
