@@ -47,6 +47,7 @@
 	"dependencies": {
 		"@prismicio/client": "^6.0.0-alpha.2",
 		"@prismicio/helpers": "^2.0.0-alpha.5",
+		"@prismicio/richtext": "^2.0.0-alpha.6",
 		"react": "^17.0.2",
 		"react-test-renderer": "^17.0.2"
 	},

@@ -12,14 +12,10 @@ export interface LinkProps {
 	rel?: string;
 }
 
-export type PrismicLinkProps<
-	LinkResolverFunction extends prismicH.LinkResolverFunction,
-	InternalComponent extends string | React.ComponentType<LinkProps>,
-	ExternalComponent extends string | React.ComponentType<LinkProps>,
-> = {
-	linkResolver?: LinkResolverFunction;
-	internalComponent?: InternalComponent;
-	externalComponent?: ExternalComponent;
+export type PrismicLinkProps = {
+	linkResolver?: prismicH.LinkResolverFunction;
+	internalComponent?: string | React.ComponentType<LinkProps>;
+	externalComponent?: string | React.ComponentType<LinkProps>;
 	target?: string;
 	rel?: string;
 	children?: React.ReactNode;
@@ -37,17 +33,7 @@ export type PrismicLinkProps<
 const defaultInternalComponent = "a";
 const defaultExternalComponent = "a";
 
-export const PrismicLink = <
-	LinkResolverFunction extends prismicH.LinkResolverFunction,
-	InternalComponent extends string | React.ComponentType<LinkProps>,
-	ExternalComponent extends string | React.ComponentType<LinkProps>,
->(
-	props: PrismicLinkProps<
-		LinkResolverFunction,
-		InternalComponent,
-		ExternalComponent
-	>,
-): JSX.Element => {
+export const PrismicLink = (props: PrismicLinkProps): JSX.Element => {
 	const context = usePrismicContext();
 
 	const linkResolver = props.linkResolver || context.linkResolver;
