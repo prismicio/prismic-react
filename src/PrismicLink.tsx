@@ -19,16 +19,7 @@ export type PrismicLinkProps = {
 	target?: string;
 	rel?: string;
 	children?: React.ReactNode;
-} & (
-	| {
-			field: prismicT.LinkField;
-			href?: never;
-	  }
-	| {
-			field?: never;
-			href: string;
-	  }
-);
+} & ({ field: prismicT.LinkField } | { href: string });
 
 const defaultInternalComponent = "a";
 const defaultExternalComponent = "a";
@@ -39,13 +30,13 @@ export const PrismicLink = (props: PrismicLinkProps): JSX.Element => {
 	const linkResolver = props.linkResolver || context.linkResolver;
 
 	const href =
-		props.href ||
-		(props.field && prismicH.asLink(props.field, linkResolver)) ||
-		"";
+		("href" in props
+			? props.href
+			: prismicH.asLink(props.field, linkResolver)) || "";
 
 	const target =
 		props.target ||
-		(props.field && "target" in props.field && props.field.target) ||
+		("field" in props && "target" in props.field && props.field.target) ||
 		undefined;
 
 	const rel =

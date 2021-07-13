@@ -2,7 +2,6 @@ import test from "ava";
 import * as prismicT from "@prismicio/types";
 import * as prismicH from "@prismicio/helpers";
 import * as React from "react";
-import * as sinon from "sinon";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
@@ -15,9 +14,7 @@ type LinkProps = {
 };
 
 const Link = ({ href, rel, target }: LinkProps) => (
-	<span data-href={href} data-rel={rel} data-target={target}>
-		Link
-	</span>
+	<a data-href={href} data-rel={rel} data-target={target} />
 );
 
 test("renders a link from a document link field", (t) => {
@@ -79,7 +76,7 @@ test("renders link from an href", (t) => {
 	t.deepEqual(actual, expected);
 });
 
-test.skip("uses link resolver provided via context", (t) => {
+test("uses link resolver provided via context", (t) => {
 	const field: prismicT.FilledLinkToDocumentField = {
 		id: "id",
 		uid: "uid",
@@ -92,13 +89,11 @@ test.skip("uses link resolver provided via context", (t) => {
 
 	const actual = renderJSON(
 		<PrismicProvider linkResolver={linkResolver}>
-			<PrismicLink field={field} />,
+			<PrismicLink field={field} />
 		</PrismicProvider>,
 	);
 	const expected = renderJSON(
-		<PrismicProvider linkResolver={linkResolver}>
-			<a href={`/${field.uid}`} rel={undefined} target={undefined} />
-		</PrismicProvider>,
+		<a href={`/${field.uid}`} rel={undefined} target={undefined} />,
 	);
 
 	t.deepEqual(actual, expected);
@@ -133,7 +128,6 @@ test("if given a link field value with _blank target, use target and include rel
 	};
 
 	const actual = renderJSON(<PrismicLink field={field} />);
-
 	const expected = renderJSON(
 		<a href={field.url} rel="noopener noreferrer" target="_blank" />,
 	);
@@ -149,7 +143,6 @@ test("allow overriding default rel", (t) => {
 	};
 
 	const actual = renderJSON(<PrismicLink field={field} rel="rel" />);
-
 	const expected = renderJSON(
 		// eslint-disable-next-line react/jsx-no-target-blank
 		<a href={field.url} rel="rel" target="_blank" />,
@@ -166,7 +159,6 @@ test("allow overriding default target", (t) => {
 	};
 
 	const actual = renderJSON(<PrismicLink field={field} target="target" />);
-
 	const expected = renderJSON(
 		<a href={field.url} target="target" rel={undefined} />,
 	);
@@ -181,7 +173,6 @@ test("if manually given _blank to target, use rel'noopener norefferer", (t) => {
 	};
 
 	const actual = renderJSON(<PrismicLink field={field} target="_blank" />);
-
 	const expected = renderJSON(
 		<a href={field.url} target="_blank" rel={"noopener noreferrer"} />,
 	);
@@ -189,9 +180,8 @@ test("if manually given _blank to target, use rel'noopener norefferer", (t) => {
 	t.deepEqual(actual, expected);
 });
 
-test("if URL is internal, render default InternalComponent", (t) => {
+test("if URL is internal and no internalComponent is given, render an <a>", (t) => {
 	const actual = renderJSON(<PrismicLink href="/internal" />);
-
 	const expected = renderJSON(
 		<a href="/internal" rel={undefined} target={undefined} />,
 	);
@@ -199,11 +189,10 @@ test("if URL is internal, render default InternalComponent", (t) => {
 	t.deepEqual(actual, expected);
 });
 
-test("if URL is internal, render InternalComponent", (t) => {
+test("if URL is internal and internalComponent is given, render internalComponent", (t) => {
 	const actual = renderJSON(
 		<PrismicLink href="/internal" internalComponent={Link} />,
 	);
-
 	const expected = renderJSON(
 		<Link href="/internal" rel={undefined} target={undefined} />,
 	);
@@ -211,18 +200,74 @@ test("if URL is internal, render InternalComponent", (t) => {
 	t.deepEqual(actual, expected);
 });
 
-test("if URL is external, render ExternalComponent", (t) => {
+test("if URL is internal and internalComponent is given to the provider, render internalComponent from the provider", (t) => {
 	const actual = renderJSON(
-		<PrismicLink href="internal" externalComponent={Link} />,
+		<PrismicProvider internalLinkComponent={Link}>
+			<PrismicLink href="/internal" />
+		</PrismicProvider>,
 	);
-
 	const expected = renderJSON(
-		<Link href="internal" rel={undefined} target={undefined} />,
+		<Link href="/internal" rel={undefined} target={undefined} />,
 	);
 
 	t.deepEqual(actual, expected);
 });
 
-test.todo("if URL is internal, render internal component from the provider");
+test("if URL is internal and internalComponent is given to the provider and the component, render internalComponent from the component", (t) => {
+	const actual = renderJSON(
+		<PrismicProvider internalLinkComponent="div">
+			<PrismicLink href="/internal" internalComponent={Link} />
+		</PrismicProvider>,
+	);
+	const expected = renderJSON(
+		<Link href="/internal" rel={undefined} target={undefined} />,
+	);
 
-test.todo("if URL is external, render external component from the provider");
+	t.deepEqual(actual, expected);
+});
+
+test("if URL is external and no externalComponent is given, render an <a>", (t) => {
+	const actual = renderJSON(<PrismicLink href="https://example.com" />);
+	const expected = renderJSON(
+		<a href="https://example.com" rel={undefined} target={undefined} />,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("if URL is external and externalComponent is given, render externalComponent", (t) => {
+	const actual = renderJSON(
+		<PrismicLink href="https://example.com" externalComponent={Link} />,
+	);
+	const expected = renderJSON(
+		<Link href="https://example.com" rel={undefined} target={undefined} />,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("if URL is external and externalComponent is given to the provider, render externalComponent from the provider", (t) => {
+	const actual = renderJSON(
+		<PrismicProvider externalLinkComponent={Link}>
+			<PrismicLink href="https://example.com" />
+		</PrismicProvider>,
+	);
+	const expected = renderJSON(
+		<Link href="https://example.com" rel={undefined} target={undefined} />,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("if URL is external and externalComponent is given to the provider and the component, render externalComponent from the component", (t) => {
+	const actual = renderJSON(
+		<PrismicProvider externalLinkComponent="div">
+			<PrismicLink href="https://example.com" externalComponent={Link} />
+		</PrismicProvider>,
+	);
+	const expected = renderJSON(
+		<Link href="https://example.com" rel={undefined} target={undefined} />,
+	);
+
+	t.deepEqual(actual, expected);
+});
