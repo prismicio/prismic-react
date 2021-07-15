@@ -125,7 +125,7 @@ function defaultComponentSerializer(
 		case Element.span:
 		default:
 			// TODO: Handle \n with <br />
-			return <span>{children}</span>;
+			return <>{content}</>;
 	}
 }
 
@@ -135,17 +135,26 @@ export const PrismicRichText = (props: PrismicRichTextProps): JSX.Element => {
 	const linkResolver = props.linkResolver || context.linkResolver;
 
 	// TODO: Memoize w/ useMemo
-	const serializer = composeSerializers(
-		typeof props.components === "object"
-			? wrapMapSerializer(props.components)
-			: props.components,
-		defaultComponentSerializer.bind(
-			null,
-			linkResolver,
-			props.internalLinkComponent,
-			props.externalLinkComponent,
-		),
-	);
+	const components = props.components || context.richTextComponents;
+
+	const serializer = components
+		? composeSerializers(
+				typeof components === "object"
+					? wrapMapSerializer(components)
+					: components,
+				defaultComponentSerializer.bind(
+					null,
+					linkResolver,
+					props.internalLinkComponent,
+					props.externalLinkComponent,
+				),
+		  )
+		: defaultComponentSerializer.bind(
+				null,
+				linkResolver,
+				props.internalLinkComponent,
+				props.externalLinkComponent,
+		  );
 
 	// TODO: Memoize w/ useMemo
 	const val = serialize(props.field, serializer);
