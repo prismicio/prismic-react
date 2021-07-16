@@ -1,5 +1,7 @@
 // We need to polyfill process if it doesn't exist, such as in the browser.
-process ||= process || { env: {} };
+if (typeof process === "undefined") {
+	globalThis.process = { env: {} } as typeof process;
+}
 
 /**
  * `true` if in the production environment, `false` otherwise.
