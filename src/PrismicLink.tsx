@@ -10,6 +10,7 @@ export interface LinkProps {
 	href: string;
 	target?: string;
 	rel?: string;
+	children?: React.ReactNode;
 }
 
 export type PrismicLinkProps = {
@@ -56,5 +57,9 @@ export const PrismicLink = (props: PrismicLinkProps): JSX.Element => {
 
 	const Component = isInternal ? InternalComponent : ExternalComponent;
 
-	return <Component href={href} target={target} rel={rel} />;
+	return (
+		<Component href={href} target={target} rel={rel}>
+			{props.children}
+		</Component>
+	);
 };

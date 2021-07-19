@@ -1,12 +1,23 @@
 import test from "ava";
 import * as prismicT from "@prismicio/types";
-import * as prismicH from "@prismicio/helpers";
 import * as React from "react";
 
-import { PrismicRichText, PrismicProvider, PrismicRichTextProps } from "../src";
+import { PrismicRichText, PrismicLink } from "../src";
 
-import fixsture from "./__fixtures__/enRichText.json";
 import { renderJSON } from "./__testutils__/renderJSON";
+
+type LinkProps = {
+	href: string;
+	rel?: string;
+	target?: string;
+	children?: React.ReactNode;
+};
+
+const Link = ({ href, rel, target, children }: LinkProps) => (
+	<a data-href={href} data-rel={rel} data-target={target}>
+		{children}
+	</a>
+);
 
 test("returns h1 JSX if type is heading1", (t) => {
 	const field: prismicT.RichTextField = [
@@ -153,28 +164,48 @@ test("returns <pre /> JSX if type is preformatted", (t) => {
 test("returns <strong /> JSX if type is strong", (t) => {
 	const field: prismicT.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.strong,
-			text: "Strong",
-			spans: [],
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "strong",
+			spans: [
+				{
+					start: 0,
+					end: "strong".length,
+					type: prismicT.RichTextNodeType.strong,
+				},
+			],
 		},
 	];
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<strong>Strong</strong>);
+	const expected = renderJSON(
+		<p>
+			<strong>strong</strong>
+		</p>,
+	);
 	t.deepEqual(actual, expected);
 });
 
 test("returns <em /> JSX if type is em", (t) => {
 	const field: prismicT.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.em,
-			text: "Embed",
-			spans: [],
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "em",
+			spans: [
+				{
+					start: 0,
+					end: 2,
+					type: prismicT.RichTextNodeType.em,
+				},
+			],
 		},
 	];
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<em>Embed</em>);
+	const expected = renderJSON(
+		<p>
+			<em>em</em>
+		</p>,
+	);
 	t.deepEqual(actual, expected);
 });
 
@@ -214,21 +245,150 @@ test("returns <ol> <li> </li> </ol> JSX if type is listItem", (t) => {
 	t.deepEqual(actual, expected);
 });
 
-// test("returns <image /> if type is image", (t) => {
-// 	const field: PrismicRichTextProps = [
-// 		{
-// 			type: prismicT.RichTextNodeType.image,
-// 			url: "url",
-// 			alt: "alt",
-// 			copyright: "copyright",
-// 			dimensions: "hi",
-// 		},
-// 	];
+test("returns <image /> if type is image", (t) => {
+	const url = "url";
+	const alt = "alt";
+	const copyright = "copyright";
 
-// 	const actual = renderJSON(<PrismicRichText field={field} />);
-// 	const expected = renderJSON(
-// 		<img src={field.url} alt={field.alt} data-copyright={field.copyright} />,
-// 	);
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.image,
+			url,
+			alt,
+			copyright,
+			dimensions: {
+				width: 100,
+				height: 100,
+			},
+		},
+	];
 
-// 	t.deepEqual(actual, expected);
-// });
+	const actual = renderJSON(<PrismicRichText field={field} />);
+	const expected = renderJSON(
+		<p className="block-img">
+			<img src={url} alt={alt} data-copyright={copyright} />
+		</p>,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("returns <image /> wrapped in <PrismicLink />", (t) => {
+	const url = "url";
+	const alt = "alt";
+	const copyright = "copyright";
+
+	const linkField: prismicT.FilledLinkToDocumentField = {
+		id: "id",
+		uid: "uid",
+		lang: "lang",
+		tags: [],
+		type: "page",
+		link_type: prismicT.LinkType.Document,
+		url: "url",
+	};
+
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.image,
+			url,
+			alt,
+			copyright,
+			dimensions: {
+				width: 100,
+				height: 100,
+			},
+			linkTo: linkField,
+		},
+	];
+
+	const actual = renderJSON(<PrismicRichText field={field} />);
+	const expected = renderJSON(
+		<p className="block-img">
+			<PrismicLink field={linkField}>
+				<img src={url} alt={alt} data-copyright={copyright} />
+			</PrismicLink>
+		</p>,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("Returns <PrismicLink /> when type is hyperlink", (t) => {
+	const data: prismicT.FilledLinkToDocumentField = {
+		id: "id",
+		uid: "uid",
+		lang: "lang",
+		tags: [],
+		type: "page",
+		link_type: prismicT.LinkType.Document,
+		url: "url",
+	};
+
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "hyperlink",
+			spans: [
+				{
+					start: 0,
+					end: "hyperlink".length,
+					type: prismicT.RichTextNodeType.hyperlink,
+					data,
+				},
+			],
+		},
+	];
+
+	const actual = renderJSON(<PrismicRichText field={field} />);
+	const expected = renderJSON(
+		<p>
+			<a href={data.url} rel={undefined} target={undefined}>
+				hyperlink
+			</a>
+		</p>,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+// TODO update isInternalURL to support an internal URL like "url"
+test("Returns <PrismicLink /> with internalComponent from props", (t) => {
+	const data: prismicT.FilledLinkToDocumentField = {
+		id: "id",
+		uid: "uid",
+		lang: "lang",
+		tags: [],
+		type: "page",
+		link_type: prismicT.LinkType.Document,
+		url: "/url",
+	};
+
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "hyperlink",
+			spans: [
+				{
+					start: 0,
+					end: "hyperlink".length,
+					type: prismicT.RichTextNodeType.hyperlink,
+					data,
+				},
+			],
+		},
+	];
+
+	const actual = renderJSON(
+		<PrismicRichText internalLinkComponent={Link} field={field} />,
+	);
+	const expected = renderJSON(
+		<p>
+			<a data-href={"/url"} data-rel={undefined} data-target={undefined}>
+				hyperlink
+			</a>
+		</p>,
+	);
+
+	t.deepEqual(actual, expected);
+});

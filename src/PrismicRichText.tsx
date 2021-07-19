@@ -19,7 +19,7 @@ import { PrismicLink, PrismicLinkProps } from "./PrismicLink";
 // const { Elements } = PrismicRichText;
 
 export type PrismicRichTextProps = {
-	field: prismicT.RichTextField;
+	field: prismicT.RichTextField | prismicT.RTInlineNode;
 	linkResolver?: PrismicLinkProps["linkResolver"];
 	/** @deprecated Use the `components` prop instead. */
 	htmlSerializer?: RichTextFunctionSerializer<React.ComponentType>;
@@ -98,7 +98,7 @@ function defaultComponentSerializer(
 					)}
 				</p>
 			);
-		// return serializeImage(linkResolver, node);
+
 		case Element.embed:
 			return (
 				<div
