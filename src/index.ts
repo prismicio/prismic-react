@@ -9,12 +9,14 @@ export type { PrismicLinkProps, LinkProps } from "./PrismicLink";
 export { PrismicRichText } from "./PrismicRichText";
 export type { PrismicRichTextProps } from "./PrismicRichText";
 
-export { SliceZone, MissingSliceComponent } from "./SliceZone";
+export { SliceZone, TODOSliceComponent } from "./SliceZone";
 export type {
-	SliceZoneProps,
-	SliceLike,
-	SliceZoneLike,
 	SliceComponentProps,
+	SliceComponentType,
+	SliceLike,
+	SliceZoneComponents,
+	SliceZoneLike,
+	SliceZoneProps,
 } from "./SliceZone";
 
 export { PrismicToolbar } from "./PrismicToolbar";

@@ -6,7 +6,7 @@ import * as sinon from "sinon";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
-import { SliceZone, MissingSliceComponent, SliceComponentProps } from "../src";
+import { SliceZone, TODOSliceComponent, SliceComponentProps } from "../src";
 
 type StringifySliceComponentProps = {
 	/** A unique identifier for the component to differentiate this component from other instances. */
@@ -53,12 +53,14 @@ test("renders components for each Slice with correct component mapping", (t) => 
 				slice={slices[0]}
 				index={0}
 				slices={slices}
+				context={{}}
 			/>
 			<StringifySliceComponent
 				id="bar"
 				slice={slices[1]}
 				index={1}
 				slices={slices}
+				context={{}}
 			/>
 		</>,
 	);
@@ -102,7 +104,7 @@ test("passes context to each component if provided", (t) => {
 	t.deepEqual(actual, expected);
 });
 
-test("renders default component if component mapping is missing", (t) => {
+test("renders TODO component if component mapping is missing", (t) => {
 	const consoleWarnStub = sinon.stub(console, "warn");
 
 	const slices = [{ slice_type: "foo" }, { slice_type: "bar" }] as const;
@@ -110,9 +112,9 @@ test("renders default component if component mapping is missing", (t) => {
 	const actual = renderJSON(
 		<SliceZone
 			slices={slices}
+			// @ts-expect-error - We are leaving `bar` out of the test on purpose.
 			components={{
 				foo: (props) => <StringifySliceComponent id="foo" {...props} />,
-				// We are leaving `bar` out of the test on purpose.
 				// bar: (props) => <StringifySliceComponent id="bar" {...props} />,
 			}}
 		/>,
@@ -124,8 +126,14 @@ test("renders default component if component mapping is missing", (t) => {
 				slice={slices[0]}
 				index={0}
 				slices={slices}
+				context={{}}
 			/>
-			<MissingSliceComponent slice={slices[1]} index={0} slices={slices} />
+			<TODOSliceComponent
+				slice={slices[1]}
+				index={0}
+				slices={slices}
+				context={{}}
+			/>
 		</>,
 	);
 
@@ -137,13 +145,13 @@ test("renders default component if component mapping is missing", (t) => {
 	consoleWarnStub.restore();
 });
 
-test.skip("default component renders null in production", () => {
+test.skip("TODO component renders null in production", () => {
 	// ts-eager does not allow esbuild configuration.
 	// We cannot override the `process.env.NODE_ENV` inline replacement.
 	// As a result, we cannot test for production currently.
 });
 
-test.skip("default component does not warn in production", () => {
+test.skip("TODO component does not warn in production", () => {
 	// ts-eager does not allow esbuild configuration.
 	// We cannot override the `process.env.NODE_ENV` inline replacement.
 	// As a result, we cannot test for production currently.
