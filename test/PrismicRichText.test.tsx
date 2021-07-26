@@ -381,7 +381,7 @@ test("Returns <PrismicLink /> with internalComponent from props", (t) => {
 	);
 	const expected = renderJSON(
 		<p>
-			<a data-href={"/url"} data-rel={undefined} data-target={undefined}>
+			<a data-href="/url" data-rel={undefined} data-target={undefined}>
 				hyperlink
 			</a>
 		</p>,
