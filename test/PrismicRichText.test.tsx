@@ -30,6 +30,7 @@ test("returns <h1> if type is heading1", (t) => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h1>Heading 1</h1>);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -44,6 +45,7 @@ test("returns <h2> if type is heading2", (t) => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h2>Heading 2</h2>);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -58,6 +60,7 @@ test("returns <h3> if type is heading3", (t) => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h3>Heading 3</h3>);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -72,6 +75,7 @@ test("returns <h4> if type is heading4", (t) => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h4>Heading 4</h4>);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -86,6 +90,7 @@ test("returns <h4> if type is heading3", (t) => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h4>Heading 4</h4>);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -100,6 +105,7 @@ test("returns <h5> if type is heading4", (t) => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h5>Heading 5</h5>);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -114,6 +120,7 @@ test("returns <h6> if type is heading6", (t) => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h6>Heading 6</h6>);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -128,6 +135,7 @@ test("returns <p /> if type is paragraph", (t) => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<p>Paragraph bold</p>);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -142,6 +150,7 @@ test("returns <pre /> if type is preformatted", (t) => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<pre>Preformatted</pre>);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -166,6 +175,7 @@ test("returns <strong /> if type is strong", (t) => {
 			<strong>strong</strong>
 		</p>,
 	);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -190,6 +200,7 @@ test("returns <em /> if type is em", (t) => {
 			<em>em</em>
 		</p>,
 	);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -208,6 +219,7 @@ test("returns <ul> <li> </li> </ul> if type is listItem", (t) => {
 			<li>listItem</li>
 		</ul>,
 	);
+
 	t.deepEqual(actual, expected);
 });
 
@@ -226,6 +238,7 @@ test("returns <ol> <li> </li> </ol> if type is listItem", (t) => {
 			<li>oListItem</li>
 		</ol>,
 	);
+
 	t.deepEqual(actual, expected);
 });
 
