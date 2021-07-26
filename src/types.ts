@@ -1,9 +1,11 @@
-import type { FilledLinkToDocumentField } from "@prismicio/types";
 import {
 	RichTextFunctionSerializer,
 	RichTextMapSerializer,
 } from "@prismicio/richtext";
 import React from "react";
+
+export type JSXFunctionSerializer = RichTextFunctionSerializer<JSX.Element>;
+export type JSXMapSerializer = RichTextMapSerializer<JSX.Element>;
 
 /**
  * Serializes a node from a rich text or title field with a function to HTML
