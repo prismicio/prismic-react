@@ -14,19 +14,69 @@ import { usePrismicContext } from "./PrismicProvider";
 import { ComponentFunctionSerializer } from "./types";
 import { PrismicLink, PrismicLinkProps } from "./PrismicLink";
 
+/**
+ * Props for `<PrismicRichText>`.
+ */
 export type PrismicRichTextProps = {
+	/** The Prismic Rich Text field to render. */
 	field: prismicT.RichTextField;
-	linkResolver?: PrismicLinkProps["linkResolver"];
-	/** @deprecated Use the `components` prop instead. */
-	htmlSerializer?: RichTextFunctionSerializer<JSX.Element>;
 	/**
-	 * TODO: Describe that we recommend the object syntax over function, but we
-	 * still support both.
+	 * The Link Resolver used to resolve links.
+	 *
+	 * @remarks If your app uses Route Resolvers when querying for your Prismic repository's content, a Link Resolver does not need to be provided.
+	 *
+	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
+	 */
+	linkResolver?: PrismicLinkProps["linkResolver"];
+	/**
+	 * A function that maps a Rich Text block to a React component.
+	 *
+	 * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
+	 *
+	 * @deprecated Use the `components` prop instead. Prefer using a map serializer when possible.
+	 * */
+	htmlSerializer?: RichTextFunctionSerializer<React.ComponentType>;
+	/**
+	 * A map or function that maps a Rich Text block to a React component.
+	 *
+	 * @remarks Prefer using a map serializer over the function serializer when possible. The map serializer is simpler to maintain.
+	 *
+	 * @example
+	 * A map serializer.
+	 *
+	 * ```ts
+	 * {
+	 *   heading1: ({children}) => <Heading>{children}</Heading>
+	 * }
+	 * ```
+	 *
+	 * @example
+	 * A function serializer.
+	 *
+	 * ```ts
+	 * (type, node, content, children) => {
+	 *	 switch (type) {
+	 *	   case 'heading1': {
+	 *	     return <Heading>{chidlren}</Heading>
+	 *	   }
+	 *	 }
+	 * }
+	 * ```
 	 */
 	components?:
 		| RichTextMapSerializer<JSX.Element>
 		| RichTextFunctionSerializer<JSX.Element>;
+	/**
+	 * The React component rendered for links when the URL is internal.
+	 *
+	 * @default `<a>`
+	 */
 	internalLinkComponent?: PrismicLinkProps["internalComponent"];
+	/**
+	 * The React component rendered for links when the URL is external.
+	 *
+	 * @default `<a>`
+	 */
 	externalLinkComponent?: PrismicLinkProps["externalComponent"];
 };
 
@@ -147,7 +197,35 @@ function defaultComponentSerializer(
 }
 
 /**
- * Serializes rich text to html and resolves links coming from rich text
+ * React component that renders content from a Prismic Rich Text field. By default, HTML elements are rendered for each piece of content. A `heading1` block will render an `<h1>` HTML element, for example. Links will use `<PrismicLink>` by default which can be customized using the `internalLinkComponent` and `externalLinkComponent` props.
+ *
+ * To customize the components that are rendered, provide a map or function serializer to the `components` prop.
+ *
+ * Components can also be provided in a centralized location using the `<PrismicProvider>` React context provider.
+ *
+ * @remarks This component returns a React fragment with no wrapping element around the content. If you need a wrapper, add a component around `<PrismicRichText>`.
+ *
+ * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
+ * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
+ *
+ * @example
+ * Rendering a Rich Text field using the default HTMl elements.
+ *
+ * <PrismicRichText field={document.data.content} />
+ *
+ * @example
+ * Rendering a Rich Text field using a custom set of React components.
+ *
+ * <PrismicRichText
+ *   field={document.data.content}
+ *   components={{
+ *		 heading1: ({ children }) => <Heading>{children}</Heading>
+ *   }}
+ * />
+ *
+ * @param props Props for the component.
+ *
+ * @returns The Rich Text field's content as React components.
  */
 export const PrismicRichText = (props: PrismicRichTextProps): JSX.Element => {
 	const context = usePrismicContext();
