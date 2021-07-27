@@ -18,7 +18,7 @@ export type PrismicRichTextProps = {
 	field: prismicT.RichTextField;
 	linkResolver?: PrismicLinkProps["linkResolver"];
 	/** @deprecated Use the `components` prop instead. */
-	htmlSerializer?: RichTextFunctionSerializer<React.ComponentType>;
+	htmlSerializer?: RichTextFunctionSerializer<JSX.Element>;
 	/**
 	 * TODO: Describe that we recommend the object syntax over function, but we
 	 * still support both.
