@@ -1,13 +1,4 @@
-<!--
-
-TODO: Replace all on all files:
-- package_name
-- package_description
-- github_org_slash_github_repo
-
--->
-
-# package_name
+# @prismicio/react
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -16,24 +7,16 @@ TODO: Replace all on all files:
 [![Conventional Commits][conventional-commits-src]][conventional-commits-href]
 [![License][license-src]][license-href]
 
-<!-- TODO: Replacing link to Prismic with [Prismic][prismic] is useful here -->
+React components and hooks to fetch and present [Prismic][prismic] content.
 
-package_description.
-
-<!--
-
-TODO: Create a small list of package features:
-
-- 🤔 &nbsp;A usefull feature;
-- 🥴 &nbsp;Another usefull feature;
-- 🙃 &nbsp;A final usefull feature.
-
- -->
+- 📝 Display content from Prismic like [Rich Text][prismic-rich-text] and [Link][prismic-link] fields
+- 🍡 Render Prismic [Slice Zones][prismic-slices] declaratively with React components
+- 🎣 Fetch Prismic content using [React hooks][react-hooks]
 
 ## Install
 
 ```bash
-npm install package_name
+npm install @prismicio/react
 ```
 
 ## Documentation
@@ -78,25 +61,29 @@ Whether you're helping us fix bugs, improve the docs, or spread the word, we'd l
 
 [prismic-docs]: https://prismic.io/docs
 [changelog]: /CHANGELOG.md
+[prismic-rich-text]: https://prismic.io/docs/core-concepts/rich-text-title
+[prismic-link]: https://prismic.io/docs/core-concepts/link-content-relationship
+[prismic-slices]: https://prismic.io/docs/core-concepts/slices
+[react-hooks]: https://reactjs.org/docs/hooks-overview.html
 
 <!-- TODO: Replace link with a more useful one if available -->
 
 [forum-question]: https://community.prismic.io
-[repo-bug-report]: https://github.com/github_org_slash_github_repo/issues/new?assignees=&labels=bug&template=bug_report.md&title=
-[repo-feature-request]: https://github.com/github_org_slash_github_repo/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=
-[repo-pull-requests]: https://github.com/github_org_slash_github_repo/pulls
+[repo-bug-report]: https://github.com/prismicio/prismic-react/issues/new?assignees=&labels=bug&template=bug_report.md&title=
+[repo-feature-request]: https://github.com/prismicio/prismic-react/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=
+[repo-pull-requests]: https://github.com/prismicio/prismic-react/pulls
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/package_name/latest.svg
-[npm-version-href]: https://npmjs.com/package/package_name
-[npm-downloads-src]: https://img.shields.io/npm/dm/package_name.svg
-[npm-downloads-href]: https://npmjs.com/package/package_name
-[github-actions-ci-src]: https://github.com/github_org_slash_github_repo/workflows/ci/badge.svg
-[github-actions-ci-href]: https://github.com/github_org_slash_github_repo/actions?query=workflow%3Aci
-[codecov-src]: https://img.shields.io/codecov/c/github/github_org_slash_github_repo.svg
-[codecov-href]: https://codecov.io/gh/github_org_slash_github_repo
+[npm-version-src]: https://img.shields.io/npm/v/@prismicio/react/latest.svg
+[npm-version-href]: https://npmjs.com/package/@prismicio/react
+[npm-downloads-src]: https://img.shields.io/npm/dm/@prismicio/react.svg
+[npm-downloads-href]: https://npmjs.com/package/@prismicio/react
+[github-actions-ci-src]: https://github.com/prismicio/prismic-react/workflows/ci/badge.svg
+[github-actions-ci-href]: https://github.com/prismicio/prismic-react/actions?query=workflow%3Aci
+[codecov-src]: https://img.shields.io/codecov/c/github/prismicio/prismic-react.svg
+[codecov-href]: https://codecov.io/gh/prismicio/prismic-react
 [conventional-commits-src]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
 [conventional-commits-href]: https://conventionalcommits.org
-[license-src]: https://img.shields.io/npm/l/package_name.svg
-[license-href]: https://npmjs.com/package/package_name
+[license-src]: https://img.shields.io/npm/l/@prismicio/react.svg
+[license-href]: https://npmjs.com/package/@prismicio/react
