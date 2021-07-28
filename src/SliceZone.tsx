@@ -142,8 +142,14 @@ export const TODOSliceComponent = __PRODUCTION__
 /**
  * Renders content from a Prismic Slice Zone using React components for each type of Slice.
  *
+ * If a component is not provided for a type of Slice, a default component can be provided. A fallback component is provided by default that will not be rendered in a production build of your app.
+ *
+ * @see Learn about Prismic Slices and Slice Zones {@link https://prismic.io/docs/core-concepts/slices}
+ *
  * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
  * @typeParam TContext - Arbitrary data made available to all Slice components.
+ *
+ * @returns The Slice Zone's content as React components.
  */
 export const SliceZone = <TSlice extends SliceLike, TContext>({
 	slices = [],

@@ -1,23 +1,16 @@
-import {
-	RichTextFunctionSerializer,
-	RichTextMapSerializer,
-} from "@prismicio/richtext";
-import React from "react";
-
-export type JSXFunctionSerializer = RichTextFunctionSerializer<JSX.Element>;
-export type JSXMapSerializer = RichTextMapSerializer<JSX.Element>;
+import * as prismicR from "@prismicio/richtext";
 
 /**
- * Serializes a node from a rich text or title field with a function to HTML
+ * A function mapping Rich Text block types to React Components. It is used to render Rich Text or Title fields.
  *
  * @see Templating rich text and title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
  */
-export type ComponentFunctionSerializer =
-	RichTextFunctionSerializer<React.ReactNode>;
+export type JSXFunctionSerializer =
+	prismicR.RichTextFunctionSerializer<JSX.Element>;
 
 /**
- * Serializes a node from a rich text or title field with a map to HTML
+ * A map of Rich Text block types to React Components. It is used to render Rich Text or Title fields.
  *
- * @see Templating rich text and title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
+ * @see Templating Rich Text and Title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
  */
-export type ComponentMapSerializer = RichTextMapSerializer<React.ReactNode>;
+export type JSXMapSerializer = prismicR.RichTextMapSerializer<JSX.Element>;

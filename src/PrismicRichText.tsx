@@ -11,7 +11,7 @@ import * as React from "react";
 import * as prismicH from "@prismicio/helpers";
 import * as prismicT from "@prismicio/types";
 import { usePrismicContext } from "./PrismicProvider";
-import { ComponentFunctionSerializer } from "./types";
+import { JSXFunctionSerializer } from "./types";
 import { PrismicLink, PrismicLinkProps } from "./PrismicLink";
 
 /**
@@ -94,11 +94,11 @@ function defaultComponentSerializer(
 	linkResolver: prismicH.LinkResolverFunction<string> | undefined,
 	internalLinkComponent: PrismicRichTextProps["internalLinkComponent"],
 	externalLinkComponent: PrismicRichTextProps["externalLinkComponent"],
-	_type: Parameters<ComponentFunctionSerializer>[0],
-	node: Parameters<ComponentFunctionSerializer>[1],
-	content: Parameters<ComponentFunctionSerializer>[2],
-	children: Parameters<ComponentFunctionSerializer>[3],
-	_key: Parameters<ComponentFunctionSerializer>[4],
+	_type: Parameters<JSXFunctionSerializer>[0],
+	node: Parameters<JSXFunctionSerializer>[1],
+	content: Parameters<JSXFunctionSerializer>[2],
+	children: Parameters<JSXFunctionSerializer>[3],
+	_key: Parameters<JSXFunctionSerializer>[4],
 ): JSX.Element {
 	switch (node.type) {
 		case Element.heading1:

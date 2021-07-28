@@ -75,6 +75,15 @@ const getParamHookDependencies = (
 	];
 };
 
+/**
+ * Creates a React hook that forwards arguments to a specific method of a `@prismicio/client` instance. The created hook has its own internal state manager to report async status, such as pending or error statuses.
+ *
+ * @param method The `@prismicio/client` method to which hook arguments will be forwarded.
+ *
+ * @returns A new React hook configured for the provided method.
+ *
+ * @internal
+ */
 export const createClientHook = <
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TMethod extends (...args: any[]) => Promise<any>,
