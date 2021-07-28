@@ -7,7 +7,7 @@
 [![Conventional Commits][conventional-commits-src]][conventional-commits-href]
 [![License][license-src]][license-href]
 
-React components and hooks to fetch and present [Prismic][prismic] content.
+[React][react] components and hooks to fetch and present [Prismic][prismic] content.
 
 - 📝 Display content from Prismic like [Rich Text][prismic-rich-text] and [Link][prismic-link] fields
 - 🍡 Render Prismic [Slice Zones][prismic-slices] declaratively with React components
@@ -61,6 +61,7 @@ Whether you're helping us fix bugs, improve the docs, or spread the word, we'd l
 
 [prismic-docs]: https://prismic.io/docs
 [changelog]: /CHANGELOG.md
+[react]: https://reactjs.org/
 [prismic-rich-text]: https://prismic.io/docs/core-concepts/rich-text-title
 [prismic-link]: https://prismic.io/docs/core-concepts/link-content-relationship
 [prismic-slices]: https://prismic.io/docs/core-concepts/slices
