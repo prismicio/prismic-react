@@ -81,14 +81,7 @@ export type PrismicRichTextProps = {
 };
 
 /**
- *
- * @param linkResolver optinal link resolver for handling links
- * @param internalLinkComponent component to return for internal URLs
- * @param externalLinkComponent component to return for external URLs
- * @param _type string that determines which time of element to return
- * @param node RichTextNode
- * @param content raw content coming from prismic, returned as is by default if type isn't found
- * @param children content to be wrapped in elements
+ * fallback component serializer
  */
 function defaultComponentSerializer(
 	linkResolver: prismicH.LinkResolverFunction<string> | undefined,
