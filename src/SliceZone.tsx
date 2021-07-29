@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as prismicT from "@prismicio/types";
 
-import { __PRODUCTION__ } from "./buildOptimizations";
+import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 
 /**
  * The minimum required properties to represent a Prismic Slice for the `<SliceZone>` component.

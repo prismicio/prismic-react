@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import { __PRODUCTION__ } from "../buildOptimizations";
+import { __PRODUCTION__ } from "./__PRODUCTION__";
 
 const prefix = "Invariant failed";
 

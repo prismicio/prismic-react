@@ -23,7 +23,7 @@ export const useAllPrismicDocuments = createClientHook<
 	[params?: ClientMethodParameters<"getAll">[0] & HookOnlyParameters]
 >(proto.getAll);
 
-export const usePrismicDocumentsByID = createClientHook<
+export const usePrismicDocumentByID = createClientHook<
 	typeof proto.getByID,
 	[
 		id: ClientMethodParameters<"getByID">[0],
@@ -47,7 +47,7 @@ export const useAllPrismicDocumentsByIDs = createClientHook<
 	]
 >(proto.getAllByIDs);
 
-export const usePrismicDocumentsByUID = createClientHook<
+export const usePrismicDocumentByUID = createClientHook<
 	typeof proto.getByUID,
 	[
 		documentType: ClientMethodParameters<"getByUID">[0],

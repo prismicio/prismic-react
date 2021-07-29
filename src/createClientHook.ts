@@ -76,6 +76,20 @@ const getParamHookDependencies = (
 };
 
 /**
+ * Determiens if a value is a `@prismicio/client` params object.
+ *
+ * @param value The value to check.
+ *
+ * @return `true` if `value` is a `@prismicio/client` params object, `false` otherwise.
+ */
+const isParams = (
+	value: unknown,
+): value is ClientMethodParameters<"get">[0] & HookOnlyParameters => {
+	// This is a *very* naive check.
+	return typeof value === "object" && value !== null && !Array.isArray(value);
+};
+
+/**
  * Creates a React hook that forwards arguments to a specific method of a `@prismicio/client` instance. The created hook has its own internal state manager to report async status, such as pending or error statuses.
  *
  * @param method The `@prismicio/client` method to which hook arguments will be forwarded.
@@ -100,10 +114,13 @@ export const createClientHook = <
 			"state" | "error"
 		>,
 	] => {
-		const params:
-			| (ClientMethodParameters<"get">[0] & HookOnlyParameters)
-			| undefined = args[args.length - 1];
-		const client = usePrismicClient(params?.client);
+		const lastArg = args[args.length - 1];
+		const { client: explicitClient, ...params } = isParams(lastArg)
+			? lastArg
+			: ({} as HookOnlyParameters);
+		const argsWithoutParams = isParams(lastArg) ? args.slice(0, -1) : args;
+
+		const client = usePrismicClient(explicitClient);
 
 		const [state, dispatch] = React.useReducer<
 			React.Reducer<
@@ -116,13 +133,13 @@ export const createClientHook = <
 			() => {
 				dispatch(["start"]);
 				method
-					.apply(client, args)
+					.call(client, ...argsWithoutParams, params)
 					.then((result) => dispatch(["succeed", result]))
 					.catch((error) => dispatch(["fail", error]));
 			},
 			// We must disable exhaustive-deps to optimize providing `params` deps.
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-			[client, ...args.slice(-1), ...getParamHookDependencies(params)],
+			[client, ...args.slice(0, -1), ...getParamHookDependencies(params)],
 		);
 
 		return React.useMemo(

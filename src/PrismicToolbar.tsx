@@ -25,9 +25,15 @@ export const PrismicToolbar = ({
 	React.useEffect(() => {
 		const script = document.createElement("script");
 		script.src = `https://static.cdn.prismic.io/prismic.js?repositoryName=${repositoryName}${
-			type == "new" ? "&type=new" : ""
+			type === "new" ? "&type=new" : ""
 		}`;
 		script.defer = true;
+
+		// Used to distinguish the toolbar element from other elements.
+		script.dataset.prismicToolbar = "";
+		script.dataset.repositoryName = repositoryName;
+		script.dataset.type = type;
+
 		document.body.appendChild(script);
 	}, [repositoryName, type]);
 
