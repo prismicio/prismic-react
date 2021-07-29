@@ -52,6 +52,19 @@ test.serial(
 );
 
 test.serial(
+	"returns the client provided to the hook even if a client was not provided to PrismicProvider",
+	(t) => {
+		const client = createClient(t);
+
+		const { result } = renderHook(() => usePrismicClient(client), {
+			wrapper: (props) => <PrismicProvider>{props.children}</PrismicProvider>,
+		});
+
+		t.is(result.current, client);
+	},
+);
+
+test.serial(
 	"throws if a client is not provided to the hook or PrismicProvider",
 	(t) => {
 		const { result } = renderHook(() => usePrismicClient(), {

@@ -1,18 +1,14 @@
-import {
-	RichTextMapSerializer,
-	RichTextFunctionSerializer,
-	Element,
-	composeSerializers,
-	wrapMapSerializer,
-	serialize,
-} from "@prismicio/richtext";
+/* eslint-disable react/display-name */
+/* eslint-disable react/prop-types */
 
 import * as React from "react";
-import * as prismicH from "@prismicio/helpers";
 import * as prismicT from "@prismicio/types";
-import { usePrismicContext } from "./PrismicProvider";
-import { JSXFunctionSerializer } from "./types";
+import * as prismicH from "@prismicio/helpers";
+import * as prismicR from "@prismicio/richtext";
+
+import { JSXFunctionSerializer, JSXMapSerializer } from "./types";
 import { PrismicLink, PrismicLinkProps } from "./PrismicLink";
+import { usePrismicContext } from "./PrismicProvider";
 
 /**
  * Props for `<PrismicRichText>`.
@@ -20,6 +16,7 @@ import { PrismicLink, PrismicLinkProps } from "./PrismicLink";
 export type PrismicRichTextProps = {
 	/** The Prismic Rich Text field to render. */
 	field: prismicT.RichTextField;
+
 	/**
 	 * The Link Resolver used to resolve links.
 	 *
@@ -28,6 +25,7 @@ export type PrismicRichTextProps = {
 	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
 	 */
 	linkResolver?: PrismicLinkProps["linkResolver"];
+
 	/**
 	 * A function that maps a Rich Text block to a React component.
 	 *
@@ -35,7 +33,8 @@ export type PrismicRichTextProps = {
 	 *
 	 * @deprecated Use the `components` prop instead. Prefer using a map serializer when possible.
 	 * */
-	htmlSerializer?: RichTextFunctionSerializer<React.ComponentType>;
+	htmlSerializer?: JSXFunctionSerializer;
+
 	/**
 	 * A map or function that maps a Rich Text block to a React component.
 	 *
@@ -63,15 +62,15 @@ export type PrismicRichTextProps = {
 	 * }
 	 * ```
 	 */
-	components?:
-		| RichTextMapSerializer<JSX.Element>
-		| RichTextFunctionSerializer<JSX.Element>;
+	components?: JSXMapSerializer | JSXFunctionSerializer;
+
 	/**
 	 * The React component rendered for links when the URL is internal.
 	 *
 	 * @default `<a>`
 	 */
 	internalLinkComponent?: PrismicLinkProps["internalComponent"];
+
 	/**
 	 * The React component rendered for links when the URL is external.
 	 *
@@ -80,61 +79,31 @@ export type PrismicRichTextProps = {
 	externalLinkComponent?: PrismicLinkProps["externalComponent"];
 };
 
-/**
- * fallback component serializer
- */
-function defaultComponentSerializer(
-	linkResolver: prismicH.LinkResolverFunction<string> | undefined,
-	internalLinkComponent: PrismicRichTextProps["internalLinkComponent"],
-	externalLinkComponent: PrismicRichTextProps["externalLinkComponent"],
-	_type: Parameters<JSXFunctionSerializer>[0],
-	node: Parameters<JSXFunctionSerializer>[1],
-	content: Parameters<JSXFunctionSerializer>[2],
-	children: Parameters<JSXFunctionSerializer>[3],
-	_key: Parameters<JSXFunctionSerializer>[4],
-): JSX.Element {
-	switch (node.type) {
-		case Element.heading1:
-			return <h1>{children}</h1>;
+type CreateDefaultSerializerArgs = {
+	linkResolver: prismicH.LinkResolverFunction<string> | undefined;
+	internalLinkComponent: PrismicRichTextProps["internalLinkComponent"];
+	externalLinkComponent: PrismicRichTextProps["externalLinkComponent"];
+};
 
-		case Element.heading2:
-			return <h2>{children}</h2>;
-
-		case Element.heading3:
-			return <h3>{children}</h3>;
-
-		case Element.heading4:
-			return <h4>{children}</h4>;
-
-		case Element.heading5:
-			return <h5>{children}</h5>;
-
-		case Element.heading6:
-			return <h6>{children}</h6>;
-
-		case Element.paragraph:
-			return <p>{children}</p>;
-
-		case Element.preformatted:
-			return <pre>{node.text}</pre>;
-
-		case Element.strong:
-			return <strong>{children}</strong>;
-
-		case Element.em:
-			return <em>{children}</em>;
-
-		case Element.listItem:
-		case Element.oListItem:
-			return <li>{children}</li>;
-
-		case Element.list:
-			return <ul>{children}</ul>;
-
-		case Element.oList:
-			return <ol>{children}</ol>;
-
-		case Element.image:
+const createDefaultSerializer = (
+	args: CreateDefaultSerializerArgs,
+): JSXFunctionSerializer =>
+	prismicR.wrapMapSerializer({
+		heading1: ({ children }) => <h1>{children}</h1>,
+		heading2: ({ children }) => <h2>{children}</h2>,
+		heading3: ({ children }) => <h3>{children}</h3>,
+		heading4: ({ children }) => <h4>{children}</h4>,
+		heading5: ({ children }) => <h5>{children}</h5>,
+		heading6: ({ children }) => <h6>{children}</h6>,
+		paragraph: ({ children }) => <p>{children}</p>,
+		preformatted: ({ node }) => <pre>{node.text}</pre>,
+		strong: ({ children }) => <strong>{children}</strong>,
+		em: ({ children }) => <em>{children}</em>,
+		listItem: ({ children }) => <li>{children}</li>,
+		oListItem: ({ children }) => <li>{children}</li>,
+		list: ({ children }) => <ul>{children}</ul>,
+		oList: ({ children }) => <ol>{children}</ol>,
+		image: ({ node }) => {
 			const img = (
 				<img
 					src={node.url}
@@ -147,9 +116,9 @@ function defaultComponentSerializer(
 				<p className="block-img">
 					{node.linkTo ? (
 						<PrismicLink
-							linkResolver={linkResolver}
-							internalComponent={internalLinkComponent}
-							externalComponent={externalLinkComponent}
+							linkResolver={args.linkResolver}
+							internalComponent={args.internalLinkComponent}
+							externalComponent={args.externalLinkComponent}
 							field={node.linkTo}
 						>
 							{img}
@@ -159,35 +128,30 @@ function defaultComponentSerializer(
 					)}
 				</p>
 			);
-
-		case Element.embed:
-			return (
-				<div
-					data-oembed={node.oembed.embed_url}
-					data-oembed-type={node.oembed.type}
-					data-oembed-provider={node.oembed.provider_name}
-					dangerouslySetInnerHTML={{ __html: node.oembed.html }}
-				/>
-			);
-
-		case Element.hyperlink:
-			return (
-				<PrismicLink
-					field={node.data}
-					linkResolver={linkResolver}
-					internalComponent={internalLinkComponent}
-					externalComponent={externalLinkComponent}
-				>
-					{children}
-				</PrismicLink>
-			);
-		case Element.label:
-			return <span className={node.data.label}>{children}</span>;
-		case Element.span:
-		default:
-			return <>{content}</>;
-	}
-}
+		},
+		embed: ({ node }) => (
+			<div
+				data-oembed={node.oembed.embed_url}
+				data-oembed-type={node.oembed.type}
+				data-oembed-provider={node.oembed.provider_name}
+				dangerouslySetInnerHTML={{ __html: node.oembed.html }}
+			/>
+		),
+		hyperlink: ({ node, children }) => (
+			<PrismicLink
+				field={node.data}
+				linkResolver={args.linkResolver}
+				internalComponent={args.internalLinkComponent}
+				externalComponent={args.externalLinkComponent}
+			>
+				{children}
+			</PrismicLink>
+		),
+		label: ({ node, children }) => (
+			<span className={node.data.label}>{children}</span>
+		),
+		span: ({ text }) => <>{text}</>,
+	});
 
 /**
  * React component that renders content from a Prismic Rich Text field. By default, HTML elements are rendered for each piece of content. A `heading1` block will render an `<h1>` HTML element, for example. Links will use `<PrismicLink>` by default which can be customized using the `internalLinkComponent` and `externalLinkComponent` props.
@@ -223,30 +187,27 @@ function defaultComponentSerializer(
 export const PrismicRichText = (props: PrismicRichTextProps): JSX.Element => {
 	const context = usePrismicContext();
 
-	const val = React.useMemo(() => {
+	return React.useMemo(() => {
 		const linkResolver = props.linkResolver || context.linkResolver;
 		const components = props.components || context.richTextComponents;
-		const serializer = components
-			? composeSerializers(
-					typeof components === "object"
-						? wrapMapSerializer(components)
-						: components,
-					defaultComponentSerializer.bind(
-						null,
-						linkResolver,
-						props.internalLinkComponent,
-						props.externalLinkComponent,
-					),
-			  )
-			: defaultComponentSerializer.bind(
-					null,
-					linkResolver,
-					props.internalLinkComponent,
-					props.externalLinkComponent,
-			  );
-		const val = serialize(props.field, serializer);
+		const defaultSerializer = createDefaultSerializer({
+			linkResolver,
+			internalLinkComponent: props.internalLinkComponent,
+			externalLinkComponent: props.externalLinkComponent,
+		});
 
-		return val;
+		const serializer = components
+			? prismicR.composeSerializers(
+					typeof components === "object"
+						? prismicR.wrapMapSerializer(components)
+						: components,
+					defaultSerializer,
+			  )
+			: defaultSerializer;
+
+		const serialized = prismicR.serialize(props.field, serializer);
+
+		return <>{serialized}</>;
 	}, [
 		props.field,
 		props.internalLinkComponent,
@@ -256,6 +217,4 @@ export const PrismicRichText = (props: PrismicRichTextProps): JSX.Element => {
 		context.linkResolver,
 		context.richTextComponents,
 	]);
-
-	return <>{val}</>;
 };

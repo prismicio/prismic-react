@@ -270,6 +270,33 @@ test("returns <image /> if type is image", (t) => {
 	t.deepEqual(actual, expected);
 });
 
+test("returns <image /> with undefined copyright if not provided", (t) => {
+	const url = "url";
+	const alt = "alt";
+
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.image,
+			url,
+			alt,
+			copyright: null,
+			dimensions: {
+				width: 100,
+				height: 100,
+			},
+		},
+	];
+
+	const actual = renderJSON(<PrismicRichText field={field} />);
+	const expected = renderJSON(
+		<p className="block-img">
+			<img src={url} alt={alt} data-copyright={undefined} />
+		</p>,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
 test("returns <image /> wrapped in <PrismicLink />", (t) => {
 	const url = "url";
 	const alt = "alt";
@@ -306,6 +333,33 @@ test("returns <image /> wrapped in <PrismicLink />", (t) => {
 				<img src={url} alt={alt} data-copyright={copyright} />
 			</PrismicLink>
 		</p>,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("returns <div /> with embedded html if type is embed", (t) => {
+	const oembed = {
+		embed_url: "https://example.com",
+		type: "modern html elements",
+		provider_name: "Prismic",
+		html: "<marquee>Prismic is fun</marquee>",
+	};
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.embed,
+			oembed,
+		},
+	];
+
+	const actual = renderJSON(<PrismicRichText field={field} />);
+	const expected = renderJSON(
+		<div
+			data-oembed={oembed.embed_url}
+			data-oembed-type={oembed.type}
+			data-oembed-provider={oembed.provider_name}
+			dangerouslySetInnerHTML={{ __html: oembed.html }}
+		/>,
 	);
 
 	t.deepEqual(actual, expected);
@@ -384,6 +438,35 @@ test("Returns <PrismicLink /> with internalComponent from props", (t) => {
 			<a data-href="/url" data-rel={undefined} data-target={undefined}>
 				hyperlink
 			</a>
+		</p>,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("returns <span /> with label className if type is label", (t) => {
+	const data = {
+		label: "label",
+	};
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "label",
+			spans: [
+				{
+					type: prismicT.RichTextNodeType.label,
+					start: 0,
+					end: 5,
+					data,
+				},
+			],
+		},
+	];
+
+	const actual = renderJSON(<PrismicRichText field={field} />);
+	const expected = renderJSON(
+		<p>
+			<span className={data.label}>label</span>
 		</p>,
 	);
 
