@@ -33,7 +33,7 @@ const LinkShim = ({ href, ...props }: LinkProps) => {
 	return <Link to={href} {...props} />;
 };
 
-// This React componetn is used for headings. We will use it when rendering
+// This React component is used for headings. We will use it when rendering
 // "Heading 1" blocks in Rich Text fields.
 const Heading = ({ children }: { children: React.ReactNode }) => {
 	return <h1 className="heading">{children}</h1>;
