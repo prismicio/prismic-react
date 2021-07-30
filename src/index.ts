@@ -40,3 +40,5 @@ export {
 	usePrismicDocumentsByType,
 	useSinglePrismicDocument,
 } from "./hooks";
+
+export type { JSXMapSerializer, JSXFunctionSerializer } from "./types";
