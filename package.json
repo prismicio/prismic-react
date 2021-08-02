@@ -46,9 +46,10 @@
 	"dependencies": {
 		"@prismicio/client": "^6.0.0-alpha.8",
 		"@prismicio/helpers": "^2.0.0-alpha.5",
-		"@prismicio/richtext": "^2.0.0-alpha.6",
-		"react": "^17.0.2",
-		"react-test-renderer": "^17.0.2"
+		"@prismicio/richtext": "^2.0.0-alpha.6"
+	},
+	"peerDependencies": {
+		"react": "^16.8.0 || 17.x"
 	},
 	"devDependencies": {
 		"@prismicio/types": "^0.1.4",
@@ -74,6 +75,7 @@
 		"node-fetch": "^2.6.1",
 		"nyc": "^15.1.0",
 		"prettier": "^2.3.2",
+		"react-test-renderer": "^17.0.2",
 		"sinon": "^11.1.1",
 		"siroc": "^0.11.1",
 		"standard-version": "^9.3.0",
