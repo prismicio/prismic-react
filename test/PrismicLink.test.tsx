@@ -76,6 +76,25 @@ test("renders link from an href", (t) => {
 	t.deepEqual(actual, expected);
 });
 
+test("prefers explicit href over field", (t) => {
+	const field: prismicT.FilledLinkToDocumentField = {
+		id: "id",
+		uid: "uid",
+		lang: "lang",
+		tags: [],
+		type: "page",
+		link_type: prismicT.LinkType.Document,
+		url: "url",
+	};
+
+	const actual = renderJSON(<PrismicLink href="href" field={field} />);
+	const expected = renderJSON(
+		<a href="href" rel={undefined} target={undefined} />,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
 test("uses link resolver provided via context", (t) => {
 	const field: prismicT.FilledLinkToDocumentField = {
 		id: "id",

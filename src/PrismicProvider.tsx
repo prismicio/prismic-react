@@ -68,15 +68,6 @@ export type PrismicContextValue = {
 export const PrismicContext = React.createContext<PrismicContextValue>({});
 
 /**
- * React hook used to read shared configuration for `@prismicio/react` components and hooks.
- *
- * @returns The closest `<PrismicProvider>` context value.
- */
-export const usePrismicContext = (): PrismicContextValue => {
-	return React.useContext(PrismicContext) || {};
-};
-
-/**
  * Props for `<PrismicProvider>`.
  */
 type PrismicProviderProps = PrismicContextValue;

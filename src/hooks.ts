@@ -4,7 +4,7 @@ import {
 	ClientMethodParameters,
 	HookOnlyParameters,
 	createClientHook,
-} from "./createClientHook";
+} from "./lib/createClientHook";
 
 const proto = prismic.Client.prototype;
 

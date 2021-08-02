@@ -1,21 +1,15 @@
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 
-import { usePrismicClient } from "./usePrismicClient";
+import { PrismicHookState } from "../types";
+import { usePrismicClient } from "../usePrismicClient";
 
 type PrismicClientError =
 	| prismic.PrismicError
 	| prismic.ParsingError
 	| prismic.ForbiddenError;
 
-export const enum PrismicHookState {
-	IDLE,
-	PENDING,
-	SUCCEEDED,
-	FAILED,
-}
-
-export type StateMachineState<TData> = {
+type StateMachineState<TData> = {
 	state: PrismicHookState;
 	data?: TData;
 	error?: PrismicClientError;
@@ -38,7 +32,7 @@ const reducer = <TData>(
 		return { ...state, state: PrismicHookState.FAILED, error: action[1] };
 	}
 
-	return state;
+	throw new Error(`Invalid action type: ${action[0]}`);
 };
 
 const initialState = { state: PrismicHookState.IDLE } as const;

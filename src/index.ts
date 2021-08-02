@@ -1,6 +1,8 @@
 export { PrismicProvider } from "./PrismicProvider";
 export type { PrismicContextValue } from "./PrismicProvider";
 
+export { usePrismicContext } from "./usePrismicContext";
+
 export { usePrismicClient } from "./usePrismicClient";
 
 export { PrismicLink } from "./PrismicLink";
@@ -22,8 +24,6 @@ export type {
 export { PrismicToolbar } from "./PrismicToolbar";
 export type { PrismicToolbarProps } from "./PrismicToolbar";
 
-export { PrismicHookState } from "./createClientHook";
-
 export {
 	useAllPrismicDocuments,
 	useAllPrismicDocumentsByIDs,
@@ -41,4 +41,5 @@ export {
 	useSinglePrismicDocument,
 } from "./hooks";
 
+export { PrismicHookState } from "./types";
 export type { JSXMapSerializer, JSXFunctionSerializer } from "./types";

@@ -8,7 +8,7 @@ import * as prismicR from "@prismicio/richtext";
 
 import { JSXFunctionSerializer, JSXMapSerializer } from "./types";
 import { PrismicLink, PrismicLinkProps } from "./PrismicLink";
-import { usePrismicContext } from "./PrismicProvider";
+import { usePrismicContext } from "./usePrismicContext";
 
 /**
  * Props for `<PrismicRichText>`.

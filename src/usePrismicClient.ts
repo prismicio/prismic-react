@@ -2,7 +2,7 @@ import * as prismic from "@prismicio/client";
 
 import { invariant } from "./lib/invariant";
 
-import { usePrismicContext } from "./PrismicProvider";
+import { usePrismicContext } from "./usePrismicContext";
 
 /**
  * Retrieve the `@prismicio/client` instance provided to `<PrismicProvider>` higher in the React tree.

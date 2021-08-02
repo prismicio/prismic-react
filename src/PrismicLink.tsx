@@ -4,7 +4,7 @@ import * as prismicT from "@prismicio/types";
 
 import { isInternalURL } from "./lib/isInternalURL";
 
-import { usePrismicContext } from "./PrismicProvider";
+import { usePrismicContext } from "./usePrismicContext";
 
 /**
  * Props provided to a component when rendered with `<PrismicLink>`.

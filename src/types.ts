@@ -14,3 +14,20 @@ export type JSXFunctionSerializer =
  * @see Templating Rich Text and Title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
  */
 export type JSXMapSerializer = prismicR.RichTextMapSerializer<JSX.Element>;
+
+/**
+ * States of a `@prismicio/client` hook.
+ */
+export const enum PrismicHookState {
+	/** The hook has not started fetching. */
+	IDLE,
+
+	/** The hook is fetching data. */
+	PENDING,
+
+	/** The hook sucessfully fetched data. */
+	SUCCEEDED,
+
+	/** The hook failed to fetch data. */
+	FAILED,
+}
