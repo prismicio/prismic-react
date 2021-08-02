@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.1](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2021-08-02)
+
+
+### Bug Fixes
+
+* move react to a peer dependency ([17d9f08](https://github.com/prismicio/prismic-reactjs/commit/17d9f08f507b612699449cb87de6d6273494f213))
+
+
+### Chore
+
+* remove private label ([8bafde4](https://github.com/prismicio/prismic-reactjs/commit/8bafde44aee43f66fd652e8fcf2151f245a80918))
+
 ## [2.0.0-alpha.0](https://github.com/prismicio/prismic-reactjs/compare/v1.3.4...v2.0.0-alpha.0) (2021-08-02)
 
 
