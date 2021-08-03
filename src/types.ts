@@ -18,7 +18,7 @@ export type JSXMapSerializer = prismicR.RichTextMapSerializer<JSX.Element>;
 /**
  * States of a `@prismicio/client` hook.
  */
-export const enum PrismicHookState {
+export const enum PrismicClientHookState {
 	/** The hook has not started fetching. */
 	IDLE,
 

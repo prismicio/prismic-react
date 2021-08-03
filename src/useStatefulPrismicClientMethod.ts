@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 
-import { PrismicHookState } from "./types";
+import { PrismicClientHookState } from "./types";
 import { usePrismicClient } from "./usePrismicClient";
 
 type PrismicClientError =
@@ -10,7 +10,7 @@ type PrismicClientError =
 	| prismic.ForbiddenError;
 
 type StateMachineState<TData> = {
-	state: PrismicHookState;
+	state: PrismicClientHookState;
 	data?: TData;
 	error?: PrismicClientError;
 };
@@ -25,17 +25,17 @@ const reducer = <TData>(
 	action: StateMachineAction<TData>,
 ): StateMachineState<TData> => {
 	if (action[0] === "start") {
-		return { state: PrismicHookState.PENDING };
+		return { state: PrismicClientHookState.PENDING };
 	} else if (action[0] === "succeed") {
-		return { state: PrismicHookState.SUCCEEDED, data: action[1] };
+		return { state: PrismicClientHookState.SUCCEEDED, data: action[1] };
 	} else if (action[0] === "fail") {
-		return { ...state, state: PrismicHookState.FAILED, error: action[1] };
+		return { ...state, state: PrismicClientHookState.FAILED, error: action[1] };
 	}
 
 	throw new Error(`Invalid action type: ${action[0]}`);
 };
 
-const initialState = { state: PrismicHookState.IDLE } as const;
+const initialState = { state: PrismicClientHookState.IDLE } as const;
 
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
@@ -134,7 +134,7 @@ export const useStatefulPrismicClientMethod = <
 
 	React.useEffect(
 		() => {
-			if (state.state === PrismicHookState.IDLE && !skip) {
+			if (state.state === PrismicClientHookState.IDLE && !skip) {
 				dispatch(["start"]);
 				method
 					.call(client, ...argsWithoutParams, params)
