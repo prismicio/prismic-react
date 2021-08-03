@@ -17,7 +17,7 @@ import { getMasterRef } from "./__testutils__/getMasterRef";
 import { md5 } from "./__testutils__/md5";
 
 import {
-	PrismicHookState,
+	PrismicClientHookState,
 	PrismicProvider,
 	useAllPrismicDocuments,
 } from "../src";
@@ -55,7 +55,7 @@ test.serial("returns all documents", async (t) => {
 	);
 
 	await waitForValueToChange(
-		() => result.current[1].state === PrismicHookState.SUCCEEDED,
+		() => result.current[1].state === PrismicClientHookState.SUCCEEDED,
 	);
 
 	t.deepEqual(result.current[0], allDocuments);
@@ -87,7 +87,7 @@ test.serial("supports params", async (t) => {
 	);
 
 	await waitForValueToChange(
-		() => result.current[1].state === PrismicHookState.SUCCEEDED,
+		() => result.current[1].state === PrismicClientHookState.SUCCEEDED,
 	);
 
 	t.deepEqual(result.current[0], allDocuments);
@@ -110,7 +110,7 @@ test.serial("supports explicit client", async (t) => {
 	);
 
 	await waitForValueToChange(
-		() => result.current[1].state === PrismicHookState.SUCCEEDED,
+		() => result.current[1].state === PrismicClientHookState.SUCCEEDED,
 	);
 
 	t.deepEqual(result.current[0], allDocuments);
@@ -137,7 +137,7 @@ test.serial("returns failed state on error", async (t) => {
 	);
 
 	await waitForValueToChange(
-		() => result.current[1].state === PrismicHookState.FAILED,
+		() => result.current[1].state === PrismicClientHookState.FAILED,
 	);
 
 	t.true(result.current[1].error instanceof prismic.ForbiddenError);
