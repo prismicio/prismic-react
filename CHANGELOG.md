@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.2](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2021-08-03)
+
+
+### Features
+
+* support document type on client hooks ([0a0427b](https://github.com/prismicio/prismic-reactjs/commit/0a0427b344087d898f0f5e56b1c125a194fa6595))
+
+
+### Bug Fixes
+
+* rename PrismicHookState to PrismicClientHookState ([8047f8b](https://github.com/prismicio/prismic-reactjs/commit/8047f8b752a9852d516ddd7a89a74c53cc99e83e))
+
+
+### Chore
+
+* add react as a dev dependency for tests ([9bac238](https://github.com/prismicio/prismic-reactjs/commit/9bac238a9cd8ad77b384e9683d5824862a05d4d4))
+
+
+### Refactor
+
+* increase test coverage by restructuring ([84c5cde](https://github.com/prismicio/prismic-reactjs/commit/84c5cde319afec2e7afbcc876d43b85b00039b98))
+
 ## [2.0.0-alpha.1](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2021-08-02)
 
 
