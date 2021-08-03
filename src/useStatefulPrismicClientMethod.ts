@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 
-import { PrismicHookState } from "../types";
-import { usePrismicClient } from "../usePrismicClient";
+import { PrismicHookState } from "./types";
+import { usePrismicClient } from "./usePrismicClient";
 
 type PrismicClientError =
 	| prismic.PrismicError
@@ -49,6 +49,7 @@ export type ClientMethodParameters<MethodName extends keyof ClientPrototype> =
 
 export type HookOnlyParameters = {
 	client?: prismic.Client;
+	skip?: boolean;
 };
 
 const getParamHookDependencies = (
@@ -70,7 +71,7 @@ const getParamHookDependencies = (
 };
 
 /**
- * Determiens if a value is a `@prismicio/client` params object.
+ * Determines if a value is a `@prismicio/client` params object.
  *
  * @param value The value to check.
  *
@@ -84,6 +85,19 @@ const isParams = (
 };
 
 /**
+ * The return value of a `@prismicio/client` React hook.
+ *
+ * @typeParam TData Data returned by the client.
+ */
+export type ClientHookReturnType<TData = unknown> = [
+	/** Data returned by the client. */
+	data: TData | undefined,
+
+	/** The current state of the hook's client method call. */
+	state: Pick<StateMachineState<TData>, "state" | "error">,
+];
+
+/**
  * Creates a React hook that forwards arguments to a specific method of a `@prismicio/client` instance. The created hook has its own internal state manager to report async status, such as pending or error statuses.
  *
  * @param method The `@prismicio/client` method to which hook arguments will be forwarded.
@@ -92,53 +106,49 @@ const isParams = (
  *
  * @internal
  */
-export const createClientHook = <
+export const useStatefulPrismicClientMethod = <
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TMethod extends (...args: any[]) => Promise<any>,
 	TArgs extends Parameters<TMethod>,
+	TData extends UnwrapPromise<ReturnType<TMethod>>,
 >(
 	method: TMethod,
-) => {
-	return (
-		...args: TArgs
-	): [
-		data: StateMachineState<UnwrapPromise<ReturnType<TMethod>>>["data"],
-		state: Pick<
+	args: TArgs,
+): ClientHookReturnType<TData> => {
+	const lastArg = args[args.length - 1];
+	const {
+		client: explicitClient,
+		skip,
+		...params
+	} = isParams(lastArg) ? lastArg : ({} as HookOnlyParameters);
+	const argsWithoutParams = isParams(lastArg) ? args.slice(0, -1) : args;
+
+	const client = usePrismicClient(explicitClient);
+
+	const [state, dispatch] = React.useReducer<
+		React.Reducer<
 			StateMachineState<UnwrapPromise<ReturnType<TMethod>>>,
-			"state" | "error"
-		>,
-	] => {
-		const lastArg = args[args.length - 1];
-		const { client: explicitClient, ...params } = isParams(lastArg)
-			? lastArg
-			: ({} as HookOnlyParameters);
-		const argsWithoutParams = isParams(lastArg) ? args.slice(0, -1) : args;
+			StateMachineAction<UnwrapPromise<ReturnType<TMethod>>>
+		>
+	>(reducer, initialState);
 
-		const client = usePrismicClient(explicitClient);
-
-		const [state, dispatch] = React.useReducer<
-			React.Reducer<
-				StateMachineState<UnwrapPromise<ReturnType<TMethod>>>,
-				StateMachineAction<UnwrapPromise<ReturnType<TMethod>>>
-			>
-		>(reducer, initialState);
-
-		React.useEffect(
-			() => {
+	React.useEffect(
+		() => {
+			if (state.state === PrismicHookState.IDLE && !skip) {
 				dispatch(["start"]);
 				method
 					.call(client, ...argsWithoutParams, params)
 					.then((result) => dispatch(["succeed", result]))
 					.catch((error) => dispatch(["fail", error]));
-			},
-			// We must disable exhaustive-deps to optimize providing `params` deps.
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			[client, ...args.slice(0, -1), ...getParamHookDependencies(params)],
-		);
+			}
+		},
+		// We must disable exhaustive-deps to optimize providing `params` deps.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[client, ...args.slice(0, -1), ...getParamHookDependencies(params)],
+	);
 
-		return React.useMemo(
-			() => [state.data, { state: state.state, error: state.error }],
-			[state],
-		);
-	};
+	return React.useMemo(
+		() => [state.data, { state: state.state, error: state.error }],
+		[state],
+	);
 };
