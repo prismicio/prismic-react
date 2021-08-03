@@ -24,15 +24,23 @@ const reducer = <TData>(
 	state: StateMachineState<TData>,
 	action: StateMachineAction<TData>,
 ): StateMachineState<TData> => {
-	if (action[0] === "start") {
-		return { state: PrismicClientHookState.PENDING };
-	} else if (action[0] === "succeed") {
-		return { state: PrismicClientHookState.SUCCEEDED, data: action[1] };
-	} else if (action[0] === "fail") {
-		return { ...state, state: PrismicClientHookState.FAILED, error: action[1] };
-	}
+	switch (action[0]) {
+		case "start": {
+			return { state: PrismicClientHookState.PENDING };
+		}
 
-	throw new Error(`Invalid action type: ${action[0]}`);
+		case "succeed": {
+			return { state: PrismicClientHookState.SUCCEEDED, data: action[1] };
+		}
+
+		case "fail": {
+			return {
+				...state,
+				state: PrismicClientHookState.FAILED,
+				error: action[1],
+			};
+		}
+	}
 };
 
 const initialState = { state: PrismicClientHookState.IDLE } as const;
@@ -53,7 +61,7 @@ export type HookOnlyParameters = {
 };
 
 const getParamHookDependencies = (
-	params: ClientMethodParameters<"get">[0] = {},
+	params: NonNullable<ClientMethodParameters<"get">[0]>,
 ) => {
 	return [
 		params.ref,
@@ -144,7 +152,16 @@ export const useStatefulPrismicClientMethod = <
 		},
 		// We must disable exhaustive-deps to optimize providing `params` deps.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[client, ...args.slice(0, -1), ...getParamHookDependencies(params)],
+		[
+			client,
+			state.state,
+			skip,
+			method,
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			...args.slice(0, -1),
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			...getParamHookDependencies(params),
+		],
 	);
 
 	return React.useMemo(
