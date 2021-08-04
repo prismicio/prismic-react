@@ -123,7 +123,7 @@ export const TODOSliceComponent = __PRODUCTION__
 	  }: SliceComponentProps<TSlice, TContext>): JSX.Element | null => {
 			React.useEffect(() => {
 				console.warn(
-					`[SliceZone] Could not find a component Slice type "${slice.slice_type}"`,
+					`[SliceZone] Could not find a component for Slice type "${slice.slice_type}"`,
 					slice,
 				);
 			}, [slice]);
