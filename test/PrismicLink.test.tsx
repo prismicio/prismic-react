@@ -1,6 +1,7 @@
 import test from "ava";
 import * as prismicT from "@prismicio/types";
 import * as prismicH from "@prismicio/helpers";
+import * as prismicM from "@prismicio/mock";
 import * as React from "react";
 
 import { renderJSON } from "./__testutils__/renderJSON";
@@ -62,6 +63,43 @@ test("renders a link from a web link field", (t) => {
 	const actual = renderJSON(<PrismicLink field={field} />);
 	const expected = renderJSON(
 		<a href={field.url} rel={undefined} target={undefined} />,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("renders a link from a document with a URL", (t) => {
+	const document = prismicM.value.document({
+		seed: t.title,
+		withURL: true,
+	});
+
+	const actual = renderJSON(<PrismicLink document={document} />);
+	const expected = renderJSON(
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		<a href={document.url!} rel={undefined} target={undefined} />,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("renders a link from a document using a Link Resolver", (t) => {
+	const document = prismicM.value.document({
+		seed: t.title,
+		withURL: false,
+		model: prismicM.model.customType({
+			seed: t.title,
+			withUID: true,
+		}),
+	});
+	const linkResolver: prismicH.LinkResolverFunction = (doc) => `/${doc.uid}`;
+
+	const actual = renderJSON(
+		<PrismicLink document={document} linkResolver={linkResolver} />,
+	);
+	const expected = renderJSON(
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		<a href={`/${document.uid}`} rel={undefined} target={undefined} />,
 	);
 
 	t.deepEqual(actual, expected);

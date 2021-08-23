@@ -61,11 +61,17 @@ export type PrismicLinkProps = {
 			 *
 			 * @see Learn about Prismic Link fields {@link https://prismic.io/docs/core-concepts/link-content-relationship}
 			 */
-			field: prismicT.LinkField;
+			field?: prismicT.LinkField;
+	  }
+	| {
+			/**
+			 * The Prismic document to link.
+			 */
+			document?: prismicT.PrismicDocument;
 	  }
 	| {
 			/** The URL to link. */
-			href: string;
+			href?: string;
 	  }
 );
 
@@ -90,19 +96,26 @@ const defaultExternalComponent = "a";
  *
  * @returns The internal or external link component depending on whether the link is internal or external.
  */
-export const PrismicLink = (props: PrismicLinkProps): JSX.Element => {
+export const PrismicLink = (props: PrismicLinkProps): JSX.Element | null => {
 	const context = usePrismicContext();
 
 	const linkResolver = props.linkResolver || context.linkResolver;
 
-	const href =
-		("href" in props
-			? props.href
-			: prismicH.asLink(props.field, linkResolver)) || "";
+	let href: string | null = null;
+	if ("href" in props) {
+		href = props.href || null;
+	} else if ("document" in props && props.document) {
+		href = prismicH.documentAsLink(props.document, linkResolver);
+	} else if ("field" in props && props.field) {
+		href = prismicH.asLink(props.field, linkResolver);
+	}
 
 	const target =
 		props.target ||
-		("field" in props && "target" in props.field && props.field.target) ||
+		("field" in props &&
+			props.field &&
+			"target" in props.field &&
+			props.field.target) ||
 		undefined;
 
 	const rel =
@@ -118,13 +131,13 @@ export const PrismicLink = (props: PrismicLinkProps): JSX.Element => {
 		context.externalLinkComponent ||
 		defaultExternalComponent;
 
-	const isInternal = isInternalURL(href);
+	const isInternal = href && isInternalURL(href);
 
 	const Component = isInternal ? InternalComponent : ExternalComponent;
 
-	return (
+	return href ? (
 		<Component href={href} target={target} rel={rel}>
 			{props.children}
 		</Component>
-	);
+	) : null;
 };
