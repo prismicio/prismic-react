@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.3](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.2...v2.0.0-alpha.3) (2021-08-23)
+
+
+### Features
+
+* render PrismicLink using a document ([0768280](https://github.com/prismicio/prismic-reactjs/commit/0768280e049d120cb93ebac581bc4e629ff98c67))
+
+
+### Bug Fixes
+
+* wording on TODOSliceComponent warning ([8abfc9a](https://github.com/prismicio/prismic-reactjs/commit/8abfc9acc5fd5ca6a5c65fdc28092d4cc5dd376b))
+
+
+### Documentation
+
+* add tsdocs for hooks ([0b1a610](https://github.com/prismicio/prismic-reactjs/commit/0b1a610197e23c2462f62443497c7044d7f49ccf))
+
 ## [2.0.0-alpha.2](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2021-08-03)
 
 
