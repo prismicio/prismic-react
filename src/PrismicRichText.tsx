@@ -107,7 +107,7 @@ const createDefaultSerializer = (
 			const img = (
 				<img
 					src={node.url}
-					alt={node.alt}
+					alt={node.alt ?? undefined}
 					data-copyright={node.copyright ? node.copyright : undefined}
 				/>
 			);
@@ -134,7 +134,7 @@ const createDefaultSerializer = (
 				data-oembed={node.oembed.embed_url}
 				data-oembed-type={node.oembed.type}
 				data-oembed-provider={node.oembed.provider_name}
-				dangerouslySetInnerHTML={{ __html: node.oembed.html }}
+				dangerouslySetInnerHTML={{ __html: node.oembed.html ?? "" }}
 			/>
 		),
 		hyperlink: ({ node, children }) => (
