@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.4](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.3...v2.0.0-alpha.4) (2021-09-15)
+
+
+### Bug Fixes
+
+* allow undefined SliceZone slices and components ([a44bebf](https://github.com/prismicio/prismic-reactjs/commit/a44bebf16617e220dbbbec2263c912238ff0f1b6))
+* proper PrismicRichText serializer fallbacks ([ca1d37a](https://github.com/prismicio/prismic-reactjs/commit/ca1d37ab6f522e2b0d9ad88c5c7bc2450b5c7f4d))
+
 ## [2.0.0-alpha.3](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.2...v2.0.0-alpha.3) (2021-08-23)
 
 
