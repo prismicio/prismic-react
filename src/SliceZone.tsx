@@ -89,29 +89,6 @@ export type SliceZoneComponents<
 	};
 
 /**
- * React props for the `<SliceZone>` component.
- *
- * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
- * @typeParam TContext - Arbitrary data made available to all Slice components.
- */
-export type SliceZoneProps<
-	TSlice extends SliceLike = SliceLike,
-	TContext = unknown,
-> = {
-	/** List of Slice data from the Slice Zone. */
-	slices: SliceZoneLike<TSlice>;
-
-	/** A record mapping Slice types to React components. */
-	components: SliceZoneComponents<TSlice, TContext>;
-
-	/** The React component rendered if a component mapping from the `components` prop cannot be found. */
-	defaultComponent?: SliceComponentType<TSlice, TContext>;
-
-	/** Arbitrary data made available to all Slice components. */
-	context?: TContext;
-};
-
-/**
  * This Slice component can be used as a reminder to provide a proper implementation.
  *
  * This is also the default React component rendered when a component mapping cannot be found in `<SliceZone>`.
@@ -138,6 +115,29 @@ export const TODOSliceComponent = __PRODUCTION__
 				</section>
 			);
 	  };
+
+/**
+ * React props for the `<SliceZone>` component.
+ *
+ * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
+ * @typeParam TContext - Arbitrary data made available to all Slice components.
+ */
+export type SliceZoneProps<
+	TSlice extends SliceLike = SliceLike,
+	TContext = unknown,
+> = {
+	/** List of Slice data from the Slice Zone. */
+	slices?: SliceZoneLike<TSlice>;
+
+	/** A record mapping Slice types to React components. */
+	components?: SliceZoneComponents<TSlice, TContext>;
+
+	/** The React component rendered if a component mapping from the `components` prop cannot be found. */
+	defaultComponent?: SliceComponentType<TSlice, TContext>;
+
+	/** Arbitrary data made available to all Slice components. */
+	context?: TContext;
+};
 
 /**
  * Renders content from a Prismic Slice Zone using React components for each type of Slice.

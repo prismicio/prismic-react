@@ -28,6 +28,12 @@ const StringifySliceComponent = ({
 	</div>
 );
 
+test("renders null by default", (t) => {
+	const actual = renderJSON(<SliceZone />);
+
+	t.is(actual, null);
+});
+
 test("renders null if an empty Slice Zone is provided", (t) => {
 	const actual = renderJSON(<SliceZone slices={[]} components={{}} />);
 
