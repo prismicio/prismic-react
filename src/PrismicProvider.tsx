@@ -70,7 +70,7 @@ export const PrismicContext = React.createContext<PrismicContextValue>({});
 /**
  * Props for `<PrismicProvider>`.
  */
-type PrismicProviderProps = PrismicContextValue;
+export type PrismicProviderProps = PrismicContextValue;
 
 /**
  * React context provider to share configuration for `@prismicio/react` components and hooks.

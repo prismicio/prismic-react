@@ -1,5 +1,8 @@
 export { PrismicProvider } from "./PrismicProvider";
-export type { PrismicContextValue } from "./PrismicProvider";
+export type {
+	PrismicProviderProps,
+	PrismicContextValue,
+} from "./PrismicProvider";
 
 export { usePrismicContext } from "./usePrismicContext";
 
