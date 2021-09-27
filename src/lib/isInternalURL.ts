@@ -1,7 +1,7 @@
 /**
  * Determines if a URL is internal or external.
  *
- * @param url The URL to check if internal or external.
+ * @param url - The URL to check if internal or external.
  *
  * @returns `true` if `url` is internal, `false` otherwise.
  */

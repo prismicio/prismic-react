@@ -5,11 +5,13 @@ import { invariant } from "./lib/invariant";
 import { usePrismicContext } from "./usePrismicContext";
 
 /**
- * Retrieve the `@prismicio/client` instance provided to `<PrismicProvider>` higher in the React tree.
+ * Retrieve the `@prismicio/client` instance provided to `<PrismicProvider>`
+ * higher in the React tree.
  *
- * @param explicitClient An optional `@prismicio/client` instance to override the Client provided to `<PrismicProvider>`.
+ * @param explicitClient - An optional `@prismicio/client` instance to override
+ *   the Client provided to `<PrismicProvider>`.
  *
- * @return The `@prismicio/client` instance provided to `<PrismicProvider>`.
+ * @returns The `@prismicio/client` instance provided to `<PrismicProvider>`.
  */
 export const usePrismicClient = (
 	explicitClient?: prismic.Client,

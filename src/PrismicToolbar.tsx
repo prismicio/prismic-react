@@ -4,7 +4,10 @@ import * as React from "react";
  * Props for `<PrismicToolbar>`.
  */
 export type PrismicToolbarProps = {
-	/** The name of the Prismic repository. For example, `"my-repo"` if the repository URL is `my-repo.prismic.io`. */
+	/**
+	 * The name of the Prismic repository. For example, `"my-repo"` if the
+	 * repository URL is `my-repo.prismic.io`.
+	 */
 	repositoryName: string;
 
 	/**
@@ -16,7 +19,8 @@ export type PrismicToolbarProps = {
 };
 
 /**
- * React component that injects the Prismic Toolbar to the app. This component can be placed anywhere in the React tree.
+ * React component that injects the Prismic Toolbar to the app. This component
+ * can be placed anywhere in the React tree.
  */
 export const PrismicToolbar = ({
 	repositoryName,

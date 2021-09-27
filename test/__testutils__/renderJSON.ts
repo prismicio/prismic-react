@@ -1,9 +1,10 @@
 import * as renderer from "react-test-renderer";
 
 /**
- * Renders a JSON representation of a React.Element. This is a helper to reduce boilerplate in each test.
+ * Renders a JSON representation of a React.Element. This is a helper to reduce
+ * boilerplate in each test.
  *
- * @param element The React.Element to render.
+ * @param element - The React.Element to render.
  *
  * @returns The JSON representation of `element`.
  */

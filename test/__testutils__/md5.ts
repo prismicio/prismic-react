@@ -3,7 +3,7 @@ import * as crypto from "crypto";
 /**
  * Generates an MD5 hash from an input.
  *
- * @param input Value used to generate the hash.
+ * @param input - Value used to generate the hash.
  *
  * @returns MD5 representation of `input`.
  */

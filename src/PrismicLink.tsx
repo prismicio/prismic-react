@@ -10,16 +10,26 @@ import { usePrismicContext } from "./usePrismicContext";
  * Props provided to a component when rendered with `<PrismicLink>`.
  */
 export interface LinkProps {
-	/** The URL to link. */
+	/**
+	 * The URL to link.
+	 */
 	href: string;
 
-	/** The `target` attribute for anchor elements. If the Prismic field is configured to open in a new window, this prop defaults to `_blank`. */
+	/**
+	 * The `target` attribute for anchor elements. If the Prismic field is
+	 * configured to open in a new window, this prop defaults to `_blank`.
+	 */
 	target?: string;
 
-	/** The `rel` attribute for anchor elements. If the `target` prop is set to `"_blank"`, this prop defaults to `"noopener noreferrer"`. */
+	/**
+	 * The `rel` attribute for anchor elements. If the `target` prop is set to
+	 * `"_blank"`, this prop defaults to `"noopener noreferrer"`.
+	 */
 	rel?: string;
 
-	/** Children for the component. **/
+	/**
+	 * Children for the component. *
+	 */
 	children?: React.ReactNode;
 }
 
@@ -30,8 +40,9 @@ export type PrismicLinkProps = {
 	/**
 	 * The Link Resolver used to resolve links.
 	 *
-	 * @remarks If your app uses Route Resolvers when querying for your Prismic repository's content, a Link Resolver does not need to be provided.
-	 *
+	 * @remarks
+	 * If your app uses Route Resolvers when querying for your Prismic
+	 * repository's content, a Link Resolver does not need to be provided.
 	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
 	 */
 	linkResolver?: prismicH.LinkResolverFunction;
@@ -39,20 +50,31 @@ export type PrismicLinkProps = {
 	/**
 	 * The component rendered for internal URLs. Defaults to `<a>`.
 	 *
-	 * If your app uses a client-side router that requires a special Link component, provide the Link component to this prop.
+	 * If your app uses a client-side router that requires a special Link
+	 * component, provide the Link component to this prop.
 	 */
 	internalComponent?: string | React.ComponentType<LinkProps>;
 
-	/** The component rendered for external URLs. Defaults to `<a>`. */
+	/**
+	 * The component rendered for external URLs. Defaults to `<a>`.
+	 */
 	externalComponent?: string | React.ComponentType<LinkProps>;
 
-	/** The `target` attribute for anchor elements. If the Prismic field is configured to open in a new window, this prop defaults to `_blank`. */
+	/**
+	 * The `target` attribute for anchor elements. If the Prismic field is
+	 * configured to open in a new window, this prop defaults to `_blank`.
+	 */
 	target?: string;
 
-	/** The `rel` attribute for anchor elements. If the `target` prop is set to `"_blank"`, this prop defaults to `"noopener noreferrer"`. */
+	/**
+	 * The `rel` attribute for anchor elements. If the `target` prop is set to
+	 * `"_blank"`, this prop defaults to `"noopener noreferrer"`.
+	 */
 	rel?: string;
 
-	/** Children for the component. **/
+	/**
+	 * Children for the component. *
+	 */
 	children?: React.ReactNode;
 } & (
 	| {
@@ -70,7 +92,9 @@ export type PrismicLinkProps = {
 			document?: prismicT.PrismicDocument;
 	  }
 	| {
-			/** The URL to link. */
+			/**
+			 * The URL to link.
+			 */
 			href?: string;
 	  }
 );
@@ -88,13 +112,17 @@ const defaultExternalComponent = "a";
 /**
  * React component to render a link from a Prismic Link field.
  *
- * Different components can be rendered depending on whether the link is internal or external. This is helpful when integrating with client-side routers, such as a router-specific Link component.
+ * Different components can be rendered depending on whether the link is
+ * internal or external. This is helpful when integrating with client-side
+ * routers, such as a router-specific Link component.
  *
- * If a link is configured to open in a new window using `target="_blank"`, `rel="noopener noreferrer"` is set by default.
+ * If a link is configured to open in a new window using `target="_blank"`,
+ * `rel="noopener noreferrer"` is set by default.
  *
- * @param props Props for the component.
+ * @param props - Props for the component.
  *
- * @returns The internal or external link component depending on whether the link is internal or external.
+ * @returns The internal or external link component depending on whether the
+ *   link is internal or external.
  */
 export const PrismicLink = (props: PrismicLinkProps): JSX.Element | null => {
 	const context = usePrismicContext();
@@ -105,7 +133,7 @@ export const PrismicLink = (props: PrismicLinkProps): JSX.Element | null => {
 	if ("href" in props) {
 		href = props.href || null;
 	} else if ("document" in props && props.document) {
-		href = prismicH.documentAsLink(props.document, linkResolver);
+		href = prismicH.asLink(props.document, linkResolver);
 	} else if ("field" in props && props.field) {
 		href = prismicH.asLink(props.field, linkResolver);
 	}

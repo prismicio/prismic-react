@@ -14,14 +14,17 @@ import { usePrismicContext } from "./usePrismicContext";
  * Props for `<PrismicRichText>`.
  */
 export type PrismicRichTextProps = {
-	/** The Prismic Rich Text field to render. */
+	/**
+	 * The Prismic Rich Text field to render.
+	 */
 	field: prismicT.RichTextField;
 
 	/**
 	 * The Link Resolver used to resolve links.
 	 *
-	 * @remarks If your app uses Route Resolvers when querying for your Prismic repository's content, a Link Resolver does not need to be provided.
-	 *
+	 * @remarks
+	 * If your app uses Route Resolvers when querying for your Prismic
+	 * repository's content, a Link Resolver does not need to be provided.
 	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
 	 */
 	linkResolver?: PrismicLinkProps["linkResolver"];
@@ -29,36 +32,35 @@ export type PrismicRichTextProps = {
 	/**
 	 * A function that maps a Rich Text block to a React component.
 	 *
+	 * @deprecated Use the `components` prop instead. Prefer using a map
+	 *   serializer when possible.
 	 * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
-	 *
-	 * @deprecated Use the `components` prop instead. Prefer using a map serializer when possible.
-	 * */
+	 */
 	htmlSerializer?: JSXFunctionSerializer;
 
 	/**
 	 * A map or function that maps a Rich Text block to a React component.
 	 *
-	 * @remarks Prefer using a map serializer over the function serializer when possible. The map serializer is simpler to maintain.
+	 * @remarks
+	 * Prefer using a map serializer over the function serializer when possible.
+	 * The map serializer is simpler to maintain.
+	 * @example A map serializer.
 	 *
-	 * @example
-	 * A map serializer.
-	 *
-	 * ```ts
+	 * ```jsx
 	 * {
 	 *   heading1: ({children}) => <Heading>{children}</Heading>
 	 * }
 	 * ```
 	 *
-	 * @example
-	 * A function serializer.
+	 * @example A function serializer.
 	 *
-	 * ```ts
+	 * ```jsx
 	 * (type, node, content, children) => {
-	 *	 switch (type) {
-	 *	   case 'heading1': {
-	 *	     return <Heading>{chidlren}</Heading>
-	 *	   }
-	 *	 }
+	 *  switch (type) {
+	 *    case 'heading1': {
+	 *      return <Heading>{chidlren}</Heading>
+	 *    }
+	 *  }
 	 * }
 	 * ```
 	 */
@@ -67,14 +69,14 @@ export type PrismicRichTextProps = {
 	/**
 	 * The React component rendered for links when the URL is internal.
 	 *
-	 * @default `<a>`
+	 * @defaultValue `<a>`
 	 */
 	internalLinkComponent?: PrismicLinkProps["internalComponent"];
 
 	/**
 	 * The React component rendered for links when the URL is external.
 	 *
-	 * @default `<a>`
+	 * @defaultValue `<a>`
 	 */
 	externalLinkComponent?: PrismicLinkProps["externalComponent"];
 };
@@ -154,35 +156,43 @@ const createDefaultSerializer = (
 	});
 
 /**
- * React component that renders content from a Prismic Rich Text field. By default, HTML elements are rendered for each piece of content. A `heading1` block will render an `<h1>` HTML element, for example. Links will use `<PrismicLink>` by default which can be customized using the `internalLinkComponent` and `externalLinkComponent` props.
+ * React component that renders content from a Prismic Rich Text field. By
+ * default, HTML elements are rendered for each piece of content. A `heading1`
+ * block will render an `<h1>` HTML element, for example. Links will use
+ * `<PrismicLink>` by default which can be customized using the
+ * `internalLinkComponent` and `externalLinkComponent` props.
  *
- * To customize the components that are rendered, provide a map or function serializer to the `components` prop.
+ * To customize the components that are rendered, provide a map or function
+ * serializer to the `components` prop.
  *
- * Components can also be provided in a centralized location using the `<PrismicProvider>` React context provider.
+ * Components can also be provided in a centralized location using the
+ * `<PrismicProvider>` React context provider.
  *
- * @remarks This component returns a React fragment with no wrapping element around the content. If you need a wrapper, add a component around `<PrismicRichText>`.
+ * @remarks
+ * This component returns a React fragment with no wrapping element around the
+ * content. If you need a wrapper, add a component around `<PrismicRichText>`.
+ * @example Rendering a Rich Text field using the default HTMl elements.
  *
- * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
- * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
- *
- * @example
- * Rendering a Rich Text field using the default HTMl elements.
- *
+ * ```jsx
  * <PrismicRichText field={document.data.content} />
+ * ```
  *
- * @example
- * Rendering a Rich Text field using a custom set of React components.
+ * @example Rendering a Rich Text field using a custom set of React components.
  *
+ * ```jsx
  * <PrismicRichText
  *   field={document.data.content}
  *   components={{
- *		 heading1: ({ children }) => <Heading>{children}</Heading>
+ * 	 heading1: ({ children }) => <Heading>{children}</Heading>
  *   }}
  * />
+ * ```
  *
- * @param props Props for the component.
+ * @param props - Props for the component.
  *
  * @returns The Rich Text field's content as React components.
+ * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
+ * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
  */
 export const PrismicRichText = (props: PrismicRichTextProps): JSX.Element => {
 	const context = usePrismicContext();

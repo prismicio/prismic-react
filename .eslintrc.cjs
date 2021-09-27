@@ -20,7 +20,7 @@ module.exports = {
 		"plugin:react/recommended",
 		"plugin:react-hooks/recommended",
 	],
-	plugins: [],
+	plugins: ["eslint-plugin-tsdoc"],
 	rules: {
 		"no-console": ["warn", { allow: ["info", "warn", "error"] }],
 		"no-debugger": "warn",

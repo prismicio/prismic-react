@@ -81,9 +81,9 @@ const getParamHookDependencies = (
 /**
  * Determines if a value is a `@prismicio/client` params object.
  *
- * @param value The value to check.
+ * @param value - The value to check.
  *
- * @return `true` if `value` is a `@prismicio/client` params object, `false` otherwise.
+ * @returns `true` if `value` is a `@prismicio/client` params object, `false` otherwise.
  */
 const isParams = (
 	value: unknown,
@@ -95,23 +95,29 @@ const isParams = (
 /**
  * The return value of a `@prismicio/client` React hook.
  *
- * @typeParam TData Data returned by the client.
+ * @typeParam TData - Data returned by the client.
  */
 export type ClientHookReturnType<TData = unknown> = [
-	/** Data returned by the client. */
+	/**
+	 * Data returned by the client.
+	 */
 	data: TData | undefined,
 
-	/** The current state of the hook's client method call. */
+	/**
+	 * The current state of the hook's client method call.
+	 */
 	state: Pick<StateMachineState<TData>, "state" | "error">,
 ];
 
 /**
- * Creates a React hook that forwards arguments to a specific method of a `@prismicio/client` instance. The created hook has its own internal state manager to report async status, such as pending or error statuses.
+ * Creates a React hook that forwards arguments to a specific method of a
+ * `@prismicio/client` instance. The created hook has its own internal state
+ * manager to report async status, such as pending or error statuses.
  *
- * @param method The `@prismicio/client` method to which hook arguments will be forwarded.
+ * @param method - The `@prismicio/client` method to which hook arguments will
+ *   be forwarded.
  *
  * @returns A new React hook configured for the provided method.
- *
  * @internal
  */
 export const useStatefulPrismicClientMethod = <
