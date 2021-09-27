@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.5](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.4...v2.0.0-alpha.5) (2021-09-27)
+
+
+### Bug Fixes
+
+* export PrismicProvider props type ([848cd7d](https://github.com/prismicio/prismic-reactjs/commit/848cd7def29712d72b33f334ba1e738968463746))
+
+
+### Chore
+
+* **deps:** maintain dependencies ([7437659](https://github.com/prismicio/prismic-reactjs/commit/74376591ec5e394ead1359df73b723baf02e9c53))
+* update template config ([8d63067](https://github.com/prismicio/prismic-reactjs/commit/8d63067a5c419e5082b741e57e03f0a96eee3d12))
+
 ## [2.0.0-alpha.4](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.3...v2.0.0-alpha.4) (2021-09-15)
 
 
