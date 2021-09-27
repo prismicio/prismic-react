@@ -1,6 +1,6 @@
 ---
 name: 🚨 Bug report
-about: Report a bug report to help us improve the package.
+about: Report a bug report to help improve the package.
 title: ""
 labels: "bug"
 assignees: ""
@@ -16,12 +16,13 @@ assignees: ""
 
 ### Versions
 
-- package_name: <!-- ex: v0.1.0 -->
+- @prismicio/react: <!-- ex: v0.1.0 -->
+- react: <!-- ex: v17.0.0 -->
 - node: <!-- ex: v12.14.0 -->
 
 ### Reproduction
 
-<!-- Link to a minimal test case, without a reproduction, it is so hard to address problem :( -->
+<!-- If possible link to a minimal test case, without a reproduction, it is so hard to address problems :( -->
 
 <details open>
 <summary>Additional Details</summary>

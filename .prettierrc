@@ -1,4 +1,8 @@
 {
+	"plugins": ["prettier-plugin-jsdoc"],
+	"jsdocSeparateReturnsFromParam": true,
+	"jsdocSingleLineComment": false,
+	"tsdoc": true,
 	"printWidth": 80,
 	"useTabs": true,
 	"semi": true,
@@ -7,7 +11,7 @@
 	"jsxSingleQuote": false,
 	"trailingComma": "all",
 	"bracketSpacing": true,
-	"jsxBracketSameLine": false,
+	"bracketSameLine": false,
 	"arrowParens": "always",
 	"requirePragma": false,
 	"insertPragma": false,

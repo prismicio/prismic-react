@@ -24,7 +24,7 @@ module.exports = {
 	rules: {
 		"no-console": ["warn", { allow: ["info", "warn", "error"] }],
 		"no-debugger": "warn",
-		"no-undef": 0,
+		"no-undef": "off",
 		curly: "error",
 		"prefer-const": "error",
 		"padding-line-between-statements": [
@@ -39,5 +39,6 @@ module.exports = {
 			},
 		],
 		"@typescript-eslint/no-var-requires": "off",
+		"tsdoc/syntax": "warn",
 	},
 };
