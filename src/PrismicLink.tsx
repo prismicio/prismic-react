@@ -33,10 +33,23 @@ export interface LinkProps {
 	children?: React.ReactNode;
 }
 
+type ComponentProps<T> = T extends React.ComponentType<infer U>
+	? U
+	: T extends keyof JSX.IntrinsicElements
+	? React.ComponentProps<T>
+	: unknown;
+
 /**
  * Props for `<PrismicLink>`.
  */
-export type PrismicLinkProps = {
+export type PrismicLinkProps<
+	InternalComponent extends string | React.ComponentType<LinkProps> =
+		| string
+		| React.ComponentType<LinkProps>,
+	ExternalComponent extends string | React.ComponentType<LinkProps> =
+		| string
+		| React.ComponentType<LinkProps>,
+> = ComponentProps<InternalComponent> & {
 	/**
 	 * The Link Resolver used to resolve links.
 	 *
@@ -53,12 +66,12 @@ export type PrismicLinkProps = {
 	 * If your app uses a client-side router that requires a special Link
 	 * component, provide the Link component to this prop.
 	 */
-	internalComponent?: string | React.ComponentType<LinkProps>;
+	internalComponent?: InternalComponent;
 
 	/**
 	 * The component rendered for external URLs. Defaults to `<a>`.
 	 */
-	externalComponent?: string | React.ComponentType<LinkProps>;
+	externalComponent?: ExternalComponent;
 
 	/**
 	 * The `target` attribute for anchor elements. If the Prismic field is
@@ -77,27 +90,27 @@ export type PrismicLinkProps = {
 	 */
 	children?: React.ReactNode;
 } & (
-	| {
-			/**
-			 * The Prismic Link field containing the URL or document to link.
-			 *
-			 * @see Learn about Prismic Link fields {@link https://prismic.io/docs/core-concepts/link-content-relationship}
-			 */
-			field?: prismicT.LinkField;
-	  }
-	| {
-			/**
-			 * The Prismic document to link.
-			 */
-			document?: prismicT.PrismicDocument;
-	  }
-	| {
-			/**
-			 * The URL to link.
-			 */
-			href?: string;
-	  }
-);
+		| {
+				/**
+				 * The Prismic Link field containing the URL or document to link.
+				 *
+				 * @see Learn about Prismic Link fields {@link https://prismic.io/docs/core-concepts/link-content-relationship}
+				 */
+				field?: prismicT.LinkField;
+		  }
+		| {
+				/**
+				 * The Prismic document to link.
+				 */
+				document?: prismicT.PrismicDocument;
+		  }
+		| {
+				/**
+				 * The URL to link.
+				 */
+				href?: string;
+		  }
+	);
 
 /**
  * The default component rendered for internal URLs.
@@ -124,7 +137,16 @@ const defaultExternalComponent = "a";
  * @returns The internal or external link component depending on whether the
  *   link is internal or external.
  */
-export const PrismicLink = (props: PrismicLinkProps): JSX.Element | null => {
+export const PrismicLink = <
+	InternalComponent extends
+		| string
+		| React.ComponentType<LinkProps> = typeof defaultInternalComponent,
+	ExternalComponent extends
+		| string
+		| React.ComponentType<LinkProps> = typeof defaultExternalComponent,
+>(
+	props: PrismicLinkProps<InternalComponent, ExternalComponent>,
+): JSX.Element | null => {
 	const context = usePrismicContext();
 
 	const linkResolver = props.linkResolver || context.linkResolver;
@@ -164,7 +186,7 @@ export const PrismicLink = (props: PrismicLinkProps): JSX.Element | null => {
 	const Component = isInternal ? InternalComponent : ExternalComponent;
 
 	return href ? (
-		<Component href={href} target={target} rel={rel}>
+		<Component {...props} href={href} target={target} rel={rel}>
 			{props.children}
 		</Component>
 	) : null;
