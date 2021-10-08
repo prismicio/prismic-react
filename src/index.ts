@@ -11,6 +11,9 @@ export { usePrismicClient } from "./usePrismicClient";
 export { PrismicLink } from "./PrismicLink";
 export type { PrismicLinkProps, LinkProps } from "./PrismicLink";
 
+export { PrismicText } from "./PrismicText";
+export type { PrismicTextProps } from "./PrismicText";
+
 export { PrismicRichText } from "./PrismicRichText";
 export type { PrismicRichTextProps } from "./PrismicRichText";
 
