@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.6](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.5...v2.0.0-alpha.6) (2021-10-09)
+
+
+### Features
+
+* add `usePrismicDocumentsByUIDs` and `useAllPrismicDocumentsByUIDs` ([3a25db8](https://github.com/prismicio/prismic-reactjs/commit/3a25db8cc9fa5909ff025028de7502b5790f2b5b))
+* support intrinsic props from link components ([ab82e96](https://github.com/prismicio/prismic-reactjs/commit/ab82e9670d36fb533044e071481d1a7e3c2c7317))
+
+
+### Bug Fixes
+
+* add keys to rendered Rich Text components ([b0300d3](https://github.com/prismicio/prismic-reactjs/commit/b0300d34605bb1d428767e80a29f641b2fd9db8c))
+* export PrismicText ([87457bf](https://github.com/prismicio/prismic-reactjs/commit/87457bfa05e56f34eef7f609f2d6d9c1d16984ef))
+* looser SliceZoneComponents type to support non-const `slice_type` ([c227fec](https://github.com/prismicio/prismic-reactjs/commit/c227fece72338a4b12c3f9f5f26f814900fe59d4))
+* move `@prismicio/client` and `@prismicio/helpers` to peer dependencies ([91a9381](https://github.com/prismicio/prismic-reactjs/commit/91a938164487e4f01944cb906986d9db8abe00b9))
+* only pass external props to rendered PrismicLink component ([1f9d9a5](https://github.com/prismicio/prismic-reactjs/commit/1f9d9a50236e9d6711fc49d3b3c2945f8d0ab2c3))
+* render Rich Text line breaks as <br /> ([4eaa6dd](https://github.com/prismicio/prismic-reactjs/commit/4eaa6dd5ab33262e536c6d46d901c0aed2abf731))
+* use string union over enum for hook states ([fef36bc](https://github.com/prismicio/prismic-reactjs/commit/fef36bc49baed5ff4f134c2ca6d94153516f9bcc))
+
+
+### Documentation
+
+* update PrismicToolbar description ([1a96dd6](https://github.com/prismicio/prismic-reactjs/commit/1a96dd6739cf0cd37def03ba6b8bbaaa91b365b9))
+
+
+### Refactor
+
+* reorganize PrismicLink ([9dfc9b9](https://github.com/prismicio/prismic-reactjs/commit/9dfc9b9baca6fd7a2a928cd13dd4f0c8d5f55fec))
+
+
+### Chore
+
+* add @prismicio/client and @prismicio/helpers as devDependencies ([672454f](https://github.com/prismicio/prismic-reactjs/commit/672454f74087c2ae1766a3b89e0ee8b16339e02f))
+* update dependencies ([c342721](https://github.com/prismicio/prismic-reactjs/commit/c342721cfa6fb6479ec6f496056b67d4cbf58b30))
+* update package-lock.json ([b8abf23](https://github.com/prismicio/prismic-reactjs/commit/b8abf23394f76b15fa823f166e9b2726eada7026))
+
 ## [2.0.0-alpha.5](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.4...v2.0.0-alpha.5) (2021-09-27)
 
 
