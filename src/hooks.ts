@@ -156,6 +156,56 @@ export const usePrismicDocumentByUID = <
 	useStatefulPrismicClientMethod(proto.getByUID, args);
 
 /**
+ * A hook that queries documents from the Prismic repository with specific UIDs
+ * of a Custom Type.
+ *
+ * @remarks
+ * An additional `@prismicio/client` instance can be provided at `params.client`.
+ * @typeParam TDocument - Type of the Prismic document returned
+ * @param documentType - The API ID of the document's Custom Type
+ * @param uids - A list of document UIDs.
+ * @param params - Parameters to filter, sort, and paginate results
+ *
+ * @returns The composable payload {@link ClientHookReturnType}
+ * @see Underlying `@prismicio/client` method {@link proto.getByUID}
+ */
+export const usePrismicDocumentsByUIDs = <
+	TDocument extends prismicT.PrismicDocument,
+>(
+	...args: [
+		documentType: ClientMethodParameters<"getByUIDs">[0],
+		uids: ClientMethodParameters<"getByUIDs">[1],
+		params?: ClientMethodParameters<"getByUIDs">[2] & HookOnlyParameters,
+	]
+): ClientHookReturnType<prismicT.Query<TDocument>> =>
+	useStatefulPrismicClientMethod(proto.getByUIDs, args);
+
+/**
+ * A hook that queries all documents from the Prismic repository with specific
+ * UIDs of a Custom Type.
+ *
+ * @remarks
+ * An additional `@prismicio/client` instance can be provided at `params.client`.
+ * @typeParam TDocument - Type of the Prismic document returned
+ * @param documentType - The API ID of the document's Custom Type
+ * @param uids - A list of document UIDs.
+ * @param params - Parameters to filter, sort, and paginate results
+ *
+ * @returns The composable payload {@link ClientHookReturnType}
+ * @see Underlying `@prismicio/client` method {@link proto.getByUID}
+ */
+export const useAllPrismicDocumentsByUIDs = <
+	TDocument extends prismicT.PrismicDocument,
+>(
+	...args: [
+		documentType: ClientMethodParameters<"getByUIDs">[0],
+		uids: ClientMethodParameters<"getByUIDs">[1],
+		params?: ClientMethodParameters<"getByUIDs">[2] & HookOnlyParameters,
+	]
+): ClientHookReturnType<TDocument[]> =>
+	useStatefulPrismicClientMethod(proto.getAllByUIDs, args);
+
+/**
  * A hook that queries a singleton document from the Prismic repository for a
  * specific Custom Type.
  *

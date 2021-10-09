@@ -36,6 +36,7 @@ export {
 	useAllPrismicDocumentsByTag,
 	useAllPrismicDocumentsByTags,
 	useAllPrismicDocumentsByType,
+	useAllPrismicDocumentsByUIDs,
 	useFirstPrismicDocument,
 	usePrismicDocumentByID,
 	usePrismicDocumentByUID,
@@ -44,6 +45,7 @@ export {
 	usePrismicDocumentsByTag,
 	usePrismicDocumentsByTags,
 	usePrismicDocumentsByType,
+	usePrismicDocumentsByUIDs,
 	useSinglePrismicDocument,
 } from "./hooks";
 
