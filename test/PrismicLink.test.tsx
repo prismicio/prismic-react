@@ -98,7 +98,6 @@ test("renders a link from a document using a Link Resolver", (t) => {
 		<PrismicLink document={document} linkResolver={linkResolver} />,
 	);
 	const expected = renderJSON(
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		<a href={`/${document.uid}`} rel={undefined} target={undefined} />,
 	);
 
@@ -327,4 +326,22 @@ test("if URL is external and externalComponent is given to the provider and the 
 	);
 
 	t.deepEqual(actual, expected);
+});
+
+test("renders null if field is provided undefined", (t) => {
+	const actual = renderJSON(<PrismicLink field={undefined} />);
+
+	t.is(actual, null);
+});
+
+test("renders null if document is provided undefined", (t) => {
+	const actual = renderJSON(<PrismicLink document={undefined} />);
+
+	t.is(actual, null);
+});
+
+test("renders null if href is provided undefined", (t) => {
+	const actual = renderJSON(<PrismicLink href={undefined} />);
+
+	t.is(actual, null);
 });
