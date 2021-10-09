@@ -99,7 +99,12 @@ export type SliceZoneComponents<
 		[SliceType in keyof Record<
 			TSlice["slice_type"],
 			never
-		>]: SliceComponentType<Extract<TSlice, SliceLike<SliceType>>, TContext>;
+		>]: SliceComponentType<
+			Extract<TSlice, SliceLike<SliceType>> extends never
+				? SliceLike
+				: Extract<TSlice, SliceLike<SliceType>>,
+			TContext
+		>;
 	};
 
 /**
