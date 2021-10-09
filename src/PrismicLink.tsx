@@ -6,6 +6,12 @@ import { isInternalURL } from "./lib/isInternalURL";
 
 import { usePrismicContext } from "./usePrismicContext";
 
+type ComponentProps<T> = T extends React.ComponentType<infer U>
+	? U
+	: T extends keyof JSX.IntrinsicElements
+	? React.ComponentProps<T>
+	: unknown;
+
 /**
  * Props provided to a component when rendered with `<PrismicLink>`.
  */
@@ -33,12 +39,6 @@ export interface LinkProps {
 	children?: React.ReactNode;
 }
 
-type ComponentProps<T> = T extends React.ComponentType<infer U>
-	? U
-	: T extends keyof JSX.IntrinsicElements
-	? React.ComponentProps<T>
-	: unknown;
-
 /**
  * Props for `<PrismicLink>`.
  */
@@ -49,6 +49,8 @@ export type PrismicLinkProps<
 	ExternalComponent extends string | React.ComponentType<LinkProps> =
 		| string
 		| React.ComponentType<LinkProps>,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
 > = ComponentProps<InternalComponent> &
 	ComponentProps<ExternalComponent> & {
 		/**
@@ -59,7 +61,7 @@ export type PrismicLinkProps<
 		 * repository's content, a Link Resolver does not need to be provided.
 		 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
 		 */
-		linkResolver?: prismicH.LinkResolverFunction;
+		linkResolver?: LinkResolverFunction;
 
 		/**
 		 * The component rendered for internal URLs. Defaults to `<a>`.
@@ -145,16 +147,22 @@ export const PrismicLink = <
 	ExternalComponent extends
 		| string
 		| React.ComponentType<LinkProps> = typeof defaultExternalComponent,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
 >(
-	props: PrismicLinkProps<InternalComponent, ExternalComponent>,
+	props: PrismicLinkProps<
+		InternalComponent,
+		ExternalComponent,
+		LinkResolverFunction
+	>,
 ): JSX.Element | null => {
 	const context = usePrismicContext();
 
 	const linkResolver = props.linkResolver || context.linkResolver;
 
-	let href: string | null = null;
+	let href: string | null | undefined;
 	if ("href" in props) {
-		href = props.href || null;
+		href = props.href;
 	} else if ("document" in props && props.document) {
 		href = prismicH.asLink(props.document, linkResolver);
 	} else if ("field" in props && props.field) {
@@ -186,28 +194,21 @@ export const PrismicLink = <
 
 	const Component = isInternal ? InternalComponent : ExternalComponent;
 
-	const restProps = {} as ComponentProps<InternalComponent> &
-		ComponentProps<ExternalComponent>;
-	for (const key in props) {
-		if (
-			![
-				"linkResolver",
-				"internalComponent",
-				"externalComponent",
-				"field",
-				"document",
-				"href",
-				"rel",
-				"target",
-			].includes(key)
-		) {
-			restProps[key as keyof typeof restProps] = props[
-				key as keyof typeof props
-			] as typeof restProps[keyof typeof restProps];
-		}
+	const passthroughProps: typeof props = Object.assign({}, props);
+	delete passthroughProps.linkResolver;
+	delete passthroughProps.internalComponent;
+	delete passthroughProps.externalComponent;
+	delete passthroughProps.rel;
+	delete passthroughProps.target;
+	if ("field" in passthroughProps) {
+		delete passthroughProps.field;
+	} else if ("document" in passthroughProps) {
+		delete passthroughProps.document;
+	} else if ("href" in passthroughProps) {
+		delete passthroughProps.href;
 	}
 
 	return href ? (
-		<Component {...restProps} href={href} target={target} rel={rel} />
+		<Component {...passthroughProps} href={href} target={target} rel={rel} />
 	) : null;
 };
