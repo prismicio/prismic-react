@@ -26,24 +26,26 @@ const reducer = <TData>(
 ): StateMachineState<TData> => {
 	switch (action[0]) {
 		case "start": {
-			return { state: PrismicClientHookState.PENDING };
+			return { state: "loading" };
 		}
 
 		case "succeed": {
-			return { state: PrismicClientHookState.SUCCEEDED, data: action[1] };
+			return { state: "loaded", data: action[1] };
 		}
 
 		case "fail": {
 			return {
 				...state,
-				state: PrismicClientHookState.FAILED,
+				state: "failed",
 				error: action[1],
 			};
 		}
 	}
 };
 
-const initialState = { state: PrismicClientHookState.IDLE } as const;
+const initialState: StateMachineState<never> = {
+	state: "idle",
+};
 
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
@@ -148,7 +150,7 @@ export const useStatefulPrismicClientMethod = <
 
 	React.useEffect(
 		() => {
-			if (state.state === PrismicClientHookState.IDLE && !skip) {
+			if (state.state === "idle" && !skip) {
 				dispatch(["start"]);
 				method
 					.call(client, ...argsWithoutParams, params)

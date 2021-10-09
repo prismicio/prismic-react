@@ -20,24 +20,4 @@ export type JSXMapSerializer = prismicR.RichTextMapSerializer<JSX.Element>;
 /**
  * States of a `@prismicio/client` hook.
  */
-export const enum PrismicClientHookState {
-	/**
-	 * The hook has not started fetching.
-	 */
-	IDLE,
-
-	/**
-	 * The hook is fetching data.
-	 */
-	PENDING,
-
-	/**
-	 * The hook sucessfully fetched data.
-	 */
-	SUCCEEDED,
-
-	/**
-	 * The hook failed to fetch data.
-	 */
-	FAILED,
-}
+export type PrismicClientHookState = "idle" | "loading" | "loaded" | "failed";

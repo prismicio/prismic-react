@@ -47,5 +47,8 @@ export {
 	useSinglePrismicDocument,
 } from "./hooks";
 
-export { PrismicClientHookState } from "./types";
-export type { JSXMapSerializer, JSXFunctionSerializer } from "./types";
+export type {
+	JSXMapSerializer,
+	JSXFunctionSerializer,
+	PrismicClientHookState,
+} from "./types";
