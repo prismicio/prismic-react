@@ -16,11 +16,7 @@ import { createRepositoryResponse } from "./__testutils__/createRepositoryRespon
 import { getMasterRef } from "./__testutils__/getMasterRef";
 import { md5 } from "./__testutils__/md5";
 
-import {
-	PrismicClientHookState,
-	PrismicProvider,
-	useFirstPrismicDocument,
-} from "../src";
+import { PrismicProvider, useFirstPrismicDocument } from "../src";
 
 const server = mswNode.setupServer();
 test.before(() => server.listen({ onUnhandledRequest: "error" }));
@@ -53,9 +49,7 @@ test.serial("returns first document", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(
-		() => result.current[1].state === PrismicClientHookState.SUCCEEDED,
-	);
+	await waitForValueToChange(() => result.current[1].state === "loaded");
 
 	t.deepEqual(result.current[0], queryResponsePages[0].results[0]);
 });
@@ -84,9 +78,7 @@ test.serial("supports params", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(
-		() => result.current[1].state === PrismicClientHookState.SUCCEEDED,
-	);
+	await waitForValueToChange(() => result.current[1].state === "loaded");
 
 	t.deepEqual(result.current[0], queryResponsePages[0].results[0]);
 });
@@ -106,9 +98,7 @@ test.serial("supports explicit client", async (t) => {
 		useFirstPrismicDocument({ client }),
 	);
 
-	await waitForValueToChange(
-		() => result.current[1].state === PrismicClientHookState.SUCCEEDED,
-	);
+	await waitForValueToChange(() => result.current[1].state === "loaded");
 
 	t.deepEqual(result.current[0], queryResponsePages[0].results[0]);
 });
@@ -133,9 +123,7 @@ test.serial("returns failed state on error", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(
-		() => result.current[1].state === PrismicClientHookState.FAILED,
-	);
+	await waitForValueToChange(() => result.current[1].state === "failed");
 
 	t.true(result.current[1].error instanceof prismic.ForbiddenError);
 	t.is(result.current[0], undefined);

@@ -1,4 +1,3 @@
-import * as prismic from "@prismicio/client";
 import * as prismicT from "@prismicio/types";
 
 import { createDocument } from "./createDocument";
@@ -18,7 +17,7 @@ export const createQueryResponsePages = <
 	numPages = 3,
 	numDocsPerPage = 3,
 	fields,
-}: CreateQueryResponsePagesArgs<TDocument> = {}): prismic.Query<TDocument>[] => {
+}: CreateQueryResponsePagesArgs<TDocument> = {}): prismicT.Query<TDocument>[] => {
 	const documents = Array(numDocsPerPage)
 		.fill(undefined)
 		.map(() => createDocument(fields));
