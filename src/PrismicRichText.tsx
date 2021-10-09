@@ -91,21 +91,21 @@ const createDefaultSerializer = (
 	args: CreateDefaultSerializerArgs,
 ): JSXFunctionSerializer =>
 	prismicR.wrapMapSerializer({
-		heading1: ({ children }) => <h1>{children}</h1>,
-		heading2: ({ children }) => <h2>{children}</h2>,
-		heading3: ({ children }) => <h3>{children}</h3>,
-		heading4: ({ children }) => <h4>{children}</h4>,
-		heading5: ({ children }) => <h5>{children}</h5>,
-		heading6: ({ children }) => <h6>{children}</h6>,
-		paragraph: ({ children }) => <p>{children}</p>,
-		preformatted: ({ node }) => <pre>{node.text}</pre>,
-		strong: ({ children }) => <strong>{children}</strong>,
-		em: ({ children }) => <em>{children}</em>,
-		listItem: ({ children }) => <li>{children}</li>,
-		oListItem: ({ children }) => <li>{children}</li>,
-		list: ({ children }) => <ul>{children}</ul>,
-		oList: ({ children }) => <ol>{children}</ol>,
-		image: ({ node }) => {
+		heading1: ({ children, key }) => <h1 key={key}>{children}</h1>,
+		heading2: ({ children, key }) => <h2 key={key}>{children}</h2>,
+		heading3: ({ children, key }) => <h3 key={key}>{children}</h3>,
+		heading4: ({ children, key }) => <h4 key={key}>{children}</h4>,
+		heading5: ({ children, key }) => <h5 key={key}>{children}</h5>,
+		heading6: ({ children, key }) => <h6 key={key}>{children}</h6>,
+		paragraph: ({ children, key }) => <p key={key}>{children}</p>,
+		preformatted: ({ node, key }) => <pre key={key}>{node.text}</pre>,
+		strong: ({ children, key }) => <strong key={key}>{children}</strong>,
+		em: ({ children, key }) => <em key={key}>{children}</em>,
+		listItem: ({ children, key }) => <li key={key}>{children}</li>,
+		oListItem: ({ children, key }) => <li key={key}>{children}</li>,
+		list: ({ children, key }) => <ul key={key}>{children}</ul>,
+		oList: ({ children, key }) => <ol key={key}>{children}</ol>,
+		image: ({ node, key }) => {
 			const img = (
 				<img
 					src={node.url}
@@ -115,7 +115,7 @@ const createDefaultSerializer = (
 			);
 
 			return (
-				<p className="block-img">
+				<p key={key} className="block-img">
 					{node.linkTo ? (
 						<PrismicLink
 							linkResolver={args.linkResolver}
@@ -131,16 +131,18 @@ const createDefaultSerializer = (
 				</p>
 			);
 		},
-		embed: ({ node }) => (
+		embed: ({ node, key }) => (
 			<div
+				key={key}
 				data-oembed={node.oembed.embed_url}
 				data-oembed-type={node.oembed.type}
 				data-oembed-provider={node.oembed.provider_name}
 				dangerouslySetInnerHTML={{ __html: node.oembed.html ?? "" }}
 			/>
 		),
-		hyperlink: ({ node, children }) => (
+		hyperlink: ({ node, children, key }) => (
 			<PrismicLink
+				key={key}
 				field={node.data}
 				linkResolver={args.linkResolver}
 				internalComponent={args.internalLinkComponent}
@@ -149,8 +151,10 @@ const createDefaultSerializer = (
 				{children}
 			</PrismicLink>
 		),
-		label: ({ node, children }) => (
-			<span className={node.data.label}>{children}</span>
+		label: ({ node, children, key }) => (
+			<span key={key} className={node.data.label}>
+				{children}
+			</span>
 		),
 		span: ({ text, key }) => {
 			const result: React.ReactNode[] = [];
