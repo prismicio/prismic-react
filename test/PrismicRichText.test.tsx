@@ -472,3 +472,23 @@ test("returns <span /> with label className if type is label", (t) => {
 
 	t.deepEqual(actual, expected);
 });
+
+test("renders line breaks as <br />", (t) => {
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "line 1\nline 2",
+			spans: [],
+		},
+	];
+
+	const actual = renderJSON(<PrismicRichText field={field} />);
+	const expected = renderJSON(
+		<p>
+			line 1<br />
+			line 2
+		</p>,
+	);
+
+	t.deepEqual(actual, expected);
+});

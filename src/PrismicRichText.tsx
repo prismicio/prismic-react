@@ -152,7 +152,22 @@ const createDefaultSerializer = (
 		label: ({ node, children }) => (
 			<span className={node.data.label}>{children}</span>
 		),
-		span: ({ text }) => <>{text}</>,
+		span: ({ text, key }) => {
+			const result: React.ReactNode[] = [];
+
+			let i = 0;
+			for (const line of text.split("\n")) {
+				if (i > 0) {
+					result.push(<br key={`${i}__break`} />);
+				}
+
+				result.push(<React.Fragment key={`${i}__line`}>{line}</React.Fragment>);
+
+				i++;
+			}
+
+			return <React.Fragment key={key}>{result}</React.Fragment>;
+		},
 	});
 
 /**
