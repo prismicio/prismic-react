@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.1](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.6...v2.0.0-beta.1) (2021-11-01)
+
+
+### Features
+
+* add *BySomeTags and *ByEveryTag hooks ([7faa6b3](https://github.com/prismicio/prismic-reactjs/commit/7faa6b35c907dd451fb1ccc605ec8368bec27d55))
+
+
+### Refactor
+
+* use universal Error object in client hooks ([c02a557](https://github.com/prismicio/prismic-reactjs/commit/c02a5575df001780aff23510c9c9ef3ebb8272eb))
+
+
+### Chore
+
+* **deps:** update dependencies ([49878fd](https://github.com/prismicio/prismic-reactjs/commit/49878fd5352b494f979f5e3620e9ccf17614cb55))
+* prepare for beta release ([8f6cb34](https://github.com/prismicio/prismic-reactjs/commit/8f6cb34a93152e6640e2f01fde4b4fb2a4c8940a))
+
 ## [2.0.0-alpha.6](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.5...v2.0.0-alpha.6) (2021-10-09)
 
 
