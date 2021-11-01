@@ -4,21 +4,16 @@ import * as prismic from "@prismicio/client";
 import { PrismicClientHookState } from "./types";
 import { usePrismicClient } from "./usePrismicClient";
 
-type PrismicClientError =
-	| prismic.PrismicError
-	| prismic.ParsingError
-	| prismic.ForbiddenError;
-
 type StateMachineState<TData> = {
 	state: PrismicClientHookState;
 	data?: TData;
-	error?: PrismicClientError;
+	error?: Error;
 };
 
 type StateMachineAction<TData> =
 	| [type: "start"]
 	| [type: "succeed", payload: TData]
-	| [type: "fail", payload: PrismicClientError];
+	| [type: "fail", payload: Error];
 
 const reducer = <TData>(
 	state: StateMachineState<TData>,
