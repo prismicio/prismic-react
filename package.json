@@ -1,6 +1,6 @@
 {
 	"name": "@prismicio/react",
-	"version": "2.0.0-alpha.6",
+	"version": "2.0.0-beta.0",
 	"description": "React components and hooks to fetch and present Prismic content",
 	"keywords": [
 		"typescript",
@@ -37,8 +37,8 @@
 		"lint": "eslint --ext .js,.ts .",
 		"prepare": "npm run build",
 		"release": "npm run build && npm run test && standard-version && git push --follow-tags && npm run build && npm publish",
-		"release:alpha": "npm run build && npm run test && standard-version --release-as major --prerelease alpha && git push --follow-tags && npm run build && npm publish --tag alpha",
-		"release:alpha:dry": "standard-version --release-as major --prerelease alpha --dry-run",
+		"release:beta": "npm run build && npm run test && standard-version --release-as major --prerelease beta && git push --follow-tags && npm run build && npm publish --tag beta",
+		"release:beta:dry": "standard-version --release-as major --prerelease beta --dry-run",
 		"release:dry": "standard-version --dry-run",
 		"test": "npm run lint && npm run unit",
 		"unit": "nyc --reporter=lcovonly --reporter=text --exclude-after-remap=false ava"
