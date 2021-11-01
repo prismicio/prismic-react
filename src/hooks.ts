@@ -319,6 +319,7 @@ export const useAllPrismicDocumentsByTag = <
 
 /**
  * A hook that queries documents from the Prismic repository with specific tags.
+ * A document must be tagged with at least one of the queried tags to be included.
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
@@ -329,18 +330,19 @@ export const useAllPrismicDocumentsByTag = <
  * @returns The composable payload {@link ClientHookReturnType}
  * @see Underlying `@prismicio/client` method {@link proto.getByTags}
  */
-export const usePrismicDocumentsByTags = <
+export const usePrismicDocumentsBySomeTags = <
 	TDocument extends prismicT.PrismicDocument,
 >(
 	...args: [
-		tag: ClientMethodParameters<"getByTags">[0],
-		params?: ClientMethodParameters<"getByTags">[1] & HookOnlyParameters,
+		tag: ClientMethodParameters<"getBySomeTags">[0],
+		params?: ClientMethodParameters<"getBySomeTags">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<prismicT.Query<TDocument>> =>
-	useStatefulPrismicClientMethod(proto.getByTags, args);
+	useStatefulPrismicClientMethod(proto.getBySomeTags, args);
 
 /**
- * A hook that queries all documents from the Prismic repository with specific tags.
+ * A hook that queries all documents from the Prismic repository with specific
+ * tags. A document must be tagged with at least one of the queried tags to be included.
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
@@ -351,12 +353,58 @@ export const usePrismicDocumentsByTags = <
  * @returns The composable payload {@link ClientHookReturnType}
  * @see Underlying `@prismicio/client` method {@link proto.getAllByTags}
  */
-export const useAllPrismicDocumentsByTags = <
+export const useAllPrismicDocumentsBySomeTags = <
 	TDocument extends prismicT.PrismicDocument,
 >(
 	...args: [
-		tag: ClientMethodParameters<"getAllByTags">[0],
-		params?: ClientMethodParameters<"getAllByTags">[1] & HookOnlyParameters,
+		tag: ClientMethodParameters<"getAllBySomeTags">[0],
+		params?: ClientMethodParameters<"getAllBySomeTags">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument[]> =>
-	useStatefulPrismicClientMethod(proto.getAllByTags, args);
+	useStatefulPrismicClientMethod(proto.getAllBySomeTags, args);
+
+/**
+ * A hook that queries documents from the Prismic repository with specific tags.
+ * A document must be tagged with all of the queried tags to be included.
+ *
+ * @remarks
+ * An additional `@prismicio/client` instance can be provided at `params.client`.
+ * @typeParam TDocument - Type of Prismic documents returned
+ * @param tags - A list of tags that must be included on a document
+ * @param params - Parameters to filter, sort, and paginate results
+ *
+ * @returns The composable payload {@link ClientHookReturnType}
+ * @see Underlying `@prismicio/client` method {@link proto.getByTags}
+ */
+export const usePrismicDocumentsByEveryTag = <
+	TDocument extends prismicT.PrismicDocument,
+>(
+	...args: [
+		tag: ClientMethodParameters<"getByEveryTag">[0],
+		params?: ClientMethodParameters<"getByEveryTag">[1] & HookOnlyParameters,
+	]
+): ClientHookReturnType<prismicT.Query<TDocument>> =>
+	useStatefulPrismicClientMethod(proto.getByEveryTag, args);
+
+/**
+ * A hook that queries all documents from the Prismic repository with specific
+ * tags. A document must be tagged with all of the queried tags to be included.
+ *
+ * @remarks
+ * An additional `@prismicio/client` instance can be provided at `params.client`.
+ * @typeParam TDocument - Type of Prismic documents returned
+ * @param tags - A list of tags that must be included on a document
+ * @param params - Parameters to filter and sort results
+ *
+ * @returns The composable payload {@link ClientHookReturnType}
+ * @see Underlying `@prismicio/client` method {@link proto.getAllByTags}
+ */
+export const useAllPrismicDocumentsByEveryTag = <
+	TDocument extends prismicT.PrismicDocument,
+>(
+	...args: [
+		tag: ClientMethodParameters<"getAllByEveryTag">[0],
+		params?: ClientMethodParameters<"getAllByEveryTag">[1] & HookOnlyParameters,
+	]
+): ClientHookReturnType<TDocument[]> =>
+	useStatefulPrismicClientMethod(proto.getAllByEveryTag, args);

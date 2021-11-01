@@ -16,7 +16,7 @@ import { createRepositoryResponse } from "./__testutils__/createRepositoryRespon
 import { getMasterRef } from "./__testutils__/getMasterRef";
 import { md5 } from "./__testutils__/md5";
 
-import { PrismicProvider, usePrismicDocumentsByTags } from "../src";
+import { PrismicProvider, useAllPrismicDocumentsByEveryTag } from "../src";
 
 const server = mswNode.setupServer();
 test.before(() => server.listen({ onUnhandledRequest: "error" }));
@@ -32,12 +32,12 @@ const createWrapper = (client: prismic.Client): React.ComponentType => {
 	return (props) => <PrismicProvider client={client} {...props} />;
 };
 
-test.serial("returns documents with matching types", async (t) => {
+test.serial("returns documents with matching IDs", async (t) => {
 	const client = createClient(t);
 	const wrapper = createWrapper(client);
 	const repositoryResponse = createRepositoryResponse();
 	const queryResponsePages = createQueryResponsePages();
-	const documents = queryResponsePages[0].results;
+	const documents = queryResponsePages.flatMap((page) => page.results);
 	const tags = documents[0].tags;
 	const ref = getMasterRef(repositoryResponse);
 
@@ -46,17 +46,18 @@ test.serial("returns documents with matching types", async (t) => {
 		createMockQueryHandler(t, queryResponsePages, {
 			ref,
 			q: `[${prismic.predicate.at("document.tags", tags)}]`,
+			pageSize: 100,
 		}),
 	);
 
 	const { result, waitForValueToChange } = renderHook(
-		() => usePrismicDocumentsByTags(tags),
+		() => useAllPrismicDocumentsByEveryTag(tags),
 		{ wrapper },
 	);
 
 	await waitForValueToChange(() => result.current[1].state === "loaded");
 
-	t.deepEqual(result.current[0], queryResponsePages[0]);
+	t.deepEqual(result.current[0], documents);
 });
 
 test.serial("supports params", async (t) => {
@@ -64,7 +65,7 @@ test.serial("supports params", async (t) => {
 	const wrapper = createWrapper(client);
 	const repositoryResponse = createRepositoryResponse();
 	const queryResponsePages = createQueryResponsePages();
-	const documents = queryResponsePages[0].results;
+	const documents = queryResponsePages.flatMap((page) => page.results);
 	const tags = documents[0].tags;
 	const ref = getMasterRef(repositoryResponse);
 
@@ -82,20 +83,20 @@ test.serial("supports params", async (t) => {
 	);
 
 	const { result, waitForValueToChange } = renderHook(
-		() => usePrismicDocumentsByTags(tags, params),
+		() => useAllPrismicDocumentsByEveryTag(tags, params),
 		{ wrapper },
 	);
 
 	await waitForValueToChange(() => result.current[1].state === "loaded");
 
-	t.deepEqual(result.current[0], queryResponsePages[0]);
+	t.deepEqual(result.current[0], documents);
 });
 
 test.serial("supports explicit client", async (t) => {
 	const client = createClient(t);
 	const repositoryResponse = createRepositoryResponse();
 	const queryResponsePages = createQueryResponsePages();
-	const documents = queryResponsePages[0].results;
+	const documents = queryResponsePages.flatMap((page) => page.results);
 	const tags = documents[0].tags;
 	const ref = getMasterRef(repositoryResponse);
 
@@ -104,16 +105,17 @@ test.serial("supports explicit client", async (t) => {
 		createMockQueryHandler(t, queryResponsePages, {
 			ref,
 			q: `[${prismic.predicate.at("document.tags", tags)}]`,
+			pageSize: 100,
 		}),
 	);
 
 	const { result, waitForValueToChange } = renderHook(() =>
-		usePrismicDocumentsByTags(tags, { client }),
+		useAllPrismicDocumentsByEveryTag(tags, { client }),
 	);
 
 	await waitForValueToChange(() => result.current[1].state === "loaded");
 
-	t.deepEqual(result.current[0], queryResponsePages[0]);
+	t.deepEqual(result.current[0], documents);
 });
 
 test.serial("returns failed state on error", async (t) => {
@@ -132,13 +134,11 @@ test.serial("returns failed state on error", async (t) => {
 	);
 
 	const { result, waitForValueToChange } = renderHook(
-		() => usePrismicDocumentsByTags(["tag", "tag2"]),
+		() => useAllPrismicDocumentsByEveryTag(["tag", "tag2"]),
 		{ wrapper },
 	);
 
-	await waitForValueToChange(
-		() => result.current[1].state === "failed",
-	);
+	await waitForValueToChange(() => result.current[1].state === "failed");
 
 	t.true(result.current[1].error instanceof prismic.ForbiddenError);
 	t.is(result.current[0], undefined);

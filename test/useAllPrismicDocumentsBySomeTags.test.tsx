@@ -16,7 +16,7 @@ import { createRepositoryResponse } from "./__testutils__/createRepositoryRespon
 import { getMasterRef } from "./__testutils__/getMasterRef";
 import { md5 } from "./__testutils__/md5";
 
-import { PrismicProvider, useAllPrismicDocumentsByTags } from "../src";
+import { PrismicProvider, useAllPrismicDocumentsBySomeTags } from "../src";
 
 const server = mswNode.setupServer();
 test.before(() => server.listen({ onUnhandledRequest: "error" }));
@@ -45,13 +45,13 @@ test.serial("returns documents with matching IDs", async (t) => {
 		createMockRepositoryHandler(t, repositoryResponse),
 		createMockQueryHandler(t, queryResponsePages, {
 			ref,
-			q: `[${prismic.predicate.at("document.tags", tags)}]`,
+			q: `[${prismic.predicate.any("document.tags", tags)}]`,
 			pageSize: 100,
 		}),
 	);
 
 	const { result, waitForValueToChange } = renderHook(
-		() => useAllPrismicDocumentsByTags(tags),
+		() => useAllPrismicDocumentsBySomeTags(tags),
 		{ wrapper },
 	);
 
@@ -77,13 +77,13 @@ test.serial("supports params", async (t) => {
 		createMockRepositoryHandler(t, repositoryResponse),
 		createMockQueryHandler(t, queryResponsePages, {
 			ref,
-			q: `[${prismic.predicate.at("document.tags", tags)}]`,
+			q: `[${prismic.predicate.any("document.tags", tags)}]`,
 			pageSize: params.pageSize.toString(),
 		}),
 	);
 
 	const { result, waitForValueToChange } = renderHook(
-		() => useAllPrismicDocumentsByTags(tags, params),
+		() => useAllPrismicDocumentsBySomeTags(tags, params),
 		{ wrapper },
 	);
 
@@ -104,13 +104,13 @@ test.serial("supports explicit client", async (t) => {
 		createMockRepositoryHandler(t, repositoryResponse),
 		createMockQueryHandler(t, queryResponsePages, {
 			ref,
-			q: `[${prismic.predicate.at("document.tags", tags)}]`,
+			q: `[${prismic.predicate.any("document.tags", tags)}]`,
 			pageSize: 100,
 		}),
 	);
 
 	const { result, waitForValueToChange } = renderHook(() =>
-		useAllPrismicDocumentsByTags(tags, { client }),
+		useAllPrismicDocumentsBySomeTags(tags, { client }),
 	);
 
 	await waitForValueToChange(() => result.current[1].state === "loaded");
@@ -134,7 +134,7 @@ test.serial("returns failed state on error", async (t) => {
 	);
 
 	const { result, waitForValueToChange } = renderHook(
-		() => useAllPrismicDocumentsByTags(["tag", "tag2"]),
+		() => useAllPrismicDocumentsBySomeTags(["tag", "tag2"]),
 		{ wrapper },
 	);
 
