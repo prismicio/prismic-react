@@ -51,6 +51,9 @@ export const createMockQueryHandler = <
 			searchParamsWithoutAccessToken.delete("access_token");
 
 			if (debug) {
+				requiredSearchParamsInstance.sort();
+				searchParamsWithoutAccessToken.sort();
+
 				t.is(
 					requiredSearchParamsInstance.toString(),
 					// TODO: Uncomment when the Authorization header can be used
