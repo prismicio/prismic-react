@@ -1,13 +1,3 @@
-<!--
-
-Replace all on all files (README.md, CONTRIBUTING.md, bug_report.md, package.json):
-- @prismicio/react
-- React components and hooks to fetch and present Prismic content
-- prismicio/prismic-react
-- prismic-react
-
--->
-
 # @prismicio/react
 
 [![npm version][npm-version-src]][npm-version-href]
