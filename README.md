@@ -28,7 +28,7 @@ Replace all on all files (README.md, CONTRIBUTING.md, bug_report.md, package.jso
 ## Install
 
 ```bash
-npm install @prismicio/react
+npm install @prismicio/react@beta
 ```
 
 ## Documentation
