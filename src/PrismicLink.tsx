@@ -80,13 +80,13 @@ export type PrismicLinkProps<
 		 * The `target` attribute for anchor elements. If the Prismic field is
 		 * configured to open in a new window, this prop defaults to `_blank`.
 		 */
-		target?: string;
+		target?: string | null;
 
 		/**
 		 * The `rel` attribute for anchor elements. If the `target` prop is set to
 		 * `"_blank"`, this prop defaults to `"noopener noreferrer"`.
 		 */
-		rel?: string;
+		rel?: string | null;
 
 		/**
 		 * Children for the component. *
