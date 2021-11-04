@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.2](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2021-11-04)
+
+
+### Features
+
+* support nullish fields in PrismicRichText and PrismicText ([7b6f73f](https://github.com/prismicio/prismic-reactjs/commit/7b6f73f2ebe014fefbd0e9797b9a189bea1833ab)), closes [#99](https://github.com/prismicio/prismic-reactjs/issues/99)
+
+
+### Bug Fixes
+
+* support null PrismicLink target and rel props ([850d9a8](https://github.com/prismicio/prismic-reactjs/commit/850d9a8a7dab8024536b77b7b9f482c017dda907))
+
+
+### Documentation
+
+* update installation command with beta tag ([a08ac53](https://github.com/prismicio/prismic-reactjs/commit/a08ac53cf3f128e98c644c17dab7c3b8d3e8b295))
+
+
+### Chore
+
+* add github issue and pull request templates ([25f2d4f](https://github.com/prismicio/prismic-reactjs/commit/25f2d4f3ef89022f52eac0481cbf37b79b4f0e3b))
+* remove outdated README comment ([75b4e3e](https://github.com/prismicio/prismic-reactjs/commit/75b4e3e7e98cea1cffa93b7e946b17762a7bbf51))
+* update dependencies ([3542673](https://github.com/prismicio/prismic-reactjs/commit/35426734ae20e41fcd510c3521cdb9fe588633f7))
+
 ## [2.0.0-beta.1](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-alpha.6...v2.0.0-beta.1) (2021-11-01)
 
 
