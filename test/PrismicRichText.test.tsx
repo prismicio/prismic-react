@@ -19,6 +19,15 @@ const Link = ({ href, rel, target, children }: LinkProps) => (
 	</a>
 );
 
+test("returns null if passed nullish field", (t) => {
+	const actualNull = renderJSON(<PrismicRichText field={null} />);
+	const actualUndefined = renderJSON(<PrismicRichText field={undefined} />);
+	const expected = null;
+
+	t.deepEqual(actualNull, expected);
+	t.deepEqual(actualUndefined, expected);
+});
+
 test("returns <h1> if type is heading1", (t) => {
 	const field: prismicT.RichTextField = [
 		{

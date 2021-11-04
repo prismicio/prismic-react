@@ -17,7 +17,7 @@ export type PrismicRichTextProps = {
 	/**
 	 * The Prismic Rich Text field to render.
 	 */
-	field: prismicT.RichTextField;
+	field: prismicT.RichTextField | null | undefined;
 
 	/**
 	 * The Link Resolver used to resolve links.
@@ -213,30 +213,36 @@ const createDefaultSerializer = (
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
  */
-export const PrismicRichText = (props: PrismicRichTextProps): JSX.Element => {
+export const PrismicRichText = (
+	props: PrismicRichTextProps,
+): JSX.Element | null => {
 	const context = usePrismicContext();
 
 	return React.useMemo(() => {
-		const linkResolver = props.linkResolver || context.linkResolver;
-		const components = props.components || context.richTextComponents;
-		const defaultSerializer = createDefaultSerializer({
-			linkResolver,
-			internalLinkComponent: props.internalLinkComponent,
-			externalLinkComponent: props.externalLinkComponent,
-		});
+		if (!props.field) {
+			return null;
+		} else {
+			const linkResolver = props.linkResolver || context.linkResolver;
+			const components = props.components || context.richTextComponents;
+			const defaultSerializer = createDefaultSerializer({
+				linkResolver,
+				internalLinkComponent: props.internalLinkComponent,
+				externalLinkComponent: props.externalLinkComponent,
+			});
 
-		const serializer = components
-			? prismicR.composeSerializers(
-					typeof components === "object"
-						? prismicR.wrapMapSerializer(components)
-						: components,
-					defaultSerializer,
-			  )
-			: defaultSerializer;
+			const serializer = components
+				? prismicR.composeSerializers(
+						typeof components === "object"
+							? prismicR.wrapMapSerializer(components)
+							: components,
+						defaultSerializer,
+				  )
+				: defaultSerializer;
 
-		const serialized = prismicR.serialize(props.field, serializer);
+			const serialized = prismicR.serialize(props.field, serializer);
 
-		return <>{serialized}</>;
+			return <>{serialized}</>;
+		}
 	}, [
 		props.field,
 		props.internalLinkComponent,

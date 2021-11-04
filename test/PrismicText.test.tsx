@@ -20,3 +20,12 @@ test("returns string when passed RichTextField", (t) => {
 
 	t.deepEqual(actual, expected);
 });
+
+test("returns null when passed nullish field", (t) => {
+	const actualNull = renderJSON(<PrismicText field={null} />);
+	const actualUndefined = renderJSON(<PrismicText field={undefined} />);
+	const expected = null;
+
+	t.deepEqual(actualNull, expected);
+	t.deepEqual(actualUndefined, expected);
+});

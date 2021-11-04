@@ -9,7 +9,7 @@ export type PrismicTextProps = {
 	/**
 	 * The Prismic Rich Text field to render.
 	 */
-	field: prismicT.RichTextField;
+	field: prismicT.RichTextField | null | undefined;
 
 	/**
 	 * The separator used between blocks. Defaults to `\n`.
@@ -34,11 +34,14 @@ export type PrismicTextProps = {
  * @returns The Rich Text field's content as plain text.
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  */
-export const PrismicText = (props: PrismicTextProps): JSX.Element => {
-	const text = React.useMemo(
-		() => prismicH.asText(props.field, props.separator),
-		[props.field, props.separator],
-	);
+export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {
+	return React.useMemo(() => {
+		if (props.field) {
+			const text = prismicH.asText(props.field, props.separator);
 
-	return <>{text}</>;
+			return <>{text}</>;
+		} else {
+			return null;
+		}
+	}, [props.field, props.separator]);
 };
