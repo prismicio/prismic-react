@@ -28,6 +28,7 @@ export const createQueryResponsePages = <
 			createQueryResponse(documents, {
 				page: i + 1,
 				total_pages: arr.length,
+				next_page: i < numPages - 1 ? "next_page" : null,
 			}),
 		);
 };

@@ -1,6 +1,5 @@
 import * as ava from "ava";
 import * as msw from "msw";
-import * as prismic from "@prismicio/client";
 import * as prismicT from "@prismicio/types";
 
 import { createQueryResponse } from "./createQueryResponse";
@@ -12,7 +11,9 @@ export const createMockQueryHandler = <
 	TDocument extends prismicT.PrismicDocument = prismicT.PrismicDocument,
 >(
 	t: ava.ExecutionContext,
-	pagedResponses: Partial<prismic.Query<TDocument>>[] = [createQueryResponse()],
+	pagedResponses: Partial<prismicT.Query<TDocument>>[] = [
+		createQueryResponse(),
+	],
 	requiredSearchParams?: Record<
 		string,
 		string | number | (string | number)[] | undefined

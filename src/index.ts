@@ -31,7 +31,7 @@ export { PrismicToolbar } from "./PrismicToolbar";
 export type { PrismicToolbarProps } from "./PrismicToolbar";
 
 export {
-	useAllPrismicDocuments,
+	useAllPrismicDocumentsDangerously,
 	useAllPrismicDocumentsByEveryTag,
 	useAllPrismicDocumentsByIDs,
 	useAllPrismicDocumentsBySomeTags,

@@ -6,7 +6,7 @@ import * as React from "react";
 import * as msw from "msw";
 import * as mswNode from "msw/node";
 import * as prismic from "@prismicio/client";
-import { renderHook, cleanup } from "@testing-library/react-hooks";
+import { renderHook, cleanup, WaitOptions } from "@testing-library/react-hooks";
 
 import { createClient } from "./__testutils__/createClient";
 import { createMockQueryHandler } from "./__testutils__/createMockQueryHandler";
@@ -30,6 +30,10 @@ test.afterEach(() => {
 
 const createWrapper = (client: prismic.Client): React.ComponentType => {
 	return (props) => <PrismicProvider client={client} {...props} />;
+};
+
+const waitForValueToChangeOptions: WaitOptions = {
+	timeout: 2000,
 };
 
 test.serial("returns documents with matching UIDs", async (t) => {
@@ -59,7 +63,10 @@ test.serial("returns documents with matching UIDs", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(() => result.current[1].state === "loaded");
+	await waitForValueToChange(
+		() => result.current[1].state === "loaded",
+		waitForValueToChangeOptions,
+	);
 
 	t.deepEqual(result.current[0], documents);
 });
@@ -95,7 +102,10 @@ test.serial("supports params", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(() => result.current[1].state === "loaded");
+	await waitForValueToChange(
+		() => result.current[1].state === "loaded",
+		waitForValueToChangeOptions,
+	);
 
 	t.deepEqual(result.current[0], documents);
 });
@@ -125,7 +135,10 @@ test.serial("supports explicit client", async (t) => {
 		useAllPrismicDocumentsByUIDs(documentType, documentUIDs, { client }),
 	);
 
-	await waitForValueToChange(() => result.current[1].state === "loaded");
+	await waitForValueToChange(
+		() => result.current[1].state === "loaded",
+		waitForValueToChangeOptions,
+	);
 
 	t.deepEqual(result.current[0], documents);
 });
@@ -150,7 +163,10 @@ test.serial("returns failed state on error", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(() => result.current[1].state === "failed");
+	await waitForValueToChange(
+		() => result.current[1].state === "failed",
+		waitForValueToChangeOptions,
+	);
 
 	t.true(result.current[1].error instanceof prismic.ForbiddenError);
 	t.is(result.current[0], undefined);

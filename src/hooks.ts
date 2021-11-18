@@ -57,12 +57,15 @@ export const useFirstPrismicDocument = <
  * @returns The composable payload {@link ClientHookReturnType}
  * @see Underlying `@prismicio/client` method {@link proto.getAll}
  */
-export const useAllPrismicDocuments = <
+export const useAllPrismicDocumentsDangerously = <
 	TDocument extends prismicT.PrismicDocument,
 >(
-	...args: [params?: ClientMethodParameters<"getAll">[0] & HookOnlyParameters]
+	...args: [
+		params?: ClientMethodParameters<"dangerouslyGetAll">[0] &
+			HookOnlyParameters,
+	]
 ): ClientHookReturnType<TDocument[]> =>
-	useStatefulPrismicClientMethod(proto.getAll, args);
+	useStatefulPrismicClientMethod(proto.dangerouslyGetAll, args);
 
 /**
  * A hook that queries a document from the Prismic repository with a specific ID.
