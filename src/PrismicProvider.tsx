@@ -1,5 +1,6 @@
+import type * as prismic from "@prismicio/client";
+
 import * as React from "react";
-import * as prismic from "@prismicio/client";
 import * as prismicH from "@prismicio/helpers";
 
 import { LinkProps } from "./PrismicLink";
@@ -45,12 +46,12 @@ export type PrismicContextValue = {
 	 *
 	 * ```jsx
 	 * (type, node, content, children) => {
-	 *  switch (type) {
-	 *    case 'heading1': {
-	 *      return <Heading>{chidlren}</Heading>
-	 *    }
-	 *  }
-	 * }
+	 * 	switch (type) {
+	 * 		case "heading1": {
+	 * 			return <Heading>{chidlren}</Heading>;
+	 * 		}
+	 * 	}
+	 * };
 	 * ```
 	 */
 	richTextComponents?: JSXMapSerializer | JSXFunctionSerializer;

@@ -1,5 +1,4 @@
-import * as prismic from "@prismicio/client";
-import * as prismicT from "@prismicio/types";
+import type * as prismicT from "@prismicio/types";
 
 import {
 	ClientHookReturnType,
@@ -7,8 +6,6 @@ import {
 	HookOnlyParameters,
 	useStatefulPrismicClientMethod,
 } from "./useStatefulPrismicClientMethod";
-
-const proto = prismic.Client.prototype;
 
 /**
  * A hook that queries content from the Prismic repository.
@@ -24,7 +21,7 @@ const proto = prismic.Client.prototype;
 export const usePrismicDocuments = <TDocument extends prismicT.PrismicDocument>(
 	...args: [params?: ClientMethodParameters<"get">[0] & HookOnlyParameters]
 ): ClientHookReturnType<prismicT.Query<TDocument>> =>
-	useStatefulPrismicClientMethod(proto.get, args);
+	useStatefulPrismicClientMethod("get", args);
 
 /**
  * A hook that queries content from the Prismic repository and returns only the
@@ -43,7 +40,7 @@ export const useFirstPrismicDocument = <
 >(
 	...args: [params?: ClientMethodParameters<"getFirst">[0] & HookOnlyParameters]
 ): ClientHookReturnType<TDocument> =>
-	useStatefulPrismicClientMethod(proto.getFirst, args);
+	useStatefulPrismicClientMethod("getFirst", args);
 
 /**
  * A hook that queries content from the Prismic repository and returns all
@@ -65,7 +62,7 @@ export const useAllPrismicDocumentsDangerously = <
 			HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument[]> =>
-	useStatefulPrismicClientMethod(proto.dangerouslyGetAll, args);
+	useStatefulPrismicClientMethod("dangerouslyGetAll", args);
 
 /**
  * A hook that queries a document from the Prismic repository with a specific ID.
@@ -87,7 +84,7 @@ export const usePrismicDocumentByID = <
 		params?: ClientMethodParameters<"getByID">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument> =>
-	useStatefulPrismicClientMethod(proto.getByID, args);
+	useStatefulPrismicClientMethod("getByID", args);
 
 /**
  * A hook that queries documents from the Prismic repository with specific IDs.
@@ -109,7 +106,7 @@ export const usePrismicDocumentsByIDs = <
 		params?: ClientMethodParameters<"getByIDs">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<prismicT.Query<TDocument>> =>
-	useStatefulPrismicClientMethod(proto.getByIDs, args);
+	useStatefulPrismicClientMethod("getByIDs", args);
 
 /**
  * A hook that queries all documents from the Prismic repository with specific IDs.
@@ -131,7 +128,7 @@ export const useAllPrismicDocumentsByIDs = <
 		params?: ClientMethodParameters<"getAllByIDs">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument[]> =>
-	useStatefulPrismicClientMethod(proto.getAllByIDs, args);
+	useStatefulPrismicClientMethod("getAllByIDs", args);
 
 /**
  * A hook that queries a document from the Prismic repository with a specific
@@ -156,7 +153,7 @@ export const usePrismicDocumentByUID = <
 		params?: ClientMethodParameters<"getByUID">[2] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument> =>
-	useStatefulPrismicClientMethod(proto.getByUID, args);
+	useStatefulPrismicClientMethod("getByUID", args);
 
 /**
  * A hook that queries documents from the Prismic repository with specific UIDs
@@ -181,7 +178,7 @@ export const usePrismicDocumentsByUIDs = <
 		params?: ClientMethodParameters<"getByUIDs">[2] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<prismicT.Query<TDocument>> =>
-	useStatefulPrismicClientMethod(proto.getByUIDs, args);
+	useStatefulPrismicClientMethod("getByUIDs", args);
 
 /**
  * A hook that queries all documents from the Prismic repository with specific
@@ -206,7 +203,7 @@ export const useAllPrismicDocumentsByUIDs = <
 		params?: ClientMethodParameters<"getByUIDs">[2] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument[]> =>
-	useStatefulPrismicClientMethod(proto.getAllByUIDs, args);
+	useStatefulPrismicClientMethod("getAllByUIDs", args);
 
 /**
  * A hook that queries a singleton document from the Prismic repository for a
@@ -229,7 +226,7 @@ export const useSinglePrismicDocument = <
 		params?: ClientMethodParameters<"getSingle">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument> =>
-	useStatefulPrismicClientMethod(proto.getSingle, args);
+	useStatefulPrismicClientMethod("getSingle", args);
 
 /**
  * A hook that queries documents from the Prismic repository for a specific Custom Type.
@@ -251,7 +248,7 @@ export const usePrismicDocumentsByType = <
 		params?: ClientMethodParameters<"getByType">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<prismicT.Query<TDocument>> =>
-	useStatefulPrismicClientMethod(proto.getByType, args);
+	useStatefulPrismicClientMethod("getByType", args);
 
 /**
  * A hook that queries all documents from the Prismic repository for a specific
@@ -274,7 +271,7 @@ export const useAllPrismicDocumentsByType = <
 		params?: ClientMethodParameters<"getAllByType">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument[]> =>
-	useStatefulPrismicClientMethod(proto.getAllByType, args);
+	useStatefulPrismicClientMethod("getAllByType", args);
 
 /**
  * A hook that queries documents from the Prismic repository with a specific tag.
@@ -296,7 +293,7 @@ export const usePrismicDocumentsByTag = <
 		params?: ClientMethodParameters<"getByTag">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<prismicT.Query<TDocument>> =>
-	useStatefulPrismicClientMethod(proto.getByTag, args);
+	useStatefulPrismicClientMethod("getByTag", args);
 
 /**
  * A hook that queries all documents from the Prismic repository with a specific tag.
@@ -318,7 +315,7 @@ export const useAllPrismicDocumentsByTag = <
 		params?: ClientMethodParameters<"getAllByTag">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument[]> =>
-	useStatefulPrismicClientMethod(proto.getAllByTag, args);
+	useStatefulPrismicClientMethod("getAllByTag", args);
 
 /**
  * A hook that queries documents from the Prismic repository with specific tags.
@@ -341,7 +338,7 @@ export const usePrismicDocumentsBySomeTags = <
 		params?: ClientMethodParameters<"getBySomeTags">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<prismicT.Query<TDocument>> =>
-	useStatefulPrismicClientMethod(proto.getBySomeTags, args);
+	useStatefulPrismicClientMethod("getBySomeTags", args);
 
 /**
  * A hook that queries all documents from the Prismic repository with specific
@@ -364,7 +361,7 @@ export const useAllPrismicDocumentsBySomeTags = <
 		params?: ClientMethodParameters<"getAllBySomeTags">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument[]> =>
-	useStatefulPrismicClientMethod(proto.getAllBySomeTags, args);
+	useStatefulPrismicClientMethod("getAllBySomeTags", args);
 
 /**
  * A hook that queries documents from the Prismic repository with specific tags.
@@ -387,7 +384,7 @@ export const usePrismicDocumentsByEveryTag = <
 		params?: ClientMethodParameters<"getByEveryTag">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<prismicT.Query<TDocument>> =>
-	useStatefulPrismicClientMethod(proto.getByEveryTag, args);
+	useStatefulPrismicClientMethod("getByEveryTag", args);
 
 /**
  * A hook that queries all documents from the Prismic repository with specific
@@ -410,4 +407,4 @@ export const useAllPrismicDocumentsByEveryTag = <
 		params?: ClientMethodParameters<"getAllByEveryTag">[1] & HookOnlyParameters,
 	]
 ): ClientHookReturnType<TDocument[]> =>
-	useStatefulPrismicClientMethod(proto.getAllByEveryTag, args);
+	useStatefulPrismicClientMethod("getAllByEveryTag", args);

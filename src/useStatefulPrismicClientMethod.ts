@@ -1,5 +1,6 @@
+import type * as prismic from "@prismicio/client";
+
 import * as React from "react";
-import * as prismic from "@prismicio/client";
 
 import { PrismicClientHookState } from "./types";
 import { usePrismicClient } from "./usePrismicClient";
@@ -46,11 +47,24 @@ type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
 type ClientPrototype = typeof prismic.Client.prototype;
 
-export type ClientMethodParameters<MethodName extends keyof ClientPrototype> =
+type ClientMethod<MethodName extends keyof ClientPrototype> =
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	ClientPrototype[MethodName] extends (...args: any[]) => any
-		? Parameters<ClientPrototype[MethodName]>
+		? ClientPrototype[MethodName]
 		: never;
+
+type ClientMethodName = keyof {
+	[P in keyof prismic.Client as prismic.Client[P] extends (
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		...args: any[]
+	) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
+	Promise<any>
+		? P
+		: never]: unknown;
+};
+
+export type ClientMethodParameters<MethodName extends keyof ClientPrototype> =
+	Parameters<ClientMethod<MethodName>>;
 
 export type HookOnlyParameters = {
 	client?: prismic.Client;
@@ -111,19 +125,18 @@ export type ClientHookReturnType<TData = unknown> = [
  * `@prismicio/client` instance. The created hook has its own internal state
  * manager to report async status, such as pending or error statuses.
  *
- * @param method - The `@prismicio/client` method to which hook arguments will
- *   be forwarded.
+ * @param methodName - The `@prismicio/client` method to which hook arguments
+ *   will be forwarded.
  *
  * @returns A new React hook configured for the provided method.
  * @internal
  */
 export const useStatefulPrismicClientMethod = <
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	TMethod extends (...args: any[]) => Promise<any>,
-	TArgs extends Parameters<TMethod>,
-	TData extends UnwrapPromise<ReturnType<TMethod>>,
+	TMethodName extends ClientMethodName,
+	TArgs extends Parameters<ClientMethod<TMethodName>>,
+	TData extends UnwrapPromise<ReturnType<ClientMethod<TMethodName>>>,
 >(
-	method: TMethod,
+	methodName: TMethodName,
 	args: TArgs,
 ): ClientHookReturnType<TData> => {
 	const lastArg = args[args.length - 1];
@@ -137,19 +150,22 @@ export const useStatefulPrismicClientMethod = <
 	const client = usePrismicClient(explicitClient);
 
 	const [state, dispatch] = React.useReducer<
-		React.Reducer<
-			StateMachineState<UnwrapPromise<ReturnType<TMethod>>>,
-			StateMachineAction<UnwrapPromise<ReturnType<TMethod>>>
-		>
+		React.Reducer<StateMachineState<TData>, StateMachineAction<TData>>
 	>(reducer, initialState);
 
 	React.useEffect(
 		() => {
 			if (state.state === "idle" && !skip) {
 				dispatch(["start"]);
-				method
-					.call(client, ...argsWithoutParams, params)
-					.then((result) => dispatch(["succeed", result]))
+
+				client[methodName]
+					.call(
+						client,
+						// @ts-expect-error - Merging method arg types is too complex
+						...argsWithoutParams,
+						params,
+					)
+					.then((result) => dispatch(["succeed", result as TData]))
 					.catch((error) => dispatch(["fail", error]));
 			}
 		},
@@ -159,7 +175,7 @@ export const useStatefulPrismicClientMethod = <
 			client,
 			state.state,
 			skip,
-			method,
+			methodName,
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 			...args.slice(0, -1),
 			// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -168,7 +184,13 @@ export const useStatefulPrismicClientMethod = <
 	);
 
 	return React.useMemo(
-		() => [state.data, { state: state.state, error: state.error }],
+		() => [
+			state.data,
+			{
+				state: state.state,
+				error: state.error,
+			},
+		],
 		[state],
 	);
 };
