@@ -49,8 +49,7 @@ export type PrismicLinkProps<
 	ExternalComponent extends string | React.ComponentType<LinkProps> =
 		| string
 		| React.ComponentType<LinkProps>,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
+	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
 > = ComponentProps<InternalComponent> &
 	ComponentProps<ExternalComponent> & {
 		/**
@@ -141,14 +140,9 @@ const defaultExternalComponent = "a";
  *   link is internal or external.
  */
 export const PrismicLink = <
-	InternalComponent extends
-		| string
-		| React.ComponentType<LinkProps> = typeof defaultInternalComponent,
-	ExternalComponent extends
-		| string
-		| React.ComponentType<LinkProps> = typeof defaultExternalComponent,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
+	InternalComponent extends string | React.ComponentType<LinkProps>,
+	ExternalComponent extends string | React.ComponentType<LinkProps>,
+	LinkResolverFunction extends prismicH.LinkResolverFunction,
 >(
 	props: PrismicLinkProps<
 		InternalComponent,
