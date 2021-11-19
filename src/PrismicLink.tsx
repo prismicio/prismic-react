@@ -50,67 +50,69 @@ export type PrismicLinkProps<
 		| string
 		| React.ComponentType<LinkProps>,
 	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
-> = ComponentProps<InternalComponent> &
-	ComponentProps<ExternalComponent> & {
-		/**
-		 * The Link Resolver used to resolve links.
-		 *
-		 * @remarks
-		 * If your app uses Route Resolvers when querying for your Prismic
-		 * repository's content, a Link Resolver does not need to be provided.
-		 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
-		 */
-		linkResolver?: LinkResolverFunction;
+> = Omit<
+	ComponentProps<InternalComponent> & ComponentProps<ExternalComponent>,
+	keyof LinkProps
+> & {
+	/**
+	 * The Link Resolver used to resolve links.
+	 *
+	 * @remarks
+	 * If your app uses Route Resolvers when querying for your Prismic
+	 * repository's content, a Link Resolver does not need to be provided.
+	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
+	 */
+	linkResolver?: LinkResolverFunction;
 
-		/**
-		 * The component rendered for internal URLs. Defaults to `<a>`.
-		 *
-		 * If your app uses a client-side router that requires a special Link
-		 * component, provide the Link component to this prop.
-		 */
-		internalComponent?: InternalComponent;
+	/**
+	 * The component rendered for internal URLs. Defaults to `<a>`.
+	 *
+	 * If your app uses a client-side router that requires a special Link
+	 * component, provide the Link component to this prop.
+	 */
+	internalComponent?: InternalComponent;
 
-		/**
-		 * The component rendered for external URLs. Defaults to `<a>`.
-		 */
-		externalComponent?: ExternalComponent;
+	/**
+	 * The component rendered for external URLs. Defaults to `<a>`.
+	 */
+	externalComponent?: ExternalComponent;
 
-		/**
-		 * The `target` attribute for anchor elements. If the Prismic field is
-		 * configured to open in a new window, this prop defaults to `_blank`.
-		 */
-		target?: string | null;
+	/**
+	 * The `target` attribute for anchor elements. If the Prismic field is
+	 * configured to open in a new window, this prop defaults to `_blank`.
+	 */
+	target?: string | null;
 
-		/**
-		 * The `rel` attribute for anchor elements. If the `target` prop is set to
-		 * `"_blank"`, this prop defaults to `"noopener noreferrer"`.
-		 */
-		rel?: string | null;
+	/**
+	 * The `rel` attribute for anchor elements. If the `target` prop is set to
+	 * `"_blank"`, this prop defaults to `"noopener noreferrer"`.
+	 */
+	rel?: string | null;
 
-		/**
-		 * Children for the component. *
-		 */
-		children?: React.ReactNode;
-	} & (
+	/**
+	 * Children for the component. *
+	 */
+	children?: React.ReactNode;
+} & (
 		| {
 				/**
 				 * The Prismic Link field containing the URL or document to link.
 				 *
 				 * @see Learn about Prismic Link fields {@link https://prismic.io/docs/core-concepts/link-content-relationship}
 				 */
-				field?: prismicT.LinkField;
+				field: prismicT.LinkField | null | undefined;
 		  }
 		| {
 				/**
 				 * The Prismic document to link.
 				 */
-				document?: prismicT.PrismicDocument;
+				document: prismicT.PrismicDocument | null | undefined;
 		  }
 		| {
 				/**
 				 * The URL to link.
 				 */
-				href?: string;
+				href: string | null | undefined;
 		  }
 	);
 
