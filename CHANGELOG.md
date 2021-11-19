@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.3](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2021-11-19)
+
+
+### Features
+
+* rename useAllPrismicDocuments to useAllPrismicDocumentsDangerously ([22d63fe](https://github.com/prismicio/prismic-reactjs/commit/22d63fe0866006f02bbf044e27bfdd0fa86a4b39))
+* treat @prismicio/client as an optional peer dependency ([0e0b0b5](https://github.com/prismicio/prismic-reactjs/commit/0e0b0b5e10a28774629aaa6e6811e872706ca562))
+
 ## [2.0.0-beta.2](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2021-11-04)
 
 
