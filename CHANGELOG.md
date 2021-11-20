@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.4](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2021-11-20)
+
+
+### Features
+
+* add `usePrismicPreviewResolver` ([4e64de2](https://github.com/prismicio/prismic-reactjs/commit/4e64de2405937d86c77f188f88f9162e1c3ab2df))
+
+
+### Bug Fixes
+
+* infer type of internal/external Link component ([891140f](https://github.com/prismicio/prismic-reactjs/commit/891140fd328f4beb63b532f1ed8f569d9d24fec2))
+* omit required LinkProps from PrismicLink ([4ea3128](https://github.com/prismicio/prismic-reactjs/commit/4ea3128e6bb8be8996805e315cefc68dc3311c3e))
+
+
+### Refactor
+
+* rename hooks.ts to clientHooks.ts ([28d4a73](https://github.com/prismicio/prismic-reactjs/commit/28d4a737c819809c9812437230451d00d43e97b9))
+
 ## [2.0.0-beta.3](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2021-11-19)
 
 
