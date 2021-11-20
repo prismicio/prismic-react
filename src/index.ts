@@ -49,7 +49,7 @@ export {
 	usePrismicDocumentsByType,
 	usePrismicDocumentsByUIDs,
 	useSinglePrismicDocument,
-} from "./hooks";
+} from "./clientHooks";
 
 export type {
 	JSXMapSerializer,
