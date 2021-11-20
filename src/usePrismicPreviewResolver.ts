@@ -75,11 +75,14 @@ export const usePrismicPreviewResolver = (
 		args.client,
 	);
 
+	const [resolvedURL] = result;
+	const { navigate } = args;
+
 	React.useEffect(() => {
-		if (result[0] && args.navigate) {
-			args.navigate(result[0]);
+		if (resolvedURL && navigate) {
+			navigate(resolvedURL);
 		}
-	}, [result[0], args.navigate]);
+	}, [resolvedURL, navigate]);
 
 	return result;
 };
