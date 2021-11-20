@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.5](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2021-11-20)
+
+
+### Bug Fixes
+
+* identify package as side-effect free ([3e3e009](https://github.com/prismicio/prismic-reactjs/commit/3e3e009eeb4098158981dab0cb7069adeef3c8e7))
+
+
+### Refactor
+
+* resolve hook lint warning ([6ff01a8](https://github.com/prismicio/prismic-reactjs/commit/6ff01a826622bf84078d77b8652f5a392b75951b))
+
 ## [2.0.0-beta.4](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2021-11-20)
 
 
