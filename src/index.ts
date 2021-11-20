@@ -30,6 +30,9 @@ export type {
 export { PrismicToolbar } from "./PrismicToolbar";
 export type { PrismicToolbarProps } from "./PrismicToolbar";
 
+export { usePrismicPreviewResolver } from "./usePrismicPreviewResolver";
+export type { UsePrismicPreviewResolverArgs } from "./usePrismicPreviewResolver";
+
 export {
 	useAllPrismicDocumentsDangerously,
 	useAllPrismicDocumentsByEveryTag,

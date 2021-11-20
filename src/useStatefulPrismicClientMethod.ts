@@ -138,16 +138,17 @@ export const useStatefulPrismicClientMethod = <
 >(
 	methodName: TMethodName,
 	args: TArgs,
+	explicitClient?: prismic.Client,
 ): ClientHookReturnType<TData> => {
 	const lastArg = args[args.length - 1];
 	const {
-		client: explicitClient,
+		client: lastArgExplicitClient,
 		skip,
 		...params
 	} = isParams(lastArg) ? lastArg : ({} as HookOnlyParameters);
 	const argsWithoutParams = isParams(lastArg) ? args.slice(0, -1) : args;
 
-	const client = usePrismicClient(explicitClient);
+	const client = usePrismicClient(explicitClient || lastArgExplicitClient);
 
 	const [state, dispatch] = React.useReducer<
 		React.Reducer<StateMachineState<TData>, StateMachineAction<TData>>
