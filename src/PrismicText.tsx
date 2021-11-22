@@ -26,12 +26,13 @@ export type PrismicTextProps = {
  * @example Rendering a Rich Text field as plain text.
  *
  * ```jsx
- * <PrismicText field={document.data.content} />
+ * <PrismicText field={document.data.content} />;
  * ```
  *
  * @param props - Props for the component.
  *
  * @returns The Rich Text field's content as plain text.
+ *
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  */
 export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {

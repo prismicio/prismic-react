@@ -56,12 +56,12 @@ export type PrismicRichTextProps = {
 	 *
 	 * ```jsx
 	 * (type, node, content, children) => {
-	 *  switch (type) {
-	 *    case 'heading1': {
-	 *      return <Heading>{chidlren}</Heading>
-	 *    }
-	 *  }
-	 * }
+	 * 	switch (type) {
+	 * 		case "heading1": {
+	 * 			return <Heading>{chidlren}</Heading>;
+	 * 		}
+	 * 	}
+	 * };
 	 * ```
 	 */
 	components?: JSXMapSerializer | JSXFunctionSerializer;
@@ -193,23 +193,24 @@ const createDefaultSerializer = (
  * @example Rendering a Rich Text field using the default HTMl elements.
  *
  * ```jsx
- * <PrismicRichText field={document.data.content} />
+ * <PrismicRichText field={document.data.content} />;
  * ```
  *
  * @example Rendering a Rich Text field using a custom set of React components.
  *
  * ```jsx
  * <PrismicRichText
- *   field={document.data.content}
- *   components={{
- * 	 heading1: ({ children }) => <Heading>{children}</Heading>
- *   }}
- * />
+ * 	field={document.data.content}
+ * 	components={{
+ * 		heading1: ({ children }) => <Heading>{children}</Heading>,
+ * 	}}
+ * />;
  * ```
  *
  * @param props - Props for the component.
  *
  * @returns The Rich Text field's content as React components.
+ *
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
  */

@@ -129,6 +129,7 @@ export type ClientHookReturnType<TData = unknown> = [
  *   will be forwarded.
  *
  * @returns A new React hook configured for the provided method.
+ *
  * @internal
  */
 export const useStatefulPrismicClientMethod = <

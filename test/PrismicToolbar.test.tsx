@@ -7,7 +7,9 @@ import { md5 } from "./__testutils__/md5";
 
 import { PrismicToolbar } from "../src";
 
-/** Retrieves the toolbar script for a specific repository. */
+/**
+ * Retrieves the toolbar script for a specific repository.
+ */
 const getToolbarScript = (repositoryName: string): Element | null => {
 	return document.body.querySelector(
 		`[data-prismic-toolbar=""][data-repository-name="${repositoryName}"]`,

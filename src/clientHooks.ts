@@ -12,10 +12,13 @@ import {
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.get}
  */
 export const usePrismicDocuments = <TDocument extends prismicT.PrismicDocument>(
@@ -29,10 +32,13 @@ export const usePrismicDocuments = <TDocument extends prismicT.PrismicDocument>(
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of the Prismic document returned
+ *
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getFirst}
  */
 export const useFirstPrismicDocument = <
@@ -48,10 +54,13 @@ export const useFirstPrismicDocument = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param params - Parameters to filter and sort results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getAll}
  */
 export const useAllPrismicDocumentsDangerously = <
@@ -69,11 +78,14 @@ export const useAllPrismicDocumentsDangerously = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of the Prismic document returned
+ *
  * @param id - ID of the document
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getByID}
  */
 export const usePrismicDocumentByID = <
@@ -91,11 +103,14 @@ export const usePrismicDocumentByID = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param ids - A list of document IDs
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getByIDs}
  */
 export const usePrismicDocumentsByIDs = <
@@ -113,11 +128,14 @@ export const usePrismicDocumentsByIDs = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param ids - A list of document IDs
  * @param params - Parameters to filter and sort results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getAllByIDs}
  */
 export const useAllPrismicDocumentsByIDs = <
@@ -136,12 +154,15 @@ export const useAllPrismicDocumentsByIDs = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of the Prismic document returned
+ *
  * @param documentType - The API ID of the document's Custom Type
  * @param uid - UID of the document
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getByUID}
  */
 export const usePrismicDocumentByUID = <
@@ -161,12 +182,15 @@ export const usePrismicDocumentByUID = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of the Prismic document returned
+ *
  * @param documentType - The API ID of the document's Custom Type
  * @param uids - A list of document UIDs.
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getByUID}
  */
 export const usePrismicDocumentsByUIDs = <
@@ -186,12 +210,15 @@ export const usePrismicDocumentsByUIDs = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of the Prismic document returned
+ *
  * @param documentType - The API ID of the document's Custom Type
  * @param uids - A list of document UIDs.
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getByUID}
  */
 export const useAllPrismicDocumentsByUIDs = <
@@ -211,11 +238,14 @@ export const useAllPrismicDocumentsByUIDs = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of the Prismic document returned
+ *
  * @param documentType - The API ID of the singleton Custom Type
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getSingle}
  */
 export const useSinglePrismicDocument = <
@@ -233,11 +263,14 @@ export const useSinglePrismicDocument = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param documentType - The API ID of the Custom Type
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getByType}
  */
 export const usePrismicDocumentsByType = <
@@ -256,11 +289,14 @@ export const usePrismicDocumentsByType = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param documentType - The API ID of the Custom Type
  * @param params - Parameters to filter and sort results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getAllByType}
  */
 export const useAllPrismicDocumentsByType = <
@@ -278,11 +314,14 @@ export const useAllPrismicDocumentsByType = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param tag - The tag that must be included on a document
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getByTag}
  */
 export const usePrismicDocumentsByTag = <
@@ -300,11 +339,14 @@ export const usePrismicDocumentsByTag = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param tag - The tag that must be included on a document
  * @param params - Parameters to filter and sort results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getAllByTag}
  */
 export const useAllPrismicDocumentsByTag = <
@@ -323,11 +365,14 @@ export const useAllPrismicDocumentsByTag = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param tags - A list of tags that must be included on a document
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getByTags}
  */
 export const usePrismicDocumentsBySomeTags = <
@@ -346,11 +391,14 @@ export const usePrismicDocumentsBySomeTags = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param tags - A list of tags that must be included on a document
  * @param params - Parameters to filter and sort results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getAllByTags}
  */
 export const useAllPrismicDocumentsBySomeTags = <
@@ -369,11 +417,14 @@ export const useAllPrismicDocumentsBySomeTags = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param tags - A list of tags that must be included on a document
  * @param params - Parameters to filter, sort, and paginate results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getByTags}
  */
 export const usePrismicDocumentsByEveryTag = <
@@ -392,11 +443,14 @@ export const usePrismicDocumentsByEveryTag = <
  *
  * @remarks
  * An additional `@prismicio/client` instance can be provided at `params.client`.
+ *
  * @typeParam TDocument - Type of Prismic documents returned
+ *
  * @param tags - A list of tags that must be included on a document
  * @param params - Parameters to filter and sort results
  *
  * @returns The composable payload {@link ClientHookReturnType}
+ *
  * @see Underlying `@prismicio/client` method {@link proto.getAllByTags}
  */
 export const useAllPrismicDocumentsByEveryTag = <

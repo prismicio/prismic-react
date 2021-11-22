@@ -136,9 +136,7 @@ test.serial("returns failed state on error", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(
-		() => result.current[1].state === "failed",
-	);
+	await waitForValueToChange(() => result.current[1].state === "failed");
 
 	t.true(result.current[1].error instanceof prismic.ForbiddenError);
 	t.is(result.current[0], undefined);
