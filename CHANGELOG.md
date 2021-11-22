@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.6](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2021-11-22)
+
+
+### Features
+
+* add `resolver` prop to SliceZone for backwards compatibility with `next-slicezone` ([#103](https://github.com/prismicio/prismic-reactjs/issues/103)) ([cfdcfb1](https://github.com/prismicio/prismic-reactjs/commit/cfdcfb1e98367e56e4c61464f6126d4f176636ec))
+
+
+### Chore
+
+* add `jsdocSeparateTagGroups` option ([c0ab73e](https://github.com/prismicio/prismic-reactjs/commit/c0ab73e38834daabd56b791473da13d03fc7f7cf))
+* update ignore files ([68dc008](https://github.com/prismicio/prismic-reactjs/commit/68dc0088a0c444131be5440a7ca1989e0616ed50))
+
 ## [2.0.0-beta.5](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2021-11-20)
 
 
