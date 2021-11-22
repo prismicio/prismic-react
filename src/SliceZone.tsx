@@ -137,6 +137,44 @@ export const TODOSliceComponent = __PRODUCTION__
 	  };
 
 /**
+ * Arguments for a `<SliceZone>` `resolver` function.
+ */
+type SliceZoneResolverArgs<TSlice extends SliceLike = SliceLike> = {
+	/**
+	 * The Slice to resolve to a React component..
+	 */
+	slice: TSlice;
+
+	/**
+	 * The name of the Slice.
+	 */
+	sliceName: TSlice["slice_type"];
+
+	/**
+	 * The index of the Slice in the Slice Zone.
+	 */
+	i: number;
+};
+
+/**
+ * A function that determines the rendered React component for each Slice in the
+ * Slice Zone. If a nullish value is returned, the component will fallback to
+ * the `components` or `defaultComponent` props to determine the rendered component.
+ *
+ * @deprecated Use the `components` prop instead.
+ *
+ * @param args - Arguments for the resolver function.
+ *
+ * @returns The React component to render for a Slice.
+ */
+export type SliceZoneResolver<
+	TSlice extends SliceLike = SliceLike,
+	TContext = unknown,
+> = (
+	args: SliceZoneResolverArgs<TSlice>,
+) => SliceComponentType<TSlice, TContext> | undefined | null;
+
+/**
  * React props for the `<SliceZone>` component.
  *
  * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
@@ -155,6 +193,18 @@ export type SliceZoneProps<
 	 * A record mapping Slice types to React components.
 	 */
 	components?: SliceZoneComponents<TSlice, TContext>;
+
+	/**
+	 * A function that determines the rendered React component for each Slice in
+	 * the Slice Zone.
+	 *
+	 * @deprecated Use the `components` prop instead.
+	 *
+	 * @param args - Arguments for the resolver function.
+	 *
+	 * @returns The React component to render for a Slice.
+	 */
+	resolver?: SliceZoneResolver<TSlice, TContext>;
 
 	/**
 	 * The React component rendered if a component mapping from the `components`
@@ -178,19 +228,36 @@ export type SliceZoneProps<
  *
  * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
  * @typeParam TContext - Arbitrary data made available to all Slice components.
+ *
  * @returns The Slice Zone's content as React components.
+ *
  * @see Learn about Prismic Slices and Slice Zones {@link https://prismic.io/docs/core-concepts/slices}
  */
 export const SliceZone = <TSlice extends SliceLike, TContext>({
 	slices = [],
 	components = {} as SliceZoneComponents<TSlice, TContext>,
+	resolver,
 	defaultComponent = TODOSliceComponent,
 	context = {} as TContext,
 }: SliceZoneProps<TSlice, TContext>): JSX.Element => {
 	const renderedSlices = React.useMemo(() => {
 		return slices.map((slice, index) => {
-			const Comp = (components[slice.slice_type as keyof typeof components] ||
+			let Comp = (components[slice.slice_type as keyof typeof components] ||
 				defaultComponent) as SliceComponentType<TSlice, TContext>;
+
+			// TODO: Remove `resolver` in v3 in favor of `components`.
+			if (resolver) {
+				const resolvedComp = resolver({
+					slice,
+					sliceName: slice.slice_type,
+					i: index,
+				});
+
+				if (resolvedComp) {
+					Comp = resolvedComp;
+				}
+			}
+
 			const key = JSON.stringify(slice);
 
 			return (

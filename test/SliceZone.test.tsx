@@ -6,10 +6,18 @@ import * as sinon from "sinon";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
-import { SliceZone, TODOSliceComponent, SliceComponentProps } from "../src";
+import {
+	SliceZone,
+	TODOSliceComponent,
+	SliceComponentProps,
+	SliceZoneResolver,
+} from "../src";
 
 type StringifySliceComponentProps = {
-	/** A unique identifier for the component to differentiate this component from other instances. */
+	/**
+	 * A unique identifier for the component to differentiate this component from
+	 * other instances.
+	 */
 	id: string;
 } & SliceComponentProps;
 
@@ -161,4 +169,44 @@ test.skip("TODO component does not warn in production", () => {
 	// ts-eager does not allow esbuild configuration.
 	// We cannot override the `process.env.NODE_ENV` inline replacement.
 	// As a result, we cannot test for production currently.
+});
+
+test("renders components from a resolver function for backwards compatibility with next-slicezone", async (t) => {
+	const slices = [{ slice_type: "foo" }, { slice_type: "bar" }] as const;
+
+	const resolver: SliceZoneResolver<typeof slices[number]> = ({
+		sliceName,
+	}) => {
+		switch (sliceName) {
+			case "foo": {
+				return (props) => <StringifySliceComponent id="foo" {...props} />;
+			}
+
+			case "bar": {
+				return (props) => <StringifySliceComponent id="bar" {...props} />;
+			}
+		}
+	};
+
+	const actual = renderJSON(<SliceZone slices={slices} resolver={resolver} />);
+	const expected = renderJSON(
+		<>
+			<StringifySliceComponent
+				id="foo"
+				slice={slices[0]}
+				index={0}
+				slices={slices}
+				context={{}}
+			/>
+			<StringifySliceComponent
+				id="bar"
+				slice={slices[1]}
+				index={1}
+				slices={slices}
+				context={{}}
+			/>
+		</>,
+	);
+
+	t.deepEqual(actual, expected);
 });
