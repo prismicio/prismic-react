@@ -158,7 +158,8 @@ type SliceZoneResolverArgs<TSlice extends SliceLike = SliceLike> = {
 
 /**
  * A function that determines the rendered React component for each Slice in the
- * Slice Zone.
+ * Slice Zone. If a nullish value is returned, the component will fallback to
+ * the `components` or `defaultComponent` props to determine the rendered component.
  *
  * @deprecated Use the `components` prop instead.
  *
@@ -171,7 +172,7 @@ export type SliceZoneResolver<
 	TContext = unknown,
 > = (
 	args: SliceZoneResolverArgs<TSlice>,
-) => SliceComponentType<TSlice, TContext>;
+) => SliceComponentType<TSlice, TContext> | undefined | null;
 
 /**
  * React props for the `<SliceZone>` component.
