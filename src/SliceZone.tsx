@@ -141,7 +141,7 @@ export const TODOSliceComponent = __PRODUCTION__
  */
 type SliceZoneResolverArgs<TSlice extends SliceLike = SliceLike> = {
 	/**
-	 * The Slice to resolve to a React component..
+	 * The Slice to resolve to a React component.
 	 */
 	slice: TSlice;
 
