@@ -25,6 +25,7 @@ export type {
 	SliceZoneComponents,
 	SliceZoneLike,
 	SliceZoneProps,
+	SliceZoneResolver,
 } from "./SliceZone";
 
 export { PrismicToolbar } from "./PrismicToolbar";
