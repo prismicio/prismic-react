@@ -258,7 +258,7 @@ export const SliceZone = <TSlice extends SliceLike, TContext>({
 				}
 			}
 
-			const key = JSON.stringify(slice);
+			const key = `${index}-${JSON.stringify(slice)}`;
 
 			return (
 				<Comp
