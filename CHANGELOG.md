@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.7](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2021-11-23)
+
+
+### Bug Fixes
+
+* render Slices in the correct order in `<SliceZone>` ([#104](https://github.com/prismicio/prismic-reactjs/issues/104)) ([ffc4d4a](https://github.com/prismicio/prismic-reactjs/commit/ffc4d4ad6a4373f827cef400a47c53daea96ff38))
+
 ## [2.0.0-beta.6](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2021-11-22)
 
 
