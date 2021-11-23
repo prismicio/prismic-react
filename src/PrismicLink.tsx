@@ -142,9 +142,13 @@ const defaultExternalComponent = "a";
  *   link is internal or external.
  */
 export const PrismicLink = <
-	InternalComponent extends string | React.ComponentType<LinkProps>,
-	ExternalComponent extends string | React.ComponentType<LinkProps>,
-	LinkResolverFunction extends prismicH.LinkResolverFunction,
+	InternalComponent extends
+		| string
+		| React.ComponentType<LinkProps> = typeof defaultInternalComponent,
+	ExternalComponent extends
+		| string
+		| React.ComponentType<LinkProps> = typeof defaultExternalComponent,
+	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
 >(
 	props: PrismicLinkProps<
 		InternalComponent,
