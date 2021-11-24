@@ -17,6 +17,14 @@ export type { PrismicTextProps } from "./PrismicText";
 export { PrismicRichText } from "./PrismicRichText";
 export type { PrismicRichTextProps } from "./PrismicRichText";
 
+import { Element } from "@prismicio/richtext";
+export { Element };
+/**
+ * @deprecated Renamed to `Element` (without an "s").
+ */
+// TODO: Remove in v3.
+export const Elements = Element;
+
 export { SliceZone, TODOSliceComponent } from "./SliceZone";
 export type {
 	SliceComponentProps,
