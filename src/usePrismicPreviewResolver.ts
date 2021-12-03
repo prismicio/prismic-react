@@ -2,6 +2,7 @@ import type * as prismic from "@prismicio/client";
 
 import * as React from "react";
 
+import { usePrismicContext } from "./usePrismicContext";
 import {
 	ClientHookReturnType,
 	useStatefulPrismicClientMethod,
@@ -62,11 +63,15 @@ export type UsePrismicPreviewResolverArgs = {
 export const usePrismicPreviewResolver = (
 	args: UsePrismicPreviewResolverArgs = {},
 ): ClientHookReturnType<string> => {
+	const context = usePrismicContext();
+
+	const linkResolver = args.linkResolver || context.linkResolver;
+
 	const result = useStatefulPrismicClientMethod(
 		"resolvePreviewURL",
 		[
 			{
-				linkResolver: args.linkResolver,
+				linkResolver,
 				defaultURL: args.defaultURL || "/",
 				previewToken: args.previewToken,
 				documentID: args.documentID,
