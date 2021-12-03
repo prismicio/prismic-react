@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.9...v2.0.0) (2021-12-03)
+
 ## [2.0.0-beta.9](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2021-12-03)
 
 
