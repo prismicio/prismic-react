@@ -71,24 +71,6 @@ export type HookOnlyParameters = {
 	skip?: boolean;
 };
 
-const getParamHookDependencies = (
-	params: NonNullable<ClientMethodParameters<"get">[0]>,
-) => {
-	return [
-		params.ref,
-		params.lang,
-		params.page,
-		params.after,
-		params.fetch,
-		params.pageSize,
-		params.orderings,
-		params.fetchLinks,
-		params.graphQuery,
-		params.predicates,
-		params.accessToken,
-	];
-};
-
 /**
  * Determines if a value is a `@prismicio/client` params object.
  *
@@ -159,7 +141,6 @@ export const useStatefulPrismicClientMethod = <
 		() => {
 			if (!skip) {
 				dispatch(["start"]);
-
 				client[methodName]
 					.call(
 						client,
@@ -171,17 +152,11 @@ export const useStatefulPrismicClientMethod = <
 					.catch((error) => dispatch(["fail", error]));
 			}
 		},
-		// We must disable exhaustive-deps to optimize providing `params` deps.
+		// We must disable exhaustive-deps since we are using
+		// JSON.stringify on args (effectively a deep equality check).
+		// We want this effect to run again anytime args changes.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[
-			client,
-			skip,
-			methodName,
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			...argsWithoutParams,
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			...getParamHookDependencies(params),
-		],
+		[client, methodName, JSON.stringify(args)],
 	);
 
 	return React.useMemo(
