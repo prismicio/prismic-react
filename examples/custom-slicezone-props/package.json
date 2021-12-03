@@ -1,0 +1,9 @@
+{
+	"type": "module",
+	"dependencies": {
+		"@prismicio/react": "alpha"
+	},
+	"devDependencies": {
+		"@prismicio/types": "^0.1.4"
+	}
+}

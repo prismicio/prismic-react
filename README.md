@@ -1,192 +1,95 @@
-![alt text](https://prismic.io/...1b58998/images/logo-dark.svg)
+# @prismicio/react
 
-[![npm version](https://badge.fury.io/js/prismic-reactjs.svg)](http://badge.fury.io/js/prismic-reactjs)
-[![Build Status](https://api.travis-ci.org/prismicio/prismic-reactjs.png)](https://travis-ci.org/prismicio/prismic-reactjs)
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![Github Actions CI][github-actions-ci-src]][github-actions-ci-href]
+[![Codecov][codecov-src]][codecov-href]
+[![Conventional Commits][conventional-commits-src]][conventional-commits-href]
+[![License][license-src]][license-href]
 
-# Prismic Rich (💰) Text, for React
-### A simple utility to render Rich Text with Prismic API V2
+<!-- TODO: Replacing link to Prismic with [Prismic][prismic] is useful here -->
 
-Prismic provides content writers with a WYSIWYG editor. It's awesome for formatting text but harder to deal with on client side. Fortunately, Prismic React provides utilities to tackle this exact issue!
+[React][react] components and hooks to fetch and present [Prismic][prismic] content.
 
-Based on [prismic-richtext](https://github.com/prismicio/prismic-richtext), it allows you to render Prismic generated Rich Text as React components. It's meant to work in pair with the prismic-javascript library, a new javascript kit for the prismic API v2 [available here](https://github.com/prismicio/prismic-javascript).
+- 📝 &nbsp;Display content from Prismic like [Rich Text][prismic-rich-text] and [Link][prismic-link] fields
+- 🍡 &nbsp;Render Prismic [Slice Zones][prismic-slices] declaratively with React components
+- 🎣 &nbsp;Fetch Prismic content using [React hooks][react-hooks]
 
-* The [source code](https://github.com/prismicio/prismic-reactjs) is on Github.
-* The [Changelog](https://github.com/prismicio/prismic-reactjs/releases) is on Github's releases tab.
-* The [API reference](https://prismicio.github.io/prismic-javascript/globals.html) is on Github.
+## Install
 
-
-## Installation
-
-#### Prismic Api Endpoint
-First and foremost, make sure you're using the V2 API.
-Your `prismic-configuration.js` (or equivalent) should probably contain a line like this one (or equivalent) 👇
-
-```javascript
-apiEndpoint: your-repo-name.prismic.io/api/v2
+```bash
+npm install @prismicio/react@beta
 ```
 
-Consider polyfilling:
-- [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
-- [Object spread](https://babeljs.io/docs/en/babel-plugin-proposal-object-rest-spread)
+## Documentation
 
-#### NPM
-👇 Prismic React is on npm...
-```sh
-npm install prismic-reactjs --save
-```
+To discover what's new on this package check out [the changelog][changelog]. For full documentation, visit the [official Prismic documentation][prismic-docs].
 
-#### CDN
-... and on CDN!
-```
-https://unpkg.com/prismic-reactjs
-```
+## Contributing
 
-(You may need to adapt the version number)
+Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Prismic developer community!
 
-#### Downloadable version
+**Asking a question**: [Open a new topic][forum-question] on our community forum explaining what you want to achieve / your question. Our support team will get back to you shortly.
 
-You'll find downloadable versions on our release page: [https://github.com/prismicio/prismic-reactjs/releases](https://github.com/prismicio/prismic-reactjs/releases).
+**Reporting a bug**: [Open an issue][repo-bug-report] explaining your application's setup and the bug you're encountering.
 
-The kit is universal, it can be used:
+**Suggesting an improvement**: [Open an issue][repo-feature-request] explaining your improvement or feature so we can discuss and learn more.
 
-* Server-side with NodeJS
-* Client-side as part of your build with Browserify, Parcel, webpack...
-* Client-side with a simple script tag
+**Submitting code changes**: For small fixes, feel free to [open a pull request][repo-pull-requests] with a description of your changes. For large changes, please first [open an issue][repo-feature-request] so we can discuss if and how the changes should be implemented.
 
-# Usage
+For more clarity on this project and its structure you can also check out the detailed [CONTRIBUTING.md][contributing] document.
 
-Although this package is mainly about RichText, Prismic React exposes 3 utilities.
-Import them in your project this way:
-
-
-``` javascript
-import {Date, Link, RichText} from 'prismic-reactjs';
-```
-
-## Date utility
-
-Like `Link`, `Date` is directly imported from [prismic-helpers](https://github.com/prismicio/prismic-helpers). It converts a Date string received from the API, to an ISO (8601) Javascript Date (ie. something you're used to work with):
-```javascript
-import { Date as ParseDate } from 'prismic-reactjs'
-ParseDate(mydoc.data.mydate)
-```
-⚠️ Make sure you rename the import to not override the built-in Date type.
-In a near future, we might rename it at package level.
-
-## Link utility
-
-`Link` generates links to documents within your website (and outside).
-Give it a Link fragment and you'll get a full fledged url:
-```javascript
-Link.url(mydoc.data.mylink, ctx.linkResolver)
-```
-👆Note that `linkResolver` argument is not required if you are 100% sure that your're not linking to a document !
-
-## RichText Component
-
-RichText is a simple React component used to _render_ a Rich Text.
-If you've been used to work with `RichText.render`, you're pretty much good to go!
-
-#### Basic example
-
-This is the most basic way to make it work, where `myDoc.data.title` is (obviously) a Rich Text object.
-`linkResolver` will be triggered everytime RichText meets a link and wants to correctly resolve it.
-```javascript
-  import { RichText } from 'prismic-reactjs';
-
-  // Use linkResolver if you *actually* have links
-  const linkResolver = (doc) => {
-    switch (doc.type) {
-        case ('homepage'): return '/'
-    }
-  }
-
-  const Header = (myDoc) => (
-    <header>
-        <RichText
-            render={myDoc.data.title}
-            linkResolver={linkResolver}
-        />
-    </header>
-  );
-  export default Header;
-```
-
-#### As text
-
-Occasionally, you may require to render not a component, but a simple string.
-Use RichText's static property `asText` to do so:
-```javascript
-  const Title = (myDoc) => (
-    <h1>
-        {RichText.asText(myDoc.data.title)}
-    </h1>
-  )
-```
-
-#### Creating a custom Link
-Under the hood, [prismic-richtext](https://github.com/prismicio/prismic-richtext) takes your rich text data and _serializes_ it. Based on your data type (ie. heading, paragraph, list, link...), it creates an HTML template and renders it as a React component. Most of the time, it's enough: a list will always be a list. But if you work with React, you'll probably want to render Prismic links as React router dom `Link` instead of `<a>` tags. We created a property called `serializeHyperlink`, just for that:
-
-```javascript
-const myCustomLink = (type, element, content, children, index) => (
-  <Link key={element.data.id} to={linkResolver(element.data)}>
-    <a>{content}</a>
-  </Link>
-);
-  const MyComponent = (myDoc) => (
-    <div>
-        <RichText
-            render={myDoc.data.textWithLinks}
-            serializeHyperlink={myCustomLink}
-        />
-    </div>
-```
-
-#### Passing your own serializer
-If `serializeHyperlink` is not enough, you can alternatively pass an `htmlSerializer` function.
-Full example and all accessible elements can be found [here](https://prismic.io/docs/javascript/beyond-the-api/html-serializer). If you need examples or help on this, feel free to open an issue!
-
-
-#### Wrapping your rich text in a React component
-Out of the box, RichText wraps your content in a `React.fragment`. But you can pass an optional Component property to RichText component. Re-writing our first example, we could simply pass `header` to Component:
-```javascript
-  const Header = (myDoc) => <RichText render={myDoc.data.title} Component="header" />
-```
-
-## Deprecation
-In earlier versions of Prismic React, rich text rendering was deferred to a method called `render`.
-This method is still accessible, although it doesn't seem to offer any advantage over a React component. If you disagree, please let me know!
-
-#### example use
-
-```javascript
-
-import { RichText } from 'prismic-reactjs';
-
-const Header = (myDoc) => (
-    <header>
-        {RichText.render(myDoc.data.title)}
-    </header>
-);
-```
-👆 Please note that this method is now a static property of `RichText` component.
-
-
-## Install the kit locally
-
-Source files are in the `src/` directory. You only need [Node.js and npm](http://www.joyent.com/blog/installing-node-and-npm/) to work on the codebase.
+## License
 
 ```
-npm install
-npm run dev
+   Copyright 2013-2021 Prismic <contact@prismic.io> (https://prismic.io)
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
 ```
 
-### License
+<!-- Links -->
 
-This software is licensed under the Apache 2 license, quoted below.
+[prismic]: https://prismic.io
 
-Copyright 2013-2019 Prismic.io (http://prismic.io).
+<!-- TODO: Replace link with a more useful one if available -->
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this project except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
+[prismic-docs]: https://prismic.io/docs
+[changelog]: /CHANGELOG.md
+[contributing]: ./CONTRIBUTING.md
+[react]: https://reactjs.org/
+[prismic-rich-text]: https://prismic.io/docs/core-concepts/rich-text-title
+[prismic-link]: https://prismic.io/docs/core-concepts/link-content-relationship
+[prismic-slices]: https://prismic.io/docs/core-concepts/slices
+[react-hooks]: https://reactjs.org/docs/hooks-overview.html
 
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+<!-- TODO: Replace link with a more useful one if available -->
+
+[forum-question]: https://community.prismic.io
+[repo-bug-report]: https://github.com/prismicio/prismic-react/issues/new?assignees=&labels=bug&template=bug_report.md&title=
+[repo-feature-request]: https://github.com/prismicio/prismic-react/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=
+[repo-pull-requests]: https://github.com/prismicio/prismic-react/pulls
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/@prismicio/react/latest.svg
+[npm-version-href]: https://npmjs.com/package/@prismicio/react
+[npm-downloads-src]: https://img.shields.io/npm/dm/@prismicio/react.svg
+[npm-downloads-href]: https://npmjs.com/package/@prismicio/react
+[github-actions-ci-src]: https://github.com/prismicio/prismic-react/workflows/ci/badge.svg
+[github-actions-ci-href]: https://github.com/prismicio/prismic-react/actions?query=workflow%3Aci
+[codecov-src]: https://img.shields.io/codecov/c/github/prismicio/prismic-react.svg
+[codecov-href]: https://codecov.io/gh/prismicio/prismic-react
+[conventional-commits-src]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
+[conventional-commits-href]: https://conventionalcommits.org
+[license-src]: https://img.shields.io/npm/l/@prismicio/react.svg
+[license-href]: https://npmjs.com/package/@prismicio/react

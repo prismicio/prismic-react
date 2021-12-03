@@ -1,0 +1,11 @@
+{
+	"type": "module",
+	"dependencies": {
+		"@prismicio/react": "alpha",
+		"react-router-dom": "^5.2.0"
+	},
+	"devDependencies": {
+		"@prismicio/types": "^0.1.4",
+		"@types/react-router-dom": "^5.1.8"
+	}
+}
