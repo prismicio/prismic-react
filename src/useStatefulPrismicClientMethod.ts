@@ -157,7 +157,7 @@ export const useStatefulPrismicClientMethod = <
 
 	React.useEffect(
 		() => {
-			if (state.state === "idle" && !skip) {
+			if (!skip) {
 				dispatch(["start"]);
 
 				client[methodName]
@@ -175,11 +175,10 @@ export const useStatefulPrismicClientMethod = <
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[
 			client,
-			state.state,
 			skip,
 			methodName,
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-			...args.slice(0, -1),
+			...argsWithoutParams,
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 			...getParamHookDependencies(params),
 		],
