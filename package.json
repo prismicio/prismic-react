@@ -45,13 +45,13 @@
 		"unit": "nyc --reporter=lcovonly --reporter=text --exclude-after-remap=false ava"
 	},
 	"dependencies": {
-		"@prismicio/helpers": "^2.0.0-beta.4",
-		"@prismicio/richtext": "^2.0.0-beta.2"
+		"@prismicio/helpers": "^2.0.0-beta.6",
+		"@prismicio/richtext": "^2.0.0-beta.3"
 	},
 	"devDependencies": {
-		"@prismicio/client": "^6.0.0-beta.3",
+		"@prismicio/client": "^6.0.0-beta.4",
 		"@prismicio/mock": "^0.0.6",
-		"@prismicio/types": "^0.1.18",
+		"@prismicio/types": "^0.1.19",
 		"@testing-library/react": "^12.1.2",
 		"@testing-library/react-hooks": "^7.0.2",
 		"@types/jsdom": "^16.2.13",
@@ -70,9 +70,9 @@
 		"eslint-plugin-react-hooks": "^4.3.0",
 		"eslint-plugin-tsdoc": "^0.2.14",
 		"global-jsdom": "^8.3.0",
-		"jsdom": "^18.1.1",
+		"jsdom": "^19.0.0",
 		"msw": "^0.35.0",
-		"node-fetch": "^3.0.0",
+		"node-fetch": "^3.1.0",
 		"nyc": "^15.1.0",
 		"prettier": "^2.5.0",
 		"prettier-plugin-jsdoc": "^0.3.30",

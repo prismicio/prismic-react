@@ -3,4 +3,5 @@ export default {
 	files: ["./test/**/*.test.ts", "./test/**/*.test.tsx"],
 	require: ["ts-eager/register"],
 	verbose: true,
+	timeout: "60s",
 };
