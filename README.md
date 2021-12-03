@@ -18,7 +18,7 @@
 ## Install
 
 ```bash
-npm install @prismicio/react@beta
+npm install @prismicio/react
 ```
 
 ## Documentation
