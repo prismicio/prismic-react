@@ -124,7 +124,6 @@ test.serial("returns failed state on error", async (t) => {
 		oauth_initiate: "oauth_initiate",
 		oauth_token: "oauth_token",
 	};
-	const tags = ["tag", "tag2"];
 
 	server.use(
 		msw.rest.get(prismic.getEndpoint(md5(t.title)), (_req, res, ctx) => {
@@ -133,7 +132,7 @@ test.serial("returns failed state on error", async (t) => {
 	);
 
 	const { result, waitForValueToChange } = renderHook(
-		() => usePrismicDocumentsBySomeTags(tags),
+		() => usePrismicDocumentsBySomeTags(["tag", "tag2"]),
 		{ wrapper },
 	);
 

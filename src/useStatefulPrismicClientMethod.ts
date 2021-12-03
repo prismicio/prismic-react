@@ -139,8 +139,14 @@ export const useStatefulPrismicClientMethod = <
 
 	React.useEffect(
 		() => {
+			// Used to prevent dispatching an action if the hook was cleaned up.
+			let didCancel = false;
+
 			if (!skip) {
-				dispatch(["start"]);
+				if (!didCancel) {
+					dispatch(["start"]);
+				}
+
 				client[methodName]
 					.call(
 						client,
@@ -148,15 +154,28 @@ export const useStatefulPrismicClientMethod = <
 						...argsWithoutParams,
 						params,
 					)
-					.then((result) => dispatch(["succeed", result as TData]))
-					.catch((error) => dispatch(["fail", error]));
+					.then((result) => {
+						if (!didCancel) {
+							dispatch(["succeed", result as TData]);
+						}
+					})
+					.catch((error) => {
+						if (!didCancel) {
+							dispatch(["fail", error]);
+						}
+					});
 			}
+
+			// Ensure we don't dispatch an action if the hook is cleaned up.
+			() => {
+				didCancel = true;
+			};
 		},
 		// We must disable exhaustive-deps since we are using
-		// JSON.stringify on args (effectively a deep equality check).
-		// We want this effect to run again anytime args changes.
+		// JSON.stringify on params (effectively a deep equality check).
+		// We want this effect to run again anytime params change.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[client, methodName, JSON.stringify(args)],
+		[client, methodName, skip, JSON.stringify(params)],
 	);
 
 	return React.useMemo(
