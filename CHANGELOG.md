@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.8](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2021-12-03)
+
+
+### Features
+
+* re-export Element from `@prismicio/richtext` ([ae79fd6](https://github.com/prismicio/prismic-reactjs/commit/ae79fd6d09ae7045d96cf6175173f0a29d9a9be9))
+
+
+### Bug Fixes
+
+* inject Prismic Toolbar only once ([aa14cbd](https://github.com/prismicio/prismic-reactjs/commit/aa14cbd9c7883ee8c9d8760fcbbce1d334c696c4))
+* re-run client hooks on parameter changes ([1fd3dad](https://github.com/prismicio/prismic-reactjs/commit/1fd3dad33336c58b67e533f7d10adf1c05b60f11))
+* restore default link component types ([9d6f366](https://github.com/prismicio/prismic-reactjs/commit/9d6f366bae85ec151e7e5ed2d178e6eda6671a99))
+* use Link Resolver from context in usePrismicPreviewResolver ([ed44fa6](https://github.com/prismicio/prismic-reactjs/commit/ed44fa6609b0ac3525dfe7a173bad0aac03a9229))
+
+
+### Chore
+
+* **deps:** maintain dependencies ([fc35a26](https://github.com/prismicio/prismic-reactjs/commit/fc35a26008da703b7506b7632dbd92d06b4e6f23))
+* **deps:** update dependencies ([05b9d33](https://github.com/prismicio/prismic-reactjs/commit/05b9d331a5f651b9f41b927968c1e0167ef6655f))
+
 ## [2.0.0-beta.7](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2021-11-23)
 
 
