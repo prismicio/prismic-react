@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.9](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2021-12-03)
+
+
+### Bug Fixes
+
+* cancel client requests on hook cleanup ([2c91305](https://github.com/prismicio/prismic-reactjs/commit/2c91305a6138eca0bd7b4f19645ac4b7b4f717f8))
+* prevent infinite loops in client hooks due to object arguments ([4858113](https://github.com/prismicio/prismic-reactjs/commit/4858113754a78f008b270a1082af711f72c8a3fb))
+* re-run hook on argument changes ([4b2da91](https://github.com/prismicio/prismic-reactjs/commit/4b2da91b4eda73f69ba7999f0d7d1bb144c1e45a))
+
 ## [2.0.0-beta.8](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2021-12-03)
 
 
