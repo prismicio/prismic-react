@@ -175,7 +175,15 @@ export const useStatefulPrismicClientMethod = <
 		// JSON.stringify on params (effectively a deep equality check).
 		// We want this effect to run again anytime params change.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[client, methodName, skip, JSON.stringify(params)],
+		[
+			client,
+			methodName,
+			skip,
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			JSON.stringify(argsWithoutParams),
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			JSON.stringify(params),
+		],
 	);
 
 	return React.useMemo(
