@@ -63,7 +63,7 @@ For more clarity on this project and its structure you can also check out the de
 
 <!-- TODO: Replace link with a more useful one if available -->
 
-[prismic-docs]: https://prismic.io/docs
+[prismic-docs]: https://prismic.io/docs/technical-reference/prismicio-react
 [changelog]: /CHANGELOG.md
 [contributing]: ./CONTRIBUTING.md
 [react]: https://reactjs.org/
