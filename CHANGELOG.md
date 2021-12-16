@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.2](https://github.com/prismicio/prismic-react/compare/v2.0.1...v2.0.2) (2021-12-16)
+
+
+### Bug Fixes
+
+* use correct toolbar URL (`new=true`) ([8de749c](https://github.com/prismicio/prismic-react/commit/8de749cde1b06e52f58a0bdef3d39a11b60d21f0))
+
+
+### Chore
+
+* remove incorrect CHANGELOG entry ([60967b8](https://github.com/prismicio/prismic-react/commit/60967b8fbd1be02b92a1e90dcb060bb3d4f47157))
+
 ### [2.0.1](https://github.com/prismicio/prismic-react/compare/v1.3.4...v2.0.1) (2021-12-16)
 
 
