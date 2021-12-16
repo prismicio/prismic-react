@@ -5,11 +5,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### [2.0.1](https://github.com/prismicio/prismic-react/compare/v1.3.4...v2.0.1) (2021-12-16)
 
 
-### Features
-
-* v2.0.0 ([#97](https://github.com/prismicio/prismic-react/issues/97)) ([408df03](https://github.com/prismicio/prismic-react/commit/408df0349d2b636661841cc007953273c88120bf))
-
-
 ### Bug Fixes
 
 * compose `<PrismicRichText>` components with `<PrismicProvider>` components ([e2d1af4](https://github.com/prismicio/prismic-react/commit/e2d1af48a10f9c664b6acb2dda7750a2a9cdec8b))
