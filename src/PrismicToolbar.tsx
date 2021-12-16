@@ -27,7 +27,7 @@ export const PrismicToolbar = ({
 	type = "new",
 }: PrismicToolbarProps): null => {
 	const src = `https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}${
-		type === "new" ? "&type=new" : ""
+		type === "new" ? "&new=true" : ""
 	}`;
 
 	React.useEffect(() => {

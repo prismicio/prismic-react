@@ -33,7 +33,7 @@ test.serial(
 		if (script instanceof HTMLScriptElement) {
 			t.is(
 				script.getAttribute("src"),
-				`https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}&type=new`,
+				`https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}&new=true`,
 			);
 			t.is(script.getAttribute("defer"), "");
 			t.is(script.dataset.repositoryName, repositoryName);
@@ -54,7 +54,7 @@ test.serial("uses the new toolbar by default", (t) => {
 	if (script instanceof HTMLScriptElement) {
 		t.is(
 			script.getAttribute("src"),
-			`https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}&type=new`,
+			`https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}&new=true`,
 		);
 		t.is(script.dataset.type, "new");
 	} else {
