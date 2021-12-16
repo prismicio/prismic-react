@@ -6,12 +6,6 @@ import { isInternalURL } from "./lib/isInternalURL";
 
 import { usePrismicContext } from "./usePrismicContext";
 
-type ComponentProps<T> = T extends React.ComponentType<infer U>
-	? U
-	: T extends keyof JSX.IntrinsicElements
-	? React.ComponentProps<T>
-	: unknown;
-
 /**
  * Props provided to a component when rendered with `<PrismicLink>`.
  */
@@ -43,15 +37,12 @@ export interface LinkProps {
  * Props for `<PrismicLink>`.
  */
 export type PrismicLinkProps<
-	InternalComponent extends string | React.ComponentType<LinkProps> =
-		| string
-		| React.ComponentType<LinkProps>,
-	ExternalComponent extends string | React.ComponentType<LinkProps> =
-		| string
-		| React.ComponentType<LinkProps>,
+	InternalComponent extends React.ElementType<LinkProps> = React.ElementType<LinkProps>,
+	ExternalComponent extends React.ElementType<LinkProps> = React.ElementType<LinkProps>,
 	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
 > = Omit<
-	ComponentProps<InternalComponent> & ComponentProps<ExternalComponent>,
+	React.ComponentProps<InternalComponent> &
+		React.ComponentProps<ExternalComponent>,
 	keyof LinkProps
 > & {
 	/**
@@ -142,12 +133,8 @@ const defaultExternalComponent = "a";
  *   link is internal or external.
  */
 export const PrismicLink = <
-	InternalComponent extends
-		| string
-		| React.ComponentType<LinkProps> = typeof defaultInternalComponent,
-	ExternalComponent extends
-		| string
-		| React.ComponentType<LinkProps> = typeof defaultExternalComponent,
+	InternalComponent extends React.ElementType<LinkProps> = typeof defaultInternalComponent,
+	ExternalComponent extends React.ElementType<LinkProps> = typeof defaultExternalComponent,
 	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
 >(
 	props: PrismicLinkProps<
@@ -180,12 +167,12 @@ export const PrismicLink = <
 	const rel =
 		props.rel || (target === "_blank" ? "noopener noreferrer" : undefined);
 
-	const InternalComponent =
+	const InternalComponent: React.ElementType<LinkProps> =
 		props.internalComponent ||
 		context.internalLinkComponent ||
 		defaultInternalComponent;
 
-	const ExternalComponent =
+	const ExternalComponent: React.ElementType<LinkProps> =
 		props.externalComponent ||
 		context.externalLinkComponent ||
 		defaultExternalComponent;

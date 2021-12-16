@@ -59,12 +59,12 @@ export type PrismicContextValue = {
 	/**
 	 * The component rendered by `<PrismicLink>` for internal URLs. Defaults to `<a>`.
 	 */
-	internalLinkComponent?: string | React.ComponentType<LinkProps>;
+	internalLinkComponent?: React.ElementType<LinkProps>;
 
 	/**
 	 * The component rendered by `<PrismicLink>` for external URLs. Defaults to `<a>`.
 	 */
-	externalLinkComponent?: string | React.ComponentType<LinkProps>;
+	externalLinkComponent?: React.ElementType<LinkProps>;
 
 	/**
 	 * Children for the component.
