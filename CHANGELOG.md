@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/prismicio/prismic-react/compare/v1.3.4...v2.0.1) (2021-12-16)
+
+
+### Features
+
+* v2.0.0 ([#97](https://github.com/prismicio/prismic-react/issues/97)) ([408df03](https://github.com/prismicio/prismic-react/commit/408df0349d2b636661841cc007953273c88120bf))
+
+
+### Bug Fixes
+
+* compose `<PrismicRichText>` components with `<PrismicProvider>` components ([e2d1af4](https://github.com/prismicio/prismic-react/commit/e2d1af48a10f9c664b6acb2dda7750a2a9cdec8b))
+
+
+### Documentation
+
+* remove `[@beta](https://github.com/beta)` tag from installation command [skip ci] ([0957770](https://github.com/prismicio/prismic-react/commit/0957770d7a14414dfbfee8c10fa26b266ac3f700))
+* update docs link [skip ci] ([8bf355e](https://github.com/prismicio/prismic-react/commit/8bf355e904ed40bcaf00d855483ade8b752b7116))
+
+
+### Chore
+
+* add github issue and pull request templates ([25f2d4f](https://github.com/prismicio/prismic-react/commit/25f2d4f3ef89022f52eac0481cbf37b79b4f0e3b))
+* **deps:** update dependencies ([b3dbec1](https://github.com/prismicio/prismic-react/commit/b3dbec14dab2b8e3d75c76d91177201b63e6d28b))
+
+
+### Refactor
+
+* simplify Rich Text serializer composition ([0904a3e](https://github.com/prismicio/prismic-react/commit/0904a3eefd76e82f934e2c6b1b4cff6728e4c611))
+* use `React.ElementType` over `string | React.ComponentType` ([19094f6](https://github.com/prismicio/prismic-react/commit/19094f62465208bee95051d88321bb808c390a4f))
+
 ## [2.0.0](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.9...v2.0.0) (2021-12-03)
 
 ## [2.0.0-beta.9](https://github.com/prismicio/prismic-reactjs/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2021-12-03)
