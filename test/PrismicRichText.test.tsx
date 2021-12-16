@@ -2,9 +2,9 @@ import test from "ava";
 import * as prismicT from "@prismicio/types";
 import * as React from "react";
 
-import { PrismicRichText, PrismicLink } from "../src";
-
 import { renderJSON } from "./__testutils__/renderJSON";
+
+import { PrismicRichText, PrismicLink, PrismicProvider } from "../src";
 
 type LinkProps = {
 	href: string;
@@ -348,9 +348,9 @@ test("returns <image /> wrapped in <PrismicLink />", (t) => {
 });
 
 test("returns <div /> with embedded html if type is embed", (t) => {
-	const oembed = {
+	const oembed: prismicT.EmbedField = {
 		embed_url: "https://example.com",
-		type: "modern html elements",
+		type: "rich",
 		provider_name: "Prismic",
 		html: "<marquee>Prismic is fun</marquee>",
 	};
@@ -367,7 +367,7 @@ test("returns <div /> with embedded html if type is embed", (t) => {
 			data-oembed={oembed.embed_url}
 			data-oembed-type={oembed.type}
 			data-oembed-provider={oembed.provider_name}
-			dangerouslySetInnerHTML={{ __html: oembed.html }}
+			dangerouslySetInnerHTML={{ __html: oembed.html as string }}
 		/>,
 	);
 
@@ -497,6 +497,88 @@ test("renders line breaks as <br />", (t) => {
 			line 1<br />
 			line 2
 		</p>,
+	);
+
+	t.deepEqual(actual, expected);
+});
+
+test("renders components from components prop", (t) => {
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "paragraph",
+			spans: [],
+		},
+	];
+
+	const actual = renderJSON(
+		<PrismicRichText
+			field={field}
+			components={{ paragraph: () => <p>paragraph</p> }}
+		/>,
+	);
+	const expected = renderJSON(<p>paragraph</p>);
+
+	t.deepEqual(actual, expected);
+});
+
+test("renders components given to PrismicProvider", (t) => {
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "paragraph",
+			spans: [],
+		},
+	];
+
+	const actual = renderJSON(
+		<PrismicProvider
+			richTextComponents={{
+				paragraph: () => <p>paragraph</p>,
+			}}
+		>
+			<PrismicRichText field={field} />
+		</PrismicProvider>,
+	);
+	const expected = renderJSON(<p>paragraph</p>);
+
+	t.deepEqual(actual, expected);
+});
+
+test("components given to components prop overrides components given to PrismicProvider", (t) => {
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.heading1,
+			text: "heading",
+			spans: [],
+		},
+		{
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "paragraph",
+			spans: [],
+		},
+	];
+
+	const actual = renderJSON(
+		<PrismicProvider
+			richTextComponents={{
+				heading1: () => <h1>PrismicProvider heading1</h1>,
+				paragraph: () => <p>PrismicProvider paragraph</p>,
+			}}
+		>
+			<PrismicRichText
+				field={field}
+				components={{
+					paragraph: () => <p>overridden paragraph</p>,
+				}}
+			/>
+		</PrismicProvider>,
+	);
+	const expected = renderJSON(
+		<>
+			<h1>PrismicProvider heading1</h1>
+			<p>overridden paragraph</p>
+		</>,
 	);
 
 	t.deepEqual(actual, expected);

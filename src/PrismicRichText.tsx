@@ -224,21 +224,25 @@ export const PrismicRichText = (
 			return null;
 		} else {
 			const linkResolver = props.linkResolver || context.linkResolver;
-			const components = props.components || context.richTextComponents;
 			const defaultSerializer = createDefaultSerializer({
 				linkResolver,
 				internalLinkComponent: props.internalLinkComponent,
 				externalLinkComponent: props.externalLinkComponent,
 			});
 
-			const serializer = components
-				? prismicR.composeSerializers(
-						typeof components === "object"
-							? prismicR.wrapMapSerializer(components)
-							: components,
-						defaultSerializer,
-				  )
-				: defaultSerializer;
+			const serializers = [
+				typeof props.components === "object"
+					? prismicR.wrapMapSerializer(props.components)
+					: props.components,
+				typeof context.richTextComponents === "object"
+					? prismicR.wrapMapSerializer(context.richTextComponents)
+					: context.richTextComponents,
+				defaultSerializer,
+			].filter((x): x is JSXFunctionSerializer => Boolean(x));
+			const serializer = prismicR.composeSerializers(
+				serializers[0],
+				...serializers.slice(1),
+			);
 
 			const serialized = prismicR.serialize(props.field, serializer);
 
