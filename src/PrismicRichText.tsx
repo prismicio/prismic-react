@@ -230,7 +230,7 @@ export const PrismicRichText = (
 				externalLinkComponent: props.externalLinkComponent,
 			});
 
-			const serializers = [
+			const serializer = prismicR.composeSerializers(
 				typeof props.components === "object"
 					? prismicR.wrapMapSerializer(props.components)
 					: props.components,
@@ -238,10 +238,6 @@ export const PrismicRichText = (
 					? prismicR.wrapMapSerializer(context.richTextComponents)
 					: context.richTextComponents,
 				defaultSerializer,
-			].filter((x): x is JSXFunctionSerializer => Boolean(x));
-			const serializer = prismicR.composeSerializers(
-				serializers[0],
-				...serializers.slice(1),
 			);
 
 			const serialized = prismicR.serialize(props.field, serializer);
