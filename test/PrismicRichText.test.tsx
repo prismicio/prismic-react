@@ -514,7 +514,7 @@ test("renders components from components prop", (t) => {
 	const actual = renderJSON(
 		<PrismicRichText
 			field={field}
-			components={{ paragraph: () => <p>paragraph</p> }}
+			components={{ paragraph: ({ key }) => <p key={key}>paragraph</p> }}
 		/>,
 	);
 	const expected = renderJSON(<p>paragraph</p>);
@@ -534,7 +534,7 @@ test("renders components given to PrismicProvider", (t) => {
 	const actual = renderJSON(
 		<PrismicProvider
 			richTextComponents={{
-				paragraph: () => <p>paragraph</p>,
+				paragraph: ({ key }) => <p key={key}>paragraph</p>,
 			}}
 		>
 			<PrismicRichText field={field} />
@@ -562,14 +562,14 @@ test("components given to components prop overrides components given to PrismicP
 	const actual = renderJSON(
 		<PrismicProvider
 			richTextComponents={{
-				heading1: () => <h1>PrismicProvider heading1</h1>,
-				paragraph: () => <p>PrismicProvider paragraph</p>,
+				heading1: ({ key }) => <h1 key={key}>PrismicProvider heading1</h1>,
+				paragraph: ({ key }) => <p key={key}>PrismicProvider paragraph</p>,
 			}}
 		>
 			<PrismicRichText
 				field={field}
 				components={{
-					paragraph: () => <p>overridden paragraph</p>,
+					paragraph: ({ key }) => <p key={key}>overridden paragraph</p>,
 				}}
 			/>
 		</PrismicProvider>,
