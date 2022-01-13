@@ -1,7 +1,9 @@
 import * as React from "react";
 import * as prismicT from "@prismicio/types";
+import type { PascalCase } from "type-fest";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
+import { pascalCase } from "./lib/pascalCase";
 
 /**
  * The minimum required properties to represent a Prismic Slice for the
@@ -148,7 +150,7 @@ type SliceZoneResolverArgs<TSlice extends SliceLike = SliceLike> = {
 	/**
 	 * The name of the Slice.
 	 */
-	sliceName: TSlice["slice_type"];
+	sliceName: PascalCase<TSlice["slice_type"]>;
 
 	/**
 	 * The index of the Slice in the Slice Zone.
@@ -249,7 +251,7 @@ export const SliceZone = <TSlice extends SliceLike, TContext>({
 			if (resolver) {
 				const resolvedComp = resolver({
 					slice,
-					sliceName: slice.slice_type,
+					sliceName: pascalCase(slice.slice_type),
 					i: index,
 				});
 
@@ -270,7 +272,7 @@ export const SliceZone = <TSlice extends SliceLike, TContext>({
 				/>
 			);
 		});
-	}, [components, context, defaultComponent, slices]);
+	}, [components, context, defaultComponent, slices, resolver]);
 
 	return <>{renderedSlices}</>;
 };
