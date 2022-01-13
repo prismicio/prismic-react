@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useContext } from "react";
 
 import { PrismicContext, PrismicContextValue } from "./PrismicProvider";
 
@@ -9,5 +9,5 @@ import { PrismicContext, PrismicContextValue } from "./PrismicProvider";
  * @returns The closest `<PrismicProvider>` context value.
  */
 export const usePrismicContext = (): PrismicContextValue => {
-	return React.useContext(PrismicContext) || {};
+	return useContext(PrismicContext) || {};
 };

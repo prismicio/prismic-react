@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 
 /**
  * Props for `<PrismicToolbar>`.
@@ -30,7 +30,7 @@ export const PrismicToolbar = ({
 		type === "new" ? "&new=true" : ""
 	}`;
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const existingScript = document.querySelector(`script[src="${src}"]`);
 
 		if (!existingScript) {
@@ -45,7 +45,7 @@ export const PrismicToolbar = ({
 
 			document.body.appendChild(script);
 		}
-	}, [repositoryName, type]);
+	}, [repositoryName, type, src]);
 
 	return null;
 };

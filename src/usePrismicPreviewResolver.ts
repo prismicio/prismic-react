@@ -1,6 +1,6 @@
 import type * as prismic from "@prismicio/client";
 
-import * as React from "react";
+import { useEffect } from "react";
 
 import { usePrismicContext } from "./usePrismicContext";
 import {
@@ -83,7 +83,7 @@ export const usePrismicPreviewResolver = (
 	const [resolvedURL] = result;
 	const { navigate } = args;
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (resolvedURL && navigate) {
 			navigate(resolvedURL);
 		}

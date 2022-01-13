@@ -1,6 +1,6 @@
 import type * as prismic from "@prismicio/client";
 
-import * as React from "react";
+import { useEffect, useMemo, useReducer } from "react";
 
 import { PrismicClientHookState } from "./types";
 import { usePrismicClient } from "./usePrismicClient";
@@ -133,11 +133,11 @@ export const useStatefulPrismicClientMethod = <
 
 	const client = usePrismicClient(explicitClient || lastArgExplicitClient);
 
-	const [state, dispatch] = React.useReducer<
+	const [state, dispatch] = useReducer<
 		React.Reducer<StateMachineState<TData>, StateMachineAction<TData>>
 	>(reducer, initialState);
 
-	React.useEffect(
+	useEffect(
 		() => {
 			// Used to prevent dispatching an action if the hook was cleaned up.
 			let didCancel = false;
@@ -186,7 +186,7 @@ export const useStatefulPrismicClientMethod = <
 		],
 	);
 
-	return React.useMemo(
+	return useMemo(
 		() => [
 			state.data,
 			{
