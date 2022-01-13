@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useEffect, useMemo } from "react";
 import * as prismicT from "@prismicio/types";
-import { pascalCase } from "tiny-case";
-import { PascalCase } from "type-fest";
+import type { PascalCase } from "type-fest";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
+import { pascalCase } from "./lib/pascalCase";
 
 /**
  * The minimum required properties to represent a Prismic Slice for the
@@ -252,9 +252,7 @@ export const SliceZone = <TSlice extends SliceLike, TContext>({
 			if (resolver) {
 				const resolvedComp = resolver({
 					slice,
-					sliceName: pascalCase(slice.slice_type) as PascalCase<
-						typeof slice.slice_type
-					>,
+					sliceName: pascalCase(slice.slice_type),
 					i: index,
 				});
 
