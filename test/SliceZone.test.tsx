@@ -179,6 +179,9 @@ test("renders components from a resolver function for backwards compatibility wi
 		{
 			slice_type: "barFoo",
 		},
+		{
+			slice_type: "baz-qux",
+		},
 	] as const;
 
 	const resolver: SliceZoneResolver<typeof slices[number]> = ({
@@ -191,6 +194,10 @@ test("renders components from a resolver function for backwards compatibility wi
 
 			case "BarFoo": {
 				return (props) => <StringifySliceComponent id="barFoo" {...props} />;
+			}
+
+			case "BazQux": {
+				return (props) => <StringifySliceComponent id="baz-qux" {...props} />;
 			}
 		}
 	};
@@ -209,6 +216,13 @@ test("renders components from a resolver function for backwards compatibility wi
 				id="barFoo"
 				slice={slices[1]}
 				index={1}
+				slices={slices}
+				context={{}}
+			/>
+			<StringifySliceComponent
+				id="baz-qux"
+				slice={slices[2]}
+				index={2}
 				slices={slices}
 				context={{}}
 			/>
