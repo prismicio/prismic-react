@@ -46,8 +46,7 @@
 	},
 	"dependencies": {
 		"@prismicio/helpers": "^2.0.0",
-		"@prismicio/richtext": "^2.0.0",
-		"tiny-case": "^1.0.2"
+		"@prismicio/richtext": "^2.0.0"
 	},
 	"devDependencies": {
 		"@prismicio/client": "^6.0.0",

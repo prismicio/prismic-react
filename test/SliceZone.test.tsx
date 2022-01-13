@@ -172,18 +172,25 @@ test.skip("TODO component does not warn in production", () => {
 });
 
 test("renders components from a resolver function for backwards compatibility with next-slicezone", async (t) => {
-	const slices = [{ slice_type: "foo" }, { slice_type: "bar" }] as const;
+	const slices = [
+		{
+			slice_type: "foo_bar",
+		},
+		{
+			slice_type: "barFoo",
+		},
+	] as const;
 
 	const resolver: SliceZoneResolver<typeof slices[number]> = ({
 		sliceName,
 	}) => {
 		switch (sliceName) {
-			case "Foo": {
-				return (props) => <StringifySliceComponent id="foo" {...props} />;
+			case "FooBar": {
+				return (props) => <StringifySliceComponent id="foo_bar" {...props} />;
 			}
 
-			case "Bar": {
-				return (props) => <StringifySliceComponent id="bar" {...props} />;
+			case "BarFoo": {
+				return (props) => <StringifySliceComponent id="barFoo" {...props} />;
 			}
 		}
 	};
@@ -192,14 +199,14 @@ test("renders components from a resolver function for backwards compatibility wi
 	const expected = renderJSON(
 		<>
 			<StringifySliceComponent
-				id="foo"
+				id="foo_bar"
 				slice={slices[0]}
 				index={0}
 				slices={slices}
 				context={{}}
 			/>
 			<StringifySliceComponent
-				id="bar"
+				id="barFoo"
 				slice={slices[1]}
 				index={1}
 				slices={slices}
