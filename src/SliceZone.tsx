@@ -251,9 +251,7 @@ export const SliceZone = <TSlice extends SliceLike, TContext>({
 			if (resolver) {
 				const resolvedComp = resolver({
 					slice,
-					sliceName: pascalCase(slice.slice_type) as PascalCase<
-						typeof slice.slice_type
-					>,
+					sliceName: pascalCase(slice.slice_type),
 					i: index,
 				});
 
