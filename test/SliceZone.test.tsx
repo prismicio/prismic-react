@@ -178,11 +178,11 @@ test("renders components from a resolver function for backwards compatibility wi
 		sliceName,
 	}) => {
 		switch (sliceName) {
-			case "foo": {
+			case "Foo": {
 				return (props) => <StringifySliceComponent id="foo" {...props} />;
 			}
 
-			case "bar": {
+			case "Bar": {
 				return (props) => <StringifySliceComponent id="bar" {...props} />;
 			}
 		}
