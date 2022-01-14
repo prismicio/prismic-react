@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useMemo } from "react";
 import * as prismicT from "@prismicio/types";
 import * as prismicH from "@prismicio/helpers";
 
@@ -37,7 +36,7 @@ export type PrismicTextProps = {
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  */
 export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {
-	return useMemo(() => {
+	return React.useMemo(() => {
 		if (props.field) {
 			const text = prismicH.asText(props.field, props.separator);
 

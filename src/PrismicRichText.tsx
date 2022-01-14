@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 
 import * as React from "react";
-import { Fragment, useMemo } from "react";
 import * as prismicT from "@prismicio/types";
 import * as prismicH from "@prismicio/helpers";
 import * as prismicR from "@prismicio/richtext";
@@ -166,12 +165,12 @@ const createDefaultSerializer = (
 					result.push(<br key={`${i}__break`} />);
 				}
 
-				result.push(<Fragment key={`${i}__line`}>{line}</Fragment>);
+				result.push(<React.Fragment key={`${i}__line`}>{line}</React.Fragment>);
 
 				i++;
 			}
 
-			return <Fragment key={key}>{result}</Fragment>;
+			return <React.Fragment key={key}>{result}</React.Fragment>;
 		},
 	});
 
@@ -220,7 +219,7 @@ export const PrismicRichText = (
 ): JSX.Element | null => {
 	const context = usePrismicContext();
 
-	return useMemo(() => {
+	return React.useMemo(() => {
 		if (!props.field) {
 			return null;
 		} else {

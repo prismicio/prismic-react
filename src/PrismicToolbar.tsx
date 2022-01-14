@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import * as React from "react";
 
 /**
  * Props for `<PrismicToolbar>`.
@@ -30,7 +30,7 @@ export const PrismicToolbar = ({
 		type === "new" ? "&new=true" : ""
 	}`;
 
-	useEffect(() => {
+	React.useEffect(() => {
 		const existingScript = document.querySelector(`script[src="${src}"]`);
 
 		if (!existingScript) {

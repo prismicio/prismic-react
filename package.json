@@ -20,12 +20,12 @@
 	"exports": {
 		".": {
 			"require": "./dist/index.cjs",
-			"import": "./dist/index.js"
+			"import": "./dist/index.mjs"
 		},
 		"./package.json": "./package.json"
 	},
 	"main": "dist/index.cjs",
-	"module": "dist/index.js",
+	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"files": [
 		"dist",
@@ -46,8 +46,7 @@
 	},
 	"dependencies": {
 		"@prismicio/helpers": "^2.0.0",
-		"@prismicio/richtext": "^2.0.0",
-		"tiny-case": "^1.0.2"
+		"@prismicio/richtext": "^2.0.0"
 	},
 	"devDependencies": {
 		"@prismicio/client": "^6.0.0",

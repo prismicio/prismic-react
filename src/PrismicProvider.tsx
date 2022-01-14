@@ -1,7 +1,6 @@
 import type * as prismic from "@prismicio/client";
 
 import * as React from "react";
-import { createContext, useMemo } from "react";
 import * as prismicH from "@prismicio/helpers";
 
 import { LinkProps } from "./PrismicLink";
@@ -77,7 +76,7 @@ export type PrismicContextValue = {
  * React context containing shared configuration for `@prismicio/react`
  * components and hooks.
  */
-export const PrismicContext = createContext<PrismicContextValue>({});
+export const PrismicContext = React.createContext<PrismicContextValue>({});
 
 /**
  * Props for `<PrismicProvider>`.
@@ -98,7 +97,7 @@ export const PrismicProvider = ({
 	externalLinkComponent,
 	children,
 }: PrismicProviderProps): JSX.Element => {
-	const value = useMemo<PrismicContextValue>(
+	const value = React.useMemo<PrismicContextValue>(
 		() => ({
 			client,
 			linkResolver,

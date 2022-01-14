@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect, useMemo } from "react";
 import * as prismicT from "@prismicio/types";
 import type { PascalCase } from "type-fest";
 
@@ -121,7 +120,7 @@ export const TODOSliceComponent = __PRODUCTION__
 	: <TSlice extends SliceLike, TContext>({
 			slice,
 	  }: SliceComponentProps<TSlice, TContext>): JSX.Element | null => {
-			useEffect(() => {
+			React.useEffect(() => {
 				console.warn(
 					`[SliceZone] Could not find a component for Slice type "${slice.slice_type}"`,
 					slice,
@@ -243,7 +242,7 @@ export const SliceZone = <TSlice extends SliceLike, TContext>({
 	defaultComponent = TODOSliceComponent,
 	context = {} as TContext,
 }: SliceZoneProps<TSlice, TContext>): JSX.Element => {
-	const renderedSlices = useMemo(() => {
+	const renderedSlices = React.useMemo(() => {
 		return slices.map((slice, index) => {
 			let Comp = (components[slice.slice_type as keyof typeof components] ||
 				defaultComponent) as SliceComponentType<TSlice, TContext>;
