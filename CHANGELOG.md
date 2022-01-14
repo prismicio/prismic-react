@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.3](https://github.com/prismicio/prismic-react/compare/v2.0.2...v2.0.3) (2022-01-14)
+
+
+### Bug Fixes
+
+* correct pascalCase type ([cf66443](https://github.com/prismicio/prismic-react/commit/cf66443b6048933d656eb8c4a1598a9f01659e91))
+* resolve lint error in PrismicToolbar ([d0a366a](https://github.com/prismicio/prismic-react/commit/d0a366af87ea1a455f8fb298984d0e2ebb6c0c0e))
+* use .mjs module exports ([c485fc1](https://github.com/prismicio/prismic-react/commit/c485fc18570b4ef3dfcd2431782aa728ac9850c4))
+* use pascalCase Slice type for `<SliceZone>` resolver ([#109](https://github.com/prismicio/prismic-react/issues/109)) ([a2f2c23](https://github.com/prismicio/prismic-react/commit/a2f2c232db304f2ff0b008f9c3c4fc7d2fe5e7ef))
+
+
+### Chore
+
+* **deps:** update `@prismicio/client` dev dependency ([382a2a9](https://github.com/prismicio/prismic-react/commit/382a2a93f3b9f1f5d836785e473f4eb2345ac444))
+* **deps:** update dependencies ([f1bb443](https://github.com/prismicio/prismic-react/commit/f1bb443f8f7b5f652239368f830f4b9798097c4f))
+* lint .tsx files ([ad91234](https://github.com/prismicio/prismic-react/commit/ad91234e8fb4f51dd3c53e43b073cec7c70cf31c))
+
 ### [2.0.2](https://github.com/prismicio/prismic-react/compare/v2.0.1...v2.0.2) (2021-12-16)
 
 
