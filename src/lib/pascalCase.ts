@@ -1,6 +1,8 @@
 import type { PascalCase } from "type-fest";
 
-export const pascalCase = <Input>(input: string): PascalCase<Input> => {
+export const pascalCase = <Input extends string>(
+	input: Input,
+): PascalCase<Input> => {
 	const camelCased = input.replace(/(?:-|_)(\w)/g, (_, c) => {
 		return c ? c.toUpperCase() : "";
 	});
