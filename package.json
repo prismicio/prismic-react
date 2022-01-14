@@ -35,7 +35,7 @@
 		"build": "siroc build",
 		"dev": "siroc build --watch",
 		"format": "prettier --write .",
-		"lint": "eslint --ext .js,.ts .",
+		"lint": "eslint --ext .js,.jsx,.ts,.tsx .",
 		"prepare": "npm run build",
 		"release": "npm run build && npm run test && standard-version && git push --follow-tags && npm run build && npm publish",
 		"release:beta": "npm run build && npm run test && standard-version --release-as major --prerelease beta && git push --follow-tags && npm run build && npm publish --tag beta",
