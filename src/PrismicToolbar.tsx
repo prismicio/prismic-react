@@ -45,7 +45,7 @@ export const PrismicToolbar = ({
 
 			document.body.appendChild(script);
 		}
-	}, [repositoryName, type]);
+	}, [repositoryName, type, src]);
 
 	return null;
 };
