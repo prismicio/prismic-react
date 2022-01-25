@@ -585,8 +585,8 @@ test("components given to components prop overrides components given to PrismicP
 	t.deepEqual(actual, expected);
 });
 
-// This test spies on `console.log()`. As a result, it must be run serially to
-// avoid affecting other tests.
+// This test spies on `console.error()`. As a result, it must be run serially
+// to avoid affecting other tests.
 test.serial("keys are automatically applied to custom components", (t) => {
 	const field: prismicT.RichTextField = [
 		{
