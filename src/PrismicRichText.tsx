@@ -240,7 +240,23 @@ export const PrismicRichText = (
 				defaultSerializer,
 			);
 
-			const serialized = prismicR.serialize(props.field, serializer);
+			// The serializer is wrapped in a higher-order function
+			// to automatically apply a key to React Elements if
+			// one is not already given.
+			const serialized = prismicR.serialize<JSX.Element>(
+				props.field,
+				(type, node, text, children, key) => {
+					const result = serializer(type, node, text, children, key);
+
+					if (React.isValidElement(result)) {
+						return React.cloneElement(result, {
+							key: result.key || key,
+						});
+					} else {
+						return result;
+					}
+				},
+			);
 
 			return <>{serialized}</>;
 		}
