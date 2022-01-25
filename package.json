@@ -41,7 +41,8 @@
 		"release:beta": "npm run build && npm run test && standard-version --release-as major --prerelease beta && git push --follow-tags && npm run build && npm publish --tag beta",
 		"release:beta:dry": "standard-version --release-as major --prerelease beta --dry-run",
 		"release:dry": "standard-version --dry-run",
-		"test": "npm run lint && npm run unit",
+		"size": "size-limit",
+		"test": "npm run lint && npm run unit && npm run build && npm run size",
 		"unit": "nyc --reporter=lcovonly --reporter=text --exclude-after-remap=false ava"
 	},
 	"dependencies": {
@@ -52,6 +53,7 @@
 		"@prismicio/client": "^6.0.0",
 		"@prismicio/mock": "^0.0.6",
 		"@prismicio/types": "^0.1.21",
+		"@size-limit/preset-small-lib": "^7.0.5",
 		"@testing-library/react": "^12.1.2",
 		"@testing-library/react-hooks": "^7.0.2",
 		"@types/jsdom": "^16.2.14",
@@ -80,6 +82,7 @@
 		"react-test-renderer": "^17.0.2",
 		"sinon": "^12.0.1",
 		"siroc": "^0.16.0",
+		"size-limit": "^7.0.5",
 		"standard-version": "^9.3.2",
 		"ts-eager": "^2.0.2",
 		"type-fest": "^2.9.0",
