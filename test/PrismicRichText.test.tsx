@@ -1,6 +1,7 @@
 import test from "ava";
 import * as prismicT from "@prismicio/types";
 import * as React from "react";
+import * as sinon from "sinon";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
@@ -582,4 +583,40 @@ test("components given to components prop overrides components given to PrismicP
 	);
 
 	t.deepEqual(actual, expected);
+});
+
+// This test spies on `console.error()`. As a result, it must be run serially
+// to avoid affecting other tests.
+test.serial("keys are automatically applied to custom components", (t) => {
+	const field: prismicT.RichTextField = [
+		{
+			type: prismicT.RichTextNodeType.heading1,
+			text: "heading1",
+			spans: [],
+		},
+		{
+			type: prismicT.RichTextNodeType.paragraph,
+			text: "paragraph",
+			spans: [],
+		},
+	];
+
+	const consoleErrorSpy = sinon.stub(console, "error");
+	consoleErrorSpy.callsFake(() => {
+		// no-op
+	});
+
+	renderJSON(
+		<PrismicRichText
+			field={field}
+			components={{
+				heading1: ({ children }) => <h1>{children}</h1>,
+				paragraph: ({ children }) => <p>{children}</p>,
+			}}
+		/>,
+	);
+
+	t.false(consoleErrorSpy.calledWith(sinon.match(/unique "key"/)));
+
+	consoleErrorSpy.restore();
 });

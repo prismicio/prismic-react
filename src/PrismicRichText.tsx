@@ -224,11 +224,6 @@ export const PrismicRichText = (
 			return null;
 		} else {
 			const linkResolver = props.linkResolver || context.linkResolver;
-			const defaultSerializer = createDefaultSerializer({
-				linkResolver,
-				internalLinkComponent: props.internalLinkComponent,
-				externalLinkComponent: props.externalLinkComponent,
-			});
 
 			const serializer = prismicR.composeSerializers(
 				typeof props.components === "object"
@@ -237,10 +232,28 @@ export const PrismicRichText = (
 				typeof context.richTextComponents === "object"
 					? prismicR.wrapMapSerializer(context.richTextComponents)
 					: context.richTextComponents,
-				defaultSerializer,
+				createDefaultSerializer({
+					linkResolver,
+					internalLinkComponent: props.internalLinkComponent,
+					externalLinkComponent: props.externalLinkComponent,
+				}),
 			);
 
-			const serialized = prismicR.serialize(props.field, serializer);
+			// The serializer is wrapped in a higher-order function
+			// that automatically applies a key to React Elements
+			// if one is not already given.
+			const serialized = prismicR.serialize<JSX.Element>(
+				props.field,
+				(type, node, text, children, key) => {
+					const result = serializer(type, node, text, children, key);
+
+					if (React.isValidElement(result) && result.key == null) {
+						return React.cloneElement(result, { key });
+					} else {
+						return result;
+					}
+				},
+			);
 
 			return <>{serialized}</>;
 		}
