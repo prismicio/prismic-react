@@ -48,6 +48,7 @@ test.serial("returns a resolved preview URL", async (t) => {
 		createMockQueryHandler(t, queryResponsePages, {
 			ref: previewToken,
 			q: `[${prismic.predicate.at("document.id", document.id)}]`,
+			lang: "*",
 		}),
 	);
 
@@ -62,7 +63,7 @@ test.serial("returns a resolved preview URL", async (t) => {
 
 	await waitForValueToChange(() => result.current[1].state === "loaded");
 
-	t.deepEqual(result.current[0], document.url);
+	t.deepEqual(result.current[0], document.url as string);
 });
 
 test.serial("navigates if a navigate function is provided", async (t) => {
@@ -81,6 +82,7 @@ test.serial("navigates if a navigate function is provided", async (t) => {
 		createMockQueryHandler(t, queryResponsePages, {
 			ref: previewToken,
 			q: `[${prismic.predicate.at("document.id", document.id)}]`,
+			lang: "*",
 		}),
 	);
 
@@ -112,6 +114,7 @@ test.serial("supports explicit client", async (t) => {
 		createMockQueryHandler(t, queryResponsePages, {
 			ref: previewToken,
 			q: `[${prismic.predicate.at("document.id", document.id)}]`,
+			lang: "*",
 		}),
 	);
 
@@ -125,7 +128,7 @@ test.serial("supports explicit client", async (t) => {
 
 	await waitForValueToChange(() => result.current[1].state === "loaded");
 
-	t.deepEqual(result.current[0], document.url);
+	t.deepEqual(result.current[0], document.url as string);
 });
 
 test.serial("returns failed state on error", async (t) => {
