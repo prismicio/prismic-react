@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.4](https://github.com/prismicio/prismic-react/compare/v2.0.3...v2.0.4) (2022-01-28)
+
+
+### Bug Fixes
+
+* automatically assign keys to custom `<PrismicRichText>` components ([#118](https://github.com/prismicio/prismic-react/issues/118)) ([9e609f6](https://github.com/prismicio/prismic-react/commit/9e609f6c6815ddbd903c488c2596af672e47fb5a))
+
+
+### Chore
+
+* add Size Limit support ([473d3fe](https://github.com/prismicio/prismic-react/commit/473d3fea7028990061bc1c814a548870423e85cb))
+* add Size Limit to CI workflow ([a7a34d0](https://github.com/prismicio/prismic-react/commit/a7a34d03d927dae35932af884f49f287efc41af6))
+* **deps:** update dependencies ([3a902c6](https://github.com/prismicio/prismic-react/commit/3a902c64666aabc0edfe2c3edf86d1d5ea9df775))
+* support React Native's Metro bundler ([9659a5a](https://github.com/prismicio/prismic-react/commit/9659a5a94c9b6f78e3205ef3a02ab70200eb35f6))
+
 ### [2.0.3](https://github.com/prismicio/prismic-react/compare/v2.0.2...v2.0.3) (2022-01-14)
 
 
