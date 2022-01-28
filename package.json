@@ -46,13 +46,13 @@
 		"unit": "nyc --reporter=lcovonly --reporter=text --exclude-after-remap=false ava"
 	},
 	"dependencies": {
-		"@prismicio/helpers": "^2.0.0",
-		"@prismicio/richtext": "^2.0.0"
+		"@prismicio/helpers": "^2.0.1",
+		"@prismicio/richtext": "^2.0.1"
 	},
 	"devDependencies": {
-		"@prismicio/client": "^6.0.0",
+		"@prismicio/client": "^6.1.1",
 		"@prismicio/mock": "^0.0.6",
-		"@prismicio/types": "^0.1.21",
+		"@prismicio/types": "^0.1.22",
 		"@size-limit/preset-small-lib": "^7.0.5",
 		"@testing-library/react": "^12.1.2",
 		"@testing-library/react-hooks": "^7.0.2",
@@ -60,7 +60,7 @@
 		"@types/node-fetch": "^3.0.3",
 		"@types/react": "^17.0.38",
 		"@types/react-test-renderer": "^17.0.1",
-		"@types/sinon": "^10.0.6",
+		"@types/sinon": "^10.0.9",
 		"@typescript-eslint/eslint-plugin": "^5.9.0",
 		"@typescript-eslint/parser": "^5.9.0",
 		"ava": "^4.0.0",
@@ -85,7 +85,7 @@
 		"size-limit": "^7.0.5",
 		"standard-version": "^9.3.2",
 		"ts-eager": "^2.0.2",
-		"type-fest": "^2.9.0",
+		"type-fest": "^2.11.0",
 		"typescript": "^4.5.4"
 	},
 	"peerDependencies": {
