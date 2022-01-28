@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.5](https://github.com/prismicio/prismic-react/compare/v2.0.4...v2.0.5) (2022-01-28)
+
+
+### Chore
+
+* ensure an entry file is available for React Native ([f65ae5d](https://github.com/prismicio/prismic-react/commit/f65ae5d487cc4ec4a246b3d871c4f2a9b66d6cc9))
+
 ### [2.0.4](https://github.com/prismicio/prismic-react/compare/v2.0.3...v2.0.4) (2022-01-28)
 
 
