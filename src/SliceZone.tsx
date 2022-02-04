@@ -1,9 +1,8 @@
 import * as React from "react";
 import * as prismicT from "@prismicio/types";
-import type { PascalCase } from "type-fest";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
-import { pascalCase } from "./lib/pascalCase";
+import { pascalCase, PascalCase } from "./lib/pascalCase";
 
 /**
  * The minimum required properties to represent a Prismic Slice for the
