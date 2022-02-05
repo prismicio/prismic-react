@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.6](https://github.com/prismicio/prismic-react/compare/v2.0.5...v2.0.6) (2022-02-05)
+
+
+### Bug Fixes
+
+* remove ESM `package.json` declaration (fixes `'Element' is not exported from '@prismicio/richtext'`) ([#122](https://github.com/prismicio/prismic-react/issues/122)) ([6fab9d5](https://github.com/prismicio/prismic-react/commit/6fab9d535d6c04a52c5c83a1f5d67cb4e7fef950))
+
+
+### Refactor
+
+* remove `type-fest` dependency ([#121](https://github.com/prismicio/prismic-react/issues/121)) ([27c502f](https://github.com/prismicio/prismic-react/commit/27c502f62cb7e10386c7ab9a289117f58d4b1879))
+
 ### [2.0.5](https://github.com/prismicio/prismic-react/compare/v2.0.4...v2.0.5) (2022-01-28)
 
 
