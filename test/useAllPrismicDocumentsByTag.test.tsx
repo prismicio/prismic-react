@@ -49,7 +49,7 @@ test.serial("returns documents with matching IDs", async (t) => {
 		createMockRepositoryHandler(t, repositoryResponse),
 		createMockQueryHandler(t, queryResponsePages, {
 			ref,
-			q: `[${prismic.predicate.at("document.tags", tag)}]`,
+			q: `[${prismic.predicate.any("document.tags", [tag])}]`,
 			pageSize: 100,
 		}),
 	);
@@ -84,7 +84,7 @@ test.serial("supports params", async (t) => {
 		createMockRepositoryHandler(t, repositoryResponse),
 		createMockQueryHandler(t, queryResponsePages, {
 			ref,
-			q: `[${prismic.predicate.at("document.tags", tag)}]`,
+			q: `[${prismic.predicate.any("document.tags", [tag])}]`,
 			pageSize: params.pageSize.toString(),
 		}),
 	);
@@ -114,7 +114,7 @@ test.serial("supports explicit client", async (t) => {
 		createMockRepositoryHandler(t, repositoryResponse),
 		createMockQueryHandler(t, queryResponsePages, {
 			ref,
-			q: `[${prismic.predicate.at("document.tags", tag)}]`,
+			q: `[${prismic.predicate.any("document.tags", [tag])}]`,
 			pageSize: 100,
 		}),
 	);
