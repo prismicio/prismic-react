@@ -89,7 +89,9 @@ test("renders a link from a document using a Link Resolver", (t) => {
 		withURL: false,
 		model: prismicM.model.customType({
 			seed: t.title,
-			withUID: true,
+			fields: {
+				uid: prismicM.model.uid({ seed: t.title }),
+			},
 		}),
 	});
 	const linkResolver: prismicH.LinkResolverFunction = (doc) => `/${doc.uid}`;
