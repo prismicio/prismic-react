@@ -64,6 +64,7 @@
 		"@typescript-eslint/parser": "^5.11.0",
 		"ava": "^4.0.1",
 		"browser-env": "^3.3.0",
+		"esbuild": "^0.14.23",
 		"esbuild-register": "^3.3.2",
 		"eslint": "^8.9.0",
 		"eslint-config-prettier": "^8.3.0",
