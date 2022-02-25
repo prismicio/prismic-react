@@ -12,6 +12,12 @@ export type PrismicTextProps = {
 	field: prismicT.RichTextField | null | undefined;
 
 	/**
+	 * The string rendered when the field is empty. If a fallback is not given,
+	 * `null` will be rendered.
+	 */
+	fallback?: string;
+
+	/**
 	 * The separator used between blocks. Defaults to `\n`.
 	 */
 	separator?: string;
@@ -42,7 +48,7 @@ export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {
 
 			return <>{text}</>;
 		} else {
-			return null;
+			return props.fallback != null ? <>{props.fallback}</> : null;
 		}
-	}, [props.field, props.separator]);
+	}, [props.field, props.fallback, props.separator]);
 };

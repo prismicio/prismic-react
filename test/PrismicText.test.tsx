@@ -29,3 +29,16 @@ test("returns null when passed nullish field", (t) => {
 	t.deepEqual(actualNull, expected);
 	t.deepEqual(actualUndefined, expected);
 });
+
+test("returns fallback when passed nullish field", (t) => {
+	const actualNull = renderJSON(
+		<PrismicText field={null} fallback="fallback" />,
+	);
+	const actualUndefined = renderJSON(
+		<PrismicText field={undefined} fallback="fallback" />,
+	);
+	const expected = renderJSON(<>fallback</>);
+
+	t.deepEqual(actualNull, expected);
+	t.deepEqual(actualUndefined, expected);
+});
