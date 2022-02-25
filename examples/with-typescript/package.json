@@ -1,0 +1,9 @@
+{
+	"type": "module",
+	"dependencies": {
+		"@prismicio/react": "latest"
+	},
+	"devDependencies": {
+		"@prismicio/types": "^0.1.25"
+	}
+}
