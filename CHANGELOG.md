@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/prismicio/prismic-react/compare/v2.0.6...v2.1.0) (2022-02-28)
+
+
+### Features
+
+* provide a fallback string to `<PrismicText>` ([#126](https://github.com/prismicio/prismic-react/issues/126)) ([e2fb4fc](https://github.com/prismicio/prismic-react/commit/e2fb4fcbdf817ac67e00fbe39acb5b038dc585d5))
+
+
+### Chore
+
+* **deps:** update dependencies ([f426bb6](https://github.com/prismicio/prismic-react/commit/f426bb6064f99e75d1dee190f3ab1a4b59ce80da))
+* update license ([ce32036](https://github.com/prismicio/prismic-react/commit/ce320369646152cd3e9428d31d6b9d62d16e2e10))
+
+
+### Documentation
+
+* add with-typescript example ([#127](https://github.com/prismicio/prismic-react/issues/127)) ([b95fe41](https://github.com/prismicio/prismic-react/commit/b95fe4113439b5d701964f591c0603c064377208))
+
 ### [2.0.6](https://github.com/prismicio/prismic-react/compare/v2.0.5...v2.0.6) (2022-02-05)
 
 
