@@ -220,9 +220,7 @@ export const PrismicRichText = (
 	const context = usePrismicContext();
 
 	return React.useMemo(() => {
-		if (!props.field) {
-			return null;
-		} else {
+		if (prismicH.isFilled.richText(props.field)) {
 			const linkResolver = props.linkResolver || context.linkResolver;
 
 			const serializer = prismicR.composeSerializers(
@@ -256,6 +254,8 @@ export const PrismicRichText = (
 			);
 
 			return <>{serialized}</>;
+		} else {
+			return null;
 		}
 	}, [
 		props.field,

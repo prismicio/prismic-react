@@ -43,7 +43,7 @@ export type PrismicTextProps = {
  */
 export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {
 	return React.useMemo(() => {
-		if (props.field) {
+		if (prismicH.isFilled.richText(props.field)) {
 			const text = prismicH.asText(props.field, props.separator);
 
 			return <>{text}</>;
