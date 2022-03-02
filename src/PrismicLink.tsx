@@ -6,6 +6,12 @@ import { isInternalURL } from "./lib/isInternalURL";
 
 import { usePrismicContext } from "./usePrismicContext";
 
+declare module "react" {
+	function forwardRef<T, P = Record<string, never>>(
+		render: (props: P, ref: React.Ref<T>) => JSX.Element | null,
+	): (props: P & React.RefAttributes<T>) => JSX.Element | null;
+}
+
 /**
  * Props provided to a component when rendered with `<PrismicLink>`.
  */
@@ -132,7 +138,7 @@ const defaultExternalComponent = "a";
  * @returns The internal or external link component depending on whether the
  *   link is internal or external.
  */
-export const PrismicLink = <
+const _PrismicLink = <
 	InternalComponent extends React.ElementType<LinkProps> = typeof defaultInternalComponent,
 	ExternalComponent extends React.ElementType<LinkProps> = typeof defaultExternalComponent,
 	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
@@ -142,6 +148,7 @@ export const PrismicLink = <
 		ExternalComponent,
 		LinkResolverFunction
 	>,
+	ref: React.ForwardedRef<any>,
 ): JSX.Element | null => {
 	const context = usePrismicContext();
 
@@ -196,6 +203,14 @@ export const PrismicLink = <
 	}
 
 	return href ? (
-		<Component {...passthroughProps} href={href} target={target} rel={rel} />
+		<Component
+			{...passthroughProps}
+			ref={ref}
+			href={href}
+			target={target}
+			rel={rel}
+		/>
 	) : null;
 };
+
+export const PrismicLink = React.forwardRef(_PrismicLink);
