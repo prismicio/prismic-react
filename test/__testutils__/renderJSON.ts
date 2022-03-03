@@ -10,11 +10,12 @@ import * as renderer from "react-test-renderer";
  */
 export const renderJSON = (
 	element: React.ReactElement,
+	options?: renderer.TestRendererOptions,
 ): renderer.ReactTestRendererJSON | renderer.ReactTestRendererJSON[] | null => {
 	let root: renderer.ReactTestRenderer;
 
 	renderer.act(() => {
-		root = renderer.create(element);
+		root = renderer.create(element, options);
 	});
 
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion

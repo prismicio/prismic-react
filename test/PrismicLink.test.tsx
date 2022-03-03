@@ -347,3 +347,77 @@ test("renders null if href is provided undefined", (t) => {
 
 	t.is(actual, null);
 });
+
+test("forwards ref to internal component", (t) => {
+	const CustomComponent =
+		// eslint-disable-next-line react/display-name
+		React.forwardRef(
+			(props: { href?: string }, ref: React.Ref<HTMLInputElement>) => {
+				return <input ref={ref} value={props.href} />;
+			},
+		);
+
+	let aRef = null as HTMLAnchorElement | null;
+	let spanRef = null as HTMLSpanElement | null;
+	let customComponentRef = null as HTMLInputElement | null;
+
+	renderJSON(
+		<>
+			<PrismicLink ref={(el) => (aRef = el)} href="/" />
+			<PrismicLink
+				ref={(el) => (spanRef = el)}
+				internalComponent="span"
+				href="/"
+			/>
+			<PrismicLink
+				ref={(el) => (customComponentRef = el)}
+				internalComponent={CustomComponent}
+				href="/"
+			/>
+		</>,
+		{
+			createNodeMock: (element) => ({ tagName: element.type }),
+		},
+	);
+
+	t.is(aRef?.tagName, "a");
+	t.is(spanRef?.tagName, "span");
+	t.is(customComponentRef?.tagName, "input");
+});
+
+test("forwards ref to external component", (t) => {
+	const CustomComponent =
+		// eslint-disable-next-line react/display-name
+		React.forwardRef(
+			(props: { href?: string }, ref: React.Ref<HTMLInputElement>) => {
+				return <input ref={ref} value={props.href} />;
+			},
+		);
+
+	let aRef = null as HTMLAnchorElement | null;
+	let spanRef = null as HTMLSpanElement | null;
+	let customComponentRef = null as HTMLInputElement | null;
+
+	renderJSON(
+		<>
+			<PrismicLink ref={(el) => (aRef = el)} href="https://prismic.io" />
+			<PrismicLink
+				ref={(el) => (spanRef = el)}
+				externalComponent="span"
+				href="https://prismic.io"
+			/>
+			<PrismicLink
+				ref={(el) => (customComponentRef = el)}
+				externalComponent={CustomComponent}
+				href="https://prismic.io"
+			/>
+		</>,
+		{
+			createNodeMock: (element) => ({ tagName: element.type }),
+		},
+	);
+
+	t.is(aRef?.tagName, "a");
+	t.is(spanRef?.tagName, "span");
+	t.is(customComponentRef?.tagName, "input");
+});
