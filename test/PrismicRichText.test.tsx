@@ -20,13 +20,19 @@ const Link = ({ href, rel, target, children }: LinkProps) => (
 	</a>
 );
 
-test("returns null if passed nullish field", (t) => {
+test("returns null if passed an empty field", (t) => {
 	const actualNull = renderJSON(<PrismicRichText field={null} />);
 	const actualUndefined = renderJSON(<PrismicRichText field={undefined} />);
+	const actualEmpty = renderJSON(<PrismicRichText field={[]} />);
+	const actualEmpty2 = renderJSON(
+		<PrismicRichText field={[{ type: "paragraph", text: "", spans: [] }]} />,
+	);
 	const expected = null;
 
 	t.deepEqual(actualNull, expected);
 	t.deepEqual(actualUndefined, expected);
+	t.deepEqual(actualEmpty, expected);
+	t.deepEqual(actualEmpty2, expected);
 });
 
 test("returns <h1> if type is heading1", (t) => {
@@ -349,11 +355,16 @@ test("returns <image /> wrapped in <PrismicLink />", (t) => {
 });
 
 test("returns <div /> with embedded html if type is embed", (t) => {
-	const oembed: prismicT.EmbedField = {
+	const oembed: prismicT.EmbedField<
+		prismicT.RichOEmbed & { provider_name: string }
+	> = {
+		version: "1.0",
 		embed_url: "https://example.com",
 		type: "rich",
-		provider_name: "Prismic",
 		html: "<marquee>Prismic is fun</marquee>",
+		width: 100,
+		height: 100,
+		provider_name: "Prismic",
 	};
 	const field: prismicT.RichTextField = [
 		{

@@ -21,24 +21,35 @@ test("returns string when passed RichTextField", (t) => {
 	t.deepEqual(actual, expected);
 });
 
-test("returns null when passed nullish field", (t) => {
+test("returns null when passed empty field", (t) => {
 	const actualNull = renderJSON(<PrismicText field={null} />);
 	const actualUndefined = renderJSON(<PrismicText field={undefined} />);
+	const actualEmpty = renderJSON(
+		<PrismicText field={[{ type: "paragraph", text: "", spans: [] }]} />,
+	);
 	const expected = null;
 
 	t.deepEqual(actualNull, expected);
 	t.deepEqual(actualUndefined, expected);
+	t.deepEqual(actualEmpty, expected);
 });
 
-test("returns fallback when passed nullish field", (t) => {
+test("returns fallback when passed empty field", (t) => {
 	const actualNull = renderJSON(
 		<PrismicText field={null} fallback="fallback" />,
 	);
 	const actualUndefined = renderJSON(
 		<PrismicText field={undefined} fallback="fallback" />,
 	);
+	const actualEmpty = renderJSON(
+		<PrismicText
+			field={[{ type: "paragraph", text: "", spans: [] }]}
+			fallback="fallback"
+		/>,
+	);
 	const expected = renderJSON(<>fallback</>);
 
 	t.deepEqual(actualNull, expected);
 	t.deepEqual(actualUndefined, expected);
+	t.deepEqual(actualEmpty, expected);
 });
