@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/prismicio/prismic-react/compare/v2.1.0...v2.1.1) (2022-03-03)
+
+
+### Bug Fixes
+
+* detect empty Rich Text fields using `@prismicio/helpers`'s `isFilled.richText()` ([#130](https://github.com/prismicio/prismic-react/issues/130)) ([fc0d68c](https://github.com/prismicio/prismic-react/commit/fc0d68c0192892e2bcfb6dbe4ad045f3e58ff6aa))
+* forward refs to `<PrismicLink>` components ([#131](https://github.com/prismicio/prismic-react/issues/131)) ([d7f75ed](https://github.com/prismicio/prismic-react/commit/d7f75ed4c7a4573ad91e4fb27f44f2fea1dd82fb))
+
 ## [2.1.0](https://github.com/prismicio/prismic-react/compare/v2.0.6...v2.1.0) (2022-02-28)
 
 
