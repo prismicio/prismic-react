@@ -6,6 +6,10 @@ import { isInternalURL } from "./lib/isInternalURL";
 
 import { usePrismicContext } from "./usePrismicContext";
 
+// This module-specific `forwardRef()` type override adds support for
+// components using generics in its props type.
+//
+// Other modules will not be affected.
 declare module "react" {
 	function forwardRef<T, P = Record<string, never>>(
 		render: (props: P, ref: React.Ref<T>) => JSX.Element | null,
@@ -142,13 +146,30 @@ const _PrismicLink = <
 	InternalComponent extends React.ElementType<LinkProps> = typeof defaultInternalComponent,
 	ExternalComponent extends React.ElementType<LinkProps> = typeof defaultExternalComponent,
 	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
+	Ref extends
+		| (InternalComponent extends keyof HTMLElementTagNameMap
+				? HTMLElementTagNameMap[InternalComponent]
+				: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+				  any)
+		| (ExternalComponent extends keyof HTMLElementTagNameMap
+				? HTMLElementTagNameMap[ExternalComponent]
+				: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+				  any) =
+		| (InternalComponent extends keyof HTMLElementTagNameMap
+				? HTMLElementTagNameMap[InternalComponent]
+				: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+				  any)
+		| (ExternalComponent extends keyof HTMLElementTagNameMap
+				? HTMLElementTagNameMap[ExternalComponent]
+				: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+				  any),
 >(
 	props: PrismicLinkProps<
 		InternalComponent,
 		ExternalComponent,
 		LinkResolverFunction
 	>,
-	ref: React.ForwardedRef<any>,
+	ref: React.ForwardedRef<Ref>,
 ): JSX.Element | null => {
 	const context = usePrismicContext();
 
@@ -204,6 +225,11 @@ const _PrismicLink = <
 
 	return href ? (
 		<Component
+			// @ts-expect-error - Expression produces a union type
+			// that is too complex to represent. This most likely
+			// happens due to the polymorphic nature of this
+			// component, passing of "extra" props, and ref
+			// forwarding support.
 			{...passthroughProps}
 			ref={ref}
 			href={href}
