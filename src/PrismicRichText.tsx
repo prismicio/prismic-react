@@ -58,7 +58,7 @@ export type PrismicRichTextProps = {
 	 * (type, node, content, children) => {
 	 * 	switch (type) {
 	 * 		case "heading1": {
-	 * 			return <Heading>{chidlren}</Heading>;
+	 * 			return <Heading>{children}</Heading>;
 	 * 		}
 	 * 	}
 	 * };
