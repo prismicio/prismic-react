@@ -6,13 +6,7 @@ import * as React from "react";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
-import { PrismicLink, PrismicProvider } from "../src";
-
-type LinkProps = {
-	href: string;
-	rel?: string;
-	target?: string;
-};
+import { PrismicLink, PrismicProvider, LinkProps } from "../src";
 
 const Link = ({ href, rel, target }: LinkProps) => (
 	<a data-href={href} data-rel={rel} data-target={target} />
@@ -351,15 +345,13 @@ test("renders null if href is provided undefined", (t) => {
 test("forwards ref to internal component", (t) => {
 	const CustomComponent =
 		// eslint-disable-next-line react/display-name
-		React.forwardRef(
-			(props: { href?: string }, ref: React.Ref<HTMLInputElement>) => {
-				return <input ref={ref} value={props.href} />;
-			},
-		);
+		React.forwardRef((props: LinkProps, ref: React.Ref<HTMLInputElement>) => {
+			return <input ref={ref} value={props.href} />;
+		});
 
-	let aRef = null as HTMLAnchorElement | null;
-	let spanRef = null as HTMLSpanElement | null;
-	let customComponentRef = null as HTMLInputElement | null;
+	let aRef = null as Element | null;
+	let spanRef = null as Element | null;
+	let customComponentRef = null as Element | null;
 
 	renderJSON(
 		<>
@@ -388,15 +380,13 @@ test("forwards ref to internal component", (t) => {
 test("forwards ref to external component", (t) => {
 	const CustomComponent =
 		// eslint-disable-next-line react/display-name
-		React.forwardRef(
-			(props: { href?: string }, ref: React.Ref<HTMLInputElement>) => {
-				return <input ref={ref} value={props.href} />;
-			},
-		);
+		React.forwardRef((props: LinkProps, ref: React.Ref<HTMLInputElement>) => {
+			return <input ref={ref} value={props.href} />;
+		});
 
-	let aRef = null as HTMLAnchorElement | null;
-	let spanRef = null as HTMLSpanElement | null;
-	let customComponentRef = null as HTMLInputElement | null;
+	let aRef = null as Element | null;
+	let spanRef = null as Element | null;
+	let customComponentRef = null as Element | null;
 
 	renderJSON(
 		<>
