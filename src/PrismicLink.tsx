@@ -6,16 +6,6 @@ import { isInternalURL } from "./lib/isInternalURL";
 
 import { usePrismicContext } from "./usePrismicContext";
 
-// This module-specific `forwardRef()` type override adds support for
-// components using generics in its props type.
-//
-// Other modules will not be affected.
-declare module "react" {
-	function forwardRef<T, P = Record<string, never>>(
-		render: (props: P, ref: React.Ref<T>) => JSX.Element | null,
-	): (props: P & React.RefAttributes<T>) => JSX.Element | null;
-}
-
 /**
  * Props provided to a component when rendered with `<PrismicLink>`.
  */
@@ -51,8 +41,8 @@ export type PrismicLinkProps<
 	ExternalComponent extends React.ElementType<LinkProps> = React.ElementType<LinkProps>,
 	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
 > = Omit<
-	React.ComponentProps<InternalComponent> &
-		React.ComponentProps<ExternalComponent>,
+	React.ComponentPropsWithoutRef<InternalComponent> &
+		React.ComponentPropsWithoutRef<ExternalComponent>,
 	keyof LinkProps
 > & {
 	/**
@@ -146,30 +136,14 @@ const _PrismicLink = <
 	InternalComponent extends React.ElementType<LinkProps> = typeof defaultInternalComponent,
 	ExternalComponent extends React.ElementType<LinkProps> = typeof defaultExternalComponent,
 	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
-	Ref extends
-		| (InternalComponent extends keyof HTMLElementTagNameMap
-				? HTMLElementTagNameMap[InternalComponent]
-				: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-				  any)
-		| (ExternalComponent extends keyof HTMLElementTagNameMap
-				? HTMLElementTagNameMap[ExternalComponent]
-				: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-				  any) =
-		| (InternalComponent extends keyof HTMLElementTagNameMap
-				? HTMLElementTagNameMap[InternalComponent]
-				: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-				  any)
-		| (ExternalComponent extends keyof HTMLElementTagNameMap
-				? HTMLElementTagNameMap[ExternalComponent]
-				: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-				  any),
 >(
 	props: PrismicLinkProps<
 		InternalComponent,
 		ExternalComponent,
 		LinkResolverFunction
 	>,
-	ref: React.ForwardedRef<Ref>,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	ref: React.Ref<any>,
 ): JSX.Element | null => {
 	const context = usePrismicContext();
 
@@ -239,4 +213,14 @@ const _PrismicLink = <
 	) : null;
 };
 
-export const PrismicLink = React.forwardRef(_PrismicLink);
+export const PrismicLink = React.forwardRef(_PrismicLink) as <
+	InternalComponent extends React.ElementType<LinkProps>,
+	ExternalComponent extends React.ElementType<LinkProps>,
+	LinkResolverFunction extends prismicH.LinkResolverFunction,
+>(
+	props: PrismicLinkProps<
+		InternalComponent,
+		ExternalComponent,
+		LinkResolverFunction
+	> & { ref?: React.Ref<Element> },
+) => JSX.Element | null;
