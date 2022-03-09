@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://github.com/prismicio/prismic-react/compare/v2.1.1...v2.1.2) (2022-03-09)
+
+
+### Bug Fixes
+
+* better support for custom `<PrismicLink>` components using `forwardRef()` ([#132](https://github.com/prismicio/prismic-react/issues/132)) ([685b270](https://github.com/prismicio/prismic-react/commit/685b2706aa0d6b183cbfe80abc2bf56d01d44e28))
+
+
+### Documentation
+
+* fix typo in `<PrismicRichText>` TSDoc ([#133](https://github.com/prismicio/prismic-react/issues/133)) ([797f7c0](https://github.com/prismicio/prismic-react/commit/797f7c094cc6ee540d73b40df56413fd5105dd9b))
+
 ### [2.1.1](https://github.com/prismicio/prismic-react/compare/v2.1.0...v2.1.1) (2022-03-03)
 
 
