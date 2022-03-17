@@ -35,6 +35,31 @@ test("returns null if passed an empty field", (t) => {
 	t.deepEqual(actualEmpty2, expected);
 });
 
+test("returns fallback if given when passed empty field", (t) => {
+	const fallback = <div>fallback</div>;
+	const actualNull = renderJSON(
+		<PrismicRichText field={null} fallback={fallback} />,
+	);
+	const actualUndefined = renderJSON(
+		<PrismicRichText field={undefined} fallback={fallback} />,
+	);
+	const actualEmpty = renderJSON(
+		<PrismicRichText field={[]} fallback={fallback} />,
+	);
+	const actualEmpty2 = renderJSON(
+		<PrismicRichText
+			field={[{ type: "paragraph", text: "", spans: [] }]}
+			fallback={fallback}
+		/>,
+	);
+	const expected = renderJSON(fallback);
+
+	t.deepEqual(actualNull, expected);
+	t.deepEqual(actualUndefined, expected);
+	t.deepEqual(actualEmpty, expected);
+	t.deepEqual(actualEmpty2, expected);
+});
+
 test("returns <h1> if type is heading1", (t) => {
 	const field: prismicT.RichTextField = [
 		{
