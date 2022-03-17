@@ -79,6 +79,12 @@ export type PrismicRichTextProps = {
 	 * @defaultValue `<a>`
 	 */
 	externalLinkComponent?: PrismicLinkProps["externalComponent"];
+
+	/**
+	 * The value to be rendered when the field is empty. If a fallback is not
+	 * given, `null` will be rendered.
+	 */
+	fallback?: React.ReactNode;
 };
 
 type CreateDefaultSerializerArgs = {
@@ -255,7 +261,7 @@ export const PrismicRichText = (
 
 			return <>{serialized}</>;
 		} else {
-			return null;
+			return props.fallback != null ? <>{props.fallback}</> : null;
 		}
 	}, [
 		props.field,
@@ -263,6 +269,7 @@ export const PrismicRichText = (
 		props.externalLinkComponent,
 		props.components,
 		props.linkResolver,
+		props.fallback,
 		context.linkResolver,
 		context.richTextComponents,
 	]);
