@@ -90,7 +90,7 @@
 	},
 	"peerDependencies": {
 		"@prismicio/client": "^6.0.0",
-		"react": "^16.8 || ^17"
+		"react": "^16.8 || >=17"
 	},
 	"peerDependenciesMeta": {
 		"@prismicio/client": {
