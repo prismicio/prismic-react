@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/prismicio/prismic-react/compare/v2.1.2...v2.2.0) (2022-03-31)
+
+
+### Features
+
+* add `fallback` prop to `<PrismicRichText>` which is rendered when given an empty field ([#135](https://github.com/prismicio/prismic-react/issues/135)) ([1c6eacb](https://github.com/prismicio/prismic-react/commit/1c6eacb889e9bfea6d379f7027bcf5e9f14abbf6))
+* support Prismic's GraphQL API in `<SliceZone>` ([#141](https://github.com/prismicio/prismic-react/issues/141)) ([3f774db](https://github.com/prismicio/prismic-react/commit/3f774db4fdca766ec01742d27d63353ae3a4f86c))
+
+
+### Bug Fixes
+
+* correct types for non-string Link Resolver functions ([#142](https://github.com/prismicio/prismic-react/issues/142)) ([50ed2f0](https://github.com/prismicio/prismic-react/commit/50ed2f03b359ddaff87444a9f2b280c00cb0e8d3))
+* support React 18 ([#138](https://github.com/prismicio/prismic-react/issues/138)) ([3c09fc3](https://github.com/prismicio/prismic-react/commit/3c09fc368716632d800908173a60e91b60eb0da7))
+
+
+### Chore
+
+* **deps:** update dependencies ([192bdf6](https://github.com/prismicio/prismic-react/commit/192bdf6e769022fdcca793b3b1d5274481c1e980))
+
 ### [2.1.2](https://github.com/prismicio/prismic-react/compare/v2.1.1...v2.1.2) (2022-03-09)
 
 
