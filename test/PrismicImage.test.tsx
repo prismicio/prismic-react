@@ -278,3 +278,22 @@ test("forwards ref", (t) => {
 
 	t.is(ref?.tagName, "img");
 });
+
+test("supports imgix parameters", (t) => {
+	const field = prismicM.value.image({
+		seed: t.title,
+		model: prismicM.model.image({ seed: t.title }),
+	});
+
+	const imgixParams = { sat: -100 };
+	const { src, srcset } = prismicH.asImageWidthSrcSet(field, imgixParams);
+
+	const actual = renderJSON(
+		<PrismicImage field={field} imgixParams={imgixParams} />,
+	);
+	const expected = renderJSON(
+		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
+	);
+
+	t.deepEqual(actual, expected);
+});
