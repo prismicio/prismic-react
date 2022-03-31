@@ -13,7 +13,10 @@ import { usePrismicContext } from "./usePrismicContext";
 /**
  * Props for `<PrismicRichText>`.
  */
-export type PrismicRichTextProps = {
+export type PrismicRichTextProps<
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
+> = {
 	/**
 	 * The Prismic Rich Text field to render.
 	 */
@@ -27,7 +30,7 @@ export type PrismicRichTextProps = {
 	 * repository's content, a Link Resolver does not need to be provided.
 	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
 	 */
-	linkResolver?: PrismicLinkProps["linkResolver"];
+	linkResolver?: LinkResolverFunction;
 
 	/**
 	 * A function that maps a Rich Text block to a React component.
@@ -87,8 +90,11 @@ export type PrismicRichTextProps = {
 	fallback?: React.ReactNode;
 };
 
-type CreateDefaultSerializerArgs = {
-	linkResolver: prismicH.LinkResolverFunction<string> | undefined;
+type CreateDefaultSerializerArgs<
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
+> = {
+	linkResolver: LinkResolverFunction | undefined;
 	internalLinkComponent: PrismicRichTextProps["internalLinkComponent"];
 	externalLinkComponent: PrismicRichTextProps["externalLinkComponent"];
 };
@@ -220,8 +226,11 @@ const createDefaultSerializer = (
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
  */
-export const PrismicRichText = (
-	props: PrismicRichTextProps,
+export const PrismicRichText = <
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
+>(
+	props: PrismicRichTextProps<LinkResolverFunction>,
 ): JSX.Element | null => {
 	const context = usePrismicContext();
 

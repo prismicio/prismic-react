@@ -39,7 +39,8 @@ export interface LinkProps {
 export type PrismicLinkProps<
 	InternalComponent extends React.ElementType<LinkProps> = React.ElementType<LinkProps>,
 	ExternalComponent extends React.ElementType<LinkProps> = React.ElementType<LinkProps>,
-	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
 > = Omit<
 	React.ComponentPropsWithoutRef<InternalComponent> &
 		React.ComponentPropsWithoutRef<ExternalComponent>,
@@ -133,9 +134,10 @@ const defaultExternalComponent = "a";
  *   link is internal or external.
  */
 const _PrismicLink = <
-	InternalComponent extends React.ElementType<LinkProps> = typeof defaultInternalComponent,
-	ExternalComponent extends React.ElementType<LinkProps> = typeof defaultExternalComponent,
-	LinkResolverFunction extends prismicH.LinkResolverFunction = prismicH.LinkResolverFunction,
+	InternalComponent extends React.ElementType<LinkProps>,
+	ExternalComponent extends React.ElementType<LinkProps>,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any>,
 >(
 	props: PrismicLinkProps<
 		InternalComponent,
@@ -216,7 +218,8 @@ const _PrismicLink = <
 export const PrismicLink = React.forwardRef(_PrismicLink) as <
 	InternalComponent extends React.ElementType<LinkProps>,
 	ExternalComponent extends React.ElementType<LinkProps>,
-	LinkResolverFunction extends prismicH.LinkResolverFunction,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any>,
 >(
 	props: PrismicLinkProps<
 		InternalComponent,
