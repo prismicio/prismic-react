@@ -34,7 +34,7 @@ type InnerCamelCaseStringArray<
 
 type CamelCaseStringArray<Parts extends readonly string[]> = Parts extends [
 	`${infer FirstPart}`,
-	...infer RemainingParts
+	...infer RemainingParts,
 ]
 	? Uncapitalize<`${FirstPart}${InnerCamelCaseStringArray<
 			RemainingParts,
