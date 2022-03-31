@@ -5,23 +5,56 @@ import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 import { pascalCase, PascalCase } from "./lib/pascalCase";
 
 /**
- * The minimum required properties to represent a Prismic Slice for the
- * `<SliceZone>` component.
+ * Returns the type of a `SliceLike` type.
  *
- * If using Prismic's REST API, use the `Slice` export from `@prismicio/types`
- * for a full interface.
+ * @typeParam Slice - The Slice from which the type will be extracted.
+ */
+type ExtractSliceType<Slice extends SliceLike> = Slice extends SliceLikeRestV2
+	? Slice["slice_type"]
+	: Slice extends SliceLikeGraphQL
+	? Slice["type"]
+	: never;
+
+/**
+ * The minimum required properties to represent a Prismic Slice from the Prismic
+ * Rest API V2 for the `<SliceZone>` component.
+ *
+ * If using Prismic's Rest API V2, use the `Slice` export from
+ * `@prismicio/types` for a full interface.
  *
  * @typeParam SliceType - Type name of the Slice.
  */
-export type SliceLike<SliceType extends string = string> = Pick<
-	prismicT.Slice<SliceType>,
-	"slice_type"
->;
+export type SliceLikeRestV2<SliceType extends string = string> = {
+	slice_type: prismicT.Slice<SliceType>["slice_type"];
+};
+
+/**
+ * The minimum required properties to represent a Prismic Slice from the Prismic
+ * GraphQL API for the `<SliceZone>` component.
+ *
+ * @typeParam SliceType - Type name of the Slice.
+ */
+export type SliceLikeGraphQL<SliceType extends string = string> = {
+	type: prismicT.Slice<SliceType>["slice_type"];
+};
+
+/**
+ * The minimum required properties to represent a Prismic Slice for the
+ * `<SliceZone>` component.
+ *
+ * If using Prismic's Rest API V2, use the `Slice` export from
+ * `@prismicio/types` for a full interface.
+ *
+ * @typeParam SliceType - Type name of the Slice.
+ */
+export type SliceLike<SliceType extends string = string> =
+	| SliceLikeRestV2<SliceType>
+	| SliceLikeGraphQL<SliceType>;
 
 /**
  * A looser version of the `SliceZone` type from `@prismicio/types` using `SliceLike`.
  *
- * If using Prismic's REST API, use the `SliceZone` export from
+ * If using Prismic's Rest API V2, use the `SliceZone` export from
  * `@prismicio/types` for the full type.
  *
  * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
@@ -97,10 +130,7 @@ export type SliceZoneComponents<
 	// signals to future developers that it is a placeholder and should be
 	// implemented.
 	{
-		[SliceType in keyof Record<
-			TSlice["slice_type"],
-			never
-		>]: SliceComponentType<
+		[SliceType in ExtractSliceType<TSlice>]: SliceComponentType<
 			Extract<TSlice, SliceLike<SliceType>> extends never
 				? SliceLike
 				: Extract<TSlice, SliceLike<SliceType>>,
@@ -119,19 +149,18 @@ export const TODOSliceComponent = __PRODUCTION__
 	: <TSlice extends SliceLike, TContext>({
 			slice,
 	  }: SliceComponentProps<TSlice, TContext>): JSX.Element | null => {
+			const type = "slice_type" in slice ? slice.slice_type : slice.type;
+
 			React.useEffect(() => {
 				console.warn(
-					`[SliceZone] Could not find a component for Slice type "${slice.slice_type}"`,
+					`[SliceZone] Could not find a component for Slice type "${type}"`,
 					slice,
 				);
-			}, [slice]);
+			}, [slice, type]);
 
 			return (
-				<section
-					data-slice-zone-todo-component=""
-					data-slice-type={slice.slice_type}
-				>
-					Could not find a component for Slice type &ldquo;{slice.slice_type}
+				<section data-slice-zone-todo-component="" data-slice-type={type}>
+					Could not find a component for Slice type &ldquo;{type}
 					&rdquo;
 				</section>
 			);
@@ -149,7 +178,7 @@ type SliceZoneResolverArgs<TSlice extends SliceLike = SliceLike> = {
 	/**
 	 * The name of the Slice.
 	 */
-	sliceName: PascalCase<TSlice["slice_type"]>;
+	sliceName: PascalCase<ExtractSliceType<TSlice>>;
 
 	/**
 	 * The index of the Slice in the Slice Zone.
@@ -243,14 +272,16 @@ export const SliceZone = <TSlice extends SliceLike, TContext>({
 }: SliceZoneProps<TSlice, TContext>): JSX.Element => {
 	const renderedSlices = React.useMemo(() => {
 		return slices.map((slice, index) => {
-			let Comp = (components[slice.slice_type as keyof typeof components] ||
+			const type = "slice_type" in slice ? slice.slice_type : slice.type;
+
+			let Comp = (components[type as keyof typeof components] ||
 				defaultComponent) as SliceComponentType<TSlice, TContext>;
 
 			// TODO: Remove `resolver` in v3 in favor of `components`.
 			if (resolver) {
 				const resolvedComp = resolver({
 					slice,
-					sliceName: pascalCase(slice.slice_type),
+					sliceName: pascalCase(type),
 					i: index,
 				});
 
