@@ -231,3 +231,37 @@ test("renders components from a resolver function for backwards compatibility wi
 
 	t.deepEqual(actual, expected);
 });
+
+test("supports the GraphQL API", (t) => {
+	const slices = [{ type: "foo" }, { type: "bar" }] as const;
+
+	const actual = renderJSON(
+		<SliceZone
+			slices={slices}
+			components={{
+				foo: (props) => <StringifySliceComponent id="foo" {...props} />,
+				bar: (props) => <StringifySliceComponent id="bar" {...props} />,
+			}}
+		/>,
+	);
+	const expected = renderJSON(
+		<>
+			<StringifySliceComponent
+				id="foo"
+				slice={slices[0]}
+				index={0}
+				slices={slices}
+				context={{}}
+			/>
+			<StringifySliceComponent
+				id="bar"
+				slice={slices[1]}
+				index={1}
+				slices={slices}
+				context={{}}
+			/>
+		</>,
+	);
+
+	t.deepEqual(actual, expected);
+});
