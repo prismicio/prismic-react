@@ -10,7 +10,10 @@ import { JSXFunctionSerializer, JSXMapSerializer } from "./types";
  * React context value containing shared configuration for `@prismicio/react`
  * components and hooks.
  */
-export type PrismicContextValue = {
+export type PrismicContextValue<
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
+> = {
 	/**
 	 * A `@prismicio/client` instance used to fetch content from a Prismic
 	 * repository. This is used by `@prismicio/react` hooks, such as
@@ -26,7 +29,7 @@ export type PrismicContextValue = {
 	 * repository's content, a Link Resolver does not need to be provided.
 	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
 	 */
-	linkResolver?: prismicH.LinkResolverFunction;
+	linkResolver?: LinkResolverFunction;
 
 	/**
 	 * A map or function that maps a Rich Text block to a React component.
@@ -81,7 +84,9 @@ export const PrismicContext = React.createContext<PrismicContextValue>({});
 /**
  * Props for `<PrismicProvider>`.
  */
-export type PrismicProviderProps = PrismicContextValue;
+export type PrismicProviderProps<
+	LinkResolverFunction extends prismicH.LinkResolverFunction,
+> = PrismicContextValue<LinkResolverFunction>;
 
 /**
  * React context provider to share configuration for `@prismicio/react`
@@ -89,15 +94,18 @@ export type PrismicProviderProps = PrismicContextValue;
  *
  * @returns A React context provider with shared configuration.
  */
-export const PrismicProvider = ({
+export const PrismicProvider = <
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any>,
+>({
 	client,
 	linkResolver,
 	richTextComponents,
 	internalLinkComponent,
 	externalLinkComponent,
 	children,
-}: PrismicProviderProps): JSX.Element => {
-	const value = React.useMemo<PrismicContextValue>(
+}: PrismicProviderProps<LinkResolverFunction>): JSX.Element => {
+	const value = React.useMemo<PrismicContextValue<LinkResolverFunction>>(
 		() => ({
 			client,
 			linkResolver,
