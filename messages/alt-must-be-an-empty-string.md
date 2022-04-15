@@ -17,7 +17,7 @@ Both `alt` and `fallbackAlt` can only be used to [declare an image as decorative
 
 All images should have an alt value. `<PrismicImage>` will automatically use the Image field's `alt` property written in the Prismic Editor. If the Image field's `alt` property is empty, the `alt` HTML attribute will not be included _unless_ one of `alt` or `fallbackAlt` is used.
 
-For more details on decorative images, [see the MDN article on the `<img>` HTMl element's `alt` attribute][mdn-alt-decorative-image].
+For more details on decorative images, [see the MDN article on the `<img>` HTML element's `alt` attribute][mdn-alt-decorative-image].
 
 ## Deciding between `alt=""` and `fallbackAlt=""`
 
