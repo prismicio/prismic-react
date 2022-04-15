@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/prismicio/prismic-react/compare/v2.2.0...v2.3.0) (2022-04-15)
+
+
+### Features
+
+* add `<PrismicImage>` ([#140](https://github.com/prismicio/prismic-react/issues/140)) ([7a93f69](https://github.com/prismicio/prismic-react/commit/7a93f69604ee423477d572ef11b8f59e39f9ba6d))
+
+
+### Bug Fixes
+
+* restore default `React.AnchorHTMLAttributes` props on `<PrismicLink>` ([#146](https://github.com/prismicio/prismic-react/issues/146)) ([e82a394](https://github.com/prismicio/prismic-react/commit/e82a394879b7ad1bc174f226e40d106ddb68c274))
+
 ## [2.2.0](https://github.com/prismicio/prismic-react/compare/v2.1.2...v2.2.0) (2022-03-31)
 
 
