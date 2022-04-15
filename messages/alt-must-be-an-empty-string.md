@@ -1,6 +1,6 @@
 # `alt` must be an empty string
 
-`<PrismicImage>` allows the the `alt` HTML attribute to be configured using two props: `alt` and `fallbackAlt`.
+`<PrismicImage>` allows the `alt` HTML attribute to be configured using two props: `alt` and `fallbackAlt`.
 
 Both `alt` and `fallbackAlt` can only be used to [declare an image as decorative][mdn-alt-decorative-image] by pasing an empty string. You may not pass arbitrary alternative text to the `alt` prop.
 
