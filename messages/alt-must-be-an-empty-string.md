@@ -5,7 +5,10 @@
 Both `alt` and `fallbackAlt` can only be used to [declare an image as decorative][mdn-alt-decorative-image] by pasing an empty string. You may not pass arbitrary alternative text to the `alt` prop.
 
 ```tsx
-// Will always render `alt=""`
+// Will render `alt` using the Image field's `alt` property.
+<PrismicImage field={doc.data.imageField} />
+
+// Will always render `alt=""`.
 <PrismicImage field={doc.data.imageField} alt="" />
 
 // Will render `alt=""` only if the Image field's alt property is empty.
