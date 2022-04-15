@@ -3,18 +3,22 @@ import * as prismicT from "@prismicio/types";
 import * as prismicH from "@prismicio/helpers";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
+import { devMsg } from "./lib/devMessageURL";
 
-export type PrismicImageProps = React.DetailedHTMLProps<
-	React.ImgHTMLAttributes<HTMLImageElement>,
-	HTMLImageElement
+export type PrismicImageProps = Omit<
+	React.DetailedHTMLProps<
+		React.ImgHTMLAttributes<HTMLImageElement>,
+		HTMLImageElement
+	>,
+	"src" | "srcset" | "alt"
 > & {
 	field: prismicT.ImageField | null | undefined;
 
 	imgixParams?: Parameters<typeof prismicH.asImageSrc>[1];
 
-	alt?: string;
+	alt?: "";
 
-	fallbackAlt?: string;
+	fallbackAlt?: "";
 } & (
 		| {
 				widths?:
@@ -48,17 +52,35 @@ const _PrismicImage = (
 		...restProps
 	} = props;
 
-	if (prismicH.isFilled.imageThumbnail(field)) {
-		if (!__PRODUCTION__ && "widths" in props && "pixelDensities" in props) {
+	if (!__PRODUCTION__) {
+		if (typeof alt === "string" && props.alt !== "") {
+			console.warn(
+				`[PrismicImage] The alt prop can only be used to declare an image as decorative by passing an empty string (alt=""). For more details, see ${devMsg(
+					"alt-must-be-an-empty-string",
+				)}`,
+			);
+		}
+
+		if (typeof fallbackAlt === "string" && fallbackAlt !== "") {
+			console.warn(
+				`[PrismicImage] The fallbackAlt prop can only be used to declare an image as decorative by passing an empty string (fallbackAlt=""). For more details, see ${devMsg(
+					"alt-must-be-an-empty-string",
+				)}`,
+			);
+		}
+
+		if (widths && pixelDensities) {
 			console.warn(
 				`[PrismicImage] Only one of "widths" or "pixelDensities" props can be provided. "widths" will be used in this case.`,
 			);
 		}
+	}
 
+	if (prismicH.isFilled.imageThumbnail(field)) {
 		let src: string | undefined;
 		let srcSet: string | undefined;
 
-		if ("widths" in props || !("pixelDensities" in props)) {
+		if (widths || !pixelDensities) {
 			const res = prismicH.asImageWidthSrcSet(field, {
 				...imgixParams,
 				widths: widths === "defaults" ? undefined : widths,
@@ -66,7 +88,7 @@ const _PrismicImage = (
 
 			src = res.src;
 			srcSet = res.srcset;
-		} else if ("pixelDensities" in props) {
+		} else if (pixelDensities) {
 			const res = prismicH.asImagePixelDensitySrcSet(field, {
 				...imgixParams,
 				pixelDensities:

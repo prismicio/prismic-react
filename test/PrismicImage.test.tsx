@@ -208,7 +208,7 @@ test("alt is undefined if the field does not have an alt value", async (t) => {
 	t.deepEqual(actual, expected);
 });
 
-test("supports an explicit fallback alt value if given", (t) => {
+test("supports an explicit decorative fallback alt value if given", (t) => {
 	const field = prismicM.value.image({
 		seed: t.title,
 		model: prismicM.model.image({ seed: t.title }),
@@ -217,17 +217,31 @@ test("supports an explicit fallback alt value if given", (t) => {
 
 	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
 
-	const actual = renderJSON(
-		<PrismicImage field={field} fallbackAlt="fallbackAlt" />,
-	);
-	const expected = renderJSON(
-		<img src={src} srcSet={srcset} alt="fallbackAlt" />,
-	);
+	const actual = renderJSON(<PrismicImage field={field} fallbackAlt="" />);
+	const expected = renderJSON(<img src={src} srcSet={srcset} alt="" />);
 
 	t.deepEqual(actual, expected);
 });
 
-test("supports overriding alt explicitly when field has an alt value", (t) => {
+test.serial("warns if a non-decorative fallback alt value is given", (t) => {
+	const field = prismicM.value.image({
+		seed: t.title,
+		model: prismicM.model.image({ seed: t.title }),
+	});
+
+	const consoleWarnStub = sinon.stub(console, "warn");
+
+	renderJSON(
+		// @ts-expect-error - Purposely giving incompatible props.
+		<PrismicImage field={field} fallbackAlt="non-decorative" />,
+	);
+
+	consoleWarnStub.restore();
+
+	t.true(consoleWarnStub.calledWithMatch(/alt-must-be-an-empty-string/i));
+});
+
+test("supports an explicit decorative alt when field has an alt value", (t) => {
 	const field = prismicM.value.image({
 		seed: t.title,
 		model: prismicM.model.image({ seed: t.title }),
@@ -236,15 +250,13 @@ test("supports overriding alt explicitly when field has an alt value", (t) => {
 
 	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
 
-	const actual = renderJSON(<PrismicImage field={field} alt="explicit alt" />);
-	const expected = renderJSON(
-		<img src={src} srcSet={srcset} alt="explicit alt" />,
-	);
+	const actual = renderJSON(<PrismicImage field={field} alt="" />);
+	const expected = renderJSON(<img src={src} srcSet={srcset} alt="" />);
 
 	t.deepEqual(actual, expected);
 });
 
-test("supports overriding alt explicitly when field does not have an alt value", (t) => {
+test("supports an explicit decorative alt when field does not have an alt value", (t) => {
 	const field = prismicM.value.image({
 		seed: t.title,
 		model: prismicM.model.image({ seed: t.title }),
@@ -253,12 +265,28 @@ test("supports overriding alt explicitly when field does not have an alt value",
 
 	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
 
-	const actual = renderJSON(<PrismicImage field={field} alt="explicit alt" />);
-	const expected = renderJSON(
-		<img src={src} srcSet={srcset} alt="explicit alt" />,
-	);
+	const actual = renderJSON(<PrismicImage field={field} alt="" />);
+	const expected = renderJSON(<img src={src} srcSet={srcset} alt="" />);
 
 	t.deepEqual(actual, expected);
+});
+
+test.serial("warns if a non-decorative alt value is given", (t) => {
+	const field = prismicM.value.image({
+		seed: t.title,
+		model: prismicM.model.image({ seed: t.title }),
+	});
+
+	const consoleWarnStub = sinon.stub(console, "warn");
+
+	renderJSON(
+		// @ts-expect-error - Purposely giving incompatible props.
+		<PrismicImage field={field} alt="non-decorative" />,
+	);
+
+	consoleWarnStub.restore();
+
+	t.true(consoleWarnStub.calledWithMatch(/alt-must-be-an-empty-string/i));
 });
 
 test("forwards ref", (t) => {
@@ -269,12 +297,9 @@ test("forwards ref", (t) => {
 
 	let ref = null as HTMLImageElement | null;
 
-	renderJSON(
-		<PrismicImage ref={(el) => (ref = el)} field={field} alt="explicit alt" />,
-		{
-			createNodeMock: (element) => ({ tagName: element.type }),
-		},
-	);
+	renderJSON(<PrismicImage ref={(el) => (ref = el)} field={field} />, {
+		createNodeMock: (element) => ({ tagName: element.type }),
+	});
 
 	t.is(ref?.tagName, "img");
 });
