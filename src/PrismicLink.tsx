@@ -38,8 +38,8 @@ export interface LinkProps {
  * Props for `<PrismicLink>`.
  */
 export type PrismicLinkProps<
-	InternalComponent extends React.ElementType<LinkProps> = React.ElementType<LinkProps>,
-	ExternalComponent extends React.ElementType<LinkProps> = React.ElementType<LinkProps>,
+	InternalComponent extends React.ElementType<LinkProps> = typeof defaultInternalComponent,
+	ExternalComponent extends React.ElementType<LinkProps> = typeof defaultInternalComponent,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
 > = Omit<
@@ -120,10 +120,10 @@ const defaultInternalComponent = "a";
 const defaultExternalComponent = "a";
 
 const _PrismicLink = <
-	InternalComponent extends React.ElementType<LinkProps>,
-	ExternalComponent extends React.ElementType<LinkProps>,
+	InternalComponent extends React.ElementType<LinkProps> = typeof defaultInternalComponent,
+	ExternalComponent extends React.ElementType<LinkProps> = typeof defaultExternalComponent,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any>,
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
 >(
 	props: PrismicLinkProps<
 		InternalComponent,
@@ -221,10 +221,10 @@ if (!__PRODUCTION__) {
  *   link is internal or external.
  */
 export const PrismicLink = React.forwardRef(_PrismicLink) as <
-	InternalComponent extends React.ElementType<LinkProps>,
-	ExternalComponent extends React.ElementType<LinkProps>,
+	InternalComponent extends React.ElementType<LinkProps> = typeof defaultInternalComponent,
+	ExternalComponent extends React.ElementType<LinkProps> = typeof defaultExternalComponent,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any>,
+	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
 >(
 	props: PrismicLinkProps<
 		InternalComponent,
