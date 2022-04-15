@@ -3,7 +3,7 @@ import * as prismicT from "@prismicio/types";
 import * as prismicH from "@prismicio/helpers";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
-import { devMsg } from "./lib/devMessageURL";
+import { devMsg } from "./lib/devMsg";
 
 export type PrismicImageProps = Omit<
 	React.DetailedHTMLProps<
