@@ -25,6 +25,9 @@ export { Element };
 // TODO: Remove in v3.
 export const Elements = Element;
 
+export { PrismicImage } from "./PrismicImage";
+export type { PrismicImageProps } from "./PrismicImage";
+
 export { SliceZone, TODOSliceComponent } from "./SliceZone";
 export type {
 	SliceComponentProps,

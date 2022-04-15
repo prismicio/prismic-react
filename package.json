@@ -46,12 +46,12 @@
 		"unit": "nyc --reporter=lcovonly --reporter=text --exclude-after-remap=false ava"
 	},
 	"dependencies": {
-		"@prismicio/helpers": "^2.2.1",
+		"@prismicio/helpers": "^2.3.0",
 		"@prismicio/richtext": "^2.0.1"
 	},
 	"devDependencies": {
 		"@prismicio/client": "^6.4.2",
-		"@prismicio/mock": "^0.0.9",
+		"@prismicio/mock": "^0.0.10",
 		"@prismicio/types": "^0.1.27",
 		"@size-limit/preset-small-lib": "^7.0.8",
 		"@testing-library/react": "^12.1.4",

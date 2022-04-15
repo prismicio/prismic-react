@@ -2,6 +2,7 @@ import * as React from "react";
 import * as prismicH from "@prismicio/helpers";
 import * as prismicT from "@prismicio/types";
 
+import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 import { isInternalURL } from "./lib/isInternalURL";
 
 import { usePrismicContext } from "./usePrismicContext";
@@ -118,21 +119,6 @@ const defaultInternalComponent = "a";
  */
 const defaultExternalComponent = "a";
 
-/**
- * React component that renders a link from a Prismic Link field.
- *
- * Different components can be rendered depending on whether the link is
- * internal or external. This is helpful when integrating with client-side
- * routers, such as a router-specific Link component.
- *
- * If a link is configured to open in a new window using `target="_blank"`,
- * `rel="noopener noreferrer"` is set by default.
- *
- * @param props - Props for the component.
- *
- * @returns The internal or external link component depending on whether the
- *   link is internal or external.
- */
 const _PrismicLink = <
 	InternalComponent extends React.ElementType<LinkProps>,
 	ExternalComponent extends React.ElementType<LinkProps>,
@@ -215,6 +201,25 @@ const _PrismicLink = <
 	) : null;
 };
 
+if (!__PRODUCTION__) {
+	_PrismicLink.displayName = "PrismicLink";
+}
+
+/**
+ * React component that renders a link from a Prismic Link field.
+ *
+ * Different components can be rendered depending on whether the link is
+ * internal or external. This is helpful when integrating with client-side
+ * routers, such as a router-specific Link component.
+ *
+ * If a link is configured to open in a new window using `target="_blank"`,
+ * `rel="noopener noreferrer"` is set by default.
+ *
+ * @param props - Props for the component.
+ *
+ * @returns The internal or external link component depending on whether the
+ *   link is internal or external.
+ */
 export const PrismicLink = React.forwardRef(_PrismicLink) as <
 	InternalComponent extends React.ElementType<LinkProps>,
 	ExternalComponent extends React.ElementType<LinkProps>,
