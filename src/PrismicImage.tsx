@@ -101,7 +101,7 @@ const _PrismicImage = (
 	if (!__PRODUCTION__) {
 		if (typeof alt === "string" && props.alt !== "") {
 			console.warn(
-				`[PrismicImage] The alt prop can only be used to declare an image as decorative by passing an empty string (alt=""). For more details, see ${devMsg(
+				`[PrismicImage] The "alt" prop can only be used to declare an image as decorative by passing an empty string (alt="") but was provided a non-empty string. You can resolve this warning by removing the "alt" prop or changing it to alt="". For more details, see ${devMsg(
 					"alt-must-be-an-empty-string",
 				)}`,
 			);
@@ -109,7 +109,7 @@ const _PrismicImage = (
 
 		if (typeof fallbackAlt === "string" && fallbackAlt !== "") {
 			console.warn(
-				`[PrismicImage] The fallbackAlt prop can only be used to declare an image as decorative by passing an empty string (fallbackAlt=""). For more details, see ${devMsg(
+				`[PrismicImage] The "fallbackAlt" prop can only be used to declare an image as decorative by passing an empty string (fallbackAlt="") but was provided a non-empty string. You can resolve this warning by removing the "fallbackAlt" prop or changing it to fallbackAlt="". For more details, see ${devMsg(
 					"alt-must-be-an-empty-string",
 				)}`,
 			);
@@ -117,7 +117,7 @@ const _PrismicImage = (
 
 		if (widths && pixelDensities) {
 			console.warn(
-				`[PrismicImage] Only one of "widths" or "pixelDensities" props can be provided. "widths" will be used in this case.`,
+				`[PrismicImage] Only one of "widths" or "pixelDensities" props can be provided. You can resolve this warning by removing either the "widths" or "pixelDensities" prop. "widths" will be used in this case.`,
 			);
 		}
 	}
