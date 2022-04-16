@@ -146,13 +146,16 @@ const _PrismicLink = <
 		href = prismicH.asLink(props.field, linkResolver);
 	}
 
-	const target =
-		props.target ||
-		("field" in props &&
-			props.field &&
-			"target" in props.field &&
-			props.field.target) ||
-		undefined;
+	const isInternal = href && isInternalURL(href);
+
+	let target = undefined;
+	if (props.target) {
+		target = props.target;
+	} else if ("field" in props && props.field && "target" in props.field) {
+		target = props.field.target;
+	} else if (!isInternal) {
+		target = "_blank";
+	}
 
 	const rel =
 		props.rel || (target === "_blank" ? "noopener noreferrer" : undefined);
@@ -166,8 +169,6 @@ const _PrismicLink = <
 		props.externalComponent ||
 		context.externalLinkComponent ||
 		defaultExternalComponent;
-
-	const isInternal = href && isInternalURL(href);
 
 	const Component = isInternal ? InternalComponent : ExternalComponent;
 

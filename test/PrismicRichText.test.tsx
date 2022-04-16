@@ -419,7 +419,7 @@ test("Returns <PrismicLink /> when type is hyperlink", (t) => {
 		tags: [],
 		type: "page",
 		link_type: prismicT.LinkType.Document,
-		url: "url",
+		url: "/url",
 	};
 
 	const field: prismicT.RichTextField = [
