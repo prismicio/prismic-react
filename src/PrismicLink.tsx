@@ -148,14 +148,14 @@ const _PrismicLink = <
 
 	const isInternal = href && isInternalURL(href);
 
-	let target = undefined;
-	if (props.target) {
-		target = props.target;
-	} else if ("field" in props && props.field && "target" in props.field) {
-		target = props.field.target;
-	} else if (!isInternal) {
-		target = "_blank";
-	}
+	const target =
+		props.target ||
+		("field" in props &&
+			props.field &&
+			"target" in props.field &&
+			props.field.target) ||
+		(!isInternal && "_blank") ||
+		undefined;
 
 	const rel =
 		props.rel || (target === "_blank" ? "noopener noreferrer" : undefined);
