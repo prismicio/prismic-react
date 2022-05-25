@@ -79,3 +79,21 @@ test('uses the legacy toolbar if type is set to "legacy"', (t) => {
 		t.fail("The toolbar script element was not found");
 	}
 });
+
+test("includes a Happy DOM patch to not execute scripts in test environments", (t) => {
+	const repositoryName = md5(t.title);
+
+	renderJSON(<PrismicToolbar repositoryName={repositoryName} type="legacy" />);
+
+	const script = getToolbarScript(repositoryName);
+
+	if (script instanceof HTMLScriptElement) {
+		t.is(
+			// @ts-expect-error - `_evaluateScript` is a Happy DOM-specific property.
+			script._evaluateScript,
+			false,
+		);
+	} else {
+		t.fail("The toolbar script element was not found");
+	}
+});

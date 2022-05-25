@@ -43,6 +43,19 @@ export const PrismicToolbar = ({
 			script.dataset.repositoryName = repositoryName;
 			script.dataset.type = type;
 
+			// Disable Happy DOM `<script>` evaluation during
+			// tests.
+			//
+			// This is a patch ONLY INCLUDED DURING TESTS. It will
+			// be pruned during code minification in non-test
+			// environments.
+			//
+			// @see https://github.com/capricorn86/happy-dom/blob/02ae081e36f990c06171eda44f9d885fd9413d73/packages/happy-dom/src/nodes/html-script-element/HTMLScriptElement.ts#L191-L209
+			if (process.env.NODE_ENV === "test") {
+				// @ts-expect-error - `_evaluateScript` is a Happy DOM-specific property.
+				script._evaluateScript = false;
+			}
+
 			document.body.appendChild(script);
 		}
 	}, [repositoryName, type, src]);
