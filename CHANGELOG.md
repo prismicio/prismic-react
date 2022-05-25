@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/prismicio/prismic-react/compare/v2.3.0...v2.4.0) (2022-05-25)
+
+
+### Features
+
+* **PrismicLink:** automatically set `target="_blank" rel="noopener noreferrer"` when `href` is external ([#147](https://github.com/prismicio/prismic-react/issues/147)) ([add20dd](https://github.com/prismicio/prismic-react/commit/add20dde8c3fd1a3588e8d3df4db0da160fd1bf9))
+
+
+### Bug Fixes
+
+* do not execute `<PrismicToolbar>`'s script during happy-dom tests ([72aaa1e](https://github.com/prismicio/prismic-react/commit/72aaa1ec0537086b2b3f0cc9b079a02992cb76a0))
+* provide more detailed warning message for `<PrismicImage>`'s `alt`, `fallbackAlt`, `width`, and `pixelDensities` props ([4eaf529](https://github.com/prismicio/prismic-react/commit/4eaf5297a491ee7ca315aed8df2740906b96dbd2))
+
+
+### Documentation
+
+* fix typo ([821e629](https://github.com/prismicio/prismic-react/commit/821e6296d3bdf49f577d256b0198468aed8088ca))
+* fix typo ([92303a0](https://github.com/prismicio/prismic-react/commit/92303a04bbd37dc4798e4771f29504ece6c17904))
+
+
+### Chore
+
+* fix Happy DOM spelling [skip ci] ([9c18562](https://github.com/prismicio/prismic-react/commit/9c18562a8f2e17325f39cc06355eca4cf5b5e66b))
+
 ## [2.3.0](https://github.com/prismicio/prismic-react/compare/v2.2.0...v2.3.0) (2022-04-15)
 
 
