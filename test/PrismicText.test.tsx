@@ -1,6 +1,7 @@
 import test from "ava";
 import * as React from "react";
 import * as prismicT from "@prismicio/types";
+import * as sinon from "sinon";
 
 import { PrismicText } from "../src";
 
@@ -52,4 +53,20 @@ test("returns fallback when passed empty field", (t) => {
 	t.deepEqual(actualNull, expected);
 	t.deepEqual(actualUndefined, expected);
 	t.deepEqual(actualEmpty, expected);
+});
+
+test("throws error if passed a string-based field (e.g. Key Text or Select)", (t) => {
+	// Used to supress logging the error in this test.
+	const consoleErrorStub = sinon.stub(console, "error");
+
+	t.throws(() =>
+		renderJSON(
+			<PrismicText
+				// @ts-expect-error - We are purposely not providing a correct field.
+				field="not a Rich Text field"
+			/>,
+		),
+	);
+
+	consoleErrorStub.restore();
 });
