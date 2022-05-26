@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.1](https://github.com/prismicio/prismic-react/compare/v2.4.0...v2.4.1) (2022-05-26)
+
+
+### Bug Fixes
+
+* throw a helpful error if `<PrismicText>` receives an incorrect field value ([#152](https://github.com/prismicio/prismic-react/issues/152)) ([2e4bab0](https://github.com/prismicio/prismic-react/commit/2e4bab0f81746ee4378c6caa33f71f82f3b3753b))
+* throw when `<PrismicLink>`'s `field` or `document` prop value is missing required properties ([#153](https://github.com/prismicio/prismic-react/issues/153)) ([349529e](https://github.com/prismicio/prismic-react/commit/349529e2fcd464ccfe1f050f18ad1e9aebed571a))
+
 ## [2.4.0](https://github.com/prismicio/prismic-react/compare/v2.3.0...v2.4.0) (2022-05-25)
 
 
