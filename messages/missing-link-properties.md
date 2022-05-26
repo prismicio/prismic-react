@@ -8,30 +8,34 @@ If the required properties are missing, `<PrismicLink>` will not render the link
 
 ## Required Properties
 
-**When using the `field` prop with a Link, Link to Media, or Content Relationship field**:
+### With the `field` prop
+
+The following properties are requried when using the `field` prop with a Link, Link to Media, or Content Relationship field:
 
 - `link_type` (or `_linkType` when using Prismic's [GraphQL API][graphql-api])
 - `id`
 - `url`
 - `uid` (only if your website uses a [Link Resolver][link-resolver] that uses a document's UID field)
 
-The following fields are not required, but are recommended:
+The following properties are not required, but are recommended:
 
 - `target`
 
-Example:
+**Example**:
 
 ```tsx
 <PrismicLink field={doc.data.linkField}>Click me</PrismicLink>
 ```
 
-**When using the `document` prop with a Prismic document**:
+### With the `document` prop
+
+The following properties are requried when using the `document` prop with a Prismic document:
 
 - `id`
 - `url`
 - `uid` (only if your website uses a [Link Resolver][link-resolver] that uses a document's UID field)
 
-Example:
+**Example**:
 
 ```tsx
 <PrismicLink document={doc}>Click me</PrismicLink>
