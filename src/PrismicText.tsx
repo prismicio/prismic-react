@@ -49,7 +49,7 @@ export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {
 		if (typeof props.field === "string") {
 			throw new Error(
 				`[PrismicText] The "field" prop only accepts a Rich Text or Title field's value but was provided a different type of field instead (e.g. a Key Text or Select field). You can resolve this error by rendering the field value inline without <PrismicText>. For more details, see ${devMsg(
-					"prismictext-only-rich-text-title",
+					"prismictext-works-only-with-rich-text-and-title-fields",
 				)}`,
 			);
 		}
