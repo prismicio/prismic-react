@@ -3,6 +3,7 @@ import * as prismicT from "@prismicio/types";
 import * as prismicH from "@prismicio/helpers";
 import * as prismicM from "@prismicio/mock";
 import * as React from "react";
+import * as sinon from "sinon";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
@@ -430,3 +431,51 @@ test("forwards ref to external component", (t) => {
 	t.is(spanRef?.tagName, "span");
 	t.is(customComponentRef?.tagName, "input");
 });
+
+test.serial(
+	"throws error if properties are missing from a given field",
+	(t) => {
+		const field = {} as prismicT.FilledLinkToDocumentField;
+
+		const consoleErrorStub = sinon.stub(console, "error");
+
+		t.throws(
+			() => {
+				renderJSON(<PrismicLink field={field} />);
+			},
+			{ message: /missing-link-properties/ },
+		);
+
+		consoleErrorStub.restore();
+
+		t.true(
+			consoleErrorStub.calledWithMatch(
+				/this "field" prop value caused an error to be thrown./i,
+			),
+		);
+	},
+);
+
+test.serial(
+	"throws error if properties are missing from a given document",
+	(t) => {
+		const document = {} as prismicT.PrismicDocument;
+
+		const consoleErrorStub = sinon.stub(console, "error");
+
+		t.throws(
+			() => {
+				renderJSON(<PrismicLink document={document} />);
+			},
+			{ message: /missing-link-properties/ },
+		);
+
+		consoleErrorStub.restore();
+
+		t.true(
+			consoleErrorStub.calledWithMatch(
+				/this "document" prop value caused an error to be thrown./i,
+			),
+		);
+	},
+);

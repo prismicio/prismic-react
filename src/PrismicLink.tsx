@@ -3,6 +3,7 @@ import * as prismicH from "@prismicio/helpers";
 import * as prismicT from "@prismicio/types";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
+import { devMsg } from "./lib/devMsg";
 import { isInternalURL } from "./lib/isInternalURL";
 
 import { usePrismicContext } from "./usePrismicContext";
@@ -134,6 +135,37 @@ const _PrismicLink = <
 	ref: React.Ref<any>,
 ): JSX.Element | null => {
 	const context = usePrismicContext();
+
+	if (!__PRODUCTION__) {
+		if ("field" in props && props.field) {
+			if (
+				!("link_type" in props.field) ||
+				!("url" in props.field || "id" in props.field)
+			) {
+				console.error(
+					`[PrismicLink] This "field" prop value caused an error to be thrown.\n`,
+					props.field,
+				);
+				throw new Error(
+					`[PrismicLink] The provided field is missing required properties to properly render a link. The link may not render. For more details, see ${devMsg(
+						"missing-link-properties",
+					)}`,
+				);
+			}
+		} else if ("document" in props && props.document) {
+			if (!("url" in props.document || "id" in props.document)) {
+				console.error(
+					`[PrismicLink] This "document" prop value caused an error to be thrown.\n`,
+					props.document,
+				);
+				throw new Error(
+					`[PrismicLink] The provided document is missing required properties to properly render a link. The link may not render. For more details, see ${devMsg(
+						"missing-link-properties",
+					)}`,
+				);
+			}
+		}
+	}
 
 	const linkResolver = props.linkResolver || context.linkResolver;
 
