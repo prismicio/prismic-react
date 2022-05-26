@@ -1,8 +1,8 @@
 # Missing Link properties
 
-`<PrismicLink>` requires specific properties to be included in the provided field or document to render properly. This requirement extends to [Link][link-fields], [Link to Media][link-fields], and [Content Relationship][link-fields] fields.
+`<PrismicLink>` requires specific properties in the provided field or document to render properly. This requirement extends to [Link][link-fields], [Link to Media][link-fields], and [Content Relationship][link-fields] fields.
 
-If the required properties are missing, `<PrismicLink>` may not be able to render the link properly, if at all.
+If the required properties are missing, `<PrismicLink>` will not render the link.
 
 **Note**: When using Prismic's [Rest API][rest-api] (the default when using `@prismicio/client`), the required fields are automatically included. When using Prismic's [GraphQL API][graphql-api], you must include these fields in your query.
 
@@ -35,12 +35,13 @@ Example:
 
 ## GraphQL Example
 
-When using Prismic's GraphQL API, Link fields must be queried with at least the following properties:
+When using Prismic's [GraphQL API][graphql-api], Link fields must be queried with at least the following properties:
 
 ```diff
   {
   	page(uid: "home", lang: "en-us") {
   		linkField {
++ 			_linkType
 + 			id
 + 			url
 + 			uid # only required if your website uses a Link Resolver that uses a document's UID field.
