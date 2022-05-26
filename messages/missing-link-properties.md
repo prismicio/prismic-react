@@ -15,6 +15,10 @@ If the required properties are missing, `<PrismicLink>` will not render the link
 - `url`
 - `uid` (only if your website uses a [Link Resolver][link-resolver] that uses a document's UID field)
 
+The following fields are not required, but are recommended:
+
+- `target`
+
 Example:
 
 ```tsx
@@ -45,6 +49,7 @@ When using Prismic's [GraphQL API][graphql-api], Link fields must be queried wit
 + 			id
 + 			url
 + 			uid # only required if your website uses a Link Resolver that uses a document's UID field.
++ 			target # not required, but recommended for automatic `target` handling
   		}
   	}
   }
