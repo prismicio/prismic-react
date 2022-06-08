@@ -126,9 +126,9 @@ test("renders TODO component if component mapping is missing", (t) => {
 	const actual = renderJSON(
 		<SliceZone
 			slices={slices}
-			// @ts-expect-error - We are leaving `bar` out of the test on purpose.
 			components={{
 				foo: (props) => <StringifySliceComponent id="foo" {...props} />,
+				// NOTE: The `bar` component is purposely left out of this test.
 				// bar: (props) => <StringifySliceComponent id="bar" {...props} />,
 			}}
 		/>,
