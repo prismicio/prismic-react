@@ -32,6 +32,8 @@ export { SliceZone, TODOSliceComponent } from "./SliceZone";
 export type {
 	SliceComponentProps,
 	SliceComponentType,
+	SliceLikeRestV2,
+	SliceLikeGraphQL,
 	SliceLike,
 	SliceZoneComponents,
 	SliceZoneLike,
