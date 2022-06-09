@@ -433,7 +433,7 @@ test("forwards ref to external component", (t) => {
 });
 
 test.serial(
-	"throws error if properties are missing from a given field",
+	"throws error if `link_type` is missing from a given field",
 	(t) => {
 		const field = {} as prismicT.FilledLinkToDocumentField;
 
@@ -456,26 +456,41 @@ test.serial(
 	},
 );
 
-test.serial(
-	"throws error if properties are missing from a given document",
-	(t) => {
-		const document = {} as prismicT.PrismicDocument;
+test.serial("warns if properties are missing from a given field", (t) => {
+	const field = { link_type: prismicT.LinkType.Web };
 
-		const consoleErrorStub = sinon.stub(console, "error");
+	const consoleWarnStub = sinon.stub(console, "warn");
 
-		t.throws(
-			() => {
-				renderJSON(<PrismicLink document={document} />);
-			},
-			{ message: /missing-link-properties/ },
-		);
+	renderJSON(<PrismicLink field={field} />);
 
-		consoleErrorStub.restore();
+	consoleWarnStub.restore();
 
-		t.true(
-			consoleErrorStub.calledWithMatch(
-				/this "document" prop value caused an error to be thrown./i,
-			),
-		);
-	},
-);
+	t.true(consoleWarnStub.calledWithMatch("missing-link-properties"));
+});
+
+test.serial("does not warn if given field is empty", (t) => {
+	const field = prismicM.value.link({
+		seed: t.title,
+		state: "empty",
+	});
+
+	const consoleWarnStub = sinon.stub(console, "warn");
+
+	renderJSON(<PrismicLink field={field} />);
+
+	consoleWarnStub.restore();
+
+	t.true(consoleWarnStub.calledWithMatch("missing-link-properties"));
+});
+
+test.serial("warns if properties are missing from a given document", (t) => {
+	const document = {} as prismicT.PrismicDocument;
+
+	const consoleWarnStub = sinon.stub(console, "warn");
+
+	renderJSON(<PrismicLink document={document} />);
+
+	consoleWarnStub.restore();
+
+	t.true(consoleWarnStub.calledWithMatch("missing-link-properties"));
+});

@@ -138,30 +138,36 @@ const _PrismicLink = <
 
 	if (!__PRODUCTION__) {
 		if ("field" in props && props.field) {
-			if (
-				!("link_type" in props.field) ||
-				!("url" in props.field || "id" in props.field)
-			) {
+			if (!props.field.link_type) {
 				console.error(
 					`[PrismicLink] This "field" prop value caused an error to be thrown.\n`,
 					props.field,
 				);
 				throw new Error(
-					`[PrismicLink] The provided field is missing required properties to properly render a link. The link may not render. For more details, see ${devMsg(
+					`[PrismicLink] The provided field is missing required properties to properly render a link. The link will not render. For more details, see ${devMsg(
 						"missing-link-properties",
 					)}`,
+				);
+			} else if (
+				!(
+					prismicH.isFilled.link(props.field) &&
+					("url" in props.field || "id" in props.field)
+				)
+			) {
+				console.warn(
+					`[PrismicLink] The provided field is missing required properties to properly render a link. The link may not render correctly. For more details, see ${devMsg(
+						"missing-link-properties",
+					)}`,
+					props.field,
 				);
 			}
 		} else if ("document" in props && props.document) {
 			if (!("url" in props.document || "id" in props.document)) {
-				console.error(
-					`[PrismicLink] This "document" prop value caused an error to be thrown.\n`,
-					props.document,
-				);
-				throw new Error(
-					`[PrismicLink] The provided document is missing required properties to properly render a link. The link may not render. For more details, see ${devMsg(
+				console.warn(
+					`[PrismicLink] The provided document is missing required properties to properly render a link. The link may not render correctly. For more details, see ${devMsg(
 						"missing-link-properties",
 					)}`,
+					props.document,
 				);
 			}
 		}
