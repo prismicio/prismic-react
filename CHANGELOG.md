@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.2](https://github.com/prismicio/prismic-react/compare/v2.4.1...v2.4.2) (2022-06-09)
+
+
+### Bug Fixes
+
+* export `SliceLikeRestV2` and `SliceLikeGraphQL` ([#156](https://github.com/prismicio/prismic-react/issues/156)) ([fcd7a13](https://github.com/prismicio/prismic-react/commit/fcd7a13617697a79507ff85f3d0cc0d18fa17cf2))
+* prefer warning over throwing when `<PrismicLink>` is given an invalid prop in development ([#157](https://github.com/prismicio/prismic-react/issues/157)) ([4610658](https://github.com/prismicio/prismic-react/commit/46106588de14b2b7f4d04b171a3121bbd3f89a8e))
+* support untyped or partially typed Slices in `<SliceZone>` ([#154](https://github.com/prismicio/prismic-react/issues/154)) ([5ca557a](https://github.com/prismicio/prismic-react/commit/5ca557abeffb269ed7a9e56301bdb15bddaecf2c))
+
 ### [2.4.1](https://github.com/prismicio/prismic-react/compare/v2.4.0...v2.4.1) (2022-05-26)
 
 
