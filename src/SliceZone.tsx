@@ -234,7 +234,7 @@ export type SliceZoneProps<TContext = unknown> = {
 	 * A record mapping Slice types to React components.
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	components?: Record<string, SliceComponentType<any>>;
+	components?: Record<string, SliceComponentType<any, TContext>>;
 
 	/**
 	 * A function that determines the rendered React component for each Slice in
