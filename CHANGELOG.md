@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.3](https://github.com/prismicio/prismic-react/compare/v2.4.2...v2.4.3) (2022-07-21)
+
+
+### Bug Fixes
+
+* type context, components in SliceZoneProps ([#159](https://github.com/prismicio/prismic-react/issues/159)) ([edb21ec](https://github.com/prismicio/prismic-react/commit/edb21ecdd93e20ac5d64e1080af93b250e935e63))
+
 ### [2.4.2](https://github.com/prismicio/prismic-react/compare/v2.4.1...v2.4.2) (2022-06-09)
 
 
