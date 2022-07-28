@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0-alpha.0](https://github.com/prismicio/prismic-react/compare/v2.4.3...v2.5.0-alpha.0) (2022-07-28)
+
+
+### Features
+
+* support slice id ([d066399](https://github.com/prismicio/prismic-react/commit/d066399a3e94d2e48d53ce14dcca4c71d346e452))
+
 ### [2.4.3](https://github.com/prismicio/prismic-react/compare/v2.4.2...v2.4.3) (2022-07-21)
 
 
