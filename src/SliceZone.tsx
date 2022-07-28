@@ -26,6 +26,7 @@ type ExtractSliceType<Slice extends SliceLike> = Slice extends SliceLikeRestV2
  */
 export type SliceLikeRestV2<SliceType extends string = string> = {
 	slice_type: prismicT.Slice<SliceType>["slice_type"];
+	slice_id?: string;
 };
 
 /**
@@ -304,7 +305,10 @@ export const SliceZone = <TContext,>({
 				}
 			}
 
-			const key = `${index}-${JSON.stringify(slice)}`;
+			const key =
+				"slice_id" in slice && slice.slice_id
+					? slice.slice_id
+					: `${index}-${JSON.stringify(slice)}`;
 
 			return (
 				<Comp
