@@ -457,7 +457,7 @@ test.serial(
 );
 
 test.serial("warns if properties are missing from a given field", (t) => {
-	const field = { link_type: prismicT.LinkType.Web };
+	const field = { link_type: prismicT.LinkType.Web, target: "_blank" };
 
 	const consoleWarnStub = sinon.stub(console, "warn");
 
@@ -480,7 +480,7 @@ test.serial("does not warn if given field is empty", (t) => {
 
 	consoleWarnStub.restore();
 
-	t.true(consoleWarnStub.calledWithMatch("missing-link-properties"));
+	t.false(consoleWarnStub.called);
 });
 
 test.serial("warns if properties are missing from a given document", (t) => {

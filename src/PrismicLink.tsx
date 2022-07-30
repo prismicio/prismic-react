@@ -149,10 +149,8 @@ const _PrismicLink = <
 					)}`,
 				);
 			} else if (
-				!(
-					prismicH.isFilled.link(props.field) &&
-					("url" in props.field || "id" in props.field)
-				)
+				Object.keys(props.field).length > 1 &&
+				!("url" in props.field || "uid" in props.field || "id" in props.field)
 			) {
 				console.warn(
 					`[PrismicLink] The provided field is missing required properties to properly render a link. The link may not render correctly. For more details, see ${devMsg(
