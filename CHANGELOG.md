@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0-alpha.1](https://github.com/prismicio/prismic-react/compare/v2.5.0-alpha.0...v2.5.0-alpha.1) (2022-08-02)
+
+
+### Refactor
+
+* slice `slice_id` > `id` ([be245ce](https://github.com/prismicio/prismic-react/commit/be245ceaa0051f2a0616a28fb28ded6c7fe82b09))
+
 ## [2.5.0-alpha.0](https://github.com/prismicio/prismic-react/compare/v2.4.3...v2.5.0-alpha.0) (2022-07-28)
 
 
