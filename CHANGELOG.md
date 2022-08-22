@@ -16,6 +16,13 @@ All notable changes to this project will be documented in this file. See [standa
 
 * support slice id ([d066399](https://github.com/prismicio/prismic-react/commit/d066399a3e94d2e48d53ce14dcca4c71d346e452))
 
+### [2.4.4](https://github.com/prismicio/prismic-react/compare/v2.4.3...v2.4.4) (2022-07-30)
+
+
+### Bug Fixes
+
+* **PrismicLink:** do not warn about missing field properties if the Link field is empty ([#163](https://github.com/prismicio/prismic-react/issues/163)) ([b138472](https://github.com/prismicio/prismic-react/commit/b13847234dc95e3e6ce2c66e91dcce702dcfede6))
+
 ### [2.4.3](https://github.com/prismicio/prismic-react/compare/v2.4.2...v2.4.3) (2022-07-21)
 
 
