@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/prismicio/prismic-react/compare/v2.4.4...v2.5.0) (2022-08-23)
+
+
+### Features
+
+* use Slice `id` property to key Slices in `<SliceZone>` when available ([#162](https://github.com/prismicio/prismic-react/issues/162)) ([dd85581](https://github.com/prismicio/prismic-react/commit/dd85581ce26ebf6b9aefa33791c0278d5a79d0a2))
+
 ## [2.5.0-alpha.1](https://github.com/prismicio/prismic-react/compare/v2.5.0-alpha.0...v2.5.0-alpha.1) (2022-08-02)
 
 
