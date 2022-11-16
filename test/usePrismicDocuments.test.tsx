@@ -6,7 +6,8 @@ import * as React from "react";
 import * as msw from "msw";
 import * as mswNode from "msw/node";
 import * as prismic from "@prismicio/client";
-import { renderHook, cleanup } from "@testing-library/react-hooks";
+import { renderHook, cleanup, waitFor } from "@testing-library/react";
+import * as assert from "node:assert";
 
 import { createClient } from "./__testutils__/createClient";
 import { createMockQueryHandler } from "./__testutils__/createMockQueryHandler";
@@ -44,12 +45,11 @@ test.serial("returns query", async (t) => {
 		createMockQueryHandler(t, queryResponsePages, { ref }),
 	);
 
-	const { result, waitForValueToChange } = renderHook(
-		() => usePrismicDocuments(),
-		{ wrapper },
-	);
+	const { result } = renderHook(() => usePrismicDocuments(), { wrapper });
 
-	await waitForValueToChange(() => result.current[1].state === "loaded");
+	await waitFor(() => {
+		assert.equal(result.current[1].state, "loaded");
+	});
 
 	t.deepEqual(result.current[0], queryResponsePages[0]);
 });
@@ -73,12 +73,11 @@ test.serial("supports params", async (t) => {
 		}),
 	);
 
-	const { result, waitForValueToChange } = renderHook(
-		() => usePrismicDocuments(params),
-		{ wrapper },
-	);
+	const { result } = renderHook(() => usePrismicDocuments(params), { wrapper });
 
-	await waitForValueToChange(() => result.current[1].state === "loaded");
+	await waitFor(() => {
+		assert.equal(result.current[1].state, "loaded");
+	});
 
 	t.deepEqual(result.current[0], queryResponsePages[0]);
 });
@@ -94,11 +93,11 @@ test.serial("supports explicit client", async (t) => {
 		createMockQueryHandler(t, queryResponsePages, { ref }),
 	);
 
-	const { result, waitForValueToChange } = renderHook(() =>
-		usePrismicDocuments({ client }),
-	);
+	const { result } = renderHook(() => usePrismicDocuments({ client }));
 
-	await waitForValueToChange(() => result.current[1].state === "loaded");
+	await waitFor(() => {
+		assert.equal(result.current[1].state, "loaded");
+	});
 
 	t.deepEqual(result.current[0], queryResponsePages[0]);
 });
@@ -118,12 +117,11 @@ test.serial("returns failed state on error", async (t) => {
 		}),
 	);
 
-	const { result, waitForValueToChange } = renderHook(
-		() => usePrismicDocuments(),
-		{ wrapper },
-	);
+	const { result } = renderHook(() => usePrismicDocuments(), { wrapper });
 
-	await waitForValueToChange(() => result.current[1].state === "failed");
+	await waitFor(() => {
+		assert.equal(result.current[1].state, "failed");
+	});
 
 	t.true(result.current[1].error instanceof prismic.ForbiddenError);
 	t.is(result.current[0], undefined);

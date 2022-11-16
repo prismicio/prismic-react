@@ -11,8 +11,8 @@ import {
  * A hook that queries content from the Prismic repository.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param params - Parameters to filter, sort, and paginate results
@@ -31,8 +31,8 @@ export const usePrismicDocuments = <TDocument extends prismicT.PrismicDocument>(
  * first result, if any.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of the Prismic document returned
  *
  * @param params - Parameters to filter, sort, and paginate results
@@ -50,11 +50,12 @@ export const useFirstPrismicDocument = <
 
 /**
  * A hook that queries content from the Prismic repository and returns all
- * matching content. If no predicates are provided, all documents will be fetched.
+ * matching content. If no predicates are provided, all documents will be
+ * fetched.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param params - Parameters to filter and sort results
@@ -74,11 +75,12 @@ export const useAllPrismicDocumentsDangerously = <
 	useStatefulPrismicClientMethod("dangerouslyGetAll", args);
 
 /**
- * A hook that queries a document from the Prismic repository with a specific ID.
+ * A hook that queries a document from the Prismic repository with a specific
+ * ID.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of the Prismic document returned
  *
  * @param id - ID of the document
@@ -102,8 +104,8 @@ export const usePrismicDocumentByID = <
  * A hook that queries documents from the Prismic repository with specific IDs.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param ids - A list of document IDs
@@ -124,11 +126,12 @@ export const usePrismicDocumentsByIDs = <
 	useStatefulPrismicClientMethod("getByIDs", args);
 
 /**
- * A hook that queries all documents from the Prismic repository with specific IDs.
+ * A hook that queries all documents from the Prismic repository with specific
+ * IDs.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param ids - A list of document IDs
@@ -153,8 +156,8 @@ export const useAllPrismicDocumentsByIDs = <
  * UID and Custom Type.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of the Prismic document returned
  *
  * @param documentType - The API ID of the document's Custom Type
@@ -181,8 +184,8 @@ export const usePrismicDocumentByUID = <
  * of a Custom Type.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of the Prismic document returned
  *
  * @param documentType - The API ID of the document's Custom Type
@@ -209,8 +212,8 @@ export const usePrismicDocumentsByUIDs = <
  * UIDs of a Custom Type.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of the Prismic document returned
  *
  * @param documentType - The API ID of the document's Custom Type
@@ -237,8 +240,8 @@ export const useAllPrismicDocumentsByUIDs = <
  * specific Custom Type.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of the Prismic document returned
  *
  * @param documentType - The API ID of the singleton Custom Type
@@ -259,11 +262,12 @@ export const useSinglePrismicDocument = <
 	useStatefulPrismicClientMethod("getSingle", args);
 
 /**
- * A hook that queries documents from the Prismic repository for a specific Custom Type.
+ * A hook that queries documents from the Prismic repository for a specific
+ * Custom Type.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param documentType - The API ID of the Custom Type
@@ -288,8 +292,8 @@ export const usePrismicDocumentsByType = <
  * Custom Type.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param documentType - The API ID of the Custom Type
@@ -310,11 +314,12 @@ export const useAllPrismicDocumentsByType = <
 	useStatefulPrismicClientMethod("getAllByType", args);
 
 /**
- * A hook that queries documents from the Prismic repository with a specific tag.
+ * A hook that queries documents from the Prismic repository with a specific
+ * tag.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param tag - The tag that must be included on a document
@@ -335,11 +340,12 @@ export const usePrismicDocumentsByTag = <
 	useStatefulPrismicClientMethod("getByTag", args);
 
 /**
- * A hook that queries all documents from the Prismic repository with a specific tag.
+ * A hook that queries all documents from the Prismic repository with a specific
+ * tag.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param tag - The tag that must be included on a document
@@ -361,11 +367,12 @@ export const useAllPrismicDocumentsByTag = <
 
 /**
  * A hook that queries documents from the Prismic repository with specific tags.
- * A document must be tagged with at least one of the queried tags to be included.
+ * A document must be tagged with at least one of the queried tags to be
+ * included.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param tags - A list of tags that must be included on a document
@@ -387,11 +394,12 @@ export const usePrismicDocumentsBySomeTags = <
 
 /**
  * A hook that queries all documents from the Prismic repository with specific
- * tags. A document must be tagged with at least one of the queried tags to be included.
+ * tags. A document must be tagged with at least one of the queried tags to be
+ * included.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param tags - A list of tags that must be included on a document
@@ -416,8 +424,8 @@ export const useAllPrismicDocumentsBySomeTags = <
  * A document must be tagged with all of the queried tags to be included.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param tags - A list of tags that must be included on a document
@@ -442,8 +450,8 @@ export const usePrismicDocumentsByEveryTag = <
  * tags. A document must be tagged with all of the queried tags to be included.
  *
  * @remarks
- * An additional `@prismicio/client` instance can be provided at `params.client`.
- *
+ * An additional `@prismicio/client` instance can be provided at
+ * `params.client`.
  * @typeParam TDocument - Type of Prismic documents returned
  *
  * @param tags - A list of tags that must be included on a document

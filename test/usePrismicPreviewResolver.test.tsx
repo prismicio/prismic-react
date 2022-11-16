@@ -7,7 +7,8 @@ import * as msw from "msw";
 import * as mswNode from "msw/node";
 import * as sinon from "sinon";
 import * as prismic from "@prismicio/client";
-import { renderHook, cleanup } from "@testing-library/react-hooks";
+import { renderHook, cleanup, waitFor } from "@testing-library/react";
+import * as assert from "node:assert";
 
 import { createClient } from "./__testutils__/createClient";
 import { createDocument } from "./__testutils__/createDocument";
@@ -49,10 +50,11 @@ test.serial("returns a resolved preview URL", async (t) => {
 			ref: previewToken,
 			q: `[${prismic.predicate.at("document.id", document.id)}]`,
 			lang: "*",
+			pageSize: 1,
 		}),
 	);
 
-	const { result, waitForValueToChange } = renderHook(
+	const { result } = renderHook(
 		() =>
 			usePrismicPreviewResolver({
 				documentID: document.id,
@@ -61,7 +63,9 @@ test.serial("returns a resolved preview URL", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(() => result.current[1].state === "loaded");
+	await waitFor(() => {
+		assert.equal(result.current[1].state, "loaded");
+	});
 
 	t.deepEqual(result.current[0], document.url as string);
 });
@@ -83,10 +87,11 @@ test.serial("navigates if a navigate function is provided", async (t) => {
 			ref: previewToken,
 			q: `[${prismic.predicate.at("document.id", document.id)}]`,
 			lang: "*",
+			pageSize: 1,
 		}),
 	);
 
-	const { result, waitForValueToChange } = renderHook(
+	const { result } = renderHook(
 		() =>
 			usePrismicPreviewResolver({
 				documentID: document.id,
@@ -96,7 +101,9 @@ test.serial("navigates if a navigate function is provided", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(() => result.current[1].state === "loaded");
+	await waitFor(() => {
+		assert.equal(result.current[1].state, "loaded");
+	});
 
 	t.true(navigate.calledWith(document.url));
 });
@@ -115,10 +122,11 @@ test.serial("supports explicit client", async (t) => {
 			ref: previewToken,
 			q: `[${prismic.predicate.at("document.id", document.id)}]`,
 			lang: "*",
+			pageSize: 1,
 		}),
 	);
 
-	const { result, waitForValueToChange } = renderHook(() =>
+	const { result } = renderHook(() =>
 		usePrismicPreviewResolver({
 			client,
 			documentID: document.id,
@@ -126,7 +134,9 @@ test.serial("supports explicit client", async (t) => {
 		}),
 	);
 
-	await waitForValueToChange(() => result.current[1].state === "loaded");
+	await waitFor(() => {
+		assert.equal(result.current[1].state, "loaded");
+	});
 
 	t.deepEqual(result.current[0], document.url as string);
 });
@@ -146,7 +156,7 @@ test.serial("returns failed state on error", async (t) => {
 		}),
 	);
 
-	const { result, waitForValueToChange } = renderHook(
+	const { result } = renderHook(
 		() =>
 			usePrismicPreviewResolver({
 				documentID: "documentID",
@@ -155,7 +165,9 @@ test.serial("returns failed state on error", async (t) => {
 		{ wrapper },
 	);
 
-	await waitForValueToChange(() => result.current[1].state === "failed");
+	await waitFor(() => {
+		assert.equal(result.current[1].state, "failed");
+	});
 
 	t.true(result.current[1].error instanceof prismic.ForbiddenError);
 	t.is(result.current[0], undefined);

@@ -27,7 +27,8 @@ export type PrismicTextProps = {
 };
 
 /**
- * React component that renders content from a Prismic Rich Text field as plain text.
+ * React component that renders content from a Prismic Rich Text field as plain
+ * text.
  *
  * @remarks
  * This component returns a React fragment with no wrapping element around the

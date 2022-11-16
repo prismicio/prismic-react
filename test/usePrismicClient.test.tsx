@@ -4,7 +4,7 @@
 import test from "ava";
 import * as React from "react";
 import * as sinon from "sinon";
-import { renderHook, cleanup } from "@testing-library/react-hooks";
+import { renderHook, cleanup } from "@testing-library/react";
 
 import { createClient } from "./__testutils__/createClient";
 
@@ -67,14 +67,17 @@ test.serial(
 test.serial(
 	"throws if a client is not provided to the hook or PrismicProvider",
 	(t) => {
-		const { result } = renderHook(() => usePrismicClient(), {
-			wrapper: (props) => <PrismicProvider>{props.children}</PrismicProvider>,
-		});
-
-		if (result.error instanceof Error) {
-			t.regex(result.error.message, /provide a client/i);
-		} else {
-			t.fail("An error was not thrown");
-		}
+		t.throws(
+			() => {
+				renderHook(() => usePrismicClient(), {
+					wrapper: (props) => (
+						<PrismicProvider>{props.children}</PrismicProvider>
+					),
+				});
+			},
+			{
+				message: /provide a client/i,
+			},
+		);
 	},
 );
