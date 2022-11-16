@@ -53,7 +53,8 @@ export type SliceLike<SliceType extends string = string> =
 	| SliceLikeGraphQL<SliceType>;
 
 /**
- * A looser version of the `SliceZone` type from `@prismicio/types` using `SliceLike`.
+ * A looser version of the `SliceZone` type from `@prismicio/types` using
+ * `SliceLike`.
  *
  * If using Prismic's Rest API V2, use the `SliceZone` export from
  * `@prismicio/types` for the full type.
@@ -96,7 +97,8 @@ export type SliceComponentProps<
 	slices: SliceZoneLike<SliceLike>;
 
 	/**
-	 * Arbitrary data passed to `<SliceZone>` and made available to all Slice components.
+	 * Arbitrary data passed to `<SliceZone>` and made available to all Slice
+	 * components.
 	 */
 	context: TContext;
 };
@@ -145,7 +147,8 @@ export type SliceZoneComponents<
 	};
 
 /**
- * This Slice component can be used as a reminder to provide a proper implementation.
+ * This Slice component can be used as a reminder to provide a proper
+ * implementation.
  *
  * This is also the default React component rendered when a component mapping
  * cannot be found in `<SliceZone>`.
@@ -198,7 +201,8 @@ type SliceZoneResolverArgs<
 /**
  * A function that determines the rendered React component for each Slice in the
  * Slice Zone. If a nullish value is returned, the component will fallback to
- * the `components` or `defaultComponent` props to determine the rendered component.
+ * the `components` or `defaultComponent` props to determine the rendered
+ * component.
  *
  * @deprecated Use the `components` prop instead.
  *

@@ -22,7 +22,8 @@ export type PrismicContextValue<
 	client?: prismic.Client;
 
 	/**
-	 * A Link Resolver used to resolve links for `<PrismicLink>` and `<PrismicRichText>`.
+	 * A Link Resolver used to resolve links for `<PrismicLink>` and
+	 * `<PrismicRichText>`.
 	 *
 	 * @remarks
 	 * If your app uses Route Resolvers when querying for your Prismic
@@ -60,12 +61,14 @@ export type PrismicContextValue<
 	richTextComponents?: JSXMapSerializer | JSXFunctionSerializer;
 
 	/**
-	 * The component rendered by `<PrismicLink>` for internal URLs. Defaults to `<a>`.
+	 * The component rendered by `<PrismicLink>` for internal URLs. Defaults to
+	 * `<a>`.
 	 */
 	internalLinkComponent?: React.ElementType<LinkProps>;
 
 	/**
-	 * The component rendered by `<PrismicLink>` for external URLs. Defaults to `<a>`.
+	 * The component rendered by `<PrismicLink>` for external URLs. Defaults to
+	 * `<a>`.
 	 */
 	externalLinkComponent?: React.ElementType<LinkProps>;
 

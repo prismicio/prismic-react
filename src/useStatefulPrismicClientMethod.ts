@@ -76,7 +76,8 @@ export type HookOnlyParameters = {
  *
  * @param value - The value to check.
  *
- * @returns `true` if `value` is a `@prismicio/client` params object, `false` otherwise.
+ * @returns `true` if `value` is a `@prismicio/client` params object, `false`
+ *   otherwise.
  */
 const isParams = (
 	value: unknown,
