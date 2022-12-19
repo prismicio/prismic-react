@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.1](https://github.com/prismicio/prismic-react/compare/v2.5.0...v2.5.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* make `@prismicio/types` a regular dependency ([b6caa1f](https://github.com/prismicio/prismic-react/commit/b6caa1f1f78380fdcbcd6dcaf5c538817006dc7c))
+
+
+### Chore
+
+* **deps:** maintain dependencies ([f8bc7e4](https://github.com/prismicio/prismic-react/commit/f8bc7e4fa7da92ded7fea4d2d89e979f336f0bbe))
+* update infrastructure ([#168](https://github.com/prismicio/prismic-react/issues/168)) ([7768901](https://github.com/prismicio/prismic-react/commit/77689014ec78f6a03b54b9b7193e778a1f13dc10))
+
 ## [2.5.0](https://github.com/prismicio/prismic-react/compare/v2.4.4...v2.5.0) (2022-08-23)
 
 
