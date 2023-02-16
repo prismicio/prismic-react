@@ -1,163 +1,154 @@
-/* eslint-disable react/display-name  */
-/* eslint-disable react/prop-types */
+// @vitest-environment happy-dom
 
-import test from "ava";
+import { it, expect, afterEach } from "vitest";
 import * as React from "react";
-import * as msw from "msw";
-import * as mswNode from "msw/node";
 import * as prismic from "@prismicio/client";
 import * as prismicT from "@prismicio/types";
 import { renderHook, cleanup, waitFor } from "@testing-library/react";
 import * as assert from "node:assert";
 
-import { createClient } from "./__testutils__/createClient";
-import { createMockQueryHandler } from "./__testutils__/createMockQueryHandler";
-import { createMockRepositoryHandler } from "./__testutils__/createMockRepositoryHandler";
-import { createQueryResponsePages } from "./__testutils__/createQueryResponsePages";
-import { createRepositoryResponse } from "./__testutils__/createRepositoryResponse";
-import { getMasterRef } from "./__testutils__/getMasterRef";
-import { md5 } from "./__testutils__/md5";
+import { createTestClient } from "./__testutils__/createTestClient";
 
 import { PrismicProvider, usePrismicDocumentByUID } from "../src";
+import { mockPrismicRestAPIV2 } from "./__testutils__/mockPrismicRestAPIV2";
 
-const server = mswNode.setupServer();
-test.before(() => server.listen({ onUnhandledRequest: "error" }));
-test.after(() => server.close());
-
-// We must clean up after each test. We also must run each test serially to
-// ensure the clean up process only occurs between tests.
-test.afterEach(() => {
+afterEach(() => {
 	cleanup();
 });
 
 const createWrapper = (client: prismic.Client): React.ComponentType => {
+	// eslint-disable-next-line react/display-name
 	return (props) => <PrismicProvider client={client} {...props} />;
 };
 
-test.serial("returns document with matching UID", async (t) => {
-	const client = createClient(t);
-	const wrapper = createWrapper(client);
-	const repositoryResponse = createRepositoryResponse();
-	const queryResponsePages = createQueryResponsePages();
-	const document = queryResponsePages[0]
-		.results[0] as prismicT.PrismicDocument & { uid: string };
-	const ref = getMasterRef(repositoryResponse);
+it("returns document with matching UID", async (ctx) => {
+	const client = createTestClient();
 
-	server.use(
-		createMockRepositoryHandler(t, repositoryResponse),
-		createMockQueryHandler(t, queryResponsePages, {
-			ref,
-			q: [
-				`[${prismic.predicate.at("document.type", document.type)}]`,
-				`[${prismic.predicate.at(`my.${document.type}.uid`, document.uid)}]`,
-			],
-			pageSize: 1,
+	const doc = ctx.mock.value.document({
+		model: ctx.mock.model.customType({
+			fields: {
+				uid: ctx.mock.model.uid(),
+			},
 		}),
-	);
+	}) as prismicT.PrismicDocumentWithUID;
+
+	mockPrismicRestAPIV2({
+		ctx,
+		queryResponse: ctx.mock.api.query({
+			documents: [doc],
+		}),
+		queryRequiredParams: {
+			q: [
+				`[${prismic.predicate.at("document.type", doc.type)}]`,
+				`[${prismic.predicate.at(`my.${doc.type}.uid`, doc.uid)}]`,
+			],
+		},
+	});
 
 	const { result } = renderHook(
-		() => usePrismicDocumentByUID(document.type, document.uid),
-		{ wrapper },
+		() => usePrismicDocumentByUID(doc.type, doc.uid),
+		{ wrapper: createWrapper(client) },
 	);
 
 	await waitFor(() => {
 		assert.equal(result.current[1].state, "loaded");
 	});
 
-	t.deepEqual(result.current[0], document);
+	expect(result.current[0]).toStrictEqual(doc);
 });
 
-test.serial("supports params", async (t) => {
-	const client = createClient(t);
-	const wrapper = createWrapper(client);
-	const repositoryResponse = createRepositoryResponse();
-	const queryResponsePages = createQueryResponsePages();
-	const document = queryResponsePages[0]
-		.results[0] as prismicT.PrismicDocument & { uid: string };
-	const ref = getMasterRef(repositoryResponse);
+it("supports params", async (ctx) => {
+	const client = createTestClient();
+
+	const doc = ctx.mock.value.document({
+		model: ctx.mock.model.customType({
+			fields: {
+				uid: ctx.mock.model.uid(),
+			},
+		}),
+	}) as prismicT.PrismicDocumentWithUID;
 
 	const params = {
 		pageSize: 2,
 	};
 
-	server.use(
-		createMockRepositoryHandler(t, repositoryResponse),
-		createMockQueryHandler(t, queryResponsePages, {
-			ref,
+	mockPrismicRestAPIV2({
+		ctx,
+		queryResponse: ctx.mock.api.query({
+			documents: [doc],
+		}),
+		queryRequiredParams: {
 			q: [
-				`[${prismic.predicate.at("document.type", document.type)}]`,
-				`[${prismic.predicate.at(`my.${document.type}.uid`, document.uid)}]`,
+				`[${prismic.predicate.at("document.type", doc.type)}]`,
+				`[${prismic.predicate.at(`my.${doc.type}.uid`, doc.uid)}]`,
 			],
 			pageSize: params.pageSize.toString(),
-		}),
-	);
+		},
+	});
 
 	const { result } = renderHook(
-		() => usePrismicDocumentByUID(document.type, document.uid, params),
-		{ wrapper },
+		() => usePrismicDocumentByUID(doc.type, doc.uid, params),
+		{ wrapper: createWrapper(client) },
 	);
 
 	await waitFor(() => {
 		assert.equal(result.current[1].state, "loaded");
 	});
 
-	t.deepEqual(result.current[0], queryResponsePages[0].results[0]);
+	expect(result.current[0]).toStrictEqual(doc);
 });
 
-test.serial("supports explicit client", async (t) => {
-	const client = createClient(t);
-	const repositoryResponse = createRepositoryResponse();
-	const queryResponsePages = createQueryResponsePages();
-	const document = queryResponsePages[0]
-		.results[0] as prismicT.PrismicDocument & { uid: string };
-	const ref = getMasterRef(repositoryResponse);
+it("supports explicit client", async (ctx) => {
+	const client = createTestClient();
 
-	server.use(
-		createMockRepositoryHandler(t, repositoryResponse),
-		createMockQueryHandler(t, queryResponsePages, {
-			ref,
-			q: [
-				`[${prismic.predicate.at("document.type", document.type)}]`,
-				`[${prismic.predicate.at(`my.${document.type}.uid`, document.uid)}]`,
-			],
-			pageSize: 1,
+	const doc = ctx.mock.value.document({
+		model: ctx.mock.model.customType({
+			fields: {
+				uid: ctx.mock.model.uid(),
+			},
 		}),
-	);
+	}) as prismicT.PrismicDocumentWithUID;
+
+	mockPrismicRestAPIV2({
+		ctx,
+		queryResponse: ctx.mock.api.query({
+			documents: [doc],
+		}),
+		queryRequiredParams: {
+			q: [
+				`[${prismic.predicate.at("document.type", doc.type)}]`,
+				`[${prismic.predicate.at(`my.${doc.type}.uid`, doc.uid)}]`,
+			],
+		},
+	});
 
 	const { result } = renderHook(() =>
-		usePrismicDocumentByUID(document.type, document.uid, { client }),
+		usePrismicDocumentByUID(doc.type, doc.uid, { client }),
 	);
 
 	await waitFor(() => {
 		assert.equal(result.current[1].state, "loaded");
 	});
 
-	t.deepEqual(result.current[0], queryResponsePages[0].results[0]);
+	expect(result.current[0]).toStrictEqual(doc);
 });
 
-test.serial("returns failed state on error", async (t) => {
-	const client = createClient(t);
-	const wrapper = createWrapper(client);
-	const repositoryResponse = {
-		message: "invalid access token",
-		oauth_initiate: "oauth_initiate",
-		oauth_token: "oauth_token",
-	};
+it("returns failed state on error", async (ctx) => {
+	const client = createTestClient();
 
-	server.use(
-		msw.rest.get(prismic.getEndpoint(md5(t.title)), (_req, res, ctx) => {
-			return res(ctx.status(403), ctx.json(repositoryResponse));
-		}),
-	);
+	mockPrismicRestAPIV2({
+		ctx,
+		accessToken: "invalid-token",
+	});
 
 	const { result } = renderHook(() => usePrismicDocumentByUID("type", "uid"), {
-		wrapper,
+		wrapper: createWrapper(client),
 	});
 
 	await waitFor(() => {
 		assert.equal(result.current[1].state, "failed");
 	});
 
-	t.true(result.current[1].error instanceof prismic.ForbiddenError);
-	t.is(result.current[0], undefined);
+	expect(result.current[1].error).instanceOf(prismic.ForbiddenError);
+	expect(result.current[0]).toBe(undefined);
 });

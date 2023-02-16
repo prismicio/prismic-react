@@ -36,14 +36,16 @@
 		"dev": "vite build --watch",
 		"format": "prettier --write .",
 		"lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+		"types": "tsc --noEmit",
 		"prepare": "npm run build",
 		"release": "npm run build && npm run test && standard-version && git push --follow-tags && npm run build && npm publish",
 		"release:alpha": "npm run build && npm run test && standard-version --release-as minor --prerelease alpha && git push --follow-tags && npm run build && npm publish --tag alpha",
 		"release:alpha:dry": "standard-version --release-as minor --prerelease alpha --dry-run",
 		"release:dry": "standard-version --dry-run",
-		"unit": "nyc --reporter=lcovonly --reporter=text --exclude-after-remap=false ava",
+		"unit": "vitest run --coverage",
+		"unit:watch": "vitest watch",
 		"size": "size-limit",
-		"test": "npm run lint && npm run unit && npm run build && npm run size"
+		"test": "npm run lint && npm run types && npm run unit && npm run build && npm run size"
 	},
 	"dependencies": {
 		"@prismicio/helpers": "^2.3.8",
@@ -52,7 +54,7 @@
 	},
 	"devDependencies": {
 		"@prismicio/client": "^6.7.3",
-		"@prismicio/mock": "^0.1.1",
+		"@prismicio/mock": "^0.2.0",
 		"@size-limit/preset-small-lib": "^8.1.0",
 		"@testing-library/react": "^13.4.0",
 		"@types/jsdom": "^20.0.1",
@@ -62,7 +64,7 @@
 		"@types/sinon": "^10.0.13",
 		"@typescript-eslint/eslint-plugin": "^5.47.0",
 		"@typescript-eslint/parser": "^5.47.0",
-		"@vitejs/plugin-react": "^3.0.0",
+		"@vitejs/plugin-react": "^3.0.1",
 		"ava": "^5.1.0",
 		"browser-env": "^3.3.0",
 		"esbuild": "^0.16.9",
@@ -74,6 +76,7 @@
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-tsdoc": "^0.2.17",
 		"global-jsdom": "^8.6.0",
+		"happy-dom": "^8.1.5",
 		"jsdom": "^20.0.3",
 		"msw": "^0.49.2",
 		"node-fetch": "^3.3.0",
@@ -87,8 +90,9 @@
 		"size-limit": "^8.1.0",
 		"standard-version": "^9.5.0",
 		"typescript": "^4.9.4",
-		"vite": "^4.0.2",
-		"vite-plugin-sdk": "^0.1.0"
+		"vite": "^4.0.4",
+		"vite-plugin-sdk": "^0.1.0",
+		"vitest": "^0.27.2"
 	},
 	"peerDependencies": {
 		"@prismicio/client": "^6",

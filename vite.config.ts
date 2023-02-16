@@ -4,4 +4,10 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
 	plugins: [sdk(), react()],
+	test: {
+		coverage: {
+			reporter: ["lcovonly", "text"],
+		},
+		setupFiles: ["./test/__setup__"],
+	},
 });
