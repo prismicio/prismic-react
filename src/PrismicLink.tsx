@@ -190,7 +190,6 @@ const _PrismicLink = <
 			props.field &&
 			"target" in props.field &&
 			props.field.target) ||
-		(!isInternal && "_blank") ||
 		undefined;
 
 	const rel =
