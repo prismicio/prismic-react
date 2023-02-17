@@ -217,7 +217,7 @@ test("allow overriding default target", (t) => {
 	t.deepEqual(actual, expected);
 });
 
-test("if manually given _blank to target, use rel'noopener norefferer", (t) => {
+test('if manually given _blank to target, use rel="noopener norefferer"', (t) => {
 	const field: prismicT.FilledLinkToWebField = {
 		url: "/url",
 		link_type: prismicT.LinkType.Web,
@@ -231,10 +231,10 @@ test("if manually given _blank to target, use rel'noopener norefferer", (t) => {
 	t.deepEqual(actual, expected);
 });
 
-test('if target is not explicitly provided and the URL is external, use target="_blank" and rel="noopener noreferrer"', (t) => {
+test("if target is not provided and the URL is external, target is not set", (t) => {
 	const actual = renderJSON(<PrismicLink href="https://example.com" />);
 	const expected = renderJSON(
-		<a href="https://example.com" target="_blank" rel="noopener noreferrer" />,
+		<a href="https://example.com" target={undefined} rel={undefined} />,
 	);
 
 	t.deepEqual(actual, expected);
@@ -289,7 +289,7 @@ test("if URL is internal and internalComponent is given to the provider and the 
 test("if URL is external and no externalComponent is given, render an <a>", (t) => {
 	const actual = renderJSON(<PrismicLink href="https://example.com" />);
 	const expected = renderJSON(
-		<a href="https://example.com" rel="noopener noreferrer" target="_blank" />,
+		<a href="https://example.com" target={undefined} rel={undefined} />,
 	);
 
 	t.deepEqual(actual, expected);
@@ -299,13 +299,7 @@ test("if URL is external and externalComponent is given, render externalComponen
 	const actual = renderJSON(
 		<PrismicLink href="https://example.com" externalComponent={Link} />,
 	);
-	const expected = renderJSON(
-		<Link
-			href="https://example.com"
-			rel="noopener noreferrer"
-			target="_blank"
-		/>,
-	);
+	const expected = renderJSON(<Link href="https://example.com" />);
 
 	t.deepEqual(actual, expected);
 });
@@ -316,13 +310,7 @@ test("if URL is external and externalComponent is given to the provider, render 
 			<PrismicLink href="https://example.com" />
 		</PrismicProvider>,
 	);
-	const expected = renderJSON(
-		<Link
-			href="https://example.com"
-			rel="noopener noreferrer"
-			target="_blank"
-		/>,
-	);
+	const expected = renderJSON(<Link href="https://example.com" />);
 
 	t.deepEqual(actual, expected);
 });
@@ -333,13 +321,7 @@ test("if URL is external and externalComponent is given to the provider and the 
 			<PrismicLink href="https://example.com" externalComponent={Link} />
 		</PrismicProvider>,
 	);
-	const expected = renderJSON(
-		<Link
-			href="https://example.com"
-			rel="noopener noreferrer"
-			target="_blank"
-		/>,
-	);
+	const expected = renderJSON(<Link href="https://example.com" />);
 
 	t.deepEqual(actual, expected);
 });
