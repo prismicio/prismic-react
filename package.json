@@ -21,12 +21,33 @@
 			"require": "./dist/index.cjs",
 			"import": "./dist/index.js"
 		},
+		"./rsc": {
+			"require": "./dist/rsc.cjs",
+			"import": "./dist/rsc.js"
+		},
+		"./config": {
+			"require": "./dist/rsc.cjs",
+			"import": "./dist/rsc.js"
+		},
 		"./package.json": "./package.json"
 	},
 	"main": "dist/index.cjs",
 	"module": "dist/index.js",
 	"react-native": "dist/index.js",
 	"types": "dist/index.d.ts",
+	"typesVersions": {
+		"*": {
+			"*": [
+				"dist/index.d.ts"
+			],
+			"rsc": [
+				"dist/rsc/index.d.ts"
+			],
+			"config": [
+				"dist/rsc/index.d.ts"
+			]
+		}
+	},
 	"files": [
 		"dist",
 		"src"
