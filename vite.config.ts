@@ -6,6 +6,7 @@ export default defineConfig({
 	plugins: [sdk(), react()],
 	test: {
 		coverage: {
+			provider: "c8",
 			reporter: ["lcovonly", "text"],
 		},
 		setupFiles: ["./test/__setup__"],
