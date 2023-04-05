@@ -4,17 +4,6 @@ import * as prismicT from "@prismicio/types";
 import { __PRODUCTION__ } from "../lib/__PRODUCTION__";
 
 /**
- * Returns the type of a `SliceLike` type.
- *
- * @typeParam Slice - The Slice from which the type will be extracted.
- */
-type ExtractSliceType<Slice extends SliceLike> = Slice extends SliceLikeRestV2
-	? Slice["slice_type"]
-	: Slice extends SliceLikeGraphQL
-	? Slice["type"]
-	: never;
-
-/**
  * The minimum required properties to represent a Prismic Slice from the Prismic
  * Rest API V2 for the `<SliceZone>` component.
  *
@@ -113,37 +102,6 @@ export type SliceComponentType<
 	TSlice extends SliceLike = any,
 	TContext = unknown,
 > = React.ComponentType<SliceComponentProps<TSlice, TContext>>;
-
-/**
- * A record of Slice types mapped to a React component. The component will be
- * rendered for each instance of its Slice.
- *
- * @deprecated This type is no longer used by `@prismicio/react`. Prefer using
- *   `Record<string, SliceComponentType<any>>` instead.
- * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
- * @typeParam TContext - Arbitrary data made available to all Slice components.
- */
-export type SliceZoneComponents<
-	TSlice extends SliceLike = SliceLike,
-	TContext = unknown,
-> =
-	// This is purposely not wrapped in Partial to ensure a component is provided
-	// for all Slice types. <SliceZone> will render a default component if one is
-	// not provided, but it *should* be a type error if an explicit component is
-	// missing.
-	//
-	// If a developer purposely does not want to provide a component, they can
-	// assign it to the TODOSliceComponent exported from this package. This
-	// signals to future developers that it is a placeholder and should be
-	// implemented.
-	{
-		[SliceType in ExtractSliceType<TSlice>]: SliceComponentType<
-			Extract<TSlice, SliceLike<SliceType>> extends never
-				? SliceLike
-				: Extract<TSlice, SliceLike<SliceType>>,
-			TContext
-		>;
-	};
 
 /**
  * This Slice component can be used as a reminder to provide a proper

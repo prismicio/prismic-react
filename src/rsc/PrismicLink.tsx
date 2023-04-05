@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as prismicH from "@prismicio/helpers";
 import * as prismicT from "@prismicio/types";
-import { config } from "@prismicio/react/config";
 
 import { devMsg } from "../lib/devMsg";
 import { isInternalURL } from "../lib/isInternalURL";
@@ -10,8 +9,6 @@ import { __PRODUCTION__ } from "../lib/__PRODUCTION__";
 const voidToUndefined = <T,>(value: T): Exclude<T, void> => {
 	return (value === undefined ? undefined : value) as Exclude<T, void>;
 };
-
-export type LinkComponent = React.ElementType<LinkProps>;
 
 /**
  * Props provided to a component when rendered with `<PrismicLink>`.
@@ -174,15 +171,13 @@ const _PrismicLink = <
 		}
 	}
 
-	const linkResolver = props.linkResolver || config.linkResolver;
-
 	let href: string | null | undefined;
 	if ("href" in props) {
 		href = props.href;
 	} else if ("document" in props && props.document) {
-		href = voidToUndefined(prismicH.asLink(props.document, linkResolver));
+		href = voidToUndefined(prismicH.asLink(props.document, props.linkResolver));
 	} else if ("field" in props && props.field) {
-		href = voidToUndefined(prismicH.asLink(props.field, linkResolver));
+		href = voidToUndefined(prismicH.asLink(props.field, props.linkResolver));
 	}
 
 	const isInternal = href && isInternalURL(href);
@@ -199,14 +194,10 @@ const _PrismicLink = <
 		props.rel || (target === "_blank" ? "noopener noreferrer" : undefined);
 
 	const InternalComponent: React.ElementType<LinkProps> =
-		props.internalComponent ||
-		config.internalLinkComponent ||
-		defaultInternalComponent;
+		props.internalComponent || defaultInternalComponent;
 
 	const ExternalComponent: React.ElementType<LinkProps> =
-		props.externalComponent ||
-		config.externalLinkComponent ||
-		defaultExternalComponent;
+		props.externalComponent || defaultExternalComponent;
 
 	const Component = (
 		isInternal ? InternalComponent : ExternalComponent

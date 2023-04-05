@@ -27,7 +27,11 @@
  *
  * @param repositoryName - The name of the Prismic repository. For example,
  *   `"my-repo"` if the repository URL is `my-repo.prismic.io`.
+ *
+ * @returns The URL for the given Prismic repository's Prismic Toolbar script.
  */
-export const getPrismicToolbarSrc = (repositoryName: string): string => {
-	return `https://static.cdn.prismic.io/prismic.js?new=true&repo=${repositoryName}`;
+export const getPrismicToolbarSrc = <TRepositoryName extends string>(
+	repositoryName: TRepositoryName,
+): `https://static.cdn.prismic.io/prismic.js?new=true&repo=${TRepositoryName}` => {
+	return `https://static.cdn.prismic.io/prismic.js?new=true&repo=${repositoryName}` as const;
 };

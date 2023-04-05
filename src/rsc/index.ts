@@ -1,28 +1,25 @@
 export { SliceZone, TODOSliceComponent } from "./SliceZone";
 export type {
+	SliceComponentProps,
+	SliceComponentType,
 	SliceLike,
+	SliceLikeGraphQL,
+	SliceLikeRestV2,
 	SliceZoneLike,
 	SliceZoneProps,
-	SliceLikeRestV2,
-	SliceLikeGraphQL,
-	SliceComponentType,
-	SliceComponentProps,
 } from "./SliceZone";
 
 export { PrismicLink } from "./PrismicLink";
-export type { LinkComponent, LinkProps, PrismicLinkProps } from "./PrismicLink";
+export type { LinkProps, PrismicLinkProps } from "./PrismicLink";
 
 export { PrismicRichText } from "./PrismicRichText";
 export type { PrismicRichTextProps } from "./PrismicRichText";
 
 export { getPrismicToolbarSrc } from "./getPrismicToolbarSrc";
 
-export { definePrismicConfig } from "./definePrismicConfig";
-
-export { PrismicConfig } from "./types";
-
 // These exports do not have RSC-specific implementations.
 // They are aliases for the root-level exports.
-export { PrismicText, PrismicTextProps } from "../PrismicText";
-export { PrismicImage, PrismicImageProps } from "../PrismicImage";
+export { Element } from "..";
+export { PrismicImage } from "../PrismicImage";
+export type { PrismicImageProps } from "../PrismicImage";
 export type { JSXMapSerializer, JSXFunctionSerializer } from "../types";
