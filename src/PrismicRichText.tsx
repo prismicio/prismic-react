@@ -150,6 +150,11 @@ const createDefaultSerializer = <
 			return (
 				<p key={key} className="block-img">
 					{node.linkTo ? (
+						// @ts-expect-error - This component is missing required
+						// props from `internalLinkComponent` and
+						// `externalLinkComponent`. We currently do not have a
+						// way to pass extra props to nested links, so we are
+						// ignoring the error for now.
 						<PrismicLink
 							linkResolver={args.linkResolver}
 							internalComponent={args.internalLinkComponent}
@@ -174,6 +179,11 @@ const createDefaultSerializer = <
 			/>
 		),
 		hyperlink: ({ node, children, key }) => (
+			// @ts-expect-error - This component is missing required
+			// props from `internalLinkComponent` and
+			// `externalLinkComponent`. We currently do not have a
+			// way to pass extra props to nested links, so we are
+			// ignoring the error for now.
 			<PrismicLink
 				key={key}
 				field={node.data}
