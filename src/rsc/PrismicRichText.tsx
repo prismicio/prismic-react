@@ -7,7 +7,8 @@ import * as prismicH from "@prismicio/helpers";
 import * as prismicR from "@prismicio/richtext";
 import { config } from "@prismicio/react/config";
 
-import { JSXFunctionSerializer, JSXMapSerializer } from "./types";
+import { JSXFunctionSerializer, JSXMapSerializer } from "../types";
+
 import { PrismicLink, PrismicLinkProps } from "./PrismicLink";
 
 /**
