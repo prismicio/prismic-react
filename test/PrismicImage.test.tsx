@@ -1,28 +1,21 @@
-import test from "ava";
-import * as React from "react";
-import * as prismicM from "@prismicio/mock";
+import { it, expect, vi } from "vitest";
 import * as prismicH from "@prismicio/helpers";
-import * as sinon from "sinon";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
 import { PrismicImage } from "../src";
 
-test("renders null when passed an empty field", async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		state: "empty",
-	});
+it("renders null when passed an empty field", async (ctx) => {
+	const field = ctx.mock.value.image({ state: "empty" });
 
 	const actual = renderJSON(<PrismicImage field={field} />);
 
-	t.deepEqual(actual, null);
+	expect(actual).toBe(null);
 });
 
-test("renders an img element with a width-based srcset by default", async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("renders an img element with a width-based srcset by default", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
@@ -32,13 +25,12 @@ test("renders an img element with a width-based srcset by default", async (t) =>
 		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("renders a width-based srcset with given widths", async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("renders a width-based srcset with given widths", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	const widths = [100, 200, 300];
@@ -49,13 +41,12 @@ test("renders a width-based srcset with given widths", async (t) => {
 		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test('renders a width-based srcset with default widths if widths is "defaults"', async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it('renders a width-based srcset with default widths if widths is "defaults"', async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
@@ -65,13 +56,12 @@ test('renders a width-based srcset with default widths if widths is "defaults"',
 		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test('renders a width-based srcset with the field\'s responsive views if widths is "thumbnails"', async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it('renders a width-based srcset with the field\'s responsive views if widths is "thumbnails"', async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	const { src, srcset } = prismicH.asImageWidthSrcSet(field, {
@@ -83,13 +73,12 @@ test('renders a width-based srcset with the field\'s responsive views if widths 
 		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test('renders pixel-density srcset with default densities if pixelDensities is "defaults"', async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it('renders pixel-density srcset with default densities if pixelDensities is "defaults"', async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	const { src, srcset } = prismicH.asImagePixelDensitySrcSet(field);
@@ -101,13 +90,12 @@ test('renders pixel-density srcset with default densities if pixelDensities is "
 		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("renders pixel-density srcset with the given densities", async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("renders pixel-density srcset with the given densities", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	const pixelDensities = [9, 10];
@@ -122,19 +110,20 @@ test("renders pixel-density srcset with the given densities", async (t) => {
 		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test.serial("prioritizes widths prop over pixelDensities", async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("prioritizes widths prop over pixelDensities", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	const widths = [100, 200, 300];
 	const { src, srcset } = prismicH.asImageWidthSrcSet(field, { widths });
 
-	const consoleWarnStub = sinon.stub(console, "warn");
+	const consoleWarnSpy = vi
+		.spyOn(console, "warn")
+		.mockImplementation(() => void 0);
 
 	const actual = renderJSON(
 		// @ts-expect-error - Purposely giving incompatible props.
@@ -144,18 +133,19 @@ test.serial("prioritizes widths prop over pixelDensities", async (t) => {
 		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
 	);
 
-	consoleWarnStub.restore();
+	consoleWarnSpy.mockRestore();
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test.serial("warns if both widths and pixelDensites are given", async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("warns if both widths and pixelDensites are given", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
-	const consoleWarnStub = sinon.stub(console, "warn");
+	const consoleWarnSpy = vi
+		.spyOn(console, "warn")
+		.mockImplementation(() => void 0);
 
 	renderJSON(
 		// @ts-expect-error - Purposely giving incompatible props.
@@ -166,19 +156,18 @@ test.serial("warns if both widths and pixelDensites are given", async (t) => {
 		/>,
 	);
 
-	consoleWarnStub.restore();
-
-	t.true(
-		consoleWarnStub.calledWithMatch(
+	expect(consoleWarnSpy).toHaveBeenCalledWith(
+		expect.stringMatching(
 			/only one of "widths" or "pixelDensities" props can be provided/i,
 		),
 	);
+
+	consoleWarnSpy.mockRestore();
 });
 
-test("uses the field's alt if given", async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("uses the field's alt if given", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
@@ -188,13 +177,12 @@ test("uses the field's alt if given", async (t) => {
 		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("alt is undefined if the field does not have an alt value", async (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("alt is undefined if the field does not have an alt value", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 	field.alt = null;
 
@@ -205,13 +193,12 @@ test("alt is undefined if the field does not have an alt value", async (t) => {
 		<img src={src} srcSet={srcset} alt={undefined} />,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("supports an explicit decorative fallback alt value if given", (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("supports an explicit decorative fallback alt value if given", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 	field.alt = null;
 
@@ -220,31 +207,33 @@ test("supports an explicit decorative fallback alt value if given", (t) => {
 	const actual = renderJSON(<PrismicImage field={field} fallbackAlt="" />);
 	const expected = renderJSON(<img src={src} srcSet={srcset} alt="" />);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test.serial("warns if a non-decorative fallback alt value is given", (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("warns if a non-decorative fallback alt value is given", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
-	const consoleWarnStub = sinon.stub(console, "warn");
+	const consoleWarnSpy = vi
+		.spyOn(console, "warn")
+		.mockImplementation(() => void 0);
 
 	renderJSON(
 		// @ts-expect-error - Purposely giving incompatible props.
 		<PrismicImage field={field} fallbackAlt="non-decorative" />,
 	);
 
-	consoleWarnStub.restore();
+	expect(consoleWarnSpy).toHaveBeenCalledWith(
+		expect.stringMatching(/alt-must-be-an-empty-string/i),
+	);
 
-	t.true(consoleWarnStub.calledWithMatch(/alt-must-be-an-empty-string/i));
+	consoleWarnSpy.mockRestore();
 });
 
-test("supports an explicit decorative alt when field has an alt value", (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("supports an explicit decorative alt when field has an alt value", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 	field.alt = "provided alt";
 
@@ -253,13 +242,12 @@ test("supports an explicit decorative alt when field has an alt value", (t) => {
 	const actual = renderJSON(<PrismicImage field={field} alt="" />);
 	const expected = renderJSON(<img src={src} srcSet={srcset} alt="" />);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("supports an explicit decorative alt when field does not have an alt value", (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("supports an explicit decorative alt when field does not have an alt value", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 	field.alt = null;
 
@@ -268,31 +256,33 @@ test("supports an explicit decorative alt when field does not have an alt value"
 	const actual = renderJSON(<PrismicImage field={field} alt="" />);
 	const expected = renderJSON(<img src={src} srcSet={srcset} alt="" />);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test.serial("warns if a non-decorative alt value is given", (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("warns if a non-decorative alt value is given", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
-	const consoleWarnStub = sinon.stub(console, "warn");
+	const consoleWarnSpy = vi
+		.spyOn(console, "warn")
+		.mockImplementation(() => void 0);
 
 	renderJSON(
 		// @ts-expect-error - Purposely giving incompatible props.
 		<PrismicImage field={field} alt="non-decorative" />,
 	);
 
-	consoleWarnStub.restore();
+	expect(consoleWarnSpy).toHaveBeenCalledWith(
+		expect.stringMatching(/alt-must-be-an-empty-string/i),
+	);
 
-	t.true(consoleWarnStub.calledWithMatch(/alt-must-be-an-empty-string/i));
+	consoleWarnSpy.mockRestore();
 });
 
-test("forwards ref", (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("forwards ref", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	let ref = null as HTMLImageElement | null;
@@ -301,13 +291,12 @@ test("forwards ref", (t) => {
 		createNodeMock: (element) => ({ tagName: element.type }),
 	});
 
-	t.is(ref?.tagName, "img");
+	expect(ref?.tagName).toBe("img");
 });
 
-test("supports imgix parameters", (t) => {
-	const field = prismicM.value.image({
-		seed: t.title,
-		model: prismicM.model.image({ seed: t.title }),
+it("supports imgix parameters", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
 	});
 
 	const imgixParams = { sat: -100 };
@@ -320,5 +309,5 @@ test("supports imgix parameters", (t) => {
 		<img src={src} srcSet={srcset} alt={field.alt || undefined} />,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });

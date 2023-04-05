@@ -1,19 +1,19 @@
-import test from "ava";
+import { expect, it } from "vitest";
 
 import { isInternalURL } from "../src/lib/isInternalURL";
 
-test("returns true for internal URLs", (t) => {
-	t.true(isInternalURL("/"));
-	t.true(isInternalURL("/internal"));
-	t.true(isInternalURL("#anchor"));
+it("returns true for internal URLs", () => {
+	expect(isInternalURL("/")).toBe(true);
+	expect(isInternalURL("/internal")).toBe(true);
+	expect(isInternalURL("#anchor")).toBe(true);
 });
 
-test("returns false for external URLs", (t) => {
-	t.false(isInternalURL("//example.com"));
-	t.false(isInternalURL("//example.com/image.png"));
-	t.false(isInternalURL("//example.com#anchor"));
-	t.false(isInternalURL("https://example.com"));
-	t.false(isInternalURL("mailto:example.com"));
-	t.false(isInternalURL("tel:example.com"));
-	t.false(isInternalURL("ftp:example.com"));
+it("returns false for external URLs", () => {
+	expect(isInternalURL("//example.com")).toBe(false);
+	expect(isInternalURL("//example.com/image.png")).toBe(false);
+	expect(isInternalURL("//example.com#anchor")).toBe(false);
+	expect(isInternalURL("https://example.com")).toBe(false);
+	expect(isInternalURL("mailto:example.com")).toBe(false);
+	expect(isInternalURL("tel:example.com")).toBe(false);
+	expect(isInternalURL("ftp:example.com")).toBe(false);
 });

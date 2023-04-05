@@ -2,7 +2,7 @@
 
 # custom
 dist
-examples/**/package-lock.json
+examples
 
 # os
 .DS_Store

@@ -15,4 +15,11 @@ export default defineConfig({
 			external: ["@prismicio/react/config"],
 		},
 	},
+	test: {
+		coverage: {
+			provider: "c8",
+			reporter: ["lcovonly", "text"],
+		},
+		setupFiles: ["./test/__setup__"],
+	},
 });
