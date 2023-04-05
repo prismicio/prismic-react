@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.2](https://github.com/prismicio/prismic-react/compare/v2.5.1...v2.5.2) (2023-02-17)
+
+
+### Bug Fixes
+
+* **PrismicLink:** only set `target="_blank"` when "Open in new window" is checked ([#176](https://github.com/prismicio/prismic-react/issues/176)) ([e74b4d6](https://github.com/prismicio/prismic-react/commit/e74b4d6a9c85166feed1caedaeb7d065d10891fb))
+
 ### [2.5.1](https://github.com/prismicio/prismic-react/compare/v2.5.0...v2.5.1) (2022-12-19)
 
 

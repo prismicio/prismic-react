@@ -184,7 +184,7 @@ it("allow overriding default target", async (ctx) => {
 	expect(actual).toStrictEqual(expected);
 });
 
-it("if manually given _blank to target, use rel'noopener norefferer", async (ctx) => {
+it('if manually given _blank to target, use rel="noopener norefferer"', async (ctx) => {
 	const field = ctx.mock.value.link({
 		type: "Web",
 		withTargetBlank: false,
@@ -199,10 +199,10 @@ it("if manually given _blank to target, use rel'noopener norefferer", async (ctx
 	expect(actual).toStrictEqual(expected);
 });
 
-it('if target is not explicitly provided and the URL is external, use target="_blank" and rel="noopener noreferrer"', async () => {
+it("if target is not provided and the URL is external, target is not set", async () => {
 	const actual = renderJSON(<PrismicLink href="https://example.com" />);
 	const expected = renderJSON(
-		<a href="https://example.com" target="_blank" rel="noopener noreferrer" />,
+		<a href="https://example.com" target={undefined} rel={undefined} />,
 	);
 
 	expect(actual).toStrictEqual(expected);
@@ -257,7 +257,7 @@ it("if URL is internal and internalComponent is given to the provider and the co
 it("if URL is external and no externalComponent is given, render an <a>", async () => {
 	const actual = renderJSON(<PrismicLink href="https://example.com" />);
 	const expected = renderJSON(
-		<a href="https://example.com" rel="noopener noreferrer" target="_blank" />,
+		<a href="https://example.com" target={undefined} rel={undefined} />,
 	);
 
 	expect(actual).toStrictEqual(expected);
@@ -267,13 +267,7 @@ it("if URL is external and externalComponent is given, render externalComponent"
 	const actual = renderJSON(
 		<PrismicLink href="https://example.com" externalComponent={Link} />,
 	);
-	const expected = renderJSON(
-		<Link
-			href="https://example.com"
-			rel="noopener noreferrer"
-			target="_blank"
-		/>,
-	);
+	const expected = renderJSON(<Link href="https://example.com" />);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -284,13 +278,7 @@ it("if URL is external and externalComponent is given to the provider, render ex
 			<PrismicLink href="https://example.com" />
 		</PrismicProvider>,
 	);
-	const expected = renderJSON(
-		<Link
-			href="https://example.com"
-			rel="noopener noreferrer"
-			target="_blank"
-		/>,
-	);
+	const expected = renderJSON(<Link href="https://example.com" />);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -301,13 +289,7 @@ it("if URL is external and externalComponent is given to the provider and the co
 			<PrismicLink href="https://example.com" externalComponent={Link} />
 		</PrismicProvider>,
 	);
-	const expected = renderJSON(
-		<Link
-			href="https://example.com"
-			rel="noopener noreferrer"
-			target="_blank"
-		/>,
-	);
+	const expected = renderJSON(<Link href="https://example.com" />);
 
 	expect(actual).toStrictEqual(expected);
 });
