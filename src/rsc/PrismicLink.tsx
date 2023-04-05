@@ -208,7 +208,9 @@ const _PrismicLink = <
 		config.externalLinkComponent ||
 		defaultExternalComponent;
 
-	const Component = isInternal ? InternalComponent : ExternalComponent;
+	const Component = (
+		isInternal ? InternalComponent : ExternalComponent
+	) as React.ComponentType<LinkProps>;
 
 	const passthroughProps: typeof props = Object.assign({}, props);
 	delete passthroughProps.linkResolver;
@@ -226,11 +228,6 @@ const _PrismicLink = <
 
 	return href ? (
 		<Component
-			// @ts-expect-error - Expression produces a union type
-			// that is too complex to represent. This most likely
-			// happens due to the polymorphic nature of this
-			// component, passing of "extra" props, and ref
-			// forwarding support.
 			{...passthroughProps}
 			ref={ref}
 			href={href}
