@@ -1,28 +1,23 @@
-/* eslint-disable react/display-name  */
-/* eslint-disable react/prop-types */
+// @vitest-environment happy-dom
 
-import test from "ava";
-import * as React from "react";
-import * as sinon from "sinon";
+import { it, expect, afterEach, vi } from "vitest";
 import { renderHook, cleanup } from "@testing-library/react";
 
-import { createClient } from "./__testutils__/createClient";
+import { createTestClient } from "./__testutils__/createTestClient";
 
 import { PrismicProvider, usePrismicClient } from "../src";
 
-// Supress React logs when errors are thrown.
-test.before(() => {
-	console.error = sinon.stub();
-});
+// // Supress React logs when errors are thrown.
+// test.before(() => {
+// 	console.error = sinon.stub();
+// });
 
-// We must clean up after each test. We also must run each test serially to
-// ensure the clean up process only occurs between tests.
-test.afterEach(() => {
+afterEach(() => {
 	cleanup();
 });
 
-test.serial("returns the client provided to PrismicProvider", (t) => {
-	const client = createClient(t);
+it("returns the client provided to PrismicProvider", () => {
+	const client = createTestClient();
 
 	const { result } = renderHook(() => usePrismicClient(), {
 		wrapper: (props) => (
@@ -30,54 +25,44 @@ test.serial("returns the client provided to PrismicProvider", (t) => {
 		),
 	});
 
-	t.is(result.current, client);
+	expect(result.current).toBe(client);
 });
 
-test.serial(
-	"returns the client provided to the hook, ignoring the client provided to PrismicProvider",
-	(t) => {
-		const providerClient = createClient(t);
-		const hookClient = createClient(t);
+it("returns the client provided to the hook, ignoring the client provided to PrismicProvider", () => {
+	const providerClient = createTestClient();
+	const hookClient = createTestClient();
 
-		const { result } = renderHook(() => usePrismicClient(hookClient), {
-			wrapper: (props) => (
-				<PrismicProvider client={providerClient}>
-					{props.children}
-				</PrismicProvider>
-			),
-		});
+	const { result } = renderHook(() => usePrismicClient(hookClient), {
+		wrapper: (props) => (
+			<PrismicProvider client={providerClient}>
+				{props.children}
+			</PrismicProvider>
+		),
+	});
 
-		t.is(result.current, hookClient);
-	},
-);
+	expect(result.current).toBe(hookClient);
+});
 
-test.serial(
-	"returns the client provided to the hook even if a client was not provided to PrismicProvider",
-	(t) => {
-		const client = createClient(t);
+it("returns the client provided to the hook even if a client was not provided to PrismicProvider", () => {
+	const client = createTestClient();
 
-		const { result } = renderHook(() => usePrismicClient(client), {
+	const { result } = renderHook(() => usePrismicClient(client), {
+		wrapper: (props) => <PrismicProvider>{props.children}</PrismicProvider>,
+	});
+
+	expect(result.current).toBe(client);
+});
+
+it("throws if a client is not provided to the hook or PrismicProvider", () => {
+	const consoleErrorSpy = vi
+		.spyOn(globalThis.console, "error")
+		.mockImplementation(() => void 0);
+
+	expect(() => {
+		renderHook(() => usePrismicClient(), {
 			wrapper: (props) => <PrismicProvider>{props.children}</PrismicProvider>,
 		});
+	}).toThrow(/provide a client/i);
 
-		t.is(result.current, client);
-	},
-);
-
-test.serial(
-	"throws if a client is not provided to the hook or PrismicProvider",
-	(t) => {
-		t.throws(
-			() => {
-				renderHook(() => usePrismicClient(), {
-					wrapper: (props) => (
-						<PrismicProvider>{props.children}</PrismicProvider>
-					),
-				});
-			},
-			{
-				message: /provide a client/i,
-			},
-		);
-	},
-);
+	consoleErrorSpy.mockRestore();
+});

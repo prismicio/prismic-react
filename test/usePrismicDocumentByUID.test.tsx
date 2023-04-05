@@ -8,9 +8,9 @@ import { renderHook, cleanup, waitFor } from "@testing-library/react";
 import * as assert from "node:assert";
 
 import { createTestClient } from "./__testutils__/createTestClient";
+import { mockPrismicRestAPIV2 } from "./__testutils__/mockPrismicRestAPIV2";
 
 import { PrismicProvider, usePrismicDocumentByUID } from "../src";
-import { mockPrismicRestAPIV2 } from "./__testutils__/mockPrismicRestAPIV2";
 
 afterEach(() => {
 	cleanup();
