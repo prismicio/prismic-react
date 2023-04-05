@@ -185,7 +185,7 @@ it("renders components from a resolver function for backwards compatibility with
 		},
 	] as const;
 
-	const resolver: SliceZoneResolver<typeof slices[number]> = ({
+	const resolver: SliceZoneResolver<(typeof slices)[number]> = ({
 		sliceName,
 	}) => {
 		switch (sliceName) {
