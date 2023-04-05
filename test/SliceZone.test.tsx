@@ -1,8 +1,6 @@
 /* eslint-disable react/display-name */
 
-import test from "ava";
-import * as React from "react";
-import * as sinon from "sinon";
+import { it, expect, vi } from "vitest";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
@@ -36,19 +34,19 @@ const StringifySliceComponent = ({
 	</div>
 );
 
-test("renders null by default", (t) => {
+it("renders null by default", () => {
 	const actual = renderJSON(<SliceZone />);
 
-	t.is(actual, null);
+	expect(actual).toBe(null);
 });
 
-test("renders null if an empty Slice Zone is provided", (t) => {
+it("renders null if an empty Slice Zone is provided", () => {
 	const actual = renderJSON(<SliceZone slices={[]} components={{}} />);
 
-	t.is(actual, null);
+	expect(actual).toBe(null);
 });
 
-test("renders components for each Slice with correct component mapping", (t) => {
+it("renders components for each Slice with correct component mapping", () => {
 	const slices = [{ slice_type: "foo" }, { slice_type: "bar" }] as const;
 
 	const actual = renderJSON(
@@ -79,10 +77,10 @@ test("renders components for each Slice with correct component mapping", (t) => 
 		</>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("passes context to each component if provided", (t) => {
+it("passes context to each component if provided", () => {
 	const slices = [{ slice_type: "foo" }, { slice_type: "bar" }] as const;
 	const context = { foo: "bar" };
 
@@ -115,11 +113,13 @@ test("passes context to each component if provided", (t) => {
 		</>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("renders TODO component if component mapping is missing", (t) => {
-	const consoleWarnStub = sinon.stub(console, "warn");
+it("renders TODO component if component mapping is missing", () => {
+	const consoleWarnSpy = vi
+		.spyOn(console, "warn")
+		.mockImplementation(() => void 0);
 
 	const slices = [{ slice_type: "foo" }, { slice_type: "bar" }] as const;
 
@@ -128,7 +128,7 @@ test("renders TODO component if component mapping is missing", (t) => {
 			slices={slices}
 			components={{
 				foo: (props) => <StringifySliceComponent id="foo" {...props} />,
-				// NOTE: The `bar` component is purposely left out of this test.
+				// NOTE: The `bar` component is purposely left out of this it.
 				// bar: (props) => <StringifySliceComponent id="bar" {...props} />,
 			}}
 		/>,
@@ -151,27 +151,28 @@ test("renders TODO component if component mapping is missing", (t) => {
 		</>,
 	);
 
-	t.deepEqual(actual, expected);
-	t.true(
-		consoleWarnStub.calledWith(sinon.match(/could not find a component/i)),
+	expect(actual).toStrictEqual(expected);
+	expect(consoleWarnSpy).toHaveBeenCalledWith(
+		expect.stringMatching(/could not find a component/i),
+		slices[1],
 	);
 
-	consoleWarnStub.restore();
+	consoleWarnSpy.mockRestore();
 });
 
-test.skip("TODO component renders null in production", () => {
+it.skip("TODO component renders null in production", () => {
 	// ts-eager does not allow esbuild configuration.
 	// We cannot override the `process.env.NODE_ENV` inline replacement.
-	// As a result, we cannot test for production currently.
+	// As a result, we cannot it for production currently.
 });
 
-test.skip("TODO component does not warn in production", () => {
+it.skip("TODO component does not warn in production", () => {
 	// ts-eager does not allow esbuild configuration.
 	// We cannot override the `process.env.NODE_ENV` inline replacement.
-	// As a result, we cannot test for production currently.
+	// As a result, we cannot it for production currently.
 });
 
-test("renders components from a resolver function for backwards compatibility with next-slicezone", async (t) => {
+it("renders components from a resolver function for backwards compatibility with next-slicezone", async () => {
 	const slices = [
 		{
 			slice_type: "foo_bar",
@@ -184,7 +185,7 @@ test("renders components from a resolver function for backwards compatibility wi
 		},
 	] as const;
 
-	const resolver: SliceZoneResolver<typeof slices[number]> = ({
+	const resolver: SliceZoneResolver<(typeof slices)[number]> = ({
 		sliceName,
 	}) => {
 		switch (sliceName) {
@@ -229,10 +230,10 @@ test("renders components from a resolver function for backwards compatibility wi
 		</>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("supports the GraphQL API", (t) => {
+it("supports the GraphQL API", () => {
 	const slices = [{ type: "foo" }, { type: "bar" }] as const;
 
 	const actual = renderJSON(
@@ -263,5 +264,5 @@ test("supports the GraphQL API", (t) => {
 		</>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });

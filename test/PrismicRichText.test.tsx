@@ -1,7 +1,6 @@
-import test from "ava";
+import { it, expect, vi } from "vitest";
 import * as prismicT from "@prismicio/types";
 import * as React from "react";
-import * as sinon from "sinon";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
@@ -20,7 +19,7 @@ const Link = ({ href, rel, target, children }: LinkProps) => (
 	</a>
 );
 
-test("returns null if passed an empty field", (t) => {
+it("returns null if passed an empty field", async () => {
 	const actualNull = renderJSON(<PrismicRichText field={null} />);
 	const actualUndefined = renderJSON(<PrismicRichText field={undefined} />);
 	const actualEmpty = renderJSON(<PrismicRichText field={[]} />);
@@ -29,13 +28,13 @@ test("returns null if passed an empty field", (t) => {
 	);
 	const expected = null;
 
-	t.deepEqual(actualNull, expected);
-	t.deepEqual(actualUndefined, expected);
-	t.deepEqual(actualEmpty, expected);
-	t.deepEqual(actualEmpty2, expected);
+	expect(actualNull).toStrictEqual(expected);
+	expect(actualUndefined).toStrictEqual(expected);
+	expect(actualEmpty).toStrictEqual(expected);
+	expect(actualEmpty2).toStrictEqual(expected);
 });
 
-test("returns fallback if given when passed empty field", (t) => {
+it("returns fallback if given when passed empty field", async () => {
 	const fallback = <div>fallback</div>;
 	const actualNull = renderJSON(
 		<PrismicRichText field={null} fallback={fallback} />,
@@ -54,13 +53,13 @@ test("returns fallback if given when passed empty field", (t) => {
 	);
 	const expected = renderJSON(fallback);
 
-	t.deepEqual(actualNull, expected);
-	t.deepEqual(actualUndefined, expected);
-	t.deepEqual(actualEmpty, expected);
-	t.deepEqual(actualEmpty2, expected);
+	expect(actualNull).toStrictEqual(expected);
+	expect(actualUndefined).toStrictEqual(expected);
+	expect(actualEmpty).toStrictEqual(expected);
+	expect(actualEmpty2).toStrictEqual(expected);
 });
 
-test("returns <h1> if type is heading1", (t) => {
+it("returns <h1> if type is heading1", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.heading1,
@@ -72,10 +71,10 @@ test("returns <h1> if type is heading1", (t) => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h1>Heading 1</h1>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <h2> if type is heading2", (t) => {
+it("returns <h2> if type is heading2", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.heading2,
@@ -87,10 +86,10 @@ test("returns <h2> if type is heading2", (t) => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h2>Heading 2</h2>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <h3> if type is heading3", (t) => {
+it("returns <h3> if type is heading3", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.heading3,
@@ -102,10 +101,10 @@ test("returns <h3> if type is heading3", (t) => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h3>Heading 3</h3>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <h4> if type is heading4", (t) => {
+it("returns <h4> if type is heading4", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.heading4,
@@ -117,10 +116,10 @@ test("returns <h4> if type is heading4", (t) => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h4>Heading 4</h4>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <h4> if type is heading3", (t) => {
+it("returns <h4> if type is heading3", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.heading4,
@@ -132,10 +131,10 @@ test("returns <h4> if type is heading3", (t) => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h4>Heading 4</h4>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <h5> if type is heading4", (t) => {
+it("returns <h5> if type is heading4", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.heading5,
@@ -147,10 +146,10 @@ test("returns <h5> if type is heading4", (t) => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h5>Heading 5</h5>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <h6> if type is heading6", (t) => {
+it("returns <h6> if type is heading6", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.heading6,
@@ -162,10 +161,10 @@ test("returns <h6> if type is heading6", (t) => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<h6>Heading 6</h6>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <p /> if type is paragraph", (t) => {
+it("returns <p /> if type is paragraph", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.paragraph,
@@ -177,10 +176,10 @@ test("returns <p /> if type is paragraph", (t) => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<p>Paragraph bold</p>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <pre /> if type is preformatted", (t) => {
+it("returns <pre /> if type is preformatted", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.preformatted,
@@ -192,10 +191,10 @@ test("returns <pre /> if type is preformatted", (t) => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(<pre>Preformatted</pre>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <strong /> if type is strong", (t) => {
+it("returns <strong /> if type is strong", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.paragraph,
@@ -217,10 +216,10 @@ test("returns <strong /> if type is strong", (t) => {
 		</p>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <em /> if type is em", (t) => {
+it("returns <em /> if type is em", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.paragraph,
@@ -242,10 +241,10 @@ test("returns <em /> if type is em", (t) => {
 		</p>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <ul> <li> </li> </ul> if type is listItem", (t) => {
+it("returns <ul> <li> </li> </ul> if type is listItem", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.listItem,
@@ -261,10 +260,10 @@ test("returns <ul> <li> </li> </ul> if type is listItem", (t) => {
 		</ul>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <ol> <li> </li> </ol> if type is listItem", (t) => {
+it("returns <ol> <li> </li> </ol> if type is listItem", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.oListItem,
@@ -280,10 +279,10 @@ test("returns <ol> <li> </li> </ol> if type is listItem", (t) => {
 		</ol>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <image /> if type is image", (t) => {
+it("returns <image /> if type is image", async () => {
 	const url = "url";
 	const alt = "alt";
 	const copyright = "copyright";
@@ -308,10 +307,10 @@ test("returns <image /> if type is image", (t) => {
 		</p>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <image /> with undefined copyright if not provided", (t) => {
+it("returns <image /> with undefined copyright if not provided", async () => {
 	const url = "url";
 	const alt = "alt";
 
@@ -335,23 +334,15 @@ test("returns <image /> with undefined copyright if not provided", (t) => {
 		</p>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <image /> wrapped in <PrismicLink />", (t) => {
+it("returns <image /> wrapped in <PrismicLink />", async (ctx) => {
 	const url = "url";
 	const alt = "alt";
 	const copyright = "copyright";
 
-	const linkField: prismicT.FilledLinkToDocumentField = {
-		id: "id",
-		uid: "uid",
-		lang: "lang",
-		tags: [],
-		type: "page",
-		link_type: prismicT.LinkType.Document,
-		url: "url",
-	};
+	const linkField = ctx.mock.value.link({ type: "Document" });
 
 	const field: prismicT.RichTextField = [
 		{
@@ -376,10 +367,10 @@ test("returns <image /> wrapped in <PrismicLink />", (t) => {
 		</p>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <div /> with embedded html if type is embed", (t) => {
+it("returns <div /> with embedded html if type is embed", async () => {
 	const oembed: prismicT.EmbedField<
 		prismicT.RichOEmbed & { provider_name: string }
 	> = {
@@ -408,10 +399,10 @@ test("returns <div /> with embedded html if type is embed", (t) => {
 		/>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("Returns <PrismicLink /> when type is hyperlink", (t) => {
+it("Returns <PrismicLink /> when type is hyperlink", async () => {
 	const data: prismicT.FilledLinkToDocumentField = {
 		id: "id",
 		uid: "uid",
@@ -446,11 +437,11 @@ test("Returns <PrismicLink /> when type is hyperlink", (t) => {
 		</p>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
 // TODO update isInternalURL to support an internal URL like "url"
-test("Returns <PrismicLink /> with internalComponent from props", (t) => {
+it("Returns <PrismicLink /> with internalComponent from props", async () => {
 	const data: prismicT.FilledLinkToDocumentField = {
 		id: "id",
 		uid: "uid",
@@ -487,10 +478,10 @@ test("Returns <PrismicLink /> with internalComponent from props", (t) => {
 		</p>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("returns <span /> with label className if type is label", (t) => {
+it("returns <span /> with label className if type is label", async () => {
 	const data = {
 		label: "label",
 	};
@@ -516,10 +507,10 @@ test("returns <span /> with label className if type is label", (t) => {
 		</p>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("renders line breaks as <br />", (t) => {
+it("renders line breaks as <br />", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.paragraph,
@@ -536,10 +527,10 @@ test("renders line breaks as <br />", (t) => {
 		</p>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("renders components from components prop", (t) => {
+it("renders components from components prop", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.paragraph,
@@ -556,10 +547,10 @@ test("renders components from components prop", (t) => {
 	);
 	const expected = renderJSON(<p>paragraph</p>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("renders components given to PrismicProvider", (t) => {
+it("renders components given to PrismicProvider", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.paragraph,
@@ -579,10 +570,10 @@ test("renders components given to PrismicProvider", (t) => {
 	);
 	const expected = renderJSON(<p>paragraph</p>);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-test("components given to components prop overrides components given to PrismicProvider", (t) => {
+it("components given to components prop overrides components given to PrismicProvider", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.heading1,
@@ -618,12 +609,10 @@ test("components given to components prop overrides components given to PrismicP
 		</>,
 	);
 
-	t.deepEqual(actual, expected);
+	expect(actual).toStrictEqual(expected);
 });
 
-// This test spies on `console.error()`. As a result, it must be run serially
-// to avoid affecting other tests.
-test.serial("keys are automatically applied to custom components", (t) => {
+it("keys are automatically applied to custom components", async () => {
 	const field: prismicT.RichTextField = [
 		{
 			type: prismicT.RichTextNodeType.heading1,
@@ -637,10 +626,9 @@ test.serial("keys are automatically applied to custom components", (t) => {
 		},
 	];
 
-	const consoleErrorSpy = sinon.stub(console, "error");
-	consoleErrorSpy.callsFake(() => {
-		// no-op
-	});
+	const consoleErrorSpy = vi
+		.spyOn(console, "error")
+		.mockImplementation(() => void 0);
 
 	renderJSON(
 		<PrismicRichText
@@ -652,7 +640,9 @@ test.serial("keys are automatically applied to custom components", (t) => {
 		/>,
 	);
 
-	t.false(consoleErrorSpy.calledWith(sinon.match(/unique "key"/)));
+	expect(consoleErrorSpy).not.toHaveBeenCalledWith(
+		expect.stringMatching(/unique "key"/),
+	);
 
-	consoleErrorSpy.restore();
+	consoleErrorSpy.mockRestore();
 });

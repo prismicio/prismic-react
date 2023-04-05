@@ -1,6 +1,6 @@
-import test from "ava";
-import * as React from "react";
-import browserEnv from "browser-env";
+// @vitest-environment happy-dom
+
+import { it, expect } from "vitest";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 import { md5 } from "./__testutils__/md5";
@@ -16,84 +16,72 @@ const getToolbarScript = (repositoryName: string): Element | null => {
 	);
 };
 
-// Polyfill the runtime with a simulated DOM.
-test.before(() => {
-	browserEnv();
+it("adds a script element with the correct attributes to document.body", (ctx) => {
+	const repositoryName = md5(ctx.meta.name);
+
+	renderJSON(<PrismicToolbar repositoryName={repositoryName} type="new" />);
+
+	const script = getToolbarScript(repositoryName);
+
+	if (script instanceof HTMLScriptElement) {
+		expect(script.getAttribute("src")).toBe(
+			`https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}&new=true`,
+		);
+		expect(script.getAttribute("defer")).toBe("");
+		expect(script.dataset.repositoryName).toBe(repositoryName);
+		expect(script.dataset.type).toBe("new");
+	} else {
+		expect.fail("The toolbar script element was not found");
+	}
 });
 
-test.serial(
-	"adds a script element with the correct attributes to document.body",
-	(t) => {
-		const repositoryName = md5(t.title);
-
-		renderJSON(<PrismicToolbar repositoryName={repositoryName} type="new" />);
-
-		const script = getToolbarScript(repositoryName);
-
-		if (script instanceof HTMLScriptElement) {
-			t.is(
-				script.getAttribute("src"),
-				`https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}&new=true`,
-			);
-			t.is(script.getAttribute("defer"), "");
-			t.is(script.dataset.repositoryName, repositoryName);
-			t.is(script.dataset.type, "new");
-		} else {
-			t.fail("The toolbar script element was not found");
-		}
-	},
-);
-
-test.serial("uses the new toolbar by default", (t) => {
-	const repositoryName = md5(t.title);
+it("uses the new toolbar by default", (ctx) => {
+	const repositoryName = md5(ctx.meta.name);
 
 	renderJSON(<PrismicToolbar repositoryName={repositoryName} />);
 
 	const script = getToolbarScript(repositoryName);
 
 	if (script instanceof HTMLScriptElement) {
-		t.is(
-			script.getAttribute("src"),
+		expect(script.getAttribute("src")).toBe(
 			`https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}&new=true`,
 		);
-		t.is(script.dataset.type, "new");
+		expect(script.dataset.type).toBe("new");
 	} else {
-		t.fail("The toolbar script element was not found");
+		expect.fail("The toolbar script element was not found");
 	}
 });
 
-test('uses the legacy toolbar if type is set to "legacy"', (t) => {
-	const repositoryName = md5(t.title);
+it('uses the legacy toolbar if type is set to "legacy"', (ctx) => {
+	const repositoryName = md5(ctx.meta.name);
 
 	renderJSON(<PrismicToolbar repositoryName={repositoryName} type="legacy" />);
 
 	const script = getToolbarScript(repositoryName);
 
 	if (script instanceof HTMLScriptElement) {
-		t.is(
-			script.getAttribute("src"),
+		expect(script.getAttribute("src")).toBe(
 			`https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}`,
 		);
-		t.is(script.dataset.type, "legacy");
+		expect(script.dataset.type).toBe("legacy");
 	} else {
-		t.fail("The toolbar script element was not found");
+		expect.fail("The toolbar script element was not found");
 	}
 });
 
-test("includes a Happy DOM patch to not execute scripts in test environments", (t) => {
-	const repositoryName = md5(t.title);
+it("includes a Happy DOM patch to not execute scripts in it environments", (ctx) => {
+	const repositoryName = md5(ctx.meta.name);
 
 	renderJSON(<PrismicToolbar repositoryName={repositoryName} type="legacy" />);
 
 	const script = getToolbarScript(repositoryName);
 
 	if (script instanceof HTMLScriptElement) {
-		t.is(
+		expect(
 			// @ts-expect-error - `_evaluateScript` is a Happy DOM-specific property.
 			script._evaluateScript,
-			false,
-		);
+		).toBe(false);
 	} else {
-		t.fail("The toolbar script element was not found");
+		expect.fail("The toolbar script element was not found");
 	}
 });
