@@ -11,9 +11,6 @@ export default defineConfig({
 				rsc: "./src/rsc/index.ts",
 			},
 		},
-		rollupOptions: {
-			external: ["@prismicio/react/config"],
-		},
 	},
 	test: {
 		coverage: {

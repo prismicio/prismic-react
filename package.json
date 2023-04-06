@@ -25,10 +25,6 @@
 			"require": "./dist/rsc.cjs",
 			"import": "./dist/rsc.js"
 		},
-		"./config": {
-			"require": "./dist/rsc.cjs",
-			"import": "./dist/rsc.js"
-		},
 		"./package.json": "./package.json"
 	},
 	"main": "dist/index.cjs",
@@ -41,9 +37,6 @@
 				"dist/index.d.ts"
 			],
 			"rsc": [
-				"dist/rsc/index.d.ts"
-			],
-			"config": [
 				"dist/rsc/index.d.ts"
 			]
 		}
