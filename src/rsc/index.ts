@@ -19,7 +19,10 @@ export { getPrismicToolbarSrc } from "./getPrismicToolbarSrc";
 
 // These exports do not have RSC-specific implementations.
 // They are aliases for the root-level exports.
-export { Element } from "..";
-export { PrismicImage } from "../PrismicImage";
-export type { PrismicImageProps } from "../PrismicImage";
-export type { JSXMapSerializer, JSXFunctionSerializer } from "../types";
+export { PrismicImage, PrismicText, Element } from "..";
+export type {
+	PrismicImageProps,
+	PrismicTextProps,
+	JSXMapSerializer,
+	JSXFunctionSerializer,
+} from "..";
