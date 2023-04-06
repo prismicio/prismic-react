@@ -14,11 +14,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"jsx": "preserve",
 		"lib": ["esnext", "dom"],
-		"types": ["node"],
-
-		"paths": {
-			"@prismicio/react/config": ["./src/rsc/__defaultConfig__.ts"]
-		}
+		"types": ["node"]
 	},
 	"exclude": ["node_modules", "dist", "examples"]
 }
