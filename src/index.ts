@@ -9,7 +9,11 @@ export { usePrismicContext } from "./usePrismicContext";
 export { usePrismicClient } from "./usePrismicClient";
 
 export { PrismicLink } from "./PrismicLink";
-export type { PrismicLinkProps, LinkProps } from "./PrismicLink";
+export type {
+	PrismicLinkProps,
+	LinkProps,
+	LooseLinkProps,
+} from "./PrismicLink";
 
 export { PrismicText } from "./PrismicText";
 export type { PrismicTextProps } from "./PrismicText";

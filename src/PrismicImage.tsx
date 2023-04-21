@@ -1,6 +1,5 @@
 import * as React from "react";
-import * as prismicT from "@prismicio/types";
-import * as prismicH from "@prismicio/helpers";
+import * as prismic from "@prismicio/client";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 import { devMsg } from "./lib/devMsg";
@@ -18,14 +17,14 @@ export type PrismicImageProps = Omit<
 	/**
 	 * The Prismic Image field or thumbnail to render.
 	 */
-	field: prismicT.ImageFieldImage | null | undefined;
+	field: prismic.ImageFieldImage | null | undefined;
 
 	/**
 	 * An object of Imgix URL API parameters to transform the image.
 	 *
 	 * See: https://docs.imgix.com/apis/rendering
 	 */
-	imgixParams?: Parameters<typeof prismicH.asImageSrc>[1];
+	imgixParams?: Parameters<typeof prismic.asImageSrc>[1];
 
 	/**
 	 * Declare an image as decorative by providing `alt=""`.
@@ -58,7 +57,7 @@ export type PrismicImageProps = Omit<
 				 */
 				widths?:
 					| NonNullable<
-							Parameters<typeof prismicH.asImageWidthSrcSet>[1]
+							Parameters<typeof prismic.asImageWidthSrcSet>[1]
 					  >["widths"]
 					| "defaults";
 				/**
@@ -79,7 +78,7 @@ export type PrismicImageProps = Omit<
 				 */
 				pixelDensities:
 					| NonNullable<
-							Parameters<typeof prismicH.asImagePixelDensitySrcSet>[1]
+							Parameters<typeof prismic.asImagePixelDensitySrcSet>[1]
 					  >["pixelDensities"]
 					| "defaults";
 		  }
@@ -123,12 +122,12 @@ const _PrismicImage = (
 		}
 	}
 
-	if (prismicH.isFilled.imageThumbnail(field)) {
+	if (prismic.isFilled.imageThumbnail(field)) {
 		let src: string | undefined;
 		let srcSet: string | undefined;
 
 		if (widths || !pixelDensities) {
-			const res = prismicH.asImageWidthSrcSet(field, {
+			const res = prismic.asImageWidthSrcSet(field, {
 				...imgixParams,
 				widths: widths === "defaults" ? undefined : widths,
 			});
@@ -136,7 +135,7 @@ const _PrismicImage = (
 			src = res.src;
 			srcSet = res.srcset;
 		} else if (pixelDensities) {
-			const res = prismicH.asImagePixelDensitySrcSet(field, {
+			const res = prismic.asImagePixelDensitySrcSet(field, {
 				...imgixParams,
 				pixelDensities:
 					pixelDensities === "defaults" ? undefined : pixelDensities,

@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as prismicT from "@prismicio/types";
+import * as prismic from "@prismicio/client";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 import { pascalCase, PascalCase } from "./lib/pascalCase";
@@ -25,7 +25,7 @@ type ExtractSliceType<Slice extends SliceLike> = Slice extends SliceLikeRestV2
  * @typeParam SliceType - Type name of the Slice.
  */
 export type SliceLikeRestV2<SliceType extends string = string> = {
-	slice_type: prismicT.Slice<SliceType>["slice_type"];
+	slice_type: prismic.Slice<SliceType>["slice_type"];
 	id?: string;
 };
 
@@ -36,7 +36,7 @@ export type SliceLikeRestV2<SliceType extends string = string> = {
  * @typeParam SliceType - Type name of the Slice.
  */
 export type SliceLikeGraphQL<SliceType extends string = string> = {
-	type: prismicT.Slice<SliceType>["slice_type"];
+	type: prismic.Slice<SliceType>["slice_type"];
 };
 
 /**

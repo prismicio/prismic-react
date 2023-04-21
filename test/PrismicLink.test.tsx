@@ -1,11 +1,11 @@
 import { it, expect, vi } from "vitest";
 import * as prismicT from "@prismicio/types";
-import * as prismicH from "@prismicio/helpers";
 import * as React from "react";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
 import { PrismicLink, PrismicProvider, LinkProps } from "../src";
+import { LinkResolverFunction } from "@prismicio/client";
 
 const Link = ({ href, rel, target }: LinkProps) => (
 	<a data-href={href} data-rel={rel} data-target={target} />
@@ -73,7 +73,7 @@ it("renders a link from a document using a Link Resolver", async (ctx) => {
 			},
 		}),
 	});
-	const linkResolver: prismicH.LinkResolverFunction = (doc) => `/${doc.uid}`;
+	const linkResolver: LinkResolverFunction = (doc) => `/${doc.uid}`;
 
 	const actual = renderJSON(
 		<PrismicLink document={document} linkResolver={linkResolver} />,
@@ -87,9 +87,7 @@ it("renders a link from a document using a Link Resolver", async (ctx) => {
 
 it("renders link from an href", async () => {
 	const actual = renderJSON(<PrismicLink href="/href" />);
-	const expected = renderJSON(
-		<a href="/href" rel={undefined} target={undefined} />,
-	);
+	const expected = renderJSON(<a href="/href" rel={undefined} />);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -110,7 +108,7 @@ it("uses link resolver provided via context", async (ctx) => {
 	const field = ctx.mock.value.link({
 		type: "Document",
 	});
-	const linkResolver: prismicH.LinkResolverFunction = (doc) => `/${doc.uid}`;
+	const linkResolver: LinkResolverFunction = (doc) => `/${doc.uid}`;
 
 	const actual = renderJSON(
 		<PrismicProvider linkResolver={linkResolver}>
@@ -126,28 +124,13 @@ it("uses link resolver provided via context", async (ctx) => {
 
 it("uses link resolver provided via props", async (ctx) => {
 	const field = ctx.mock.value.link({ type: "Document" });
-	const linkResolver: prismicH.LinkResolverFunction = (doc) => `/${doc.uid}`;
+	const linkResolver: LinkResolverFunction = (doc) => `/${doc.uid}`;
 
 	const actual = renderJSON(
 		<PrismicLink field={field} linkResolver={linkResolver} />,
 	);
 	const expected = renderJSON(
 		<a href={`/${field.uid}`} rel={undefined} target={undefined} />,
-	);
-
-	expect(actual).toStrictEqual(expected);
-});
-
-it("if given a link field value with _blank target, use target and include rel='noopener noreferrer'", async (ctx) => {
-	const field = ctx.mock.value.link({
-		type: "Web",
-		withTargetBlank: true,
-	});
-	field.url = "/url";
-
-	const actual = renderJSON(<PrismicLink field={field} />);
-	const expected = renderJSON(
-		<a href={field.url} rel="noopener noreferrer" target="_blank" />,
 	);
 
 	expect(actual).toStrictEqual(expected);
@@ -184,35 +167,16 @@ it("allow overriding default target", async (ctx) => {
 	expect(actual).toStrictEqual(expected);
 });
 
-it('if manually given _blank to target, use rel="noopener norefferer"', async (ctx) => {
-	const field = ctx.mock.value.link({
-		type: "Web",
-		withTargetBlank: false,
-	});
-	field.url = "/url";
-
-	const actual = renderJSON(<PrismicLink field={field} target="_blank" />);
-	const expected = renderJSON(
-		<a href={field.url} target="_blank" rel="noopener noreferrer" />,
-	);
-
-	expect(actual).toStrictEqual(expected);
-});
-
 it("if target is not provided and the URL is external, target is not set", async () => {
 	const actual = renderJSON(<PrismicLink href="https://example.com" />);
-	const expected = renderJSON(
-		<a href="https://example.com" target={undefined} rel={undefined} />,
-	);
+	const expected = renderJSON(<a href="https://example.com" rel={undefined} />);
 
 	expect(actual).toStrictEqual(expected);
 });
 
 it("if URL is internal and no internalComponent is given, render an <a>", async () => {
 	const actual = renderJSON(<PrismicLink href="/internal" />);
-	const expected = renderJSON(
-		<a href="/internal" rel={undefined} target={undefined} />,
-	);
+	const expected = renderJSON(<a href="/internal" rel={undefined} />);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -221,9 +185,7 @@ it("if URL is internal and internalComponent is given, render internalComponent"
 	const actual = renderJSON(
 		<PrismicLink href="/internal" internalComponent={Link} />,
 	);
-	const expected = renderJSON(
-		<Link href="/internal" rel={undefined} target={undefined} />,
-	);
+	const expected = renderJSON(<Link href="/internal" rel={undefined} />);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -234,31 +196,25 @@ it("if URL is internal and internalComponent is given to the provider, render in
 			<PrismicLink href="/internal" />
 		</PrismicProvider>,
 	);
-	const expected = renderJSON(
-		<Link href="/internal" rel={undefined} target={undefined} />,
-	);
+	const expected = renderJSON(<Link href="/internal" rel={undefined} />);
 
 	expect(actual).toStrictEqual(expected);
 });
 
 it("if URL is internal and internalComponent is given to the provider and the component, render internalComponent from the component", async () => {
 	const actual = renderJSON(
-		<PrismicProvider internalLinkComponent="div">
+		<PrismicProvider internalLinkComponent={(props) => <div {...props} />}>
 			<PrismicLink href="/internal" internalComponent={Link} />
 		</PrismicProvider>,
 	);
-	const expected = renderJSON(
-		<Link href="/internal" rel={undefined} target={undefined} />,
-	);
+	const expected = renderJSON(<Link href="/internal" rel={undefined} />);
 
 	expect(actual).toStrictEqual(expected);
 });
 
 it("if URL is external and no externalComponent is given, render an <a>", async () => {
 	const actual = renderJSON(<PrismicLink href="https://example.com" />);
-	const expected = renderJSON(
-		<a href="https://example.com" target={undefined} rel={undefined} />,
-	);
+	const expected = renderJSON(<a href="https://example.com" rel={undefined} />);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -285,7 +241,7 @@ it("if URL is external and externalComponent is given to the provider, render ex
 
 it("if URL is external and externalComponent is given to the provider and the component, render externalComponent from the component", async () => {
 	const actual = renderJSON(
-		<PrismicProvider externalLinkComponent="div">
+		<PrismicProvider externalLinkComponent={(props) => <div {...props} />}>
 			<PrismicLink href="https://example.com" externalComponent={Link} />
 		</PrismicProvider>,
 	);
@@ -294,43 +250,40 @@ it("if URL is external and externalComponent is given to the provider and the co
 	expect(actual).toStrictEqual(expected);
 });
 
-it("renders null if field is provided undefined", async () => {
+it("renders internal component if provided field is undefined", async () => {
 	const actual = renderJSON(<PrismicLink field={undefined} />);
+	const expected = renderJSON(<a href="" rel={undefined} />);
 
-	expect(actual).toBe(null);
+	expect(actual).toStrictEqual(expected);
 });
 
-it("renders null if document is provided undefined", async () => {
+it("renders internal component if document is provided undefined", async () => {
 	const actual = renderJSON(<PrismicLink document={undefined} />);
+	const expected = renderJSON(<a href="" rel={undefined} />);
 
-	expect(actual).toBe(null);
+	expect(actual).toStrictEqual(expected);
 });
 
-it("renders null if href is provided undefined", async () => {
-	const actual = renderJSON(<PrismicLink href={undefined} />);
+it("renders internal component if provided href is falsey", async () => {
+	const actual = renderJSON(<PrismicLink href="" />);
+	const expected = renderJSON(<a href="" rel={undefined} />);
 
-	expect(actual).toBe(null);
+	expect(actual).toStrictEqual(expected);
 });
 
 it("forwards ref to internal component", async () => {
 	const CustomComponent =
 		// eslint-disable-next-line react/display-name
-		React.forwardRef((props: LinkProps, ref: React.Ref<HTMLInputElement>) => {
+		React.forwardRef<HTMLInputElement, LinkProps>((props, ref) => {
 			return <input ref={ref} value={props.href} />;
 		});
 
 	let aRef = null as Element | null;
-	let spanRef = null as Element | null;
 	let customComponentRef = null as Element | null;
 
 	renderJSON(
 		<>
 			<PrismicLink ref={(el) => (aRef = el)} href="/" />
-			<PrismicLink
-				ref={(el) => (spanRef = el)}
-				internalComponent="span"
-				href="/"
-			/>
 			<PrismicLink
 				ref={(el) => (customComponentRef = el)}
 				internalComponent={CustomComponent}
@@ -343,7 +296,6 @@ it("forwards ref to internal component", async () => {
 	);
 
 	expect(aRef?.tagName).toBe("a");
-	expect(spanRef?.tagName).toBe("span");
 	expect(customComponentRef?.tagName).toBe("input");
 });
 
@@ -355,17 +307,11 @@ it("forwards ref to external component", async () => {
 		});
 
 	let aRef = null as Element | null;
-	let spanRef = null as Element | null;
 	let customComponentRef = null as Element | null;
 
 	renderJSON(
 		<>
 			<PrismicLink ref={(el) => (aRef = el)} href="https://prismic.io" />
-			<PrismicLink
-				ref={(el) => (spanRef = el)}
-				externalComponent="span"
-				href="https://prismic.io"
-			/>
 			<PrismicLink
 				ref={(el) => (customComponentRef = el)}
 				externalComponent={CustomComponent}
@@ -378,7 +324,6 @@ it("forwards ref to external component", async () => {
 	);
 
 	expect(aRef?.tagName).toBe("a");
-	expect(spanRef?.tagName).toBe("span");
 	expect(customComponentRef?.tagName).toBe("input");
 });
 

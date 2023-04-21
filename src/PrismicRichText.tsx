@@ -2,31 +2,30 @@
 /* eslint-disable react/prop-types */
 
 import * as React from "react";
-import * as prismicT from "@prismicio/types";
-import * as prismicH from "@prismicio/helpers";
+import * as prismic from "@prismicio/client";
 import * as prismicR from "@prismicio/richtext";
 
 import { JSXFunctionSerializer, JSXMapSerializer } from "./types";
-import { LinkProps, PrismicLink, PrismicLinkProps } from "./PrismicLink";
+import { LooseLinkProps, PrismicLink, PrismicLinkProps } from "./PrismicLink";
 import { usePrismicContext } from "./usePrismicContext";
 
 /**
  * Props for `<PrismicRichText>`.
  */
 export type PrismicRichTextProps<
-	InternalLinkComponent extends React.ElementType<LinkProps> = NonNullable<
+	InternalLinkComponent extends React.ComponentType<LooseLinkProps> = NonNullable<
 		PrismicLinkProps["internalComponent"]
 	>,
-	ExternalLinkComponent extends React.ElementType<LinkProps> = NonNullable<
+	ExternalLinkComponent extends React.ComponentType<LooseLinkProps> = NonNullable<
 		PrismicLinkProps["externalComponent"]
 	>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
+	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
 > = {
 	/**
 	 * The Prismic Rich Text field to render.
 	 */
-	field: prismicT.RichTextField | null | undefined;
+	field: prismic.RichTextField | null | undefined;
 
 	/**
 	 * The Link Resolver used to resolve links.
@@ -97,14 +96,14 @@ export type PrismicRichTextProps<
 };
 
 type CreateDefaultSerializerArgs<
-	InternalLinkComponent extends React.ElementType<LinkProps> = NonNullable<
+	InternalLinkComponent extends React.ComponentType<LooseLinkProps> = NonNullable<
 		PrismicLinkProps["internalComponent"]
 	>,
-	ExternalLinkComponent extends React.ElementType<LinkProps> = NonNullable<
+	ExternalLinkComponent extends React.ComponentType<LooseLinkProps> = NonNullable<
 		PrismicLinkProps["externalComponent"]
 	>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
+	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
 > = {
 	linkResolver: LinkResolverFunction | undefined;
 	internalLinkComponent?: InternalLinkComponent;
@@ -112,10 +111,10 @@ type CreateDefaultSerializerArgs<
 };
 
 const createDefaultSerializer = <
-	InternalLinkComponent extends React.ElementType<LinkProps>,
-	ExternalLinkComponent extends React.ElementType<LinkProps>,
+	InternalLinkComponent extends React.ComponentType<LooseLinkProps>,
+	ExternalLinkComponent extends React.ComponentType<LooseLinkProps>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any>,
+	LinkResolverFunction extends prismic.LinkResolverFunction<any>,
 >(
 	args: CreateDefaultSerializerArgs<
 		InternalLinkComponent,
@@ -150,11 +149,6 @@ const createDefaultSerializer = <
 			return (
 				<p key={key} className="block-img">
 					{node.linkTo ? (
-						// @ts-expect-error - This component is missing required
-						// props from `internalLinkComponent` and
-						// `externalLinkComponent`. We currently do not have a
-						// way to pass extra props to nested links, so we are
-						// ignoring the error for now.
 						<PrismicLink
 							linkResolver={args.linkResolver}
 							internalComponent={args.internalLinkComponent}
@@ -179,11 +173,6 @@ const createDefaultSerializer = <
 			/>
 		),
 		hyperlink: ({ node, children, key }) => (
-			// @ts-expect-error - This component is missing required
-			// props from `internalLinkComponent` and
-			// `externalLinkComponent`. We currently do not have a
-			// way to pass extra props to nested links, so we are
-			// ignoring the error for now.
 			<PrismicLink
 				key={key}
 				field={node.data}
@@ -258,10 +247,10 @@ const createDefaultSerializer = <
  * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
  */
 export const PrismicRichText = <
-	InternalLinkComponent extends React.ElementType<LinkProps>,
-	ExternalLinkComponent extends React.ElementType<LinkProps>,
+	InternalLinkComponent extends React.ComponentType<LooseLinkProps>,
+	ExternalLinkComponent extends React.ComponentType<LooseLinkProps>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any>,
+	LinkResolverFunction extends prismic.LinkResolverFunction<any>,
 >(
 	props: PrismicRichTextProps<
 		InternalLinkComponent,
@@ -272,7 +261,7 @@ export const PrismicRichText = <
 	const context = usePrismicContext();
 
 	return React.useMemo(() => {
-		if (prismicH.isFilled.richText(props.field)) {
+		if (prismic.isFilled.richText(props.field)) {
 			const linkResolver = props.linkResolver || context.linkResolver;
 
 			const serializer = prismicR.composeSerializers(
