@@ -46,33 +46,37 @@ export interface LinkProps {
 export type PrismicLinkProps<
 	InternalComponentProps = React.ComponentProps<typeof defaultComponent>,
 	ExternalComponentProps = React.ComponentProps<typeof defaultComponent>,
-> = Omit<LinkProps, "href"> &
-	Omit<InternalComponentProps & ExternalComponentProps, keyof LinkProps> & {
-		rel?: string | AsLinkAttrsConfig["rel"];
+> = Omit<InternalComponentProps & ExternalComponentProps, "rel" | "href"> & {
+	/**
+	 * The `rel` attribute for the link. By default, `"noreferrer"` is provided if
+	 * the link's URL is external. This prop can be provided a function to use the
+	 * link's metadata to determine the `rel` value.
+	 */
+	rel?: string | AsLinkAttrsConfig["rel"];
 
-		/**
-		 * The Link Resolver used to resolve links.
-		 *
-		 * @remarks
-		 * If your app uses Route Resolvers when querying for your Prismic
-		 * repository's content, a Link Resolver does not need to be provided.
-		 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
-		 */
-		linkResolver?: LinkResolverFunction;
+	/**
+	 * The Link Resolver used to resolve links.
+	 *
+	 * @remarks
+	 * If your app uses Route Resolvers when querying for your Prismic
+	 * repository's content, a Link Resolver does not need to be provided.
+	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
+	 */
+	linkResolver?: LinkResolverFunction;
 
-		/**
-		 * The component rendered for internal URLs. Defaults to `<a>`.
-		 *
-		 * If your app uses a client-side router that requires a special Link
-		 * component, provide the Link component to this prop.
-		 */
-		internalComponent?: React.ElementType<InternalComponentProps>;
+	/**
+	 * The component rendered for internal URLs. Defaults to `<a>`.
+	 *
+	 * If your app uses a client-side router that requires a special Link
+	 * component, provide the Link component to this prop.
+	 */
+	internalComponent?: React.ElementType<InternalComponentProps>;
 
-		/**
-		 * The component rendered for external URLs. Defaults to `<a>`.
-		 */
-		externalComponent?: React.ComponentType<ExternalComponentProps>;
-	} & (
+	/**
+	 * The component rendered for external URLs. Defaults to `<a>`.
+	 */
+	externalComponent?: React.ComponentType<ExternalComponentProps>;
+} & (
 		| {
 				document: PrismicDocument | null | undefined;
 				href?: never;
@@ -138,6 +142,7 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 			}
 		}
 	}
+
 	const {
 		href: computedHref,
 		rel: computedRel,

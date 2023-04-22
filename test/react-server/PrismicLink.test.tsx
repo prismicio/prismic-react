@@ -134,6 +134,29 @@ it("allow overriding default rel", async (ctx) => {
 	expect(actual).toStrictEqual(expected);
 });
 
+it("allow overriding default rel with a function", async (ctx) => {
+	const field = ctx.mock.value.link({
+		type: "Web",
+		withTargetBlank: true,
+	});
+	field.url = "https://prismic.io";
+
+	const rel = vi.fn(() => "foo");
+
+	const actual = renderJSON(<PrismicLink field={field} rel={rel} />);
+	const expected = renderJSON(
+		// eslint-disable-next-line react/jsx-no-target-blank
+		<a href={field.url} rel="foo" target="_blank" />,
+	);
+
+	expect(actual).toStrictEqual(expected);
+	expect(rel).toHaveBeenCalledWith({
+		href: field.url,
+		target: field.target,
+		isExternal: true,
+	});
+});
+
 it("allow overriding default target", async (ctx) => {
 	const field = ctx.mock.value.link({
 		type: "Web",
@@ -226,7 +249,6 @@ it("forwards ref to internal component", async () => {
 				ref={(el) => (customComponentRef = el)}
 				internalComponent={CustomComponent}
 				href="/"
-				onClick={() => void 0}
 			/>
 		</>,
 		{
