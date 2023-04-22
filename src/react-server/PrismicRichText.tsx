@@ -1,20 +1,14 @@
-/* eslint-disable react/display-name */
-/* eslint-disable react/prop-types */
-
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 import * as prismicR from "@prismicio/richtext";
 
 import { JSXFunctionSerializer, JSXMapSerializer } from "../types";
-
-import { PrismicLink, PrismicLinkProps, LooseLinkProps } from "../PrismicLink";
+import { LinkProps, PrismicLink } from "./PrismicLink";
 
 /**
  * Props for `<PrismicRichText>`.
  */
 export type PrismicRichTextProps<
-	InternalLinkComponentProps extends LooseLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>,
-	ExternalLinkComponentProps extends LooseLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
 > = {
@@ -32,15 +26,6 @@ export type PrismicRichTextProps<
 	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
 	 */
 	linkResolver?: LinkResolverFunction;
-
-	/**
-	 * A function that maps a Rich Text block to a React component.
-	 *
-	 * @deprecated Use the `components` prop instead. Prefer using a map
-	 *   serializer when possible.
-	 * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
-	 */
-	htmlSerializer?: JSXFunctionSerializer;
 
 	/**
 	 * A map or function that maps a Rich Text block to a React component.
@@ -75,14 +60,14 @@ export type PrismicRichTextProps<
 	 *
 	 * @defaultValue `<a>`
 	 */
-	internalLinkComponent?: React.ComponentType<InternalLinkComponentProps>;
+	internalLinkComponent?: React.ComponentType<LinkProps>;
 
 	/**
 	 * The React component rendered for links when the URL is external.
 	 *
 	 * @defaultValue `<a>`
 	 */
-	externalLinkComponent?: React.ComponentType<ExternalLinkComponentProps>;
+	externalLinkComponent?: React.ComponentType<LinkProps>;
 
 	/**
 	 * The value to be rendered when the field is empty. If a fallback is not
@@ -92,27 +77,19 @@ export type PrismicRichTextProps<
 };
 
 type CreateDefaultSerializerArgs<
-	InternalLinkComponentProps extends LooseLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>,
-	ExternalLinkComponentProps extends LooseLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
 > = {
 	linkResolver: LinkResolverFunction | undefined;
-	internalLinkComponent?: React.ComponentType<InternalLinkComponentProps>;
-	externalLinkComponent?: React.ComponentType<ExternalLinkComponentProps>;
+	internalLinkComponent?: React.ComponentType<LinkProps>;
+	externalLinkComponent?: React.ComponentType<LinkProps>;
 };
 
 const createDefaultSerializer = <
-	InternalLinkComponentProps extends LooseLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>,
-	ExternalLinkComponentProps extends LooseLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
+	LinkResolverFunction extends prismic.LinkResolverFunction<any>,
 >(
-	args: CreateDefaultSerializerArgs<
-		InternalLinkComponentProps,
-		ExternalLinkComponentProps,
-		LinkResolverFunction
-	>,
+	args: CreateDefaultSerializerArgs<LinkResolverFunction>,
 ): JSXFunctionSerializer =>
 	prismicR.wrapMapSerializer({
 		heading1: ({ children, key }) => <h1 key={key}>{children}</h1>,
@@ -208,9 +185,6 @@ const createDefaultSerializer = <
  * To customize the components that are rendered, provide a map or function
  * serializer to the `components` prop.
  *
- * Components can also be provided in a centralized location using the
- * `<PrismicProvider>` React context provider.
- *
  * @remarks
  * This component returns a React fragment with no wrapping element around the
  * content. If you need a wrapper, add a component around `<PrismicRichText>`.
@@ -238,28 +212,27 @@ const createDefaultSerializer = <
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  * @see Learn about Rich Text serializers {@link https://prismic.io/docs/core-concepts/html-serializer}
  */
-export const PrismicRichText = <
-	InternalLinkComponentProps extends LooseLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>,
-	ExternalLinkComponentProps extends LooseLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>,
+export function PrismicRichText<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
->(
-	props: PrismicRichTextProps<
-		InternalLinkComponentProps,
-		ExternalLinkComponentProps,
-		LinkResolverFunction
-	>,
-): JSX.Element | null => {
+	LinkResolverFunction extends prismic.LinkResolverFunction<any>,
+>({
+	linkResolver,
+	field,
+	fallback,
+	components,
+	externalLinkComponent,
+	internalLinkComponent,
+}: PrismicRichTextProps<LinkResolverFunction>): JSX.Element | null {
 	return React.useMemo(() => {
-		if (prismic.isFilled.richText(props.field)) {
+		if (prismic.isFilled.richText(field)) {
 			const serializer = prismicR.composeSerializers(
-				typeof props.components === "object"
-					? prismicR.wrapMapSerializer(props.components)
-					: props.components,
+				typeof components === "object"
+					? prismicR.wrapMapSerializer(components)
+					: components,
 				createDefaultSerializer({
-					linkResolver: props.linkResolver,
-					internalLinkComponent: props.internalLinkComponent,
-					externalLinkComponent: props.externalLinkComponent,
+					linkResolver,
+					internalLinkComponent,
+					externalLinkComponent,
 				}),
 			);
 
@@ -267,7 +240,7 @@ export const PrismicRichText = <
 			// that automatically applies a key to React Elements
 			// if one is not already given.
 			const serialized = prismicR.serialize<JSX.Element>(
-				props.field,
+				field,
 				(type, node, text, children, key) => {
 					const result = serializer(type, node, text, children, key);
 
@@ -281,14 +254,14 @@ export const PrismicRichText = <
 
 			return <>{serialized}</>;
 		} else {
-			return props.fallback != null ? <>{props.fallback}</> : null;
+			return fallback != null ? <>{fallback}</> : null;
 		}
 	}, [
-		props.field,
-		props.internalLinkComponent,
-		props.externalLinkComponent,
-		props.components,
-		props.linkResolver,
-		props.fallback,
+		field,
+		internalLinkComponent,
+		externalLinkComponent,
+		components,
+		linkResolver,
+		fallback,
 	]);
-};
+}

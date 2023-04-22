@@ -18,12 +18,14 @@
 	"sideEffects": false,
 	"exports": {
 		".": {
-			"require": "./dist/index.cjs",
-			"import": "./dist/index.js"
-		},
-		"./rsc": {
-			"require": "./dist/rsc.cjs",
-			"import": "./dist/rsc.js"
+			"react-server": {
+				"import": "./dist/react-server.js",
+				"require": "./dist/react-server.cjs"
+			},
+			"default": {
+				"import": "./dist/index.js",
+				"require": "./dist/index.cjs"
+			}
 		},
 		"./package.json": "./package.json"
 	},
@@ -31,16 +33,6 @@
 	"module": "dist/index.js",
 	"react-native": "dist/index.js",
 	"types": "dist/index.d.ts",
-	"typesVersions": {
-		"*": {
-			"*": [
-				"dist/index.d.ts"
-			],
-			"rsc": [
-				"dist/rsc/index.d.ts"
-			]
-		}
-	},
 	"files": [
 		"dist",
 		"src"
@@ -92,6 +84,7 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-test-renderer": "^18.2.0",
+		"rollup-plugin-preserve-directives": "^0.1.0",
 		"size-limit": "^8.2.4",
 		"standard-version": "^9.5.0",
 		"typescript": "^5.0.3",

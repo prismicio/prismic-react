@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import sdk from "vite-plugin-sdk";
 import react from "@vitejs/plugin-react";
+import preserveDirectives from "rollup-plugin-preserve-directives";
 
 export default defineConfig({
 	plugins: [sdk(), react()],
@@ -8,8 +9,11 @@ export default defineConfig({
 		lib: {
 			entry: {
 				index: "./src/index.ts",
-				rsc: "./src/rsc/index.ts",
+				"react-server": "./src/react-server/index.ts",
 			},
+		},
+		rollupOptions: {
+			plugins: [preserveDirectives()],
 		},
 	},
 	test: {

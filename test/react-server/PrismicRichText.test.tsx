@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { renderJSON } from "../__testutils__/renderJSON";
 
-import { PrismicRichText, PrismicLink } from "../../src/rsc";
+import { PrismicLink, PrismicRichText } from "../../src/react-server";
 
 type LinkProps = {
 	href: string;

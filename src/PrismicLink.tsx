@@ -1,27 +1,29 @@
+"use client";
+
 import * as React from "react";
 
 import {
-	PrismicLink as BasePrismicLink,
+	PrismicLink as ServerPrismicLink,
 	LinkProps,
-	LooseLinkProps,
 	PrismicLinkProps,
+	defaultComponent,
 } from "./react-server/PrismicLink";
 
 import { usePrismicContext } from "./usePrismicContext";
 
-export { PrismicLinkProps, LooseLinkProps };
+export { LinkProps, PrismicLinkProps };
 
 export const PrismicLink = React.forwardRef(function PrismicLink<
-	InternalComponent extends React.ElementType<LinkProps> = "a",
-	ExternalComponent extends React.ElementType<LinkProps> = "a",
+	InternalComponentProps = React.ComponentProps<typeof defaultComponent>,
+	ExternalComponentProps = React.ComponentProps<typeof defaultComponent>,
 >(
-	props: PrismicLinkProps<InternalComponent, ExternalComponent>,
-	ref: React.ForwardedRef<unknown>,
+	props: PrismicLinkProps<InternalComponentProps, ExternalComponentProps>,
+	ref: React.ForwardedRef<Element>,
 ) {
 	const context = usePrismicContext();
 
 	return (
-		<BasePrismicLink
+		<ServerPrismicLink
 			ref={ref}
 			linkResolver={context.linkResolver}
 			internalComponent={context.internalLinkComponent}
@@ -30,11 +32,10 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 		/>
 	);
 }) as <
-	InternalComponent extends React.ElementType<LinkProps> = "a",
-	ExternalComponent extends React.ElementType<LinkProps> = "a",
+	InternalComponentProps = React.ComponentProps<typeof defaultComponent>,
+	ExternalComponentProps = React.ComponentProps<typeof defaultComponent>,
 >(
-	props: PrismicLinkProps<InternalComponent, ExternalComponent> & {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		ref?: React.ForwardedRef<any>;
+	props: PrismicLinkProps<InternalComponentProps, ExternalComponentProps> & {
+		ref?: React.ForwardedRef<Element>;
 	},
 ) => JSX.Element;

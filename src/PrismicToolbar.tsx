@@ -1,4 +1,7 @@
+"use client";
+
 import * as React from "react";
+import { getToolbarSrc } from "@prismicio/client";
 
 /**
  * Props for `<PrismicToolbar>`.
@@ -13,6 +16,8 @@ export type PrismicToolbarProps = {
 	/**
 	 * The type of toolbar needed for the repository. Defaults to `"new"`.
 	 *
+	 * @deprecated All repositories use the "new"-type toolbar. This option can be
+	 *   removed.
 	 * @see To check which version you need, view the Prismic Toolbar documentation {@link https://prismic.io/docs/technologies/previews-and-the-prismic-toolbar-reactjs}
 	 */
 	type?: "new" | "legacy";
@@ -24,11 +29,8 @@ export type PrismicToolbarProps = {
  */
 export const PrismicToolbar = ({
 	repositoryName,
-	type = "new",
 }: PrismicToolbarProps): null => {
-	const src = `https://static.cdn.prismic.io/prismic.js?repo=${repositoryName}${
-		type === "new" ? "&new=true" : ""
-	}`;
+	const src = getToolbarSrc(repositoryName);
 
 	React.useEffect(() => {
 		const existingScript = document.querySelector(`script[src="${src}"]`);
@@ -41,7 +43,6 @@ export const PrismicToolbar = ({
 			// Used to distinguish the toolbar element from other elements.
 			script.dataset.prismicToolbar = "";
 			script.dataset.repositoryName = repositoryName;
-			script.dataset.type = type;
 
 			// Disable Happy DOM `<script>` evaluation during
 			// tests.
@@ -58,7 +59,7 @@ export const PrismicToolbar = ({
 
 			document.body.appendChild(script);
 		}
-	}, [repositoryName, type, src]);
+	}, [repositoryName, src]);
 
 	return null;
 };

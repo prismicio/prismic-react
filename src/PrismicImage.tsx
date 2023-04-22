@@ -84,10 +84,29 @@ export type PrismicImageProps = Omit<
 		  }
 	);
 
-const _PrismicImage = (
+/**
+ * React component that renders an image from a Prismic Image field or one of
+ * its thumbnails. It will automatically set the `alt` attribute using the Image
+ * field's `alt` property.
+ *
+ * By default, a widths-based srcset will be used to support responsive images.
+ * This ensures only the smallest image needed for a browser is downloaded.
+ *
+ * To use a pixel-density-based srcset, use the `pixelDensities` prop. Default
+ * pixel densities can be used by using `pixelDensities="defaults"`.
+ *
+ * **Note**: If you are using a framework that has a native image component,
+ * such as Next.js and Gatsby, prefer using those image components instead. They
+ * can provide deeper framework integration than `<PrismicImage>`.
+ *
+ * @param props - Props for the component.
+ *
+ * @returns A responsive image component for the given Image field.
+ */
+export const PrismicImage = React.forwardRef(function PrismicImage(
 	props: PrismicImageProps,
 	ref: React.ForwardedRef<HTMLImageElement>,
-): JSX.Element | null => {
+): JSX.Element | null {
 	const {
 		field,
 		alt,
@@ -157,29 +176,4 @@ const _PrismicImage = (
 	} else {
 		return null;
 	}
-};
-
-if (!__PRODUCTION__) {
-	_PrismicImage.displayName = "PrismicImage";
-}
-
-/**
- * React component that renders an image from a Prismic Image field or one of
- * its thumbnails. It will automatically set the `alt` attribute using the Image
- * field's `alt` property.
- *
- * By default, a widths-based srcset will be used to support responsive images.
- * This ensures only the smallest image needed for a browser is downloaded.
- *
- * To use a pixel-density-based srcset, use the `pixelDensities` prop. Default
- * pixel densities can be used by using `pixelDensities="defaults"`.
- *
- * **Note**: If you are using a framework that has a native image component,
- * such as Next.js and Gatsby, prefer using those image components instead. They
- * can provide deeper framework integration than `<PrismicImage>`.
- *
- * @param props - Props for the component.
- *
- * @returns A responsive image component for the given Image field.
- */
-export const PrismicImage = React.forwardRef(_PrismicImage);
+});

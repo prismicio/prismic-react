@@ -1,8 +1,10 @@
+"use client";
+
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 
-import { LooseLinkProps } from "./react-server/PrismicLink";
 import { JSXFunctionSerializer, JSXMapSerializer } from "./types";
+import { LinkProps } from "./PrismicLink";
 
 /**
  * React context value containing shared configuration for `@prismicio/react`
@@ -62,13 +64,13 @@ export type PrismicContextValue<
 	 * The component rendered by `<PrismicLink>` for internal URLs. Defaults to
 	 * `<a>`.
 	 */
-	internalLinkComponent?: React.ComponentType<LooseLinkProps>;
+	internalLinkComponent?: React.ComponentType<LinkProps>;
 
 	/**
 	 * The component rendered by `<PrismicLink>` for external URLs. Defaults to
 	 * `<a>`.
 	 */
-	externalLinkComponent?: React.ComponentType<LooseLinkProps>;
+	externalLinkComponent?: React.ComponentType<LinkProps>;
 
 	/**
 	 * Children for the component.
@@ -86,7 +88,8 @@ export const PrismicContext = React.createContext<PrismicContextValue>({});
  * Props for `<PrismicProvider>`.
  */
 export type PrismicProviderProps<
-	LinkResolverFunction extends prismic.LinkResolverFunction,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction<any>,
 > = PrismicContextValue<LinkResolverFunction>;
 
 /**
