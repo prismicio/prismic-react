@@ -54,10 +54,10 @@
 		"test": "npm run lint && npm run types && npm run unit && npm run build && npm run size"
 	},
 	"dependencies": {
+		"@prismicio/client": "^7.0.0-alpha.2",
 		"@prismicio/richtext": "^2.1.4"
 	},
 	"devDependencies": {
-		"@prismicio/client": "^7.0.0-alpha.2",
 		"@prismicio/mock": "^0.2.0",
 		"@size-limit/preset-small-lib": "^8.2.4",
 		"@testing-library/react": "^14.0.0",
@@ -91,7 +91,7 @@
 		"vitest": "^0.30.1"
 	},
 	"peerDependencies": {
-		"@prismicio/client": "^7",
+		"@prismicio/client": "^6 || ^7",
 		"react": "^18"
 	},
 	"engines": {
