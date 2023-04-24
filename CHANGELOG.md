@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0-alpha.0](https://github.com/prismicio/prismic-react/compare/v2.5.2...v2.6.0-alpha.0) (2023-04-24)
+
+
+### Features
+
+* add initial React Server Components experiments ([6845370](https://github.com/prismicio/prismic-react/commit/6845370758c6a37f39eaa375d0fd2921b5e8fba7))
+* full RSC compatibility (maybe) ([935cb40](https://github.com/prismicio/prismic-react/commit/935cb40864716ff3047e100f5627ff83a6d737c5))
+* PrismicLink progress ([61020b5](https://github.com/prismicio/prismic-react/commit/61020b5c08193bd0df3b2efdf552d46f68dce85e))
+* remove the ability to configure components via `@prismicio/react/config` ([180802a](https://github.com/prismicio/prismic-react/commit/180802a915b386d90080dcf3135c2e567f51052d))
+
+
+### Bug Fixes
+
+* **PrismicLink:** types for `rel` and internal/external component props ([ed75718](https://github.com/prismicio/prismic-react/commit/ed75718de9aff5b59ec4b1f5eadef6ccc21901ce))
+* remove `[@ts-expect-error](https://github.com/ts-expect-error)` ([2b420c0](https://github.com/prismicio/prismic-react/commit/2b420c049a77d7b18d9df45e009e3a3456432d27))
+* type import issue ([fe73dc0](https://github.com/prismicio/prismic-react/commit/fe73dc0f1fd3406e1793506629dea0d74d771c75))
+
+
+### Refactor
+
+* export non-RSC modules from root ([fea9c14](https://github.com/prismicio/prismic-react/commit/fea9c146976cddd8fe8242b807e38fad5d29376f))
+
+
+### Chore
+
+* **deps:** update all dependencies ([299b701](https://github.com/prismicio/prismic-react/commit/299b701ef5edae426b833e47d04a4b10a68fdaa2))
+* remove reference to `/config` entry ([57c836f](https://github.com/prismicio/prismic-react/commit/57c836fe2179bc0c403ba9c34ea376c0f2b175d0))
+* remove references to `/config` entry ([03d47b3](https://github.com/prismicio/prismic-react/commit/03d47b3ccd39b4a7969a897e097046d8a38faa57))
+* remove unused `jsdom` dependencies ([963d21c](https://github.com/prismicio/prismic-react/commit/963d21cc592148464327e57e27f0ccb967595ba7))
+* update Size Limit config to include all exports ([ffc7e75](https://github.com/prismicio/prismic-react/commit/ffc7e75a9705ad2a601a7429f4d49037900cf4a8))
+* use consistent `package.json` file paths ([e901bc0](https://github.com/prismicio/prismic-react/commit/e901bc0a5ae6ada843f749fd0943b442c7c551ca))
+
 ### [2.5.2](https://github.com/prismicio/prismic-react/compare/v2.5.1...v2.5.2) (2023-02-17)
 
 
