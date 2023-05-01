@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0-alpha.2](https://github.com/prismicio/prismic-react/compare/v2.6.0-alpha.1...v2.6.0-alpha.2) (2023-05-01)
+
+
+### Bug Fixes
+
+* bundle `@prismicio/client` v7 to prevent `npm install` issues ([fdff6ce](https://github.com/prismicio/prismic-react/commit/fdff6ce800407ad19e440863a23ffb19afd0137d))
+* update error message for incompatible Server Component APIs ([d558c91](https://github.com/prismicio/prismic-react/commit/d558c918dce0afe3d434d59a01cf6303fbd60dd7))
+
 ## [2.6.0-alpha.1](https://github.com/prismicio/prismic-react/compare/v2.6.0-alpha.0...v2.6.0-alpha.1) (2023-04-25)
 
 
