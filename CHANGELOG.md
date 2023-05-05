@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0-alpha.3](https://github.com/prismicio/prismic-react/compare/v2.6.0-alpha.2...v2.6.0-alpha.3) (2023-05-05)
+
+
+### Bug Fixes
+
+* mark `@prismicio/client` as an optional peer dependency ([ebfb24d](https://github.com/prismicio/prismic-react/commit/ebfb24d2c5648271e92271cb489211e1d4b440f2))
+
 ## [2.6.0-alpha.2](https://github.com/prismicio/prismic-react/compare/v2.6.0-alpha.1...v2.6.0-alpha.2) (2023-05-01)
 
 
