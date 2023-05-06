@@ -1,10 +1,10 @@
-import type * as prismic from "@prismicio/client";
+"use client";
 
 import * as React from "react";
-import * as prismicH from "@prismicio/helpers";
+import * as prismic from "@prismicio/client";
 
-import { LinkProps } from "./PrismicLink";
 import { JSXFunctionSerializer, JSXMapSerializer } from "./types";
+import { LinkProps } from "./PrismicLink";
 
 /**
  * React context value containing shared configuration for `@prismicio/react`
@@ -12,7 +12,7 @@ import { JSXFunctionSerializer, JSXMapSerializer } from "./types";
  */
 export type PrismicContextValue<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any> = prismicH.LinkResolverFunction,
+	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
 > = {
 	/**
 	 * A `@prismicio/client` instance used to fetch content from a Prismic
@@ -64,13 +64,13 @@ export type PrismicContextValue<
 	 * The component rendered by `<PrismicLink>` for internal URLs. Defaults to
 	 * `<a>`.
 	 */
-	internalLinkComponent?: React.ElementType<LinkProps>;
+	internalLinkComponent?: React.ComponentType<LinkProps>;
 
 	/**
 	 * The component rendered by `<PrismicLink>` for external URLs. Defaults to
 	 * `<a>`.
 	 */
-	externalLinkComponent?: React.ElementType<LinkProps>;
+	externalLinkComponent?: React.ComponentType<LinkProps>;
 
 	/**
 	 * Children for the component.
@@ -88,7 +88,8 @@ export const PrismicContext = React.createContext<PrismicContextValue>({});
  * Props for `<PrismicProvider>`.
  */
 export type PrismicProviderProps<
-	LinkResolverFunction extends prismicH.LinkResolverFunction,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction<any>,
 > = PrismicContextValue<LinkResolverFunction>;
 
 /**
@@ -99,7 +100,7 @@ export type PrismicProviderProps<
  */
 export const PrismicProvider = <
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismicH.LinkResolverFunction<any>,
+	LinkResolverFunction extends prismic.LinkResolverFunction<any>,
 >({
 	client,
 	linkResolver,

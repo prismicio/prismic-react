@@ -1,5 +1,5 @@
 import { it, expect, vi } from "vitest";
-import * as prismicH from "@prismicio/helpers";
+import * as prismic from "@prismicio/client";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
@@ -18,7 +18,7 @@ it("renders an img element with a width-based srcset by default", async (ctx) =>
 		model: ctx.mock.model.image(),
 	});
 
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
+	const { src, srcset } = prismic.asImageWidthSrcSet(field);
 
 	const actual = renderJSON(<PrismicImage field={field} />);
 	const expected = renderJSON(
@@ -34,7 +34,7 @@ it("renders a width-based srcset with given widths", async (ctx) => {
 	});
 
 	const widths = [100, 200, 300];
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field, { widths });
+	const { src, srcset } = prismic.asImageWidthSrcSet(field, { widths });
 
 	const actual = renderJSON(<PrismicImage field={field} widths={widths} />);
 	const expected = renderJSON(
@@ -49,7 +49,7 @@ it('renders a width-based srcset with default widths if widths is "defaults"', a
 		model: ctx.mock.model.image(),
 	});
 
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
+	const { src, srcset } = prismic.asImageWidthSrcSet(field);
 
 	const actual = renderJSON(<PrismicImage field={field} widths="defaults" />);
 	const expected = renderJSON(
@@ -64,7 +64,7 @@ it('renders a width-based srcset with the field\'s responsive views if widths is
 		model: ctx.mock.model.image(),
 	});
 
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field, {
+	const { src, srcset } = prismic.asImageWidthSrcSet(field, {
 		widths: "thumbnails",
 	});
 
@@ -81,7 +81,7 @@ it('renders pixel-density srcset with default densities if pixelDensities is "de
 		model: ctx.mock.model.image(),
 	});
 
-	const { src, srcset } = prismicH.asImagePixelDensitySrcSet(field);
+	const { src, srcset } = prismic.asImagePixelDensitySrcSet(field);
 
 	const actual = renderJSON(
 		<PrismicImage field={field} pixelDensities="defaults" />,
@@ -99,7 +99,7 @@ it("renders pixel-density srcset with the given densities", async (ctx) => {
 	});
 
 	const pixelDensities = [9, 10];
-	const { src, srcset } = prismicH.asImagePixelDensitySrcSet(field, {
+	const { src, srcset } = prismic.asImagePixelDensitySrcSet(field, {
 		pixelDensities,
 	});
 
@@ -119,7 +119,7 @@ it("prioritizes widths prop over pixelDensities", async (ctx) => {
 	});
 
 	const widths = [100, 200, 300];
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field, { widths });
+	const { src, srcset } = prismic.asImageWidthSrcSet(field, { widths });
 
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
@@ -170,7 +170,7 @@ it("uses the field's alt if given", async (ctx) => {
 		model: ctx.mock.model.image(),
 	});
 
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
+	const { src, srcset } = prismic.asImageWidthSrcSet(field);
 
 	const actual = renderJSON(<PrismicImage field={field} />);
 	const expected = renderJSON(
@@ -186,7 +186,7 @@ it("alt is undefined if the field does not have an alt value", async (ctx) => {
 	});
 	field.alt = null;
 
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
+	const { src, srcset } = prismic.asImageWidthSrcSet(field);
 
 	const actual = renderJSON(<PrismicImage field={field} />);
 	const expected = renderJSON(
@@ -202,7 +202,7 @@ it("supports an explicit decorative fallback alt value if given", async (ctx) =>
 	});
 	field.alt = null;
 
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
+	const { src, srcset } = prismic.asImageWidthSrcSet(field);
 
 	const actual = renderJSON(<PrismicImage field={field} fallbackAlt="" />);
 	const expected = renderJSON(<img src={src} srcSet={srcset} alt="" />);
@@ -237,7 +237,7 @@ it("supports an explicit decorative alt when field has an alt value", async (ctx
 	});
 	field.alt = "provided alt";
 
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
+	const { src, srcset } = prismic.asImageWidthSrcSet(field);
 
 	const actual = renderJSON(<PrismicImage field={field} alt="" />);
 	const expected = renderJSON(<img src={src} srcSet={srcset} alt="" />);
@@ -251,7 +251,7 @@ it("supports an explicit decorative alt when field does not have an alt value", 
 	});
 	field.alt = null;
 
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field);
+	const { src, srcset } = prismic.asImageWidthSrcSet(field);
 
 	const actual = renderJSON(<PrismicImage field={field} alt="" />);
 	const expected = renderJSON(<img src={src} srcSet={srcset} alt="" />);
@@ -300,7 +300,7 @@ it("supports imgix parameters", async (ctx) => {
 	});
 
 	const imgixParams = { sat: -100 };
-	const { src, srcset } = prismicH.asImageWidthSrcSet(field, imgixParams);
+	const { src, srcset } = prismic.asImageWidthSrcSet(field, imgixParams);
 
 	const actual = renderJSON(
 		<PrismicImage field={field} imgixParams={imgixParams} />,

@@ -1,6 +1,5 @@
 import * as React from "react";
-import * as prismicT from "@prismicio/types";
-import * as prismicH from "@prismicio/helpers";
+import * as prismic from "@prismicio/client";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 import { devMsg } from "./lib/devMsg";
@@ -12,7 +11,7 @@ export type PrismicTextProps = {
 	/**
 	 * The Prismic Rich Text field to render.
 	 */
-	field: prismicT.RichTextField | null | undefined;
+	field: prismic.RichTextField | null | undefined;
 
 	/**
 	 * The string rendered when the field is empty. If a fallback is not given,
@@ -57,8 +56,8 @@ export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {
 	}
 
 	return React.useMemo(() => {
-		if (prismicH.isFilled.richText(props.field)) {
-			const text = prismicH.asText(props.field, props.separator);
+		if (prismic.isFilled.richText(props.field)) {
+			const text = prismic.asText(props.field, props.separator);
 
 			return <>{text}</>;
 		} else {

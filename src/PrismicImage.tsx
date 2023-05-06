@@ -1,6 +1,5 @@
 import * as React from "react";
-import * as prismicT from "@prismicio/types";
-import * as prismicH from "@prismicio/helpers";
+import * as prismic from "@prismicio/client";
 
 import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 import { devMsg } from "./lib/devMsg";
@@ -18,14 +17,14 @@ export type PrismicImageProps = Omit<
 	/**
 	 * The Prismic Image field or thumbnail to render.
 	 */
-	field: prismicT.ImageFieldImage | null | undefined;
+	field: prismic.ImageFieldImage | null | undefined;
 
 	/**
 	 * An object of Imgix URL API parameters to transform the image.
 	 *
 	 * See: https://docs.imgix.com/apis/rendering
 	 */
-	imgixParams?: Parameters<typeof prismicH.asImageSrc>[1];
+	imgixParams?: Parameters<typeof prismic.asImageSrc>[1];
 
 	/**
 	 * Declare an image as decorative by providing `alt=""`.
@@ -58,7 +57,7 @@ export type PrismicImageProps = Omit<
 				 */
 				widths?:
 					| NonNullable<
-							Parameters<typeof prismicH.asImageWidthSrcSet>[1]
+							Parameters<typeof prismic.asImageWidthSrcSet>[1]
 					  >["widths"]
 					| "defaults";
 				/**
@@ -79,16 +78,35 @@ export type PrismicImageProps = Omit<
 				 */
 				pixelDensities:
 					| NonNullable<
-							Parameters<typeof prismicH.asImagePixelDensitySrcSet>[1]
+							Parameters<typeof prismic.asImagePixelDensitySrcSet>[1]
 					  >["pixelDensities"]
 					| "defaults";
 		  }
 	);
 
-const _PrismicImage = (
+/**
+ * React component that renders an image from a Prismic Image field or one of
+ * its thumbnails. It will automatically set the `alt` attribute using the Image
+ * field's `alt` property.
+ *
+ * By default, a widths-based srcset will be used to support responsive images.
+ * This ensures only the smallest image needed for a browser is downloaded.
+ *
+ * To use a pixel-density-based srcset, use the `pixelDensities` prop. Default
+ * pixel densities can be used by using `pixelDensities="defaults"`.
+ *
+ * **Note**: If you are using a framework that has a native image component,
+ * such as Next.js and Gatsby, prefer using those image components instead. They
+ * can provide deeper framework integration than `<PrismicImage>`.
+ *
+ * @param props - Props for the component.
+ *
+ * @returns A responsive image component for the given Image field.
+ */
+export const PrismicImage = React.forwardRef(function PrismicImage(
 	props: PrismicImageProps,
 	ref: React.ForwardedRef<HTMLImageElement>,
-): JSX.Element | null => {
+): JSX.Element | null {
 	const {
 		field,
 		alt,
@@ -123,12 +141,12 @@ const _PrismicImage = (
 		}
 	}
 
-	if (prismicH.isFilled.imageThumbnail(field)) {
+	if (prismic.isFilled.imageThumbnail(field)) {
 		let src: string | undefined;
 		let srcSet: string | undefined;
 
 		if (widths || !pixelDensities) {
-			const res = prismicH.asImageWidthSrcSet(field, {
+			const res = prismic.asImageWidthSrcSet(field, {
 				...imgixParams,
 				widths: widths === "defaults" ? undefined : widths,
 			});
@@ -136,7 +154,7 @@ const _PrismicImage = (
 			src = res.src;
 			srcSet = res.srcset;
 		} else if (pixelDensities) {
-			const res = prismicH.asImagePixelDensitySrcSet(field, {
+			const res = prismic.asImagePixelDensitySrcSet(field, {
 				...imgixParams,
 				pixelDensities:
 					pixelDensities === "defaults" ? undefined : pixelDensities,
@@ -158,29 +176,4 @@ const _PrismicImage = (
 	} else {
 		return null;
 	}
-};
-
-if (!__PRODUCTION__) {
-	_PrismicImage.displayName = "PrismicImage";
-}
-
-/**
- * React component that renders an image from a Prismic Image field or one of
- * its thumbnails. It will automatically set the `alt` attribute using the Image
- * field's `alt` property.
- *
- * By default, a widths-based srcset will be used to support responsive images.
- * This ensures only the smallest image needed for a browser is downloaded.
- *
- * To use a pixel-density-based srcset, use the `pixelDensities` prop. Default
- * pixel densities can be used by using `pixelDensities="defaults"`.
- *
- * **Note**: If you are using a framework that has a native image component,
- * such as Next.js and Gatsby, prefer using those image components instead. They
- * can provide deeper framework integration than `<PrismicImage>`.
- *
- * @param props - Props for the component.
- *
- * @returns A responsive image component for the given Image field.
- */
-export const PrismicImage = React.forwardRef(_PrismicImage);
+});

@@ -4,12 +4,7 @@ import { it, expect, vi } from "vitest";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
-import {
-	SliceZone,
-	TODOSliceComponent,
-	SliceComponentProps,
-	SliceZoneResolver,
-} from "../src";
+import { SliceZone, TODOSliceComponent, SliceComponentProps } from "../src";
 
 type StringifySliceComponentProps = {
 	/**
@@ -154,7 +149,6 @@ it("renders TODO component if component mapping is missing", () => {
 	expect(actual).toStrictEqual(expected);
 	expect(consoleWarnSpy).toHaveBeenCalledWith(
 		expect.stringMatching(/could not find a component/i),
-		slices[1],
 	);
 
 	consoleWarnSpy.mockRestore();
@@ -170,67 +164,6 @@ it.skip("TODO component does not warn in production", () => {
 	// ts-eager does not allow esbuild configuration.
 	// We cannot override the `process.env.NODE_ENV` inline replacement.
 	// As a result, we cannot it for production currently.
-});
-
-it("renders components from a resolver function for backwards compatibility with next-slicezone", async () => {
-	const slices = [
-		{
-			slice_type: "foo_bar",
-		},
-		{
-			slice_type: "barFoo",
-		},
-		{
-			slice_type: "baz-qux",
-		},
-	] as const;
-
-	const resolver: SliceZoneResolver<(typeof slices)[number]> = ({
-		sliceName,
-	}) => {
-		switch (sliceName) {
-			case "FooBar": {
-				return (props) => <StringifySliceComponent id="foo_bar" {...props} />;
-			}
-
-			case "BarFoo": {
-				return (props) => <StringifySliceComponent id="barFoo" {...props} />;
-			}
-
-			case "BazQux": {
-				return (props) => <StringifySliceComponent id="baz-qux" {...props} />;
-			}
-		}
-	};
-
-	const actual = renderJSON(<SliceZone slices={slices} resolver={resolver} />);
-	const expected = renderJSON(
-		<>
-			<StringifySliceComponent
-				id="foo_bar"
-				slice={slices[0]}
-				index={0}
-				slices={slices}
-				context={{}}
-			/>
-			<StringifySliceComponent
-				id="barFoo"
-				slice={slices[1]}
-				index={1}
-				slices={slices}
-				context={{}}
-			/>
-			<StringifySliceComponent
-				id="baz-qux"
-				slice={slices[2]}
-				index={2}
-				slices={slices}
-				context={{}}
-			/>
-		</>,
-	);
-
-	expect(actual).toStrictEqual(expected);
 });
 
 it("supports the GraphQL API", () => {

@@ -17,13 +17,7 @@ export type { PrismicTextProps } from "./PrismicText";
 export { PrismicRichText } from "./PrismicRichText";
 export type { PrismicRichTextProps } from "./PrismicRichText";
 
-import { Element } from "@prismicio/richtext";
-export { Element };
-/**
- * @deprecated Renamed to `Element` (without an "s").
- */
-// TODO: Remove in v3.
-export const Elements = Element;
+export { Element } from "@prismicio/richtext";
 
 export { PrismicImage } from "./PrismicImage";
 export type { PrismicImageProps } from "./PrismicImage";
@@ -35,10 +29,8 @@ export type {
 	SliceLikeRestV2,
 	SliceLikeGraphQL,
 	SliceLike,
-	SliceZoneComponents,
 	SliceZoneLike,
 	SliceZoneProps,
-	SliceZoneResolver,
 } from "./SliceZone";
 
 export { PrismicToolbar } from "./PrismicToolbar";
