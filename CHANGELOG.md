@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/prismicio/prismic-react/compare/v2.5.2...v2.6.0) (2023-05-06)
+
+
+### Features
+
+* support React Server Components ([#178](https://github.com/prismicio/prismic-react/issues/178)) ([ea0ddf8](https://github.com/prismicio/prismic-react/commit/ea0ddf84fdaeefb830bacaf7746a52a614365975))
+
 ## [2.6.0-alpha.3](https://github.com/prismicio/prismic-react/compare/v2.6.0-alpha.2...v2.6.0-alpha.3) (2023-05-05)
 
 
