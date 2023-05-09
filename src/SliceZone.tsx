@@ -1,8 +1,6 @@
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 
-import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
-
 /**
  * The minimum required properties to represent a Prismic Slice from the Prismic
  * Rest API V2 for the `<SliceZone>` component.
@@ -110,24 +108,25 @@ export type SliceComponentType<
  * This is also the default React component rendered when a component mapping
  * cannot be found in `<SliceZone>`.
  */
-export const TODOSliceComponent = __PRODUCTION__
-	? () => null
-	: <TSlice extends SliceLike, TContext>({
-			slice,
-	  }: SliceComponentProps<TSlice, TContext>): JSX.Element | null => {
-			const type = "slice_type" in slice ? slice.slice_type : slice.type;
+export const TODOSliceComponent =
+	process.env.NODE_ENV === "development"
+		? () => null
+		: <TSlice extends SliceLike, TContext>({
+				slice,
+		  }: SliceComponentProps<TSlice, TContext>): JSX.Element | null => {
+				const type = "slice_type" in slice ? slice.slice_type : slice.type;
 
-			console.warn(
-				`[SliceZone] Could not find a component for Slice type "${type}"`,
-			);
+				console.warn(
+					`[SliceZone] Could not find a component for Slice type "${type}"`,
+				);
 
-			return (
-				<section data-slice-zone-todo-component="" data-slice-type={type}>
-					Could not find a component for Slice type &ldquo;{type}
-					&rdquo;
-				</section>
-			);
-	  };
+				return (
+					<section data-slice-zone-todo-component="" data-slice-type={type}>
+						Could not find a component for Slice type &ldquo;{type}
+						&rdquo;
+					</section>
+				);
+		  };
 
 /**
  * React props for the `<SliceZone>` component.
