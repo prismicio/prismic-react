@@ -1,14 +1,14 @@
 import { it, expect, vi } from "vitest";
-import * as prismicT from "@prismicio/types";
+import * as prismic from "@prismicio/client";
 
 import { PrismicText } from "../src";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
 it("returns string when passed RichTextField", () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading1,
+			type: prismic.RichTextNodeType.heading1,
 			text: "Heading 1",
 			spans: [],
 		},
@@ -54,6 +54,10 @@ it("returns fallback when passed empty field", () => {
 });
 
 it("throws error if passed a string-based field (e.g. Key Text or Select)", () => {
+	// The error is only thrown  in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
+
 	// Used to supress logging the error in this it.
 	const consoleErrorStub = vi
 		.spyOn(console, "error")
@@ -69,4 +73,33 @@ it("throws error if passed a string-based field (e.g. Key Text or Select)", () =
 	}).throws(/prismictext-works-only-with-rich-text-and-title-fields/);
 
 	consoleErrorStub.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
+});
+
+it("warns if a className prop is provided", async () => {
+	const field: prismic.RichTextField = [];
+
+	// The warning only logs in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
+
+	const consoleWarnSpy = vi
+		.spyOn(console, "warn")
+		.mockImplementation(() => void 0);
+
+	renderJSON(
+		<PrismicText
+			field={field}
+			// @ts-expect-error - We are purposely passing an invalid prop to trigger the console wraning.
+			className="foo"
+		/>,
+	);
+
+	expect(consoleWarnSpy).toHaveBeenCalledWith(
+		expect.stringMatching(/classname-is-not-a-valid-prop/),
+		field,
+	);
+
+	consoleWarnSpy.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
 });

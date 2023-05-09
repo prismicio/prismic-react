@@ -4,6 +4,7 @@ import * as prismicR from "@prismicio/richtext";
 
 import { JSXFunctionSerializer, JSXMapSerializer } from "../types";
 import { LinkProps, PrismicLink } from "./PrismicLink";
+import { devMsg } from "../lib/devMsg";
 
 /**
  * Props for `<PrismicRichText>`.
@@ -222,8 +223,20 @@ export function PrismicRichText<
 	components,
 	externalLinkComponent,
 	internalLinkComponent,
+	...restProps
 }: PrismicRichTextProps<LinkResolverFunction>): JSX.Element | null {
 	return React.useMemo(() => {
+		if (process.env.NODE_ENV === "development") {
+			if ("className" in restProps) {
+				console.warn(
+					`[PrismicRichText] className cannot be passed to <PrismicRichText> since it renders an array without a wrapping component. For more details, see ${devMsg(
+						"classname-is-not-a-valid-prop",
+					)}.`,
+					field,
+				);
+			}
+		}
+
 		if (prismic.isFilled.richText(field)) {
 			const serializer = prismicR.composeSerializers(
 				typeof components === "object"

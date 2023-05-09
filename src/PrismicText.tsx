@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 
-import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 import { devMsg } from "./lib/devMsg";
 
 /**
@@ -45,7 +44,16 @@ export type PrismicTextProps = {
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  */
 export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {
-	if (!__PRODUCTION__) {
+	if (process.env.NODE_ENV === "development") {
+		if ("className" in props) {
+			console.warn(
+				`[PrismicText] className cannot be passed to <PrismicText> since it renders plain text without a wrapping component. For more details, see ${devMsg(
+					"classname-is-not-a-valid-prop",
+				)}.`,
+				props.field,
+			);
+		}
+
 		if (typeof props.field === "string") {
 			throw new Error(
 				`[PrismicText] The "field" prop only accepts a Rich Text or Title field's value but was provided a different type of field instead (e.g. a Key Text or Select field). You can resolve this error by rendering the field value inline without <PrismicText>. For more details, see ${devMsg(
