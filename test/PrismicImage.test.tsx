@@ -143,6 +143,9 @@ it("warns if both widths and pixelDensites are given", async (ctx) => {
 		model: ctx.mock.model.image(),
 	});
 
+	// The warning only logs in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
@@ -163,6 +166,7 @@ it("warns if both widths and pixelDensites are given", async (ctx) => {
 	);
 
 	consoleWarnSpy.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
 });
 
 it("uses the field's alt if given", async (ctx) => {
@@ -215,6 +219,9 @@ it("warns if a non-decorative fallback alt value is given", async (ctx) => {
 		model: ctx.mock.model.image(),
 	});
 
+	// The warning only logs in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
@@ -229,6 +236,7 @@ it("warns if a non-decorative fallback alt value is given", async (ctx) => {
 	);
 
 	consoleWarnSpy.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
 });
 
 it("supports an explicit decorative alt when field has an alt value", async (ctx) => {
@@ -264,6 +272,9 @@ it("warns if a non-decorative alt value is given", async (ctx) => {
 		model: ctx.mock.model.image(),
 	});
 
+	// The warning only logs in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
@@ -278,6 +289,7 @@ it("warns if a non-decorative alt value is given", async (ctx) => {
 	);
 
 	consoleWarnSpy.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
 });
 
 it("forwards ref", async (ctx) => {
