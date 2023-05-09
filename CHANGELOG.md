@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.1](https://github.com/prismicio/prismic-react/compare/v2.6.0...v2.6.1) (2023-05-09)
+
+
+### Bug Fixes
+
+* **SliceZone:** restore `resolver` prop ([#181](https://github.com/prismicio/prismic-react/issues/181)) ([e3604d9](https://github.com/prismicio/prismic-react/commit/e3604d98b85fcd9ea0dd7e208ed305868d6a8fdd))
+* warn when passing `className` to `<PrismicRichText>` or `<PrismicText>` ([#179](https://github.com/prismicio/prismic-react/issues/179)) ([aac1cc7](https://github.com/prismicio/prismic-react/commit/aac1cc76d586ddf971a903e8b1e5c066a370ebb7))
+
+
+### Refactor
+
+* remove `__PRODUCTION__` and `invariant`; add tests for `development` environment ([#180](https://github.com/prismicio/prismic-react/issues/180)) ([8f30e6c](https://github.com/prismicio/prismic-react/commit/8f30e6c4d65014757d15cdbae730ff39425c24ba))
+
 ## [2.6.0](https://github.com/prismicio/prismic-react/compare/v2.5.2...v2.6.0) (2023-05-06)
 
 
