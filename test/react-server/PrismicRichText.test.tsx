@@ -1,5 +1,5 @@
 import { it, expect, vi } from "vitest";
-import * as prismicT from "@prismicio/types";
+import * as prismic from "@prismicio/client";
 import * as React from "react";
 
 import { renderJSON } from "../__testutils__/renderJSON";
@@ -60,9 +60,9 @@ it("returns fallback if given when passed empty field", async () => {
 });
 
 it("returns <h1> if type is heading1", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading1,
+			type: prismic.RichTextNodeType.heading1,
 			text: "Heading 1",
 			spans: [],
 		},
@@ -75,9 +75,9 @@ it("returns <h1> if type is heading1", async () => {
 });
 
 it("returns <h2> if type is heading2", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading2,
+			type: prismic.RichTextNodeType.heading2,
 			text: "Heading 2",
 			spans: [],
 		},
@@ -90,9 +90,9 @@ it("returns <h2> if type is heading2", async () => {
 });
 
 it("returns <h3> if type is heading3", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading3,
+			type: prismic.RichTextNodeType.heading3,
 			text: "Heading 3",
 			spans: [],
 		},
@@ -105,9 +105,9 @@ it("returns <h3> if type is heading3", async () => {
 });
 
 it("returns <h4> if type is heading4", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading4,
+			type: prismic.RichTextNodeType.heading4,
 			text: "Heading 4",
 			spans: [],
 		},
@@ -120,9 +120,9 @@ it("returns <h4> if type is heading4", async () => {
 });
 
 it("returns <h4> if type is heading3", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading4,
+			type: prismic.RichTextNodeType.heading4,
 			text: "Heading 4",
 			spans: [],
 		},
@@ -135,9 +135,9 @@ it("returns <h4> if type is heading3", async () => {
 });
 
 it("returns <h5> if type is heading4", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading5,
+			type: prismic.RichTextNodeType.heading5,
 			text: "Heading 5",
 			spans: [],
 		},
@@ -150,9 +150,9 @@ it("returns <h5> if type is heading4", async () => {
 });
 
 it("returns <h6> if type is heading6", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading6,
+			type: prismic.RichTextNodeType.heading6,
 			text: "Heading 6",
 			spans: [],
 		},
@@ -165,9 +165,9 @@ it("returns <h6> if type is heading6", async () => {
 });
 
 it("returns <p /> if type is paragraph", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "Paragraph bold",
 			spans: [],
 		},
@@ -180,9 +180,9 @@ it("returns <p /> if type is paragraph", async () => {
 });
 
 it("returns <pre /> if type is preformatted", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.preformatted,
+			type: prismic.RichTextNodeType.preformatted,
 			text: "Preformatted",
 			spans: [],
 		},
@@ -195,15 +195,15 @@ it("returns <pre /> if type is preformatted", async () => {
 });
 
 it("returns <strong /> if type is strong", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "strong",
 			spans: [
 				{
 					start: 0,
 					end: "strong".length,
-					type: prismicT.RichTextNodeType.strong,
+					type: prismic.RichTextNodeType.strong,
 				},
 			],
 		},
@@ -220,15 +220,15 @@ it("returns <strong /> if type is strong", async () => {
 });
 
 it("returns <em /> if type is em", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "em",
 			spans: [
 				{
 					start: 0,
 					end: 2,
-					type: prismicT.RichTextNodeType.em,
+					type: prismic.RichTextNodeType.em,
 				},
 			],
 		},
@@ -245,9 +245,9 @@ it("returns <em /> if type is em", async () => {
 });
 
 it("returns <ul> <li> </li> </ul> if type is listItem", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.listItem,
+			type: prismic.RichTextNodeType.listItem,
 			text: "listItem",
 			spans: [],
 		},
@@ -264,9 +264,9 @@ it("returns <ul> <li> </li> </ul> if type is listItem", async () => {
 });
 
 it("returns <ol> <li> </li> </ol> if type is listItem", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.oListItem,
+			type: prismic.RichTextNodeType.oListItem,
 			text: "oListItem",
 			spans: [],
 		},
@@ -287,9 +287,9 @@ it("returns <image /> if type is image", async () => {
 	const alt = "alt";
 	const copyright = "copyright";
 
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.image,
+			type: prismic.RichTextNodeType.image,
 			url,
 			alt,
 			copyright,
@@ -314,9 +314,9 @@ it("returns <image /> with undefined copyright if not provided", async () => {
 	const url = "url";
 	const alt = "alt";
 
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.image,
+			type: prismic.RichTextNodeType.image,
 			url,
 			alt,
 			copyright: null,
@@ -344,9 +344,9 @@ it("returns <image /> wrapped in <PrismicLink />", async (ctx) => {
 
 	const linkField = ctx.mock.value.link({ type: "Document" });
 
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.image,
+			type: prismic.RichTextNodeType.image,
 			url,
 			alt,
 			copyright,
@@ -371,8 +371,8 @@ it("returns <image /> wrapped in <PrismicLink />", async (ctx) => {
 });
 
 it("returns <div /> with embedded html if type is embed", async () => {
-	const oembed: prismicT.EmbedField<
-		prismicT.RichOEmbed & { provider_name: string }
+	const oembed: prismic.EmbedField<
+		prismic.RichOEmbed & { provider_name: string }
 	> = {
 		version: "1.0",
 		embed_url: "https://example.com",
@@ -382,9 +382,9 @@ it("returns <div /> with embedded html if type is embed", async () => {
 		height: 100,
 		provider_name: "Prismic",
 	};
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.embed,
+			type: prismic.RichTextNodeType.embed,
 			oembed,
 		},
 	];
@@ -403,25 +403,25 @@ it("returns <div /> with embedded html if type is embed", async () => {
 });
 
 it("Returns <PrismicLink /> when type is hyperlink", async () => {
-	const data: prismicT.FilledLinkToDocumentField = {
+	const data: prismic.FilledContentRelationshipField = {
 		id: "id",
 		uid: "uid",
 		lang: "lang",
 		tags: [],
 		type: "page",
-		link_type: prismicT.LinkType.Document,
+		link_type: prismic.LinkType.Document,
 		url: "/url",
 	};
 
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "hyperlink",
 			spans: [
 				{
 					start: 0,
 					end: "hyperlink".length,
-					type: prismicT.RichTextNodeType.hyperlink,
+					type: prismic.RichTextNodeType.hyperlink,
 					data,
 				},
 			],
@@ -442,25 +442,25 @@ it("Returns <PrismicLink /> when type is hyperlink", async () => {
 
 // TODO update isInternalURL to support an internal URL like "url"
 it("Returns <PrismicLink /> with internalComponent from props", async () => {
-	const data: prismicT.FilledLinkToDocumentField = {
+	const data: prismic.FilledContentRelationshipField = {
 		id: "id",
 		uid: "uid",
 		lang: "lang",
 		tags: [],
 		type: "page",
-		link_type: prismicT.LinkType.Document,
+		link_type: prismic.LinkType.Document,
 		url: "/url",
 	};
 
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "hyperlink",
 			spans: [
 				{
 					start: 0,
 					end: "hyperlink".length,
-					type: prismicT.RichTextNodeType.hyperlink,
+					type: prismic.RichTextNodeType.hyperlink,
 					data,
 				},
 			],
@@ -485,13 +485,13 @@ it("returns <span /> with label className if type is label", async () => {
 	const data = {
 		label: "label",
 	};
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "label",
 			spans: [
 				{
-					type: prismicT.RichTextNodeType.label,
+					type: prismic.RichTextNodeType.label,
 					start: 0,
 					end: 5,
 					data,
@@ -511,9 +511,9 @@ it("returns <span /> with label className if type is label", async () => {
 });
 
 it("renders line breaks as <br />", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "line 1\nline 2",
 			spans: [],
 		},
@@ -531,9 +531,9 @@ it("renders line breaks as <br />", async () => {
 });
 
 it("renders components from components prop", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "paragraph",
 			spans: [],
 		},
@@ -551,14 +551,14 @@ it("renders components from components prop", async () => {
 });
 
 it("keys are automatically applied to custom components", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading1,
+			type: prismic.RichTextNodeType.heading1,
 			text: "heading1",
 			spans: [],
 		},
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "paragraph",
 			spans: [],
 		},
@@ -583,4 +583,32 @@ it("keys are automatically applied to custom components", async () => {
 	);
 
 	consoleErrorSpy.mockRestore();
+});
+
+it("warns if a className prop is provided", async () => {
+	const field: prismic.RichTextField = [];
+
+	// The warning only logs in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
+
+	const consoleWarnSpy = vi
+		.spyOn(console, "warn")
+		.mockImplementation(() => void 0);
+
+	renderJSON(
+		<PrismicRichText
+			field={field}
+			// @ts-expect-error - We are purposely passing an invalid prop to trigger the console wraning.
+			className="foo"
+		/>,
+	);
+
+	expect(consoleWarnSpy).toHaveBeenCalledWith(
+		expect.stringMatching(/classname-is-not-a-valid-prop/),
+		field,
+	);
+
+	consoleWarnSpy.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
 });
