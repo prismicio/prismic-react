@@ -7,7 +7,6 @@ import {
 	AsLinkAttrsConfig,
 } from "@prismicio/client";
 
-import { __PRODUCTION__ } from "../lib/__PRODUCTION__";
 import { devMsg } from "../lib/devMsg";
 import { isInternalURL } from "../lib/isInternalURL";
 
@@ -108,7 +107,7 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 	}: PrismicLinkProps<InternalComponentProps, ExternalComponentProps>,
 	ref: React.ForwardedRef<Element>,
 ): JSX.Element {
-	if (!__PRODUCTION__) {
+	if (process.env.NODE_ENV === "development") {
 		if (field) {
 			if (!field.link_type) {
 				console.error(

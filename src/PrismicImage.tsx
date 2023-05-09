@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 
-import { __PRODUCTION__ } from "./lib/__PRODUCTION__";
 import { devMsg } from "./lib/devMsg";
 
 /**
@@ -117,7 +116,7 @@ export const PrismicImage = React.forwardRef(function PrismicImage(
 		...restProps
 	} = props;
 
-	if (!__PRODUCTION__) {
+	if (process.env.NODE_ENV === "development") {
 		if (typeof alt === "string" && props.alt !== "") {
 			console.warn(
 				`[PrismicImage] The "alt" prop can only be used to declare an image as decorative by passing an empty string (alt="") but was provided a non-empty string. You can resolve this warning by removing the "alt" prop or changing it to alt="". For more details, see ${devMsg(

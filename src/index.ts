@@ -1,3 +1,5 @@
+import "./lib/processPolyfill";
+
 export { PrismicProvider } from "./PrismicProvider";
 export type {
 	PrismicProviderProps,

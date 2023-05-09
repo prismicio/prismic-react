@@ -293,6 +293,10 @@ it("throws error if `link_type` is missing from a given field", async (ctx) => {
 	// @ts-expect-error - We are purposely deleting a non-optional field.
 	delete field.link_type;
 
+	// The warning only logs in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
+
 	const consoleErrorSpy = vi
 		.spyOn(console, "error")
 		.mockImplementation(() => void 0);
@@ -309,10 +313,15 @@ it("throws error if `link_type` is missing from a given field", async (ctx) => {
 	);
 
 	consoleErrorSpy.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
 });
 
 it("warns if properties are missing from a given field", async () => {
 	const field = { link_type: prismic.LinkType.Web, target: "_blank" };
+
+	// The warning only logs in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
 
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
@@ -326,10 +335,15 @@ it("warns if properties are missing from a given field", async () => {
 	);
 
 	consoleWarnSpy.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
 });
 
 it("does not warn if given field is empty", async (ctx) => {
 	const field = ctx.mock.value.link({ state: "empty" });
+
+	// The warning only logs in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
 
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
@@ -340,11 +354,15 @@ it("does not warn if given field is empty", async (ctx) => {
 	expect(consoleWarnSpy).not.toHaveBeenCalled();
 
 	consoleWarnSpy.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
 });
 
 it("warns if properties are missing from a given document", async () => {
 	const document = {} as prismic.PrismicDocument;
 
+	// The warning only logs in "development".
+	const originalNodeEnv = process.env.NODE_ENV;
+	process.env.NODE_ENV = "development";
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
@@ -357,4 +375,5 @@ it("warns if properties are missing from a given document", async () => {
 	);
 
 	consoleWarnSpy.mockRestore();
+	process.env.NODE_ENV = originalNodeEnv;
 });
