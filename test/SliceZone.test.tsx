@@ -187,18 +187,14 @@ it("TODO component renders null in production", () => {
 				slices={slices}
 				context={{}}
 			/>
-			<TODOSliceComponent
-				slice={slices[1]}
-				index={0}
-				slices={slices}
-				context={{}}
-			/>
+			{null}
 		</>,
 	);
 
 	expect(actual).toStrictEqual(expected);
 	expect(consoleWarnSpy).not.toHaveBeenCalledWith(
 		expect.stringMatching(/could not find a component/i),
+		slices[1],
 	);
 
 	consoleWarnSpy.mockRestore();
