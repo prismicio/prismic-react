@@ -155,7 +155,10 @@ export type SliceZoneComponents<
 export const TODOSliceComponent = <TSlice extends SliceLike, TContext>({
 	slice,
 }: SliceComponentProps<TSlice, TContext>): JSX.Element | null => {
-	if (process.env.NODE_ENV === "development") {
+	if (
+		typeof process !== "undefined" &&
+		process.env.NODE_ENV === "development"
+	) {
 		const type = "slice_type" in slice ? slice.slice_type : slice.type;
 
 		console.warn(

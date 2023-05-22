@@ -19,12 +19,24 @@
 	"exports": {
 		".": {
 			"react-server": {
-				"import": "./dist/react-server.js",
-				"require": "./dist/react-server.cjs"
+				"require": {
+					"types": "./dist/react-server/index.d.ts",
+					"default": "./dist/react-server.cjs"
+				},
+				"import": {
+					"types": "./dist/react-server/index.d.ts",
+					"default": "./dist/react-server.js"
+				}
 			},
 			"default": {
-				"import": "./dist/index.js",
-				"require": "./dist/index.cjs"
+				"require": {
+					"types": "./dist/index.d.ts",
+					"default": "./dist/index.cjs"
+				},
+				"import": {
+					"types": "./dist/index.d.ts",
+					"default": "./dist/index.js"
+				}
 			}
 		},
 		"./package.json": "./package.json"
@@ -54,10 +66,10 @@
 		"test": "npm run lint && npm run types && npm run unit && npm run build && npm run size"
 	},
 	"dependencies": {
-		"@prismicio/richtext": "^2.1.4"
+		"@prismicio/richtext": "^2.1.5"
 	},
 	"devDependencies": {
-		"@prismicio/client": "^7.0.0-alpha.3",
+		"@prismicio/client": "^7.0.1",
 		"@prismicio/mock": "^0.2.0",
 		"@size-limit/preset-small-lib": "^8.2.4",
 		"@testing-library/react": "^14.0.0",

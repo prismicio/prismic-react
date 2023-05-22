@@ -226,7 +226,10 @@ export function PrismicRichText<
 	...restProps
 }: PrismicRichTextProps<LinkResolverFunction>): JSX.Element | null {
 	return React.useMemo(() => {
-		if (process.env.NODE_ENV === "development") {
+		if (
+			typeof process !== "undefined" &&
+			process.env.NODE_ENV === "development"
+		) {
 			if ("className" in restProps) {
 				console.warn(
 					`[PrismicRichText] className cannot be passed to <PrismicRichText> since it renders an array without a wrapping component. For more details, see ${devMsg(

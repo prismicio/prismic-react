@@ -107,7 +107,10 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 	}: PrismicLinkProps<InternalComponentProps, ExternalComponentProps>,
 	ref: React.ForwardedRef<Element>,
 ): JSX.Element {
-	if (process.env.NODE_ENV === "development") {
+	if (
+		typeof process !== "undefined" &&
+		process.env.NODE_ENV === "development"
+	) {
 		if (field) {
 			if (!field.link_type) {
 				console.error(
