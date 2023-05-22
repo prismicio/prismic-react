@@ -20,11 +20,11 @@
 		".": {
 			"react-server": {
 				"require": {
-					"types": "./dist/react-server.d.ts",
+					"types": "./dist/react-server/index.d.ts",
 					"default": "./dist/react-server.cjs"
 				},
 				"import": {
-					"types": "./dist/react-server.d.ts",
+					"types": "./dist/react-server/index.d.ts",
 					"default": "./dist/react-server.js"
 				}
 			},
