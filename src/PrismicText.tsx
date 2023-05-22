@@ -44,7 +44,10 @@ export type PrismicTextProps = {
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  */
 export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {
-	if (process.env.NODE_ENV === "development") {
+	if (
+		typeof process !== "undefined" &&
+		process.env.NODE_ENV === "development"
+	) {
 		if ("className" in props) {
 			console.warn(
 				`[PrismicText] className cannot be passed to <PrismicText> since it renders plain text without a wrapping component. For more details, see ${devMsg(

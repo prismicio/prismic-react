@@ -52,7 +52,7 @@ export const PrismicToolbar = ({
 			// environments.
 			//
 			// @see https://github.com/capricorn86/happy-dom/blob/02ae081e36f990c06171eda44f9d885fd9413d73/packages/happy-dom/src/nodes/html-script-element/HTMLScriptElement.ts#L191-L209
-			if (process.env.NODE_ENV === "test") {
+			if (typeof process !== "undefined" && process.env.NODE_ENV === "test") {
 				// @ts-expect-error - `_evaluateScript` is a Happy DOM-specific property.
 				script._evaluateScript = false;
 			}
