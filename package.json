@@ -19,12 +19,24 @@
 	"exports": {
 		".": {
 			"react-server": {
-				"import": "./dist/react-server.js",
-				"require": "./dist/react-server.cjs"
+				"require": {
+					"types": "./dist/react-server.d.ts",
+					"default": "./dist/react-server.cjs"
+				},
+				"import": {
+					"types": "./dist/react-server.d.ts",
+					"default": "./dist/react-server.js"
+				}
 			},
 			"default": {
-				"import": "./dist/index.js",
-				"require": "./dist/index.cjs"
+				"require": {
+					"types": "./dist/index.d.ts",
+					"default": "./dist/index.cjs"
+				},
+				"import": {
+					"types": "./dist/index.d.ts",
+					"default": "./dist/index.js"
+				}
 			}
 		},
 		"./package.json": "./package.json"
