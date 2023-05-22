@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.2](https://github.com/prismicio/prismic-react/compare/v2.6.1...v2.6.2) (2023-05-22)
+
+
+### Bug Fixes
+
+* properly resolve types when using TypeScript's latest module resolution strategy ([#182](https://github.com/prismicio/prismic-react/issues/182)) ([27332f5](https://github.com/prismicio/prismic-react/commit/27332f571ec660f6b9aed8ff54739f5581bc64a7))
+
 ### [2.6.1](https://github.com/prismicio/prismic-react/compare/v2.6.0...v2.6.1) (2023-05-09)
 
 
