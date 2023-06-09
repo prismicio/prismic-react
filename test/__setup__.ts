@@ -21,7 +21,7 @@ beforeAll(() => {
 });
 
 beforeEach((ctx) => {
-	ctx.mock = createMockFactory({ seed: ctx.meta.name });
+	ctx.mock = createMockFactory({ seed: ctx.task.name });
 	ctx.msw = mswServer;
 
 	ctx.msw.resetHandlers();
