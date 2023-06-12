@@ -1,14 +1,14 @@
 import { it, expect } from "vitest";
-import * as prismicT from "@prismicio/types";
+import * as prismic from "@prismicio/client";
 
 import { renderJSON } from "./__testutils__/renderJSON";
 
 import { PrismicRichText, PrismicProvider } from "../src";
 
 it("renders components given to PrismicProvider", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "paragraph",
 			spans: [],
 		},
@@ -29,14 +29,14 @@ it("renders components given to PrismicProvider", async () => {
 });
 
 it("components given to components prop overrides components given to PrismicProvider", async () => {
-	const field: prismicT.RichTextField = [
+	const field: prismic.RichTextField = [
 		{
-			type: prismicT.RichTextNodeType.heading1,
+			type: prismic.RichTextNodeType.heading1,
 			text: "heading",
 			spans: [],
 		},
 		{
-			type: prismicT.RichTextNodeType.paragraph,
+			type: prismic.RichTextNodeType.paragraph,
 			text: "paragraph",
 			spans: [],
 		},

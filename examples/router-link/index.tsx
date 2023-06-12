@@ -1,11 +1,11 @@
 import * as React from "react";
-import * as prismicT from "@prismicio/types";
+import * as prismic from "@prismicio/client";
 import { PrismicLink, LinkProps } from "@prismicio/react";
 import { Link } from "react-router-dom";
 
 // This is an example Link field value. It contains a URL internal to the app.
-const field: prismicT.LinkField = {
-	link_type: prismicT.LinkType.Web,
+const field: prismic.LinkField = {
+	link_type: prismic.LinkType.Web,
 	url: "/internal-url",
 };
 

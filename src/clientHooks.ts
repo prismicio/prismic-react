@@ -1,4 +1,4 @@
-import type * as prismicT from "@prismicio/types";
+import type * as prismic from "@prismicio/client";
 
 import {
 	ClientHookReturnType,
@@ -21,9 +21,9 @@ import {
  *
  * @see Underlying `@prismicio/client` method {@link proto.get}
  */
-export const usePrismicDocuments = <TDocument extends prismicT.PrismicDocument>(
+export const usePrismicDocuments = <TDocument extends prismic.PrismicDocument>(
 	...args: [params?: ClientMethodParameters<"get">[0] & HookOnlyParameters]
-): ClientHookReturnType<prismicT.Query<TDocument>> =>
+): ClientHookReturnType<prismic.Query<TDocument>> =>
 	useStatefulPrismicClientMethod("get", args);
 
 /**
@@ -42,7 +42,7 @@ export const usePrismicDocuments = <TDocument extends prismicT.PrismicDocument>(
  * @see Underlying `@prismicio/client` method {@link proto.getFirst}
  */
 export const useFirstPrismicDocument = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [params?: ClientMethodParameters<"getFirst">[0] & HookOnlyParameters]
 ): ClientHookReturnType<TDocument> =>
@@ -65,7 +65,7 @@ export const useFirstPrismicDocument = <
  * @see Underlying `@prismicio/client` method {@link proto.getAll}
  */
 export const useAllPrismicDocumentsDangerously = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		params?: ClientMethodParameters<"dangerouslyGetAll">[0] &
@@ -91,7 +91,7 @@ export const useAllPrismicDocumentsDangerously = <
  * @see Underlying `@prismicio/client` method {@link proto.getByID}
  */
 export const usePrismicDocumentByID = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		id: ClientMethodParameters<"getByID">[0],
@@ -116,13 +116,13 @@ export const usePrismicDocumentByID = <
  * @see Underlying `@prismicio/client` method {@link proto.getByIDs}
  */
 export const usePrismicDocumentsByIDs = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		id: ClientMethodParameters<"getByIDs">[0],
 		params?: ClientMethodParameters<"getByIDs">[1] & HookOnlyParameters,
 	]
-): ClientHookReturnType<prismicT.Query<TDocument>> =>
+): ClientHookReturnType<prismic.Query<TDocument>> =>
 	useStatefulPrismicClientMethod("getByIDs", args);
 
 /**
@@ -142,7 +142,7 @@ export const usePrismicDocumentsByIDs = <
  * @see Underlying `@prismicio/client` method {@link proto.getAllByIDs}
  */
 export const useAllPrismicDocumentsByIDs = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		id: ClientMethodParameters<"getAllByIDs">[0],
@@ -169,7 +169,7 @@ export const useAllPrismicDocumentsByIDs = <
  * @see Underlying `@prismicio/client` method {@link proto.getByUID}
  */
 export const usePrismicDocumentByUID = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		documentType: ClientMethodParameters<"getByUID">[0],
@@ -197,14 +197,14 @@ export const usePrismicDocumentByUID = <
  * @see Underlying `@prismicio/client` method {@link proto.getByUID}
  */
 export const usePrismicDocumentsByUIDs = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		documentType: ClientMethodParameters<"getByUIDs">[0],
 		uids: ClientMethodParameters<"getByUIDs">[1],
 		params?: ClientMethodParameters<"getByUIDs">[2] & HookOnlyParameters,
 	]
-): ClientHookReturnType<prismicT.Query<TDocument>> =>
+): ClientHookReturnType<prismic.Query<TDocument>> =>
 	useStatefulPrismicClientMethod("getByUIDs", args);
 
 /**
@@ -225,7 +225,7 @@ export const usePrismicDocumentsByUIDs = <
  * @see Underlying `@prismicio/client` method {@link proto.getByUID}
  */
 export const useAllPrismicDocumentsByUIDs = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		documentType: ClientMethodParameters<"getByUIDs">[0],
@@ -252,7 +252,7 @@ export const useAllPrismicDocumentsByUIDs = <
  * @see Underlying `@prismicio/client` method {@link proto.getSingle}
  */
 export const useSinglePrismicDocument = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		documentType: ClientMethodParameters<"getSingle">[0],
@@ -278,13 +278,13 @@ export const useSinglePrismicDocument = <
  * @see Underlying `@prismicio/client` method {@link proto.getByType}
  */
 export const usePrismicDocumentsByType = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		documentType: ClientMethodParameters<"getByType">[0],
 		params?: ClientMethodParameters<"getByType">[1] & HookOnlyParameters,
 	]
-): ClientHookReturnType<prismicT.Query<TDocument>> =>
+): ClientHookReturnType<prismic.Query<TDocument>> =>
 	useStatefulPrismicClientMethod("getByType", args);
 
 /**
@@ -304,7 +304,7 @@ export const usePrismicDocumentsByType = <
  * @see Underlying `@prismicio/client` method {@link proto.getAllByType}
  */
 export const useAllPrismicDocumentsByType = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		documentType: ClientMethodParameters<"getAllByType">[0],
@@ -330,13 +330,13 @@ export const useAllPrismicDocumentsByType = <
  * @see Underlying `@prismicio/client` method {@link proto.getByTag}
  */
 export const usePrismicDocumentsByTag = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		tag: ClientMethodParameters<"getByTag">[0],
 		params?: ClientMethodParameters<"getByTag">[1] & HookOnlyParameters,
 	]
-): ClientHookReturnType<prismicT.Query<TDocument>> =>
+): ClientHookReturnType<prismic.Query<TDocument>> =>
 	useStatefulPrismicClientMethod("getByTag", args);
 
 /**
@@ -356,7 +356,7 @@ export const usePrismicDocumentsByTag = <
  * @see Underlying `@prismicio/client` method {@link proto.getAllByTag}
  */
 export const useAllPrismicDocumentsByTag = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		tag: ClientMethodParameters<"getAllByTag">[0],
@@ -383,13 +383,13 @@ export const useAllPrismicDocumentsByTag = <
  * @see Underlying `@prismicio/client` method {@link proto.getByTags}
  */
 export const usePrismicDocumentsBySomeTags = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		tag: ClientMethodParameters<"getBySomeTags">[0],
 		params?: ClientMethodParameters<"getBySomeTags">[1] & HookOnlyParameters,
 	]
-): ClientHookReturnType<prismicT.Query<TDocument>> =>
+): ClientHookReturnType<prismic.Query<TDocument>> =>
 	useStatefulPrismicClientMethod("getBySomeTags", args);
 
 /**
@@ -410,7 +410,7 @@ export const usePrismicDocumentsBySomeTags = <
  * @see Underlying `@prismicio/client` method {@link proto.getAllByTags}
  */
 export const useAllPrismicDocumentsBySomeTags = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		tag: ClientMethodParameters<"getAllBySomeTags">[0],
@@ -436,13 +436,13 @@ export const useAllPrismicDocumentsBySomeTags = <
  * @see Underlying `@prismicio/client` method {@link proto.getByTags}
  */
 export const usePrismicDocumentsByEveryTag = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		tag: ClientMethodParameters<"getByEveryTag">[0],
 		params?: ClientMethodParameters<"getByEveryTag">[1] & HookOnlyParameters,
 	]
-): ClientHookReturnType<prismicT.Query<TDocument>> =>
+): ClientHookReturnType<prismic.Query<TDocument>> =>
 	useStatefulPrismicClientMethod("getByEveryTag", args);
 
 /**
@@ -462,7 +462,7 @@ export const usePrismicDocumentsByEveryTag = <
  * @see Underlying `@prismicio/client` method {@link proto.getAllByTags}
  */
 export const useAllPrismicDocumentsByEveryTag = <
-	TDocument extends prismicT.PrismicDocument,
+	TDocument extends prismic.PrismicDocument,
 >(
 	...args: [
 		tag: ClientMethodParameters<"getAllByEveryTag">[0],

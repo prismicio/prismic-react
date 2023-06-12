@@ -1,43 +1,43 @@
 import * as React from "react";
-import * as prismicH from "@prismicio/helpers";
-import * as prismicT from "@prismicio/types";
+import * as prismic from "@prismicio/client";
 import { SliceZone, PrismicRichText, PrismicLink } from "@prismicio/react";
 
-// Documents can be typed using `@prismicio/types`
-type PageDocument = prismicT.PrismicDocumentWithUID<{
-	title: prismicT.TitleField;
-	meta_description: prismicT.RichTextField;
-	related_links: prismicT.GroupField<{
-		link: prismicT.LinkField;
+// Documents can be typed using `@prismicio/client`
+type PageDocument = prismic.PrismicDocumentWithUID<{
+	title: prismic.TitleField;
+	meta_description: prismic.RichTextField;
+	related_links: prismic.GroupField<{
+		label: prismic.KeyTextField;
+		link: prismic.LinkField;
 	}>;
 
-	// Each Slice in a Slice Zone can be typed using `prismicT.Slice`
-	slices: prismicT.SliceZone<
-		| prismicT.Slice<
+	// Each Slice in a Slice Zone can be typed using `prismic.Slice`
+	slices: prismic.SliceZone<
+		| prismic.Slice<
 				// Slice type
 				"hero",
 				// Primary/non-repeatable fields
 				{
-					heading: prismicT.TitleField;
-					body: prismicT.RichTextField;
+					heading: prismic.TitleField;
+					body: prismic.RichTextField;
 				},
 				// Item/repeatable fields
 				{
-					buttonText: prismicT.KeyTextField;
-					buttonLink: prismicT.LinkField;
+					buttonText: prismic.KeyTextField;
+					buttonLink: prismic.LinkField;
 				}
 		  >
-		| prismicT.Slice<
+		| prismic.Slice<
 				// Slice type
 				"call_to_action",
 				// Primary/non-repeatable fields
 				{
-					text: prismicT.RichTextField;
+					text: prismic.RichTextField;
 				},
 				// Item/repeatable fields
 				{
-					buttonText: prismicT.KeyTextField;
-					buttonLink: prismicT.LinkField;
+					buttonText: prismic.KeyTextField;
+					buttonLink: prismic.LinkField;
 				}
 		  >
 	>;
@@ -70,18 +70,18 @@ export const WithDocumentLink = (): JSX.Element => {
 export const WithGroupFieldLink = (): JSX.Element => {
 	return (
 		<ul>
-			{prismicH.isFilled.group(page.data.related_links) &&
+			{prismic.isFilled.group(page.data.related_links) &&
 				page.data.related_links.map(
 					(item) =>
-						prismicH.isFilled.link(item.link) && (
+						prismic.isFilled.link(item.link) && (
 							<li
 								key={
-									item.link.link_type === prismicT.LinkType.Document
+									item.link.link_type === prismic.LinkType.Document
 										? item.link.id
 										: item.link.url
 								}
 							>
-								<PrismicLink field={item.link}>{item}</PrismicLink>
+								<PrismicLink field={item.link}>{item.label}</PrismicLink>
 							</li>
 						),
 				)}

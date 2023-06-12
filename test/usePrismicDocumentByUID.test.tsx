@@ -3,7 +3,6 @@
 import { it, expect, afterEach } from "vitest";
 import * as React from "react";
 import * as prismic from "@prismicio/client";
-import * as prismicT from "@prismicio/types";
 import { renderHook, cleanup, waitFor } from "@testing-library/react";
 import * as assert from "node:assert";
 
@@ -30,7 +29,7 @@ it("returns document with matching UID", async (ctx) => {
 				uid: ctx.mock.model.uid(),
 			},
 		}),
-	}) as prismicT.PrismicDocumentWithUID;
+	}) as prismic.PrismicDocumentWithUID;
 
 	mockPrismicRestAPIV2({
 		ctx,
@@ -66,7 +65,7 @@ it("supports params", async (ctx) => {
 				uid: ctx.mock.model.uid(),
 			},
 		}),
-	}) as prismicT.PrismicDocumentWithUID;
+	}) as prismic.PrismicDocumentWithUID;
 
 	const params = {
 		pageSize: 2,
@@ -107,7 +106,7 @@ it("supports explicit client", async (ctx) => {
 				uid: ctx.mock.model.uid(),
 			},
 		}),
-	}) as prismicT.PrismicDocumentWithUID;
+	}) as prismic.PrismicDocumentWithUID;
 
 	mockPrismicRestAPIV2({
 		ctx,

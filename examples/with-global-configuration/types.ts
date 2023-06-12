@@ -1,20 +1,20 @@
-import * as prismicT from "@prismicio/types";
+import * as prismic from "@prismicio/client";
 
-export type HeroSlice = prismicT.Slice<
+export type HeroSlice = prismic.Slice<
 	"hero",
 	{
-		heading: prismicT.KeyTextField;
-		buttonText: prismicT.KeyTextField;
+		heading: prismic.KeyTextField;
+		buttonText: prismic.KeyTextField;
 	}
 >;
 
-export type CallToActionSlice = prismicT.Slice<
+export type CallToActionSlice = prismic.Slice<
 	"call_to_action",
 	{
-		text: prismicT.KeyTextField;
+		text: prismic.KeyTextField;
 	}
 >;
 
 export type Slices = HeroSlice | CallToActionSlice;
 
-export type ExampleSliceZone = prismicT.SliceZone<Slices>;
+export type ExampleSliceZone = prismic.SliceZone<Slices>;
