@@ -2,7 +2,7 @@ import * as React from "react";
 import * as prismic from "@prismicio/client";
 import { SliceZone, PrismicRichText, PrismicLink } from "@prismicio/react";
 
-// Documents can be typed using `@prismicio/types`
+// Documents can be typed using `@prismicio/client`
 type PageDocument = prismic.PrismicDocumentWithUID<{
 	title: prismic.TitleField;
 	meta_description: prismic.RichTextField;
@@ -11,7 +11,7 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 		link: prismic.LinkField;
 	}>;
 
-	// Each Slice in a Slice Zone can be typed using `prismicT.Slice`
+	// Each Slice in a Slice Zone can be typed using `prismic.Slice`
 	slices: prismic.SliceZone<
 		| prismic.Slice<
 				// Slice type

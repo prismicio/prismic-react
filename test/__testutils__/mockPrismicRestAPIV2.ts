@@ -5,13 +5,12 @@ import { rest } from "msw";
 import { createRepositoryName } from "./createRepositoryName";
 
 import * as prismic from "@prismicio/client";
-import * as prismicT from "@prismicio/types";
 
 type MockPrismicRestAPIV2Args = {
 	ctx: TestContext;
 	accessToken?: string;
-	repositoryResponse?: prismicT.Repository;
-	queryResponse?: prismicT.Query | prismicT.Query[];
+	repositoryResponse?: prismic.Repository;
+	queryResponse?: prismic.Query | prismic.Query[];
 	queryRequiredParams?: Record<string, string | string[]>;
 	queryDelay?: number;
 };
