@@ -5,10 +5,10 @@ import * as React from "react";
 import {
 	SliceZone,
 	SliceComponentProps,
-	SliceZoneComponents,
+	SliceComponentType,
 } from "@prismicio/react";
 
-import { Slices, HeroSlice, ExampleSliceZone } from "./types";
+import { HeroSlice, ExampleSliceZone } from "./types";
 
 // This is the contents of a Slice Zone field.
 // Normally, this would be accessed at `document.data.body`, where `document`
@@ -71,7 +71,7 @@ const CallToActionSlice = ({
 // It is important to define this object *outside* the React component that
 // uses `<SliceZone>`. This ensures the React app will not re-render
 // unnecessarily.
-const components: SliceZoneComponents<Slices> = {
+const components: Record<string, SliceComponentType> = {
 	// Since HeroSlice accepts a `slice` prop, we can pass the component directly.
 	hero: HeroSlice,
 

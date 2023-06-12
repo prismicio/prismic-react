@@ -2,7 +2,7 @@
 /* eslint-disable react/display-name */
 
 import * as React from "react";
-import * as prismicT from "@prismicio/types";
+import * as prismic from "@prismicio/client";
 import {
 	PrismicProvider,
 	PrismicLink,
@@ -13,15 +13,15 @@ import {
 import { Link } from "react-router-dom";
 
 // This is an example Link field value. It contains a URL internal to the app.
-const linkField: prismicT.LinkField = {
-	link_type: prismicT.LinkType.Web,
+const linkField: prismic.LinkField = {
+	link_type: prismic.LinkType.Web,
 	url: "/internal-url",
 };
 
 // This is an example Rich Text field value. It contains a "Heading 1" block.
-const richTextField: prismicT.RichTextField = [
+const richTextField: prismic.RichTextField = [
 	{
-		type: prismicT.RichTextNodeType.heading1,
+		type: prismic.RichTextNodeType.heading1,
 		text: "Lorem ipsum",
 		spans: [],
 	},
