@@ -70,7 +70,7 @@
 	},
 	"devDependencies": {
 		"@prismicio/client": "^7.1.0",
-		"@prismicio/mock": "^0.3.0",
+		"@prismicio/mock": "^0.3.1",
 		"@size-limit/preset-small-lib": "^8.2.4",
 		"@testing-library/react": "^14.0.0",
 		"@types/node-fetch": "^3.0.3",
