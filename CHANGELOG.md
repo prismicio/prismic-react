@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/prismicio/prismic-react/compare/v2.6.2...v2.7.0) (2023-06-13)
+
+
+### Features
+
+* **SliceZone:** add support for mapped Slice Zones created with `@prismicio/client`'s `unstable_mapSliceZone()` ([#185](https://github.com/prismicio/prismic-react/issues/185)) ([c1e469d](https://github.com/prismicio/prismic-react/commit/c1e469d7298b3461b6d18e4dffde6f9ee970b5d1))
+
+
+### Bug Fixes
+
+* replace `@prismicio/types` usage with `@prismicio/client` v7 ([#186](https://github.com/prismicio/prismic-react/issues/186)) ([34649e2](https://github.com/prismicio/prismic-react/commit/34649e20731ac111b527391f11e06b20dc1d410b))
+
+
+### Chore
+
+* **deps:** update `@prismicio/mock` ([f30c971](https://github.com/prismicio/prismic-react/commit/f30c97187017ad5715fcfc58cb328a40bfcf912b))
+
 ### [2.6.2](https://github.com/prismicio/prismic-react/compare/v2.6.1...v2.6.2) (2023-05-22)
 
 
