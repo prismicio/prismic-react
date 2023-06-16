@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.1](https://github.com/prismicio/prismic-react/compare/v2.7.0...v2.7.1) (2023-06-16)
+
+
+### Bug Fixes
+
+* **PrismicImage:** allow removing Imgix params in React Server Components using `null` ([#188](https://github.com/prismicio/prismic-react/issues/188)) ([2b17327](https://github.com/prismicio/prismic-react/commit/2b173279539992574b5ef85a72d02fe3f0b601fa))
+
 ## [2.7.0](https://github.com/prismicio/prismic-react/compare/v2.6.2...v2.7.0) (2023-06-13)
 
 
