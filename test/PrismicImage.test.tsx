@@ -323,3 +323,33 @@ it("supports imgix parameters", async (ctx) => {
 
 	expect(actual).toStrictEqual(expected);
 });
+
+it("allows removing existing Imgix params via the imgixParams prop", async (ctx) => {
+	const field = ctx.mock.value.image({
+		model: ctx.mock.model.image(),
+	});
+	const fieldURL = new URL(field.url);
+	fieldURL.searchParams.set("auto", "compress,format");
+	fieldURL.searchParams.set("sat", "-100");
+	fieldURL.searchParams.set("ar", "1:2");
+	field.url = fieldURL.toString();
+
+	const img = renderJSON(
+		<PrismicImage
+			field={field}
+			imgixParams={{
+				auto: undefined,
+				// React Server Components removes `undefined`
+				// from objects, so we also support `null` as an
+				// explicit value to remove a param.
+				sat: null,
+			}}
+		/>,
+	);
+
+	const src = new URL(img?.props.src);
+
+	expect(src.searchParams.get("auto")).toBe(null);
+	expect(src.searchParams.get("sat")).toBe(null);
+	expect(src.searchParams.get("ar")).toBe("1:2");
+});

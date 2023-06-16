@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as prismic from "@prismicio/client";
+import { ImgixURLParams } from "imgix-url-builder";
 
 import { devMsg } from "./lib/devMsg";
 
@@ -23,7 +24,7 @@ export type PrismicImageProps = Omit<
 	 *
 	 * See: https://docs.imgix.com/apis/rendering
 	 */
-	imgixParams?: Parameters<typeof prismic.asImageSrc>[1];
+	imgixParams?: { [P in keyof ImgixURLParams]: ImgixURLParams[P] | null };
 
 	/**
 	 * Declare an image as decorative by providing `alt=""`.
@@ -103,24 +104,22 @@ export type PrismicImageProps = Omit<
  * @returns A responsive image component for the given Image field.
  */
 export const PrismicImage = React.forwardRef(function PrismicImage(
-	props: PrismicImageProps,
-	ref: React.ForwardedRef<HTMLImageElement>,
-): JSX.Element | null {
-	const {
+	{
 		field,
 		alt,
 		fallbackAlt,
-		imgixParams,
+		imgixParams = {},
 		widths,
 		pixelDensities,
 		...restProps
-	} = props;
-
+	}: PrismicImageProps,
+	ref: React.ForwardedRef<HTMLImageElement>,
+): JSX.Element | null {
 	if (
 		typeof process !== "undefined" &&
 		process.env.NODE_ENV === "development"
 	) {
-		if (typeof alt === "string" && props.alt !== "") {
+		if (typeof alt === "string" && alt !== "") {
 			console.warn(
 				`[PrismicImage] The "alt" prop can only be used to declare an image as decorative by passing an empty string (alt="") but was provided a non-empty string. You can resolve this warning by removing the "alt" prop or changing it to alt="". For more details, see ${devMsg(
 					"alt-must-be-an-empty-string",
@@ -144,23 +143,30 @@ export const PrismicImage = React.forwardRef(function PrismicImage(
 	}
 
 	if (prismic.isFilled.imageThumbnail(field)) {
+		const resolvedImgixParams = imgixParams;
+		for (const x in imgixParams) {
+			if (resolvedImgixParams[x as keyof typeof resolvedImgixParams] === null) {
+				resolvedImgixParams[x as keyof typeof resolvedImgixParams] = undefined;
+			}
+		}
+
 		let src: string | undefined;
 		let srcSet: string | undefined;
 
 		if (widths || !pixelDensities) {
 			const res = prismic.asImageWidthSrcSet(field, {
-				...imgixParams,
+				...resolvedImgixParams,
 				widths: widths === "defaults" ? undefined : widths,
-			});
+			} as ImgixURLParams);
 
 			src = res.src;
 			srcSet = res.srcset;
 		} else if (pixelDensities) {
 			const res = prismic.asImagePixelDensitySrcSet(field, {
-				...imgixParams,
+				...resolvedImgixParams,
 				pixelDensities:
 					pixelDensities === "defaults" ? undefined : pixelDensities,
-			});
+			} as ImgixURLParams);
 
 			src = res.src;
 			srcSet = res.srcset;

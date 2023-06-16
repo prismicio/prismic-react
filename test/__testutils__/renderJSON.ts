@@ -11,7 +11,7 @@ import * as renderer from "react-test-renderer";
 export const renderJSON = (
 	element: React.ReactElement,
 	options?: renderer.TestRendererOptions,
-): renderer.ReactTestRendererJSON | renderer.ReactTestRendererJSON[] | null => {
+): renderer.ReactTestRendererJSON | null => {
 	let root: renderer.ReactTestRenderer;
 
 	renderer.act(() => {
@@ -19,5 +19,5 @@ export const renderJSON = (
 	});
 
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	return root!.toJSON();
+	return root!.toJSON() as renderer.ReactTestRendererJSON;
 };
