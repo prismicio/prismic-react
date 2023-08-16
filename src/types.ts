@@ -15,7 +15,11 @@ export type JSXFunctionSerializer =
  *
  * @see Templating Rich Text and Title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
  */
-export type JSXMapSerializer = prismicR.RichTextMapSerializer<JSX.Element>;
+export type JSXMapSerializer = {
+	[P in keyof prismicR.RichTextMapSerializer<JSX.Element>]: P extends "span"
+		? prismicR.RichTextMapSerializer<JSX.Element>[P]
+		: prismicR.RichTextMapSerializer<JSX.Element>[P] | { className: string };
+};
 
 /**
  * States of a `@prismicio/client` hook.

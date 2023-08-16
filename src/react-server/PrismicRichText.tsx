@@ -6,27 +6,26 @@ import { JSXFunctionSerializer, JSXMapSerializer } from "../types";
 import { LinkProps, PrismicLink } from "./PrismicLink";
 import { devMsg } from "../lib/devMsg";
 
-type JSXOrShorthandMapSerializer = {
-	[P in keyof JSXMapSerializer]: P extends "span"
-		? JSXMapSerializer[P]
-		: JSXMapSerializer[P] | { className: string };
+const removeClassNameShorthands = (
+	serializer: JSXMapSerializer,
+): prismicR.RichTextMapSerializer<JSX.Element> => {
+	return Object.fromEntries(
+		Object.entries(serializer).filter(([_, value]) => {
+			return !("className" in value);
+		}),
+	);
 };
 
-const removeClassNameShorthands = (
-	serializer: JSXOrShorthandMapSerializer,
-): JSXMapSerializer => {
-	const res: JSXMapSerializer = {};
-
-	for (const type in serializer) {
-		const definition = serializer[type as keyof typeof serializer];
-
-		if (definition && !("className" in definition)) {
-			res[type as keyof typeof serializer] =
-				definition as prismicR.RichTextMapSerializerFunction<JSX.Element>;
-		}
+const getExtraPropsFromSerializerDefinition = (
+	definition?: NonNullable<JSXMapSerializer[keyof JSXMapSerializer]>,
+): { className?: string } => {
+	if (definition && "className" in definition) {
+		return {
+			className: definition.className,
+		};
 	}
 
-	return res;
+	return {};
 };
 
 /**
@@ -77,7 +76,7 @@ export type PrismicRichTextProps<
 	 * };
 	 * ```
 	 */
-	components?: JSXOrShorthandMapSerializer | JSXFunctionSerializer;
+	components?: JSXMapSerializer | JSXFunctionSerializer;
 
 	/**
 	 * The React component rendered for links when the URL is internal.
@@ -100,31 +99,11 @@ export type PrismicRichTextProps<
 	fallback?: React.ReactNode;
 };
 
-const getExtraPropsFromDefinition = (
-	definition?: NonNullable<
-		JSXOrShorthandMapSerializer[keyof JSXOrShorthandMapSerializer]
-	>,
-): Record<string, unknown> & {
-	className?: string;
-} => {
-	if (!definition) {
-		return {};
-	}
-
-	const res: Record<string, unknown> = {};
-
-	if ("className" in definition) {
-		res.className = definition.className;
-	}
-
-	return res;
-};
-
 type CreateDefaultSerializerArgs<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
 > = {
-	providedMapSerializer?: JSXOrShorthandMapSerializer;
+	providedMapSerializer?: JSXMapSerializer;
 	linkResolver: LinkResolverFunction | undefined;
 	internalLinkComponent?: React.ComponentType<LinkProps>;
 	externalLinkComponent?: React.ComponentType<LinkProps>;
@@ -140,7 +119,9 @@ const createDefaultSerializer = <
 		heading1: ({ children, key }) => (
 			<h1
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading1)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.heading1,
+				)}
 			>
 				{children}
 			</h1>
@@ -148,7 +129,9 @@ const createDefaultSerializer = <
 		heading2: ({ children, key }) => (
 			<h2
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading2)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.heading2,
+				)}
 			>
 				{children}
 			</h2>
@@ -156,7 +139,9 @@ const createDefaultSerializer = <
 		heading3: ({ children, key }) => (
 			<h3
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading3)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.heading3,
+				)}
 			>
 				{children}
 			</h3>
@@ -164,7 +149,9 @@ const createDefaultSerializer = <
 		heading4: ({ children, key }) => (
 			<h4
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading4)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.heading4,
+				)}
 			>
 				{children}
 			</h4>
@@ -172,7 +159,9 @@ const createDefaultSerializer = <
 		heading5: ({ children, key }) => (
 			<h5
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading5)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.heading5,
+				)}
 			>
 				{children}
 			</h5>
@@ -180,7 +169,9 @@ const createDefaultSerializer = <
 		heading6: ({ children, key }) => (
 			<h6
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading6)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.heading6,
+				)}
 			>
 				{children}
 			</h6>
@@ -188,7 +179,9 @@ const createDefaultSerializer = <
 		paragraph: ({ children, key }) => (
 			<p
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.paragraph)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.paragraph,
+				)}
 			>
 				{children}
 			</p>
@@ -196,7 +189,7 @@ const createDefaultSerializer = <
 		preformatted: ({ node, key }) => (
 			<pre
 				key={key}
-				{...getExtraPropsFromDefinition(
+				{...getExtraPropsFromSerializerDefinition(
 					args.providedMapSerializer?.preformatted,
 				)}
 			>
@@ -206,7 +199,9 @@ const createDefaultSerializer = <
 		strong: ({ children, key }) => (
 			<strong
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.strong)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.strong,
+				)}
 			>
 				{children}
 			</strong>
@@ -214,7 +209,9 @@ const createDefaultSerializer = <
 		em: ({ children, key }) => (
 			<em
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.em)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.em,
+				)}
 			>
 				{children}
 			</em>
@@ -222,7 +219,9 @@ const createDefaultSerializer = <
 		listItem: ({ children, key }) => (
 			<li
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.listItem)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.listItem,
+				)}
 			>
 				{children}
 			</li>
@@ -230,7 +229,9 @@ const createDefaultSerializer = <
 		oListItem: ({ children, key }) => (
 			<li
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.oListItem)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.oListItem,
+				)}
 			>
 				{children}
 			</li>
@@ -238,7 +239,9 @@ const createDefaultSerializer = <
 		list: ({ children, key }) => (
 			<ul
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.list)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.list,
+				)}
 			>
 				{children}
 			</ul>
@@ -246,7 +249,9 @@ const createDefaultSerializer = <
 		oList: ({ children, key }) => (
 			<ol
 				key={key}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.oList)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.oList,
+				)}
 			>
 				{children}
 			</ol>
@@ -257,7 +262,9 @@ const createDefaultSerializer = <
 					src={node.url}
 					alt={node.alt ?? undefined}
 					data-copyright={node.copyright ? node.copyright : undefined}
-					{...getExtraPropsFromDefinition(args.providedMapSerializer?.image)}
+					{...getExtraPropsFromSerializerDefinition(
+						args.providedMapSerializer?.image,
+					)}
 				/>
 			);
 
@@ -285,7 +292,9 @@ const createDefaultSerializer = <
 				data-oembed-type={node.oembed.type}
 				data-oembed-provider={node.oembed.provider_name}
 				dangerouslySetInnerHTML={{ __html: node.oembed.html ?? "" }}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.embed)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.embed,
+				)}
 			/>
 		),
 		hyperlink: ({ node, children, key }) => (
@@ -295,15 +304,18 @@ const createDefaultSerializer = <
 				linkResolver={args.linkResolver}
 				internalComponent={args.internalLinkComponent}
 				externalComponent={args.externalLinkComponent}
-				{...getExtraPropsFromDefinition(args.providedMapSerializer?.hyperlink)}
+				{...getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.hyperlink,
+				)}
 			>
 				{children}
 			</PrismicLink>
 		),
 		label: ({ node, children, key }) => {
-			const { className, ...extraProps } = getExtraPropsFromDefinition(
-				args.providedMapSerializer?.label,
-			);
+			const { className, ...extraProps } =
+				getExtraPropsFromSerializerDefinition(
+					args.providedMapSerializer?.label,
+				);
 
 			return (
 				<span
@@ -362,6 +374,17 @@ const createDefaultSerializer = <
  * 	field={document.data.content}
  * 	components={{
  * 		heading1: ({ children }) => <Heading>{children}</Heading>,
+ * 	}}
+ * />;
+ * ```
+ *
+ * @example Rendering a Rich Text field using a custom class name.
+ *
+ * ```jsx
+ * <PrismicRichText
+ * 	field={document.data.content}
+ * 	components={{
+ * 		heading1: "text-4xl",
  * 	}}
  * />;
  * ```
