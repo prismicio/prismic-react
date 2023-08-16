@@ -2,30 +2,23 @@ import * as React from "react";
 import * as prismic from "@prismicio/client";
 import * as prismicR from "@prismicio/richtext";
 
-import { JSXFunctionSerializer, JSXMapSerializer } from "../types";
-import { LinkProps, PrismicLink } from "./PrismicLink";
 import { devMsg } from "../lib/devMsg";
+import { removeJSXMapSerializerShorthands } from "../lib/removeJSXMapSerializerShorthands";
 
-const removeClassNameShorthands = (
-	serializer: JSXMapSerializer,
-): prismicR.RichTextMapSerializer<JSX.Element> => {
-	return Object.fromEntries(
-		Object.entries(serializer).filter(([_, value]) => {
-			return !("className" in value);
-		}),
-	);
-};
+import { JSXFunctionSerializer, JSXMapSerializer } from "../types";
+
+import { LinkProps, PrismicLink } from "./PrismicLink";
 
 const getExtraPropsFromSerializerDefinition = (
 	definition?: NonNullable<JSXMapSerializer[keyof JSXMapSerializer]>,
 ): { className?: string } => {
-	if (definition && "className" in definition) {
-		return {
-			className: definition.className,
-		};
+	if (!definition || typeof definition !== "object") {
+		return {};
 	}
 
-	return {};
+	return {
+		className: definition.className,
+	};
 };
 
 /**
@@ -426,7 +419,9 @@ export function PrismicRichText<
 		if (prismic.isFilled.richText(field)) {
 			const serializer = prismicR.composeSerializers(
 				typeof components === "object"
-					? prismicR.wrapMapSerializer(removeClassNameShorthands(components))
+					? prismicR.wrapMapSerializer(
+							removeJSXMapSerializerShorthands(components),
+					  )
 					: components,
 				createDefaultSerializer({
 					providedMapSerializer:

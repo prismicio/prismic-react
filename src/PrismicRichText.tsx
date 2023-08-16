@@ -3,6 +3,8 @@
 import * as prismic from "@prismicio/client";
 import * as prismicR from "@prismicio/richtext";
 
+import { removeJSXMapSerializerShorthands } from "./lib/removeJSXMapSerializerShorthands";
+
 import {
 	PrismicRichText as ServerPrismicRichText,
 	PrismicRichTextProps,
@@ -20,10 +22,12 @@ export const PrismicRichText = function PrismicRichText<
 
 	const serializer = prismicR.composeSerializers(
 		typeof components === "object"
-			? prismicR.wrapMapSerializer(components)
+			? prismicR.wrapMapSerializer(removeJSXMapSerializerShorthands(components))
 			: components,
 		typeof context.richTextComponents === "object"
-			? prismicR.wrapMapSerializer(context.richTextComponents)
+			? prismicR.wrapMapSerializer(
+					removeJSXMapSerializerShorthands(context.richTextComponents),
+			  )
 			: context.richTextComponents,
 	);
 

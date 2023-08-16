@@ -10,6 +10,13 @@ export type JSXFunctionSerializer =
 	prismicR.RichTextFunctionSerializer<JSX.Element>;
 
 /**
+ * A shorthand definition for rich text block components.
+ */
+export type JSXMapSerializerShorthand = {
+	className?: string;
+};
+
+/**
  * A map of Rich Text block types to React Components. It is used to render Rich
  * Text or Title fields.
  *
@@ -18,7 +25,9 @@ export type JSXFunctionSerializer =
 export type JSXMapSerializer = {
 	[P in keyof prismicR.RichTextMapSerializer<JSX.Element>]: P extends "span"
 		? prismicR.RichTextMapSerializer<JSX.Element>[P]
-		: prismicR.RichTextMapSerializer<JSX.Element>[P] | { className: string };
+		:
+				| prismicR.RichTextMapSerializer<JSX.Element>[P]
+				| JSXMapSerializerShorthand;
 };
 
 /**
