@@ -6,6 +6,29 @@ import { JSXFunctionSerializer, JSXMapSerializer } from "../types";
 import { LinkProps, PrismicLink } from "./PrismicLink";
 import { devMsg } from "../lib/devMsg";
 
+type JSXOrShorthandMapSerializer = {
+	[P in keyof JSXMapSerializer]: P extends "span"
+		? JSXMapSerializer[P]
+		: JSXMapSerializer[P] | { className: string };
+};
+
+const removeClassNameShorthands = (
+	serializer: JSXOrShorthandMapSerializer,
+): JSXMapSerializer => {
+	const res: JSXMapSerializer = {};
+
+	for (const type in serializer) {
+		const definition = serializer[type as keyof typeof serializer];
+
+		if (definition && !("className" in definition)) {
+			res[type as keyof typeof serializer] =
+				definition as prismicR.RichTextMapSerializerFunction<JSX.Element>;
+		}
+	}
+
+	return res;
+};
+
 /**
  * Props for `<PrismicRichText>`.
  */
@@ -54,7 +77,7 @@ export type PrismicRichTextProps<
 	 * };
 	 * ```
 	 */
-	components?: JSXMapSerializer | JSXFunctionSerializer;
+	components?: JSXOrShorthandMapSerializer | JSXFunctionSerializer;
 
 	/**
 	 * The React component rendered for links when the URL is internal.
@@ -77,10 +100,31 @@ export type PrismicRichTextProps<
 	fallback?: React.ReactNode;
 };
 
+const getExtraPropsFromDefinition = (
+	definition?: NonNullable<
+		JSXOrShorthandMapSerializer[keyof JSXOrShorthandMapSerializer]
+	>,
+): Record<string, unknown> & {
+	className?: string;
+} => {
+	if (!definition) {
+		return {};
+	}
+
+	const res: Record<string, unknown> = {};
+
+	if ("className" in definition) {
+		res.className = definition.className;
+	}
+
+	return res;
+};
+
 type CreateDefaultSerializerArgs<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
 > = {
+	providedMapSerializer?: JSXOrShorthandMapSerializer;
 	linkResolver: LinkResolverFunction | undefined;
 	internalLinkComponent?: React.ComponentType<LinkProps>;
 	externalLinkComponent?: React.ComponentType<LinkProps>;
@@ -91,28 +135,129 @@ const createDefaultSerializer = <
 	LinkResolverFunction extends prismic.LinkResolverFunction<any>,
 >(
 	args: CreateDefaultSerializerArgs<LinkResolverFunction>,
-): JSXFunctionSerializer =>
-	prismicR.wrapMapSerializer({
-		heading1: ({ children, key }) => <h1 key={key}>{children}</h1>,
-		heading2: ({ children, key }) => <h2 key={key}>{children}</h2>,
-		heading3: ({ children, key }) => <h3 key={key}>{children}</h3>,
-		heading4: ({ children, key }) => <h4 key={key}>{children}</h4>,
-		heading5: ({ children, key }) => <h5 key={key}>{children}</h5>,
-		heading6: ({ children, key }) => <h6 key={key}>{children}</h6>,
-		paragraph: ({ children, key }) => <p key={key}>{children}</p>,
-		preformatted: ({ node, key }) => <pre key={key}>{node.text}</pre>,
-		strong: ({ children, key }) => <strong key={key}>{children}</strong>,
-		em: ({ children, key }) => <em key={key}>{children}</em>,
-		listItem: ({ children, key }) => <li key={key}>{children}</li>,
-		oListItem: ({ children, key }) => <li key={key}>{children}</li>,
-		list: ({ children, key }) => <ul key={key}>{children}</ul>,
-		oList: ({ children, key }) => <ol key={key}>{children}</ol>,
+): prismicR.RichTextFunctionSerializer<JSX.Element> => {
+	return prismicR.wrapMapSerializer({
+		heading1: ({ children, key }) => (
+			<h1
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading1)}
+			>
+				{children}
+			</h1>
+		),
+		heading2: ({ children, key }) => (
+			<h2
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading2)}
+			>
+				{children}
+			</h2>
+		),
+		heading3: ({ children, key }) => (
+			<h3
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading3)}
+			>
+				{children}
+			</h3>
+		),
+		heading4: ({ children, key }) => (
+			<h4
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading4)}
+			>
+				{children}
+			</h4>
+		),
+		heading5: ({ children, key }) => (
+			<h5
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading5)}
+			>
+				{children}
+			</h5>
+		),
+		heading6: ({ children, key }) => (
+			<h6
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.heading6)}
+			>
+				{children}
+			</h6>
+		),
+		paragraph: ({ children, key }) => (
+			<p
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.paragraph)}
+			>
+				{children}
+			</p>
+		),
+		preformatted: ({ node, key }) => (
+			<pre
+				key={key}
+				{...getExtraPropsFromDefinition(
+					args.providedMapSerializer?.preformatted,
+				)}
+			>
+				{node.text}
+			</pre>
+		),
+		strong: ({ children, key }) => (
+			<strong
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.strong)}
+			>
+				{children}
+			</strong>
+		),
+		em: ({ children, key }) => (
+			<em
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.em)}
+			>
+				{children}
+			</em>
+		),
+		listItem: ({ children, key }) => (
+			<li
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.listItem)}
+			>
+				{children}
+			</li>
+		),
+		oListItem: ({ children, key }) => (
+			<li
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.oListItem)}
+			>
+				{children}
+			</li>
+		),
+		list: ({ children, key }) => (
+			<ul
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.list)}
+			>
+				{children}
+			</ul>
+		),
+		oList: ({ children, key }) => (
+			<ol
+				key={key}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.oList)}
+			>
+				{children}
+			</ol>
+		),
 		image: ({ node, key }) => {
 			const img = (
 				<img
 					src={node.url}
 					alt={node.alt ?? undefined}
 					data-copyright={node.copyright ? node.copyright : undefined}
+					{...getExtraPropsFromDefinition(args.providedMapSerializer?.image)}
 				/>
 			);
 
@@ -140,6 +285,7 @@ const createDefaultSerializer = <
 				data-oembed-type={node.oembed.type}
 				data-oembed-provider={node.oembed.provider_name}
 				dangerouslySetInnerHTML={{ __html: node.oembed.html ?? "" }}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.embed)}
 			/>
 		),
 		hyperlink: ({ node, children, key }) => (
@@ -149,15 +295,28 @@ const createDefaultSerializer = <
 				linkResolver={args.linkResolver}
 				internalComponent={args.internalLinkComponent}
 				externalComponent={args.externalLinkComponent}
+				{...getExtraPropsFromDefinition(args.providedMapSerializer?.hyperlink)}
 			>
 				{children}
 			</PrismicLink>
 		),
-		label: ({ node, children, key }) => (
-			<span key={key} className={node.data.label}>
-				{children}
-			</span>
-		),
+		label: ({ node, children, key }) => {
+			const { className, ...extraProps } = getExtraPropsFromDefinition(
+				args.providedMapSerializer?.label,
+			);
+
+			return (
+				<span
+					key={key}
+					className={
+						className ? `${node.data.label} ${className}` : node.data.label
+					}
+					{...extraProps}
+				>
+					{children}
+				</span>
+			);
+		},
 		span: ({ text, key }) => {
 			const result: React.ReactNode[] = [];
 
@@ -175,6 +334,7 @@ const createDefaultSerializer = <
 			return <React.Fragment key={key}>{result}</React.Fragment>;
 		},
 	});
+};
 
 /**
  * React component that renders content from a Prismic Rich Text field. By
@@ -225,27 +385,29 @@ export function PrismicRichText<
 	internalLinkComponent,
 	...restProps
 }: PrismicRichTextProps<LinkResolverFunction>): JSX.Element | null {
-	return React.useMemo(() => {
-		if (
-			typeof process !== "undefined" &&
-			process.env.NODE_ENV === "development"
-		) {
-			if ("className" in restProps) {
-				console.warn(
-					`[PrismicRichText] className cannot be passed to <PrismicRichText> since it renders an array without a wrapping component. For more details, see ${devMsg(
-						"classname-is-not-a-valid-prop",
-					)}.`,
-					field,
-				);
-			}
+	if (
+		typeof process !== "undefined" &&
+		process.env.NODE_ENV === "development"
+	) {
+		if ("className" in restProps) {
+			console.warn(
+				`[PrismicRichText] className cannot be passed to <PrismicRichText> since it renders an array without a wrapping component. For more details, see ${devMsg(
+					"classname-is-not-a-valid-prop",
+				)}.`,
+				field,
+			);
 		}
+	}
 
+	return React.useMemo(() => {
 		if (prismic.isFilled.richText(field)) {
 			const serializer = prismicR.composeSerializers(
 				typeof components === "object"
-					? prismicR.wrapMapSerializer(components)
+					? prismicR.wrapMapSerializer(removeClassNameShorthands(components))
 					: components,
 				createDefaultSerializer({
+					providedMapSerializer:
+						typeof components === "object" ? components : undefined,
 					linkResolver,
 					internalLinkComponent,
 					externalLinkComponent,

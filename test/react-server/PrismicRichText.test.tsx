@@ -310,6 +310,34 @@ it("returns <image /> if type is image", async () => {
 	expect(actual).toStrictEqual(expected);
 });
 
+it("returns <image /> with undefined alt if alt is null", async () => {
+	const url = "url";
+	const alt = null;
+	const copyright = "copyright";
+
+	const field: prismic.RichTextField = [
+		{
+			type: prismic.RichTextNodeType.image,
+			url,
+			alt,
+			copyright,
+			dimensions: {
+				width: 100,
+				height: 100,
+			},
+		},
+	];
+
+	const actual = renderJSON(<PrismicRichText field={field} />);
+	const expected = renderJSON(
+		<p className="block-img">
+			<img src={url} alt={undefined} data-copyright={copyright} />
+		</p>,
+	);
+
+	expect(actual).toStrictEqual(expected);
+});
+
 it("returns <image /> with undefined copyright if not provided", async () => {
 	const url = "url";
 	const alt = "alt";
@@ -611,4 +639,224 @@ it("warns if a className prop is provided", async () => {
 
 	consoleWarnSpy.mockRestore();
 	process.env.NODE_ENV = originalNodeEnv;
+});
+
+it("supports `className` shorthand", async () => {
+	const field: prismic.RichTextField = [
+		{
+			type: prismic.RichTextNodeType.heading1,
+			text: "Heading 1",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.heading2,
+			text: "Heading 2",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.heading3,
+			text: "Heading 3",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.heading4,
+			text: "Heading 4",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.heading5,
+			text: "Heading 5",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.heading6,
+			text: "Heading 6",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.paragraph,
+			text: "Paragraph",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.preformatted,
+			text: "Preformatted",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.paragraph,
+			text: "Strong",
+			spans: [
+				{
+					start: 0,
+					end: 7,
+					type: "strong",
+				},
+			],
+		},
+		{
+			type: prismic.RichTextNodeType.paragraph,
+			text: "Emphasis",
+			spans: [
+				{
+					start: 0,
+					end: 8,
+					type: "em",
+				},
+			],
+		},
+		{
+			type: prismic.RichTextNodeType.listItem,
+			text: "List item",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.oListItem,
+			text: "Ordered list item",
+			spans: [],
+		},
+		{
+			type: prismic.RichTextNodeType.image,
+			url: "url",
+			alt: "alt",
+			copyright: "copyright",
+			dimensions: {
+				width: 100,
+				height: 100,
+			},
+		},
+		{
+			type: prismic.RichTextNodeType.embed,
+			oembed: {
+				version: "1.0",
+				embed_url: "https://example.com",
+				type: "rich",
+				html: "<marquee>Prismic is fun</marquee>",
+				width: 100,
+				height: 100,
+				provider_name: "Prismic",
+			},
+		},
+		{
+			type: prismic.RichTextNodeType.paragraph,
+			text: "hyperlink",
+			spans: [
+				{
+					start: 0,
+					end: "hyperlink".length,
+					type: prismic.RichTextNodeType.hyperlink,
+					data: {
+						id: "id",
+						uid: "uid",
+						lang: "lang",
+						tags: [],
+						type: "page",
+						link_type: prismic.LinkType.Document,
+						url: "/url",
+					},
+				},
+			],
+		},
+		{
+			type: prismic.RichTextNodeType.paragraph,
+			text: "label",
+			spans: [
+				{
+					type: prismic.RichTextNodeType.label,
+					start: 0,
+					end: 5,
+					data: { label: "foo" },
+				},
+			],
+		},
+	];
+
+	const actual = renderJSON(
+		<PrismicRichText
+			field={field}
+			components={{
+				heading1: { className: "heading1" },
+				heading2: { className: "heading2" },
+				heading3: { className: "heading3" },
+				heading4: { className: "heading4" },
+				heading5: { className: "heading5" },
+				heading6: { className: "heading6" },
+				paragraph: { className: "paragraph" },
+				preformatted: { className: "preformatted" },
+				strong: { className: "strong" },
+				em: { className: "em" },
+				listItem: { className: "listItem" },
+				oListItem: { className: "oListItem" },
+				list: { className: "list" },
+				oList: { className: "oList" },
+				image: { className: "image" },
+				embed: { className: "embed" },
+				hyperlink: { className: "hyperlink" },
+				label: { className: "label" },
+			}}
+		/>,
+	);
+	const expected = renderJSON(
+		<>
+			<h1 key={1} className="heading1">
+				Heading 1
+			</h1>
+			<h2 key={2} className="heading2">
+				Heading 2
+			</h2>
+			<h3 key={3} className="heading3">
+				Heading 3
+			</h3>
+			<h4 key={4} className="heading4">
+				Heading 4
+			</h4>
+			<h5 key={5} className="heading5">
+				Heading 5
+			</h5>
+			<h6 key={6} className="heading6">
+				Heading 6
+			</h6>
+			<p key={7} className="paragraph">
+				Paragraph
+			</p>
+			<pre key={8} className="preformatted">
+				Preformatted
+			</pre>
+			<p key={9} className="paragraph">
+				<strong className="strong">Strong</strong>
+			</p>
+			<p key={10} className="paragraph">
+				<em className="em">Emphasis</em>
+			</p>
+			<ul key={11} className="list">
+				<li className="listItem">List item</li>
+			</ul>
+			<ol key={12} className="oList">
+				<li className="oListItem">Ordered list item</li>
+			</ol>
+			<p key={13} className="block-img">
+				<img src="url" alt="alt" data-copyright="copyright" className="image" />
+			</p>
+			<div
+				key={14}
+				data-oembed="https://example.com"
+				data-oembed-type="rich"
+				data-oembed-provider="Prismic"
+				dangerouslySetInnerHTML={{
+					__html: "<marquee>Prismic is fun</marquee>",
+				}}
+				className="embed"
+			/>
+			<p key={15} className="paragraph">
+				<a href="/url" rel={undefined} target={undefined} className="hyperlink">
+					hyperlink
+				</a>
+			</p>
+			<p key={16} className="paragraph">
+				<span className="foo label">label</span>
+			</p>
+		</>,
+	);
+
+	expect(actual).toStrictEqual(expected);
 });
