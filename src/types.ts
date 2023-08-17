@@ -13,7 +13,13 @@ export type JSXFunctionSerializer =
  * A shorthand definition for rich text block components.
  */
 export type JSXMapSerializerShorthand = {
-	className?: string;
+	className: string;
+};
+
+export type JSXMapSerializerWithShorthands = {
+	[P in keyof JSXMapSerializer]: P extends "span"
+		? JSXMapSerializer[P]
+		: JSXMapSerializer[P] | JSXMapSerializerShorthand;
 };
 
 /**
@@ -22,13 +28,7 @@ export type JSXMapSerializerShorthand = {
  *
  * @see Templating Rich Text and Title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
  */
-export type JSXMapSerializer = {
-	[P in keyof prismicR.RichTextMapSerializer<JSX.Element>]: P extends "span"
-		? prismicR.RichTextMapSerializer<JSX.Element>[P]
-		:
-				| prismicR.RichTextMapSerializer<JSX.Element>[P]
-				| JSXMapSerializerShorthand;
-};
+export type JSXMapSerializer = prismicR.RichTextMapSerializer<JSX.Element>;
 
 /**
  * States of a `@prismicio/client` hook.

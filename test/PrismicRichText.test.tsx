@@ -8,6 +8,11 @@ import { PrismicRichText, PrismicProvider } from "../src";
 it("renders components given to PrismicProvider", async () => {
 	const field: prismic.RichTextField = [
 		{
+			type: prismic.RichTextNodeType.heading1,
+			text: "heading1",
+			spans: [],
+		},
+		{
 			type: prismic.RichTextNodeType.paragraph,
 			text: "paragraph",
 			spans: [],
@@ -17,13 +22,19 @@ it("renders components given to PrismicProvider", async () => {
 	const actual = renderJSON(
 		<PrismicProvider
 			richTextComponents={{
+				heading1: { className: "heading1" },
 				paragraph: ({ key }) => <p key={key}>paragraph</p>,
 			}}
 		>
 			<PrismicRichText field={field} />
 		</PrismicProvider>,
 	);
-	const expected = renderJSON(<p>paragraph</p>);
+	const expected = renderJSON(
+		<>
+			<h1 className="heading1">heading1</h1>
+			<p>paragraph</p>
+		</>,
+	);
 
 	expect(actual).toStrictEqual(expected);
 });

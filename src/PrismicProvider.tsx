@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 
-import { JSXFunctionSerializer, JSXMapSerializer } from "./types";
+import { JSXFunctionSerializer, JSXMapSerializerWithShorthands } from "./types";
 import { LinkProps } from "./PrismicLink";
 
 /**
@@ -58,7 +58,7 @@ export type PrismicContextValue<
 	 * };
 	 * ```
 	 */
-	richTextComponents?: JSXMapSerializer | JSXFunctionSerializer;
+	richTextComponents?: JSXMapSerializerWithShorthands | JSXFunctionSerializer;
 
 	/**
 	 * The component rendered by `<PrismicLink>` for internal URLs. Defaults to
