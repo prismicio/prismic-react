@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.2](https://github.com/prismicio/prismic-react/compare/v2.7.1...v2.7.2) (2023-08-31)
+
+
+### Bug Fixes
+
+* **`usePrismicClient()`:** accept a type parameter to define which documents are supported by the client (e.g. `Content.AllDocumentTypes`) ([#197](https://github.com/prismicio/prismic-react/issues/197)) ([b16e968](https://github.com/prismicio/prismic-react/commit/b16e9681781bbbcb4afcf5c268b7ceddd1cf7e7f))
+
 ### [2.7.1](https://github.com/prismicio/prismic-react/compare/v2.7.0...v2.7.1) (2023-06-16)
 
 
