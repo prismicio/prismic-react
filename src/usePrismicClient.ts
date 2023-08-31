@@ -11,9 +11,11 @@ import { usePrismicContext } from "./usePrismicContext";
  *
  * @returns The `@prismicio/client` instance provided to `<PrismicProvider>`.
  */
-export const usePrismicClient = (
-	explicitClient?: prismic.Client,
-): prismic.Client => {
+export const usePrismicClient = <
+	TDocuments extends prismic.PrismicDocument = prismic.PrismicDocument,
+>(
+	explicitClient?: prismic.Client<TDocuments>,
+): prismic.Client<TDocuments> => {
 	const context = usePrismicContext();
 
 	const client = explicitClient || context?.client;
