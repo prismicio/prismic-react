@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.3](https://github.com/prismicio/prismic-react/compare/v2.7.2...v2.7.3) (2023-09-18)
+
+
+### Bug Fixes
+
+* resolve TypeScript build error in projects using `--isolatedModules` ([c3628d5](https://github.com/prismicio/prismic-react/commit/c3628d55278dc17b8e0938a679d98704b9ac2a1e))
+
 ### [2.7.2](https://github.com/prismicio/prismic-react/compare/v2.7.1...v2.7.2) (2023-08-31)
 
 
