@@ -11,7 +11,7 @@ import {
 
 import { usePrismicContext } from "./usePrismicContext";
 
-export { LinkProps, PrismicLinkProps };
+export type { LinkProps, PrismicLinkProps };
 
 export const PrismicLink = React.forwardRef(function PrismicLink<
 	InternalComponentProps = React.ComponentProps<typeof defaultComponent>,

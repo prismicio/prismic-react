@@ -10,7 +10,7 @@ import {
 
 import { usePrismicContext } from "./usePrismicContext";
 
-export { PrismicRichTextProps };
+export type { PrismicRichTextProps };
 
 export const PrismicRichText = function PrismicRichText<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
