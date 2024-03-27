@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.4](https://github.com/prismicio/prismic-react/compare/v2.7.3...v2.7.4) (2024-03-27)
+
+
+### Bug Fixes
+
+* `<TodoSliceComponent />` compat with Slice Mapper ([#202](https://github.com/prismicio/prismic-react/issues/202)) ([0fd4313](https://github.com/prismicio/prismic-react/commit/0fd43134b4845a36e240e6438fea8ea84025e7dd))
+
 ### [2.7.3](https://github.com/prismicio/prismic-react/compare/v2.7.2...v2.7.3) (2023-09-18)
 
 
