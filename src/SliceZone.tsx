@@ -247,9 +247,11 @@ export type SliceZoneProps<TContext = unknown> = {
  * This is also the default React component rendered when a component mapping
  * cannot be found in `<SliceZone>`.
  */
-export const TODOSliceComponent = <TSlice extends SliceLike, TContext>({
+export const TODOSliceComponent = <TSlice extends SliceLike>({
 	slice,
-}: SliceComponentProps<TSlice, TContext>): JSX.Element | null => {
+}: {
+	slice: TSlice;
+}): JSX.Element | null => {
 	if (
 		typeof process !== "undefined" &&
 		process.env.NODE_ENV === "development"
@@ -291,7 +293,7 @@ export function SliceZone<TContext>({
 	slices = [],
 	components = {},
 	resolver,
-	defaultComponent = TODOSliceComponent,
+	defaultComponent,
 	context = {} as TContext,
 }: SliceZoneProps<TContext>) {
 	// TODO: Remove in v3 when the `resolver` prop is removed.
@@ -326,20 +328,24 @@ export function SliceZone<TContext>({
 				? slice.id
 				: `${index}-${JSON.stringify(slice)}`;
 
-		if (slice.__mapped) {
-			const { __mapped, ...mappedProps } = slice;
+		if (Comp) {
+			if (slice.__mapped) {
+				const { __mapped, ...mappedProps } = slice;
 
-			return <Comp key={key} {...mappedProps} />;
+				return <Comp key={key} {...mappedProps} />;
+			} else {
+				return (
+					<Comp
+						key={key}
+						slice={slice}
+						index={index}
+						slices={slices}
+						context={context}
+					/>
+				);
+			}
 		} else {
-			return (
-				<Comp
-					key={key}
-					slice={slice}
-					index={index}
-					slices={slices}
-					context={context}
-				/>
-			);
+			return <TODOSliceComponent key={key} slice={slice} />;
 		}
 	});
 
