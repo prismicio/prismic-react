@@ -133,7 +133,9 @@ it("renders TODO component if component mapping is missing", (ctx) => {
 		ctx.mock.value.slice(),
 		// Testing a GraphQL Slice
 		{ type: "baz" },
-	];
+		// Testing a mapped Slice
+		{ __mapped: true, id: "4", slice_type: "qux", abc: "123" },
+	] as const;
 	(slices[0] as Slice).slice_type = "foo";
 	(slices[1] as Slice).slice_type = "bar";
 
@@ -156,18 +158,9 @@ it("renders TODO component if component mapping is missing", (ctx) => {
 				slices={slices}
 				context={{}}
 			/>
-			<TODOSliceComponent
-				slice={slices[1]}
-				index={0}
-				slices={slices}
-				context={{}}
-			/>
-			<TODOSliceComponent
-				slice={slices[2]}
-				index={0}
-				slices={slices}
-				context={{}}
-			/>
+			<TODOSliceComponent slice={slices[1]} />
+			<TODOSliceComponent slice={slices[2]} />
+			<TODOSliceComponent slice={slices[3]} />
 		</>,
 	);
 
@@ -179,6 +172,10 @@ it("renders TODO component if component mapping is missing", (ctx) => {
 	expect(consoleWarnSpy).toHaveBeenCalledWith(
 		expect.stringMatching(/could not find a component/i),
 		slices[2],
+	);
+	expect(consoleWarnSpy).toHaveBeenCalledWith(
+		expect.stringMatching(/could not find a component/i),
+		slices[3],
 	);
 
 	consoleWarnSpy.mockRestore();
