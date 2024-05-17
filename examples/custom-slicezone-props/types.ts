@@ -1,18 +1,28 @@
 import * as prismic from "@prismicio/client";
 
-export type HeroSlice = prismic.Slice<
+export type HeroSlice = prismic.SharedSlice<
 	"hero",
-	{
-		heading: prismic.KeyTextField;
-		buttonText: prismic.KeyTextField;
-	}
+	prismic.SharedSliceVariation<
+		"default",
+		{
+			heading: prismic.KeyTextField;
+			buttonText: prismic.KeyTextField;
+			cards: prismic.GroupField<{
+				title: prismic.KeyTextField;
+				content: prismic.KeyTextField;
+			}>;
+		}
+	>
 >;
 
-export type CallToActionSlice = prismic.Slice<
+export type CallToActionSlice = prismic.SharedSlice<
 	"call_to_action",
-	{
-		text: prismic.KeyTextField;
-	}
+	prismic.SharedSliceVariation<
+		"default",
+		{
+			text: prismic.KeyTextField;
+		}
+	>
 >;
 
 export type Slices = HeroSlice | CallToActionSlice;
