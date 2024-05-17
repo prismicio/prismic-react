@@ -22,9 +22,9 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 					{
 						heading: prismic.KeyTextField;
 						body: prismic.RichTextField;
-						items: prismic.GroupField<{
-							buttonText: prismic.KeyTextField;
-							buttonLink: prismic.LinkField;
+						buttons: prismic.GroupField<{
+							label: prismic.KeyTextField;
+							link: prismic.LinkField;
 						}>;
 					}
 				>
@@ -37,9 +37,9 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 					// Fields
 					{
 						text: prismic.RichTextField;
-						items: prismic.GroupField<{
-							buttonText: prismic.KeyTextField;
-							buttonLink: prismic.LinkField;
+						buttons: prismic.GroupField<{
+							label: prismic.KeyTextField;
+							link: prismic.LinkField;
 						}>;
 					}
 				>
