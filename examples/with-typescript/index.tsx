@@ -11,34 +11,38 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 		link: prismic.LinkField;
 	}>;
 
-	// Each Slice in a Slice Zone can be typed using `prismic.Slice`
+	// Each Slice in a Slice Zone can be typed using `prismic.SharedSlice`
 	slices: prismic.SliceZone<
-		| prismic.Slice<
+		| prismic.SharedSlice<
 				// Slice type
 				"hero",
-				// Primary/non-repeatable fields
-				{
-					heading: prismic.TitleField;
-					body: prismic.RichTextField;
-				},
-				// Item/repeatable fields
-				{
-					buttonText: prismic.KeyTextField;
-					buttonLink: prismic.LinkField;
-				}
+				prismic.SharedSliceVariation<
+					"default",
+					// Fields
+					{
+						heading: prismic.KeyTextField;
+						body: prismic.RichTextField;
+						buttons: prismic.GroupField<{
+							label: prismic.KeyTextField;
+							link: prismic.LinkField;
+						}>;
+					}
+				>
 		  >
-		| prismic.Slice<
+		| prismic.SharedSlice<
 				// Slice type
 				"call_to_action",
-				// Primary/non-repeatable fields
-				{
-					text: prismic.RichTextField;
-				},
-				// Item/repeatable fields
-				{
-					buttonText: prismic.KeyTextField;
-					buttonLink: prismic.LinkField;
-				}
+				prismic.SharedSliceVariation<
+					"default",
+					// Fields
+					{
+						text: prismic.RichTextField;
+						buttons: prismic.GroupField<{
+							label: prismic.KeyTextField;
+							link: prismic.LinkField;
+						}>;
+					}
+				>
 		  >
 	>;
 }>;

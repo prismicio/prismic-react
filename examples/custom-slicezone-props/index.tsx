@@ -15,21 +15,37 @@ import { HeroSlice, ExampleSliceZone } from "./types";
 // is a Prismic document and `body` is a Slice Zone.
 const slices: ExampleSliceZone = [
 	{
+		id: "1",
 		slice_type: "hero",
 		slice_label: null,
+		variation: "default",
 		primary: {
 			heading: "Lorem ipsum",
 			buttonText: "Lorem ipsum",
+			cards: [
+				{
+					title: "Lorem ipsum 1",
+					content: "Lorem ipsum dolor sit amet",
+				},
+				{
+					title: "Lorem ipsum 2",
+					content: "Lorem ipsum dolor sit amet",
+				},
+			],
 		},
 		items: [],
+		version: "1",
 	},
 	{
+		id: "2",
 		slice_type: "call_to_action",
 		slice_label: null,
+		variation: "default",
 		primary: {
 			text: "Lorem ipsum dolor sit amet",
 		},
 		items: [],
+		version: "2",
 	},
 ];
 
@@ -40,6 +56,12 @@ const HeroSlice = ({ slice }: SliceComponentProps<HeroSlice>) => {
 		<section>
 			<h1>{slice.primary.heading}</h1>
 			<button>{slice.primary.buttonText}</button>
+			{slice.primary.cards.map((card, index) => (
+				<div key={index}>
+					<h2>{card.title}</h2>
+					<p>{card.content}</p>
+				</div>
+			))}
 		</section>
 	);
 };
