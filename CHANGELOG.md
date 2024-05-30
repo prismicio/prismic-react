@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0](https://github.com/prismicio/prismic-react/compare/v2.7.4...v2.8.0) (2024-05-30)
+
+
+### Features
+
+* support React 19 ([c06d5c1](https://github.com/prismicio/prismic-react/commit/c06d5c13a9313efc5dda0c98f714803789b48bf8))
+
 ### [2.7.4](https://github.com/prismicio/prismic-react/compare/v2.7.3...v2.7.4) (2024-03-27)
 
 
