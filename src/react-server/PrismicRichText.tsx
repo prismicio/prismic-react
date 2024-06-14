@@ -2,9 +2,16 @@ import * as React from "react";
 import * as prismic from "@prismicio/client";
 import * as prismicR from "@prismicio/richtext";
 
-import { JSXFunctionSerializer, JSXMapSerializer } from "../types";
-import { LinkProps, PrismicLink } from "./PrismicLink";
+import { createDefaultSerializer } from "../lib/createDefaultSerializer";
 import { devMsg } from "../lib/devMsg";
+import { wrapShorthandSerializer } from "../lib/wrapShorthandSerializer";
+
+import {
+	JSXFunctionSerializer,
+	JSXMapSerializerWithShorthands,
+} from "../types";
+
+import { LinkProps } from "./PrismicLink";
 
 /**
  * Props for `<PrismicRichText>`.
@@ -54,7 +61,7 @@ export type PrismicRichTextProps<
 	 * };
 	 * ```
 	 */
-	components?: JSXMapSerializer | JSXFunctionSerializer;
+	components?: JSXMapSerializerWithShorthands | JSXFunctionSerializer;
 
 	/**
 	 * The React component rendered for links when the URL is internal.
@@ -76,105 +83,6 @@ export type PrismicRichTextProps<
 	 */
 	fallback?: React.ReactNode;
 };
-
-type CreateDefaultSerializerArgs<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismic.LinkResolverFunction<any> = prismic.LinkResolverFunction,
-> = {
-	linkResolver: LinkResolverFunction | undefined;
-	internalLinkComponent?: React.ComponentType<LinkProps>;
-	externalLinkComponent?: React.ComponentType<LinkProps>;
-};
-
-const createDefaultSerializer = <
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	LinkResolverFunction extends prismic.LinkResolverFunction<any>,
->(
-	args: CreateDefaultSerializerArgs<LinkResolverFunction>,
-): JSXFunctionSerializer =>
-	prismicR.wrapMapSerializer({
-		heading1: ({ children, key }) => <h1 key={key}>{children}</h1>,
-		heading2: ({ children, key }) => <h2 key={key}>{children}</h2>,
-		heading3: ({ children, key }) => <h3 key={key}>{children}</h3>,
-		heading4: ({ children, key }) => <h4 key={key}>{children}</h4>,
-		heading5: ({ children, key }) => <h5 key={key}>{children}</h5>,
-		heading6: ({ children, key }) => <h6 key={key}>{children}</h6>,
-		paragraph: ({ children, key }) => <p key={key}>{children}</p>,
-		preformatted: ({ node, key }) => <pre key={key}>{node.text}</pre>,
-		strong: ({ children, key }) => <strong key={key}>{children}</strong>,
-		em: ({ children, key }) => <em key={key}>{children}</em>,
-		listItem: ({ children, key }) => <li key={key}>{children}</li>,
-		oListItem: ({ children, key }) => <li key={key}>{children}</li>,
-		list: ({ children, key }) => <ul key={key}>{children}</ul>,
-		oList: ({ children, key }) => <ol key={key}>{children}</ol>,
-		image: ({ node, key }) => {
-			const img = (
-				<img
-					src={node.url}
-					alt={node.alt ?? undefined}
-					data-copyright={node.copyright ? node.copyright : undefined}
-				/>
-			);
-
-			return (
-				<p key={key} className="block-img">
-					{node.linkTo ? (
-						<PrismicLink
-							linkResolver={args.linkResolver}
-							internalComponent={args.internalLinkComponent}
-							externalComponent={args.externalLinkComponent}
-							field={node.linkTo}
-						>
-							{img}
-						</PrismicLink>
-					) : (
-						img
-					)}
-				</p>
-			);
-		},
-		embed: ({ node, key }) => (
-			<div
-				key={key}
-				data-oembed={node.oembed.embed_url}
-				data-oembed-type={node.oembed.type}
-				data-oembed-provider={node.oembed.provider_name}
-				dangerouslySetInnerHTML={{ __html: node.oembed.html ?? "" }}
-			/>
-		),
-		hyperlink: ({ node, children, key }) => (
-			<PrismicLink
-				key={key}
-				field={node.data}
-				linkResolver={args.linkResolver}
-				internalComponent={args.internalLinkComponent}
-				externalComponent={args.externalLinkComponent}
-			>
-				{children}
-			</PrismicLink>
-		),
-		label: ({ node, children, key }) => (
-			<span key={key} className={node.data.label}>
-				{children}
-			</span>
-		),
-		span: ({ text, key }) => {
-			const result: React.ReactNode[] = [];
-
-			let i = 0;
-			for (const line of text.split("\n")) {
-				if (i > 0) {
-					result.push(<br key={`${i}__break`} />);
-				}
-
-				result.push(<React.Fragment key={`${i}__line`}>{line}</React.Fragment>);
-
-				i++;
-			}
-
-			return <React.Fragment key={key}>{result}</React.Fragment>;
-		},
-	});
 
 /**
  * React component that renders content from a Prismic Rich Text field. By
@@ -206,6 +114,17 @@ const createDefaultSerializer = <
  * />;
  * ```
  *
+ * @example Rendering a Rich Text field using a custom class name.
+ *
+ * ```jsx
+ * <PrismicRichText
+ * 	field={document.data.content}
+ * 	components={{
+ * 		heading1: "text-4xl",
+ * 	}}
+ * />;
+ * ```
+ *
  * @param props - Props for the component.
  *
  * @returns The Rich Text field's content as React components.
@@ -225,31 +144,38 @@ export function PrismicRichText<
 	internalLinkComponent,
 	...restProps
 }: PrismicRichTextProps<LinkResolverFunction>): JSX.Element | null {
-	return React.useMemo(() => {
-		if (
-			typeof process !== "undefined" &&
-			process.env.NODE_ENV === "development"
-		) {
-			if ("className" in restProps) {
-				console.warn(
-					`[PrismicRichText] className cannot be passed to <PrismicRichText> since it renders an array without a wrapping component. For more details, see ${devMsg(
-						"classname-is-not-a-valid-prop",
-					)}.`,
-					field,
-				);
-			}
+	if (
+		typeof process !== "undefined" &&
+		process.env.NODE_ENV === "development"
+	) {
+		if ("className" in restProps) {
+			console.warn(
+				`[PrismicRichText] className cannot be passed to <PrismicRichText> since it renders an array without a wrapping component. For more details, see ${devMsg(
+					"classname-is-not-a-valid-prop",
+				)}.`,
+				field,
+			);
 		}
+	}
 
+	return React.useMemo(() => {
 		if (prismic.isFilled.richText(field)) {
 			const serializer = prismicR.composeSerializers(
-				typeof components === "object"
-					? prismicR.wrapMapSerializer(components)
-					: components,
-				createDefaultSerializer({
-					linkResolver,
-					internalLinkComponent,
-					externalLinkComponent,
-				}),
+				components
+					? wrapShorthandSerializer({
+							serializer: components,
+							linkResolver,
+							internalLinkComponent,
+							externalLinkComponent,
+					  })
+					: undefined,
+				prismicR.wrapMapSerializer(
+					createDefaultSerializer({
+						linkResolver,
+						internalLinkComponent,
+						externalLinkComponent,
+					}),
+				),
 			);
 
 			// The serializer is wrapped in a higher-order function
