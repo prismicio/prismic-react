@@ -45,7 +45,10 @@ export interface LinkProps {
 export type PrismicLinkProps<
 	InternalComponentProps = React.ComponentProps<typeof defaultComponent>,
 	ExternalComponentProps = React.ComponentProps<typeof defaultComponent>,
-> = Omit<InternalComponentProps & ExternalComponentProps, "rel" | "href"> & {
+> = Omit<
+	InternalComponentProps & ExternalComponentProps,
+	"rel" | "href" | "children"
+> & {
 	/**
 	 * The `rel` attribute for the link. By default, `"noreferrer"` is provided if
 	 * the link's URL is external. This prop can be provided a function to use the
@@ -75,6 +78,13 @@ export type PrismicLinkProps<
 	 * The component rendered for external URLs. Defaults to `<a>`.
 	 */
 	externalComponent?: React.ComponentType<ExternalComponentProps>;
+
+	/**
+	 * The text to render for the link. If no children is provided and the link
+	 * field contain a 'text' property filled, the 'text' property will be used as
+	 * children.
+	 */
+	children?: React.ReactNode;
 } & (
 		| {
 				document: PrismicDocument | null | undefined;
@@ -103,6 +113,7 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 		linkResolver,
 		internalComponent,
 		externalComponent,
+		children,
 		...restProps
 	}: PrismicLinkProps<InternalComponentProps, ExternalComponentProps>,
 	ref: React.ForwardedRef<Element>,
@@ -161,6 +172,11 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 
 	const href = ("href" in restProps ? restProps.href : computedHref) || "";
 
+	let text: string | undefined;
+	if (field && "text" in field) {
+		text = field.text;
+	}
+
 	const InternalComponent = (internalComponent ||
 		defaultComponent) as React.ComponentType<LinkProps>;
 	const ExternalComponent = (externalComponent ||
@@ -169,7 +185,9 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 		href && isInternalURL(href) ? InternalComponent : ExternalComponent;
 
 	return (
-		<Component ref={ref} {...attrs} {...restProps} href={href} rel={rel} />
+		<Component ref={ref} {...attrs} {...restProps} href={href} rel={rel}>
+			{children || text}
+		</Component>
 	);
 }) as <
 	InternalComponentProps = React.ComponentProps<typeof defaultComponent>,

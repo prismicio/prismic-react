@@ -7,7 +7,6 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 	title: prismic.TitleField;
 	meta_description: prismic.RichTextField;
 	related_links: prismic.GroupField<{
-		label: prismic.KeyTextField;
 		link: prismic.LinkField;
 	}>;
 
@@ -23,7 +22,6 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 						heading: prismic.KeyTextField;
 						body: prismic.RichTextField;
 						buttons: prismic.GroupField<{
-							label: prismic.KeyTextField;
 							link: prismic.LinkField;
 						}>;
 					}
@@ -38,7 +36,6 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 					{
 						text: prismic.RichTextField;
 						buttons: prismic.GroupField<{
-							label: prismic.KeyTextField;
 							link: prismic.LinkField;
 						}>;
 					}
@@ -85,7 +82,7 @@ export const WithGroupFieldLink = (): JSX.Element => {
 										: item.link.url
 								}
 							>
-								<PrismicLink field={item.link}>{item.label}</PrismicLink>
+								<PrismicLink field={item.link} />
 							</li>
 						),
 				)}

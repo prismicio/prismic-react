@@ -289,6 +289,13 @@ it("returns <image /> if type is image", async () => {
 
 	const field: prismic.RichTextField = [
 		{
+			id: "",
+			edit: {
+				background: "transparent",
+				x: 0,
+				y: 0,
+				zoom: 1,
+			},
 			type: prismic.RichTextNodeType.image,
 			url,
 			alt,
@@ -316,6 +323,13 @@ it("returns <image /> with undefined copyright if not provided", async () => {
 
 	const field: prismic.RichTextField = [
 		{
+			id: "",
+			edit: {
+				background: "transparent",
+				x: 0,
+				y: 0,
+				zoom: 1,
+			},
 			type: prismic.RichTextNodeType.image,
 			url,
 			alt,
@@ -346,6 +360,13 @@ it("returns <image /> wrapped in <PrismicLink />", async (ctx) => {
 
 	const field: prismic.RichTextField = [
 		{
+			id: "",
+			edit: {
+				background: "transparent",
+				x: 0,
+				y: 0,
+				zoom: 1,
+			},
 			type: prismic.RichTextNodeType.image,
 			url,
 			alt,
