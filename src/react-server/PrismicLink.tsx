@@ -5,6 +5,7 @@ import {
 	PrismicDocument,
 	asLinkAttrs,
 	AsLinkAttrsConfig,
+	isFilled,
 } from "@prismicio/client";
 
 import { devMsg } from "../lib/devMsg";
@@ -80,9 +81,8 @@ export type PrismicLinkProps<
 	externalComponent?: React.ComponentType<ExternalComponentProps>;
 
 	/**
-	 * The text to render for the link. If no children is provided and the link
-	 * field contain a 'text' property filled, the 'text' property will be used as
-	 * children.
+	 * The children to render for the link. If no children are provided, the
+	 * link's `text` property will be used.
 	 */
 	children?: React.ReactNode;
 } & (
@@ -171,11 +171,7 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 	}
 
 	const href = ("href" in restProps ? restProps.href : computedHref) || "";
-
-	let text: string | undefined;
-	if (field && "text" in field) {
-		text = field.text;
-	}
+	const text = isFilled.link(field) ? field.text : undefined;
 
 	const InternalComponent = (internalComponent ||
 		defaultComponent) as React.ComponentType<LinkProps>;

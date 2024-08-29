@@ -80,18 +80,9 @@ it("if URL is external and externalComponent is given to the provider and the co
 	expect(actual).toStrictEqual(expected);
 });
 
-it("if link text is provided without children, render link with the text", async (ctx) => {
-	const field = ctx.mock.value.link({
-		type: "Web",
-		model: {
-			type: "Link",
-			config: {
-				text: {
-					type: "Text",
-				},
-			},
-		},
-	});
+it("renders the link's text if no children are provided", async (ctx) => {
+	const model = ctx.mock.model.link({ text: true });
+	const field = ctx.mock.value.link({ type: "Web", model });
 	const actual = renderJSON(<PrismicLink field={field} />);
 	const expected = renderJSON(
 		<a href={field.url} rel="noreferrer" target={field.target}>
@@ -102,18 +93,9 @@ it("if link text is provided without children, render link with the text", async
 	expect(actual).toStrictEqual(expected);
 });
 
-it("if link text is provided with children, render link with given children", async (ctx) => {
-	const field = ctx.mock.value.link({
-		type: "Web",
-		model: {
-			type: "Link",
-			config: {
-				text: {
-					type: "Text",
-				},
-			},
-		},
-	});
+it("renders the given children, overriding the link's text", async (ctx) => {
+	const model = ctx.mock.model.link({ text: true });
+	const field = ctx.mock.value.link({ type: "Web", model });
 	const children = ctx.mock.value.keyText();
 	const actual = renderJSON(
 		<PrismicLink field={field}>{children}</PrismicLink>,
