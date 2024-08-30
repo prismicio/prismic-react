@@ -182,7 +182,7 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 
 	return (
 		<Component ref={ref} {...attrs} {...restProps} href={href} rel={rel}>
-			{children || text}
+			{"children" in restProps ? children : text}
 		</Component>
 	);
 }) as <
