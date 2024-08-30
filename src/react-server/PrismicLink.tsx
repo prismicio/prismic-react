@@ -107,7 +107,10 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 	InternalComponentProps = React.ComponentProps<typeof defaultComponent>,
 	ExternalComponentProps = React.ComponentProps<typeof defaultComponent>,
 >(
-	{
+	props: PrismicLinkProps<InternalComponentProps, ExternalComponentProps>,
+	ref: React.ForwardedRef<Element>,
+): JSX.Element {
+	const {
 		field,
 		document: doc,
 		linkResolver,
@@ -115,9 +118,8 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 		externalComponent,
 		children,
 		...restProps
-	}: PrismicLinkProps<InternalComponentProps, ExternalComponentProps>,
-	ref: React.ForwardedRef<Element>,
-): JSX.Element {
+	} = props;
+
 	if (
 		typeof process !== "undefined" &&
 		process.env.NODE_ENV === "development"
@@ -182,7 +184,7 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 
 	return (
 		<Component ref={ref} {...attrs} {...restProps} href={href} rel={rel}>
-			{"children" in restProps ? children : text}
+			{"children" in props ? children : text}
 		</Component>
 	);
 }) as <
