@@ -136,7 +136,9 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 					)}`,
 				);
 			} else if (
-				Object.keys(field).length > 1 &&
+				("text" in field
+					? Object.keys(field).length > 2
+					: Object.keys(field).length > 1) &&
 				!("url" in field || "uid" in field || "id" in field)
 			) {
 				console.warn(
@@ -173,7 +175,6 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 	}
 
 	const href = ("href" in restProps ? restProps.href : computedHref) || "";
-	const text = isFilled.link(field) ? field.text : undefined;
 
 	const InternalComponent = (internalComponent ||
 		defaultComponent) as React.ComponentType<LinkProps>;
@@ -184,7 +185,7 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 
 	return (
 		<Component ref={ref} {...attrs} {...restProps} href={href} rel={rel}>
-			{"children" in props ? children : text}
+			{"children" in props ? children : field?.text}
 		</Component>
 	);
 }) as <
