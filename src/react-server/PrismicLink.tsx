@@ -5,7 +5,6 @@ import {
 	PrismicDocument,
 	asLinkAttrs,
 	AsLinkAttrsConfig,
-	isFilled,
 } from "@prismicio/client";
 
 import { devMsg } from "../lib/devMsg";

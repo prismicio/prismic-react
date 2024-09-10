@@ -81,7 +81,7 @@ it("if URL is external and externalComponent is given to the provider and the co
 });
 
 it("renders the link's text if no children are provided", async (ctx) => {
-	const model = ctx.mock.model.link({ text: true });
+	const model = ctx.mock.model.link({ allowText: true });
 	const field = ctx.mock.value.link({ type: "Web", model });
 	const actual = renderJSON(<PrismicLink field={field} />);
 	const expected = renderJSON(
@@ -94,7 +94,7 @@ it("renders the link's text if no children are provided", async (ctx) => {
 });
 
 it("renders the given children, overriding the link's text", async (ctx) => {
-	const model = ctx.mock.model.link({ text: true });
+	const model = ctx.mock.model.link({ allowText: true });
 	const field = ctx.mock.value.link({ type: "Web", model });
 	const children = ctx.mock.value.keyText();
 	const actual = renderJSON(

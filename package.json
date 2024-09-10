@@ -69,8 +69,8 @@
 		"@prismicio/richtext": "^2.1.5"
 	},
 	"devDependencies": {
-		"@prismicio/client": "7.9.0-alpha.2",
-		"@prismicio/mock": "0.3.8-alpha.0",
+		"@prismicio/client": "7.9.0-alpha.3",
+		"@prismicio/mock": "0.3.8-alpha.2",
 		"@size-limit/preset-small-lib": "^8.2.4",
 		"@testing-library/react": "^14.0.0",
 		"@types/node-fetch": "^3.0.3",
@@ -113,7 +113,7 @@
 		"access": "public"
 	},
 	"overrides": {
-		"@prismicio/client": "7.9.0-alpha.2",
-		"@prismicio/mock": "0.3.8-alpha.0"
+		"@prismicio/client": "7.9.0-alpha.3",
+		"@prismicio/mock": "0.3.8-alpha.2"
 	}
 }
