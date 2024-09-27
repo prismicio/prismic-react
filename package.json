@@ -1,6 +1,6 @@
 {
 	"name": "@prismicio/react",
-	"version": "2.8.0",
+	"version": "2.9.0",
 	"description": "React components and hooks to fetch and present Prismic content",
 	"keywords": [
 		"typescript",
@@ -69,8 +69,8 @@
 		"@prismicio/richtext": "^2.1.5"
 	},
 	"devDependencies": {
-		"@prismicio/client": "^7.1.0",
-		"@prismicio/mock": "^0.3.1",
+		"@prismicio/client": "^7.11.0",
+		"@prismicio/mock": "0.4.0",
 		"@size-limit/preset-small-lib": "^8.2.4",
 		"@testing-library/react": "^14.0.0",
 		"@types/node-fetch": "^3.0.3",
