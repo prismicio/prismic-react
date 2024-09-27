@@ -148,13 +148,9 @@ export const useStatefulPrismicClientMethod = <
 					dispatch(["start"]);
 				}
 
+				// @ts-expect-error - Merging method arg types is too complex
 				client[methodName]
-					.call(
-						client,
-						// @ts-expect-error - Merging method arg types is too complex
-						...argsWithoutParams,
-						params,
-					)
+					.call(client, ...argsWithoutParams, params)
 					.then((result) => {
 						if (!didCancel) {
 							dispatch(["succeed", result as TData]);

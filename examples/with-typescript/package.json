@@ -4,6 +4,6 @@
 		"@prismicio/react": "../../src"
 	},
 	"devDependencies": {
-		"@prismicio/client": "7.9.0-alpha.2"
+		"@prismicio/client": "^7.11.0"
 	}
 }
