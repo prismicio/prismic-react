@@ -69,7 +69,7 @@ it("returns <h1> if type is heading1", async () => {
 	];
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h1>Heading 1</h1>);
+	const expected = renderJSON(<h1 dir={undefined}>Heading 1</h1>);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -84,7 +84,7 @@ it("returns <h2> if type is heading2", async () => {
 	];
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h2>Heading 2</h2>);
+	const expected = renderJSON(<h2 dir={undefined}>Heading 2</h2>);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -99,7 +99,7 @@ it("returns <h3> if type is heading3", async () => {
 	];
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h3>Heading 3</h3>);
+	const expected = renderJSON(<h3 dir={undefined}>Heading 3</h3>);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -114,27 +114,12 @@ it("returns <h4> if type is heading4", async () => {
 	];
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h4>Heading 4</h4>);
+	const expected = renderJSON(<h4 dir={undefined}>Heading 4</h4>);
 
 	expect(actual).toStrictEqual(expected);
 });
 
-it("returns <h4> if type is heading3", async () => {
-	const field: prismic.RichTextField = [
-		{
-			type: prismic.RichTextNodeType.heading4,
-			text: "Heading 4",
-			spans: [],
-		},
-	];
-
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h4>Heading 4</h4>);
-
-	expect(actual).toStrictEqual(expected);
-});
-
-it("returns <h5> if type is heading4", async () => {
+it("returns <h5> if type is heading5", async () => {
 	const field: prismic.RichTextField = [
 		{
 			type: prismic.RichTextNodeType.heading5,
@@ -144,7 +129,7 @@ it("returns <h5> if type is heading4", async () => {
 	];
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h5>Heading 5</h5>);
+	const expected = renderJSON(<h5 dir={undefined}>Heading 5</h5>);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -159,7 +144,7 @@ it("returns <h6> if type is heading6", async () => {
 	];
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h6>Heading 6</h6>);
+	const expected = renderJSON(<h6 dir={undefined}>Heading 6</h6>);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -174,7 +159,7 @@ it("returns <p /> if type is paragraph", async () => {
 	];
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<p>Paragraph bold</p>);
+	const expected = renderJSON(<p dir={undefined}>Paragraph bold</p>);
 
 	expect(actual).toStrictEqual(expected);
 });
@@ -211,7 +196,7 @@ it("returns <strong /> if type is strong", async () => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(
-		<p>
+		<p dir={undefined}>
 			<strong>strong</strong>
 		</p>,
 	);
@@ -236,7 +221,7 @@ it("returns <em /> if type is em", async () => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(
-		<p>
+		<p dir={undefined}>
 			<em>em</em>
 		</p>,
 	);
@@ -256,7 +241,7 @@ it("returns <ul> <li> </li> </ul> if type is listItem", async () => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(
 		<ul>
-			<li>listItem</li>
+			<li dir={undefined}>listItem</li>
 		</ul>,
 	);
 
@@ -275,7 +260,7 @@ it("returns <ol> <li> </li> </ol> if type is listItem", async () => {
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(
 		<ol>
-			<li>oListItem</li>
+			<li dir={undefined}>oListItem</li>
 		</ol>,
 	);
 
@@ -451,7 +436,7 @@ it("Returns <PrismicLink /> when type is hyperlink", async () => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(
-		<p>
+		<p dir={undefined}>
 			<a href={data.url} rel={undefined} target={undefined}>
 				hyperlink
 			</a>
@@ -492,7 +477,7 @@ it("Returns <PrismicLink /> with internalComponent from props", async () => {
 		<PrismicRichText internalLinkComponent={Link} field={field} />,
 	);
 	const expected = renderJSON(
-		<p>
+		<p dir={undefined}>
 			<a data-href="/url" data-rel={undefined} data-target={undefined}>
 				hyperlink
 			</a>
@@ -523,7 +508,7 @@ it("returns <span /> with label className if type is label", async () => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(
-		<p>
+		<p dir={undefined}>
 			<span className={data.label}>label</span>
 		</p>,
 	);
@@ -542,10 +527,90 @@ it("renders line breaks as <br />", async () => {
 
 	const actual = renderJSON(<PrismicRichText field={field} />);
 	const expected = renderJSON(
-		<p>
+		<p dir={undefined}>
 			line 1<br />
 			line 2
 		</p>,
+	);
+
+	expect(actual).toStrictEqual(expected);
+});
+
+it("includes `dir` attribute on right-to-left languages", async () => {
+	const field: prismic.RichTextField = [
+		{
+			type: prismic.RichTextNodeType.heading1,
+			text: "Heading 1",
+			spans: [],
+			direction: "rtl",
+		},
+		{
+			type: prismic.RichTextNodeType.heading2,
+			text: "Heading 2",
+			spans: [],
+			direction: "rtl",
+		},
+		{
+			type: prismic.RichTextNodeType.heading3,
+			text: "Heading 3",
+			spans: [],
+			direction: "rtl",
+		},
+		{
+			type: prismic.RichTextNodeType.heading4,
+			text: "Heading 4",
+			spans: [],
+			direction: "rtl",
+		},
+		{
+			type: prismic.RichTextNodeType.heading5,
+			text: "Heading 5",
+			spans: [],
+			direction: "rtl",
+		},
+		{
+			type: prismic.RichTextNodeType.heading6,
+			text: "Heading 6",
+			spans: [],
+			direction: "rtl",
+		},
+		{
+			type: prismic.RichTextNodeType.paragraph,
+			text: "Paragraph",
+			spans: [],
+			direction: "rtl",
+		},
+		{
+			type: prismic.RichTextNodeType.listItem,
+			text: "listItem",
+			spans: [],
+			direction: "rtl",
+		},
+		{
+			type: prismic.RichTextNodeType.oListItem,
+			text: "oListItem",
+			spans: [],
+			direction: "rtl",
+		},
+	];
+
+	const actual = renderJSON(<PrismicRichText field={field} />);
+	const expected = renderJSON(
+		<>
+			<h1 dir="rtl">Heading 1</h1>
+			<h2 dir="rtl">Heading 2</h2>
+			<h3 dir="rtl">Heading 3</h3>
+			<h4 dir="rtl">Heading 4</h4>
+			<h5 dir="rtl">Heading 5</h5>
+			<h6 dir="rtl">Heading 6</h6>
+			<p dir="rtl">Paragraph</p>
+			<ul>
+				<li dir="rtl">listItem</li>
+			</ul>
+			<ol>
+				<li dir="rtl">oListItem</li>
+			</ol>
+		</>,
 	);
 
 	expect(actual).toStrictEqual(expected);

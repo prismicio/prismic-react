@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as prismic from "@prismicio/client";
 import * as prismicR from "@prismicio/richtext";
+import * as prismicT from "@prismicio/types";
 
 import { JSXFunctionSerializer, JSXMapSerializer } from "../types";
 import { LinkProps, PrismicLink } from "./PrismicLink";
@@ -86,6 +87,12 @@ type CreateDefaultSerializerArgs<
 	externalLinkComponent?: React.ComponentType<LinkProps>;
 };
 
+const getDir = (node: prismicT.RTAnyNode): "rtl" | undefined => {
+	if ("direction" in node && node.direction === "rtl") {
+		return "rtl";
+	}
+};
+
 const createDefaultSerializer = <
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	LinkResolverFunction extends prismic.LinkResolverFunction<any>,
@@ -93,18 +100,54 @@ const createDefaultSerializer = <
 	args: CreateDefaultSerializerArgs<LinkResolverFunction>,
 ): JSXFunctionSerializer =>
 	prismicR.wrapMapSerializer({
-		heading1: ({ children, key }) => <h1 key={key}>{children}</h1>,
-		heading2: ({ children, key }) => <h2 key={key}>{children}</h2>,
-		heading3: ({ children, key }) => <h3 key={key}>{children}</h3>,
-		heading4: ({ children, key }) => <h4 key={key}>{children}</h4>,
-		heading5: ({ children, key }) => <h5 key={key}>{children}</h5>,
-		heading6: ({ children, key }) => <h6 key={key}>{children}</h6>,
-		paragraph: ({ children, key }) => <p key={key}>{children}</p>,
+		heading1: ({ node, children, key }) => (
+			<h1 key={key} dir={getDir(node)}>
+				{children}
+			</h1>
+		),
+		heading2: ({ node, children, key }) => (
+			<h2 key={key} dir={getDir(node)}>
+				{children}
+			</h2>
+		),
+		heading3: ({ node, children, key }) => (
+			<h3 key={key} dir={getDir(node)}>
+				{children}
+			</h3>
+		),
+		heading4: ({ node, children, key }) => (
+			<h4 key={key} dir={getDir(node)}>
+				{children}
+			</h4>
+		),
+		heading5: ({ node, children, key }) => (
+			<h5 key={key} dir={getDir(node)}>
+				{children}
+			</h5>
+		),
+		heading6: ({ node, children, key }) => (
+			<h6 key={key} dir={getDir(node)}>
+				{children}
+			</h6>
+		),
+		paragraph: ({ node, children, key }) => (
+			<p key={key} dir={getDir(node)}>
+				{children}
+			</p>
+		),
 		preformatted: ({ node, key }) => <pre key={key}>{node.text}</pre>,
 		strong: ({ children, key }) => <strong key={key}>{children}</strong>,
 		em: ({ children, key }) => <em key={key}>{children}</em>,
-		listItem: ({ children, key }) => <li key={key}>{children}</li>,
-		oListItem: ({ children, key }) => <li key={key}>{children}</li>,
+		listItem: ({ node, children, key }) => (
+			<li key={key} dir={getDir(node)}>
+				{children}
+			</li>
+		),
+		oListItem: ({ node, children, key }) => (
+			<li key={key} dir={getDir(node)}>
+				{children}
+			</li>
+		),
 		list: ({ children, key }) => <ul key={key}>{children}</ul>,
 		oList: ({ children, key }) => <ol key={key}>{children}</ol>,
 		image: ({ node, key }) => {
