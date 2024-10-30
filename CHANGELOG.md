@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.9.1](https://github.com/prismicio/prismic-react/compare/v2.9.0...v2.9.1) (2024-10-30)
+
+
+### Bug Fixes
+
+* **helpers:** add missing `dir` attribute for right-to-left languages ([#211](https://github.com/prismicio/prismic-react/issues/211)) ([b5139ec](https://github.com/prismicio/prismic-react/commit/b5139ec33ef520832064a81e0125ec09869d1f4f))
+
 ## [2.9.0](https://github.com/prismicio/prismic-react/compare/v2.9.0-alpha.0...v2.9.0) (2024-09-27)
 
 ## [2.9.0-alpha.0](https://github.com/prismicio/prismic-react/compare/v2.7.4...v2.9.0-alpha.0) (2024-09-10)
