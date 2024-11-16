@@ -1,9 +1,6 @@
-// @vitest-environment happy-dom
-
 import { it, expect } from "vitest";
 
 import { renderJSON } from "./__testutils__/renderJSON";
-import { md5 } from "./__testutils__/md5";
 
 import { PrismicToolbar } from "../src";
 
@@ -14,8 +11,8 @@ const getToolbarScript = (repositoryName: string): Element | null => {
 	);
 };
 
-it("adds a script element with the correct attributes to document.body", (ctx) => {
-	const repositoryName = md5(ctx.meta.name);
+it("adds a script element with the correct attributes to document.body", () => {
+	const repositoryName = "repositoryName";
 
 	renderJSON(<PrismicToolbar repositoryName={repositoryName} />);
 
@@ -32,8 +29,8 @@ it("adds a script element with the correct attributes to document.body", (ctx) =
 	}
 });
 
-it("includes a Happy DOM patch to not execute scripts in it environments", (ctx) => {
-	const repositoryName = md5(ctx.meta.name);
+it("includes a Happy DOM patch to not execute scripts in test environments", () => {
+	const repositoryName = "repositoryName";
 
 	renderJSON(<PrismicToolbar repositoryName={repositoryName} />);
 

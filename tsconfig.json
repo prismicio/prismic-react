@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"strict": true,
+		"skipLibCheck": true,
 
 		"target": "esnext",
 		"module": "esnext",
@@ -12,9 +13,8 @@
 
 		"declaration": true,
 		"outDir": "./dist",
-		"rootDir": "./src",
 
 		"types": ["react"]
 	},
-	"exclude": ["./node_modules", "./dist", "./examples"]
+	"exclude": ["node_modules", "dist", "examples"]
 }

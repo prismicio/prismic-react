@@ -10,7 +10,8 @@ export default defineConfig({
 	build: {
 		lib: {
 			entry: {
-				index: "./src/index.ts" },
+				index: "./src/index.ts",
+			},
 			formats: ["es"],
 		},
 		minify: false,
@@ -24,14 +25,16 @@ export default defineConfig({
 				...Object.keys(dependencies),
 				...Object.keys(peerDependencies),
 			].map((name) => new RegExp(`^${name}(?:\/.*)?$`)),
-			plugins: [typescript(), preserveDirectives()],
+			plugins: [
+				typescript({ tsconfig: "./tsconfig.build.json" }),
+				preserveDirectives(),
+			],
 		},
 	},
 	test: {
 		coverage: {
-			provider: "v8",
 			reporter: ["lcovonly", "text"],
 		},
-		setupFiles: ["./test/__setup__"],
+		environment: "happy-dom",
 	},
 });

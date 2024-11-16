@@ -6,9 +6,7 @@
 	"keywords": [
 		"typescript",
 		"prismic",
-		"react",
-		"cms",
-		"hook"
+		"react"
 	],
 	"repository": {
 		"type": "git",
@@ -59,12 +57,13 @@
 		"@testing-library/react": "^16.0.1",
 		"@types/node-fetch": "^3.0.3",
 		"@types/react": "^18.3.12",
+		"@types/react-dom": "^18.3.1",
 		"@types/react-test-renderer": "^18.3.0",
 		"@typescript-eslint/eslint-plugin": "^8.14.0",
 		"@typescript-eslint/parser": "^8.14.0",
 		"@vitejs/plugin-react": "^4.3.3",
 		"@vitest/coverage-v8": "^2.1.5",
-		"eslint": "^9.15.0",
+		"eslint": "^8.57.1",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.2.1",
 		"eslint-plugin-react": "^7.37.2",

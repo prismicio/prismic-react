@@ -62,7 +62,9 @@ export function PrismicText(props: PrismicTextProps): JSX.Element | null {
 	}
 
 	const text = useMemo(() => {
-		if (!isFilled.richText(field)) return;
+		if (!isFilled.richText(field)) {
+			return;
+		}
 
 		return asText(field, { separator });
 	}, [field, separator]);

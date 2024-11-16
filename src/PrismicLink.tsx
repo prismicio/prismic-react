@@ -200,7 +200,7 @@ export const PrismicLink = forwardRef(function PrismicLink<
  * @returns `true` if `url` is internal, `false` otherwise.
  */
 // TODO: This does not detect all relative URLs as internal such as `about` or `./about`. This function assumes relative URLs start with a "/" or "#"`.
-function isInternalURL(url: string): boolean {
+export function isInternalURL(url: string): boolean {
 	const isInternal = /^(\/(?!\/)|#)/.test(url);
 	const isSpecialLink = !isInternal && !/^https?:\/\//.test(url);
 

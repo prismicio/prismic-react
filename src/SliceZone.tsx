@@ -184,7 +184,9 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
 }: {
 	slice: TSlice;
 }): JSX.Element | null => {
-	if (!DEV) return null;
+	if (!DEV) {
+		return null;
+	}
 
 	const type = "slice_type" in slice ? slice.slice_type : slice.type;
 

@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 
-import { isInternalURL } from "../src/lib/isInternalURL";
+import { isInternalURL } from "../src/PrismicLink";
 
 it("returns true for internal URLs", () => {
 	expect(isInternalURL("/")).toBe(true);

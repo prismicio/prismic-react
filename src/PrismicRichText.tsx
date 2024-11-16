@@ -43,8 +43,8 @@ export type JSXMapSerializer = RichTextMapSerializer<JSX.Element>;
 
 /** Props for `<PrismicRichText>`. */
 export type PrismicRichTextProps<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TLinkResolverFunction extends
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		LinkResolverFunction<any> = LinkResolverFunction,
 > = {
 	/** The Prismic Rich Text field to render. */
@@ -112,8 +112,8 @@ export type PrismicRichTextProps<
 };
 
 type CreateDefaultSerializerArgs<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TLinkResolverFunction extends
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		LinkResolverFunction<any> = LinkResolverFunction,
 > = {
 	linkResolver: TLinkResolverFunction | undefined;
@@ -317,7 +317,9 @@ export function PrismicRichText<
 	}
 
 	const serialized = useMemo(() => {
-		if (!isFilled.richText(field)) return;
+		if (!isFilled.richText(field)) {
+			return;
+		}
 
 		const serializer = composeSerializers(
 			typeof components === "object"
@@ -348,7 +350,6 @@ export function PrismicRichText<
 		externalLinkComponent,
 		components,
 		linkResolver,
-		fallback,
 	]);
 
 	if (!serialized) {
