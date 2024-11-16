@@ -1,23 +1,22 @@
-import * as React from "react";
-import * as prismic from "@prismicio/client";
-import { ImgixURLParams } from "imgix-url-builder";
+import { ForwardedRef, forwardRef, type ComponentProps } from "react";
+import {
+	type ImageFieldImage,
+	asImagePixelDensitySrcSet,
+	asImageWidthSrcSet,
+	isFilled,
+} from "@prismicio/client";
+import type { ImgixURLParams } from "imgix-url-builder";
+import { DEV } from "esm-env";
 
-import { devMsg } from "./lib/devMsg";
+import { devMsg } from "./lib/devMsg.js";
 
-/**
- * Props for `<PrismicImage>`.
- */
+/** Props for `<PrismicImage>`. */
 export type PrismicImageProps = Omit<
-	React.DetailedHTMLProps<
-		React.ImgHTMLAttributes<HTMLImageElement>,
-		HTMLImageElement
-	>,
+	ComponentProps<"img">,
 	"src" | "srcset" | "alt"
 > & {
-	/**
-	 * The Prismic Image field or thumbnail to render.
-	 */
-	field: prismic.ImageFieldImage | null | undefined;
+	/** The Prismic Image field or thumbnail to render. */
+	field: ImageFieldImage | null | undefined;
 
 	/**
 	 * An object of Imgix URL API parameters to transform the image.
@@ -56,19 +55,13 @@ export type PrismicImageProps = Omit<
 				 * `"thumbnails"` as the `widths` prop.
 				 */
 				widths?:
-					| NonNullable<
-							Parameters<typeof prismic.asImageWidthSrcSet>[1]
-					  >["widths"]
+					| NonNullable<Parameters<typeof asImageWidthSrcSet>[1]>["widths"]
 					| "defaults";
-				/**
-				 * Not used when the `widths` prop is used.
-				 */
+				/** Not used when the `widths` prop is used. */
 				pixelDensities?: never;
 		  }
 		| {
-				/**
-				 * Not used when the `widths` prop is used.
-				 */
+				/** Not used when the `widths` prop is used. */
 				widths?: never;
 				/**
 				 * Pixel densities used to build a `srcset` value for the Image field.
@@ -78,7 +71,7 @@ export type PrismicImageProps = Omit<
 				 */
 				pixelDensities:
 					| NonNullable<
-							Parameters<typeof prismic.asImagePixelDensitySrcSet>[1]
+							Parameters<typeof asImagePixelDensitySrcSet>[1]
 					  >["pixelDensities"]
 					| "defaults";
 		  }
@@ -103,8 +96,11 @@ export type PrismicImageProps = Omit<
  *
  * @returns A responsive image component for the given Image field.
  */
-export const PrismicImage = React.forwardRef(function PrismicImage(
-	{
+export const PrismicImage = forwardRef(function PrismicImage(
+	props: PrismicImageProps,
+	ref: ForwardedRef<HTMLImageElement>,
+): JSX.Element | null {
+	const {
 		field,
 		alt,
 		fallbackAlt,
@@ -112,13 +108,9 @@ export const PrismicImage = React.forwardRef(function PrismicImage(
 		widths,
 		pixelDensities,
 		...restProps
-	}: PrismicImageProps,
-	ref: React.ForwardedRef<HTMLImageElement>,
-): JSX.Element | null {
-	if (
-		typeof process !== "undefined" &&
-		process.env.NODE_ENV === "development"
-	) {
+	} = props;
+
+	if (DEV) {
 		if (typeof alt === "string" && alt !== "") {
 			console.warn(
 				`[PrismicImage] The "alt" prop can only be used to declare an image as decorative by passing an empty string (alt="") but was provided a non-empty string. You can resolve this warning by removing the "alt" prop or changing it to alt="". For more details, see ${devMsg(
@@ -142,46 +134,46 @@ export const PrismicImage = React.forwardRef(function PrismicImage(
 		}
 	}
 
-	if (prismic.isFilled.imageThumbnail(field)) {
-		const resolvedImgixParams = imgixParams;
-		for (const x in imgixParams) {
-			if (resolvedImgixParams[x as keyof typeof resolvedImgixParams] === null) {
-				resolvedImgixParams[x as keyof typeof resolvedImgixParams] = undefined;
-			}
-		}
-
-		let src: string | undefined;
-		let srcSet: string | undefined;
-
-		if (widths || !pixelDensities) {
-			const res = prismic.asImageWidthSrcSet(field, {
-				...resolvedImgixParams,
-				widths: widths === "defaults" ? undefined : widths,
-			} as ImgixURLParams);
-
-			src = res.src;
-			srcSet = res.srcset;
-		} else if (pixelDensities) {
-			const res = prismic.asImagePixelDensitySrcSet(field, {
-				...resolvedImgixParams,
-				pixelDensities:
-					pixelDensities === "defaults" ? undefined : pixelDensities,
-			} as ImgixURLParams);
-
-			src = res.src;
-			srcSet = res.srcset;
-		}
-
-		return (
-			<img
-				ref={ref}
-				src={src}
-				srcSet={srcSet}
-				alt={alt ?? (field.alt || fallbackAlt)}
-				{...restProps}
-			/>
-		);
-	} else {
+	if (!isFilled.imageThumbnail(field)) {
 		return null;
 	}
+
+	const resolvedImgixParams = imgixParams;
+	for (const x in imgixParams) {
+		if (resolvedImgixParams[x as keyof typeof resolvedImgixParams] === null) {
+			resolvedImgixParams[x as keyof typeof resolvedImgixParams] = undefined;
+		}
+	}
+
+	let src: string | undefined;
+	let srcSet: string | undefined;
+
+	if (widths || !pixelDensities) {
+		const res = asImageWidthSrcSet(field, {
+			...resolvedImgixParams,
+			widths: widths === "defaults" ? undefined : widths,
+		} as ImgixURLParams);
+
+		src = res.src;
+		srcSet = res.srcset;
+	} else if (pixelDensities) {
+		const res = asImagePixelDensitySrcSet(field, {
+			...resolvedImgixParams,
+			pixelDensities:
+				pixelDensities === "defaults" ? undefined : pixelDensities,
+		} as ImgixURLParams);
+
+		src = res.src;
+		srcSet = res.srcset;
+	}
+
+	return (
+		<img
+			ref={ref}
+			src={src}
+			srcSet={srcSet}
+			alt={alt ?? (field.alt || fallbackAlt)}
+			{...restProps}
+		/>
+	);
 });

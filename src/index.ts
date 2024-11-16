@@ -1,28 +1,22 @@
-export { PrismicProvider } from "./PrismicProvider";
+export { PrismicLink } from "./PrismicLink.js";
+export type { PrismicLinkProps, LinkProps } from "./PrismicLink.js";
+
+export { PrismicText } from "./PrismicText.js";
+export type { PrismicTextProps } from "./PrismicText.js";
+
+export { PrismicRichText } from "./PrismicRichText.js";
 export type {
-	PrismicProviderProps,
-	PrismicContextValue,
-} from "./PrismicProvider";
+	PrismicRichTextProps,
+	JSXMapSerializer,
+	JSXFunctionSerializer,
+} from "./PrismicRichText.js";
 
-export { usePrismicContext } from "./usePrismicContext";
+export { Element } from "@prismicio/client/richtext";
 
-export { usePrismicClient } from "./usePrismicClient";
+export { PrismicImage } from "./PrismicImage.js";
+export type { PrismicImageProps } from "./PrismicImage.js";
 
-export { PrismicLink } from "./PrismicLink";
-export type { PrismicLinkProps, LinkProps } from "./PrismicLink";
-
-export { PrismicText } from "./PrismicText";
-export type { PrismicTextProps } from "./PrismicText";
-
-export { PrismicRichText } from "./PrismicRichText";
-export type { PrismicRichTextProps } from "./PrismicRichText";
-
-export { Element } from "@prismicio/richtext";
-
-export { PrismicImage } from "./PrismicImage";
-export type { PrismicImageProps } from "./PrismicImage";
-
-export { SliceZone, TODOSliceComponent } from "./SliceZone";
+export { SliceZone, TODOSliceComponent } from "./SliceZone.js";
 export type {
 	SliceComponentProps,
 	SliceComponentType,
@@ -32,37 +26,7 @@ export type {
 	SliceZoneComponents,
 	SliceZoneLike,
 	SliceZoneProps,
-} from "./SliceZone";
+} from "./SliceZone.js";
 
-export { PrismicToolbar } from "./PrismicToolbar";
-export type { PrismicToolbarProps } from "./PrismicToolbar";
-
-export { usePrismicPreviewResolver } from "./usePrismicPreviewResolver";
-export type { UsePrismicPreviewResolverArgs } from "./usePrismicPreviewResolver";
-
-export {
-	useAllPrismicDocumentsDangerously,
-	useAllPrismicDocumentsByEveryTag,
-	useAllPrismicDocumentsByIDs,
-	useAllPrismicDocumentsBySomeTags,
-	useAllPrismicDocumentsByTag,
-	useAllPrismicDocumentsByType,
-	useAllPrismicDocumentsByUIDs,
-	useFirstPrismicDocument,
-	usePrismicDocumentByID,
-	usePrismicDocumentByUID,
-	usePrismicDocuments,
-	usePrismicDocumentsByEveryTag,
-	usePrismicDocumentsByIDs,
-	usePrismicDocumentsBySomeTags,
-	usePrismicDocumentsByTag,
-	usePrismicDocumentsByType,
-	usePrismicDocumentsByUIDs,
-	useSinglePrismicDocument,
-} from "./clientHooks";
-
-export type {
-	JSXMapSerializer,
-	JSXFunctionSerializer,
-	PrismicClientHookState,
-} from "./types";
+export { PrismicToolbar } from "./PrismicToolbar.js";
+export type { PrismicToolbarProps } from "./PrismicToolbar.js";
