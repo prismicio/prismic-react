@@ -25,10 +25,7 @@ export default defineConfig({
 				...Object.keys(dependencies),
 				...Object.keys(peerDependencies),
 			].map((name) => new RegExp(`^${name}(?:\/.*)?$`)),
-			plugins: [
-				typescript({ tsconfig: "./tsconfig.build.json" }),
-				preserveDirectives(),
-			],
+			plugins: [typescript({ rootDir: "./src" }), preserveDirectives()],
 		},
 	},
 	test: {
@@ -36,5 +33,6 @@ export default defineConfig({
 			reporter: ["lcovonly", "text"],
 		},
 		environment: "happy-dom",
+		setupFiles: ["./test/__setup__.ts"],
 	},
 });
