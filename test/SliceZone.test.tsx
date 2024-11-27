@@ -16,6 +16,17 @@ type StringifySliceComponentProps = {
 } & Partial<SliceComponentProps> &
 	Record<string, unknown>;
 
+const getDEV = vi.fn(() => true);
+vi.mock("esm-env", async () => {
+	const actual = await vi.importActual("esm-env");
+	return {
+		...actual,
+		get DEV() {
+			return getDEV();
+		},
+	};
+});
+
 const StringifySliceComponent = ({
 	id,
 	slice,
@@ -182,8 +193,8 @@ it("renders TODO component if component mapping is missing", (ctx) => {
 });
 
 it("TODO component renders null in production", (ctx) => {
-	const originalNodeEnv = process.env.NODE_ENV;
-	process.env.NODE_ENV = "production";
+	getDEV.mockReturnValue(false);
+
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
@@ -222,7 +233,8 @@ it("TODO component renders null in production", (ctx) => {
 	);
 
 	consoleWarnSpy.mockRestore();
-	process.env.NODE_ENV = originalNodeEnv;
+
+	getDEV.mockReturnValue(true);
 });
 
 it("supports the GraphQL API", () => {
