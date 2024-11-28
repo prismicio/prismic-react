@@ -1,3 +1,5 @@
+/* eslint react-hooks/rules-of-hooks: 0 */
+
 import { MockFactory, createMockFactory } from "@prismicio/mock";
 import { test } from "vitest";
 

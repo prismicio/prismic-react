@@ -1,3 +1,5 @@
+/* eslint react/display-name: 0 */
+
 import { describe, expect, vi } from "vitest";
 import { render } from "vitest-browser-react";
 import { forwardRef } from "react";
@@ -264,20 +266,20 @@ it("forwards ref", async () => {
 	render(
 		<>
 			<PrismicLink
-				ref={(el) => {
+				ref={(el: Element | null) => {
 					defaultRef = el;
 				}}
 				href="/"
 			/>
 			<PrismicLink
-				ref={(el) => {
+				ref={(el: Element | null) => {
 					internalRef = el;
 				}}
 				internalComponent={InternalComp}
 				href="/"
 			/>
 			<PrismicLink
-				ref={(el) => {
+				ref={(el: Element | null) => {
 					externalRef = el;
 				}}
 				internalComponent={ExternalComp}
