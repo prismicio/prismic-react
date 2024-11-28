@@ -1,9 +1,10 @@
-import { it, expect, vi } from "vitest";
+import { expect, vi } from "vitest";
+import { render } from "vitest-browser-react";
 import * as prismic from "@prismicio/client";
 
 import { PrismicText } from "../src";
 
-import { renderJSON } from "./__testutils__/renderJSON";
+import { it } from "./it";
 
 it("returns string when passed RichTextField", () => {
 	const field: prismic.RichTextField = [
@@ -14,57 +15,55 @@ it("returns string when passed RichTextField", () => {
 		},
 	];
 
-	const actual = renderJSON(<PrismicText field={field} />);
-	const expected = renderJSON(<>Heading 1</>);
+	const screen = render(<PrismicText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container.innerHTML).toBe("Heading 1");
 });
 
 it("returns null when passed empty field", () => {
-	const actualNull = renderJSON(<PrismicText field={null} />);
-	const actualUndefined = renderJSON(<PrismicText field={undefined} />);
-	const actualEmpty = renderJSON(
+	const nullScreen = render(<PrismicText field={null} />);
+	expect(nullScreen.container).toContainHTML("");
+
+	const undefinedScreen = render(<PrismicText field={undefined} />);
+	expect(undefinedScreen.container).toContainHTML("");
+
+	const emptyScreen = render(<PrismicText field={[]} />);
+	expect(emptyScreen.container).toContainHTML("");
+
+	const empty2Screen = render(
 		<PrismicText field={[{ type: "paragraph", text: "", spans: [] }]} />,
 	);
-	const expected = null;
-
-	expect(actualNull).toStrictEqual(expected);
-	expect(actualUndefined).toStrictEqual(expected);
-	expect(actualEmpty).toStrictEqual(expected);
+	expect(empty2Screen.container).toContainHTML("");
 });
 
 it("returns fallback when passed empty field", () => {
-	const actualNull = renderJSON(
-		<PrismicText field={null} fallback="fallback" />,
-	);
-	const actualUndefined = renderJSON(
+	const nullScreen = render(<PrismicText field={null} fallback="fallback" />);
+	expect(nullScreen.container).toContainHTML("");
+
+	const undefinedScreen = render(
 		<PrismicText field={undefined} fallback="fallback" />,
 	);
-	const actualEmpty = renderJSON(
+	expect(undefinedScreen.container).toContainHTML("");
+
+	const emptyScreen = render(<PrismicText field={[]} fallback="fallback" />);
+	expect(emptyScreen.container).toContainHTML("");
+
+	const empty2Screen = render(
 		<PrismicText
 			field={[{ type: "paragraph", text: "", spans: [] }]}
 			fallback="fallback"
 		/>,
 	);
-	const expected = renderJSON(<>fallback</>);
-
-	expect(actualNull).toStrictEqual(expected);
-	expect(actualUndefined).toStrictEqual(expected);
-	expect(actualEmpty).toStrictEqual(expected);
+	expect(empty2Screen.container).toContainHTML("");
 });
 
 it("throws error if passed a string-based field (e.g. Key Text or Select)", () => {
-	// The error is only thrown  in "development".
-	const originalNodeEnv = process.env.NODE_ENV;
-	process.env.NODE_ENV = "development";
-
-	// Used to supress logging the error in this it.
 	const consoleErrorStub = vi
 		.spyOn(console, "error")
 		.mockImplementation(() => void 0);
 
 	expect(() => {
-		renderJSON(
+		render(
 			<PrismicText
 				// @ts-expect-error - We are purposely not providing a correct field.
 				field="not a Rich Text field"
@@ -73,21 +72,16 @@ it("throws error if passed a string-based field (e.g. Key Text or Select)", () =
 	}).throws(/prismictext-works-only-with-rich-text-and-title-fields/);
 
 	consoleErrorStub.mockRestore();
-	process.env.NODE_ENV = originalNodeEnv;
 });
 
 it("warns if a className prop is provided", async () => {
 	const field: prismic.RichTextField = [];
 
-	// The warning only logs in "development".
-	const originalNodeEnv = process.env.NODE_ENV;
-	process.env.NODE_ENV = "development";
-
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
 
-	renderJSON(
+	render(
 		<PrismicText
 			field={field}
 			// @ts-expect-error - We are purposely passing an invalid prop to trigger the console wraning.
@@ -101,5 +95,4 @@ it("warns if a className prop is provided", async () => {
 	);
 
 	consoleWarnSpy.mockRestore();
-	process.env.NODE_ENV = originalNodeEnv;
 });

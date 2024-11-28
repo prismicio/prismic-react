@@ -1,503 +1,356 @@
-import { it, expect, vi } from "vitest";
-import * as prismic from "@prismicio/client";
-import * as React from "react";
+import { expect, vi } from "vitest";
+import { render } from "vitest-browser-react";
+import { RichTextField, RichTextNodeType } from "@prismicio/client";
 
-import { renderJSON } from "./__testutils__/renderJSON";
+import { it } from "./it";
 
-import { PrismicLink, PrismicRichText } from "../src";
-
-type LinkProps = {
-	href: string;
-	rel?: string;
-	target?: string;
-	children?: React.ReactNode;
-};
-
-const Link = ({ href, rel, target, children }: LinkProps) => (
-	<a data-href={href} data-rel={rel} data-target={target}>
-		{children}
-	</a>
-);
+import { PrismicRichText } from "../src";
 
 it("returns null if passed an empty field", async () => {
-	const actualNull = renderJSON(<PrismicRichText field={null} />);
-	const actualUndefined = renderJSON(<PrismicRichText field={undefined} />);
-	const actualEmpty = renderJSON(<PrismicRichText field={[]} />);
-	const actualEmpty2 = renderJSON(
+	const nullScreen = render(<PrismicRichText field={null} />);
+	expect(nullScreen.container).toContainHTML("");
+
+	const undefinedScreen = render(<PrismicRichText field={undefined} />);
+	expect(undefinedScreen.container).toContainHTML("");
+
+	const emptyScreen = render(<PrismicRichText field={[]} />);
+	expect(emptyScreen.container).toContainHTML("");
+
+	const empty2Screen = render(
 		<PrismicRichText field={[{ type: "paragraph", text: "", spans: [] }]} />,
 	);
-	const expected = null;
-
-	expect(actualNull).toStrictEqual(expected);
-	expect(actualUndefined).toStrictEqual(expected);
-	expect(actualEmpty).toStrictEqual(expected);
-	expect(actualEmpty2).toStrictEqual(expected);
+	expect(empty2Screen.container).toContainHTML("");
 });
 
 it("returns fallback if given when passed empty field", async () => {
-	const fallback = <div>fallback</div>;
-	const actualNull = renderJSON(
-		<PrismicRichText field={null} fallback={fallback} />,
+	const nullScreen = render(
+		<PrismicRichText field={null} fallback="fallback" />,
 	);
-	const actualUndefined = renderJSON(
-		<PrismicRichText field={undefined} fallback={fallback} />,
+	expect(nullScreen.container).toContainHTML("");
+
+	const undefinedScreen = render(
+		<PrismicRichText field={undefined} fallback="fallback" />,
 	);
-	const actualEmpty = renderJSON(
-		<PrismicRichText field={[]} fallback={fallback} />,
+	expect(undefinedScreen.container).toContainHTML("");
+
+	const emptyScreen = render(
+		<PrismicRichText field={[]} fallback="fallback" />,
 	);
-	const actualEmpty2 = renderJSON(
+	expect(emptyScreen.container).toContainHTML("");
+
+	const empty2Screen = render(
 		<PrismicRichText
 			field={[{ type: "paragraph", text: "", spans: [] }]}
-			fallback={fallback}
+			fallback="fallback"
 		/>,
 	);
-	const expected = renderJSON(fallback);
-
-	expect(actualNull).toStrictEqual(expected);
-	expect(actualUndefined).toStrictEqual(expected);
-	expect(actualEmpty).toStrictEqual(expected);
-	expect(actualEmpty2).toStrictEqual(expected);
+	expect(empty2Screen.container).toContainHTML("");
 });
 
 it("returns <h1> if type is heading1", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.heading1,
+			type: RichTextNodeType.heading1,
 			text: "Heading 1",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h1 dir={undefined}>Heading 1</h1>);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<h1>Heading 1</h1>");
 });
 
 it("returns <h2> if type is heading2", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.heading2,
+			type: RichTextNodeType.heading2,
 			text: "Heading 2",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h2 dir={undefined}>Heading 2</h2>);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<h2>Heading 2</h2>");
 });
 
 it("returns <h3> if type is heading3", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.heading3,
+			type: RichTextNodeType.heading3,
 			text: "Heading 3",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h3 dir={undefined}>Heading 3</h3>);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<h3>Heading 3</h3>");
 });
 
 it("returns <h4> if type is heading4", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.heading4,
+			type: RichTextNodeType.heading4,
 			text: "Heading 4",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h4 dir={undefined}>Heading 4</h4>);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<h4>Heading 4</h4>");
 });
 
 it("returns <h5> if type is heading5", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.heading5,
+			type: RichTextNodeType.heading5,
 			text: "Heading 5",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h5 dir={undefined}>Heading 5</h5>);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<h5>Heading 5</h5>");
 });
 
 it("returns <h6> if type is heading6", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.heading6,
+			type: RichTextNodeType.heading6,
 			text: "Heading 6",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<h6 dir={undefined}>Heading 6</h6>);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<h6>Heading 6</h6>");
 });
 
-it("returns <p /> if type is paragraph", async () => {
-	const field: prismic.RichTextField = [
+it("returns <p> if type is paragraph", async () => {
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.paragraph,
-			text: "Paragraph bold",
+			type: RichTextNodeType.paragraph,
+			text: "Paragraph",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<p dir={undefined}>Paragraph bold</p>);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<p>Paragraph</p>");
 });
 
 it("returns <pre /> if type is preformatted", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.preformatted,
+			type: RichTextNodeType.preformatted,
 			text: "Preformatted",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(<pre>Preformatted</pre>);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<pre>Preformatted</pre>");
 });
 
 it("returns <strong /> if type is strong", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.paragraph,
+			type: RichTextNodeType.paragraph,
 			text: "strong",
 			spans: [
 				{
 					start: 0,
 					end: "strong".length,
-					type: prismic.RichTextNodeType.strong,
+					type: RichTextNodeType.strong,
 				},
 			],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<p dir={undefined}>
-			<strong>strong</strong>
-		</p>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<p><strong>strong</strong></p>");
 });
 
 it("returns <em /> if type is em", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.paragraph,
+			type: RichTextNodeType.paragraph,
 			text: "em",
 			spans: [
 				{
 					start: 0,
-					end: 2,
-					type: prismic.RichTextNodeType.em,
+					end: "em".length,
+					type: RichTextNodeType.em,
 				},
 			],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<p dir={undefined}>
-			<em>em</em>
-		</p>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<p><em>em</em></p>");
 });
 
 it("returns <ul> <li> </li> </ul> if type is listItem", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.listItem,
+			type: RichTextNodeType.listItem,
 			text: "listItem",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<ul>
-			<li dir={undefined}>listItem</li>
-		</ul>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<ul><li>listItem</li></ul>");
 });
 
-it("returns <ol> <li> </li> </ol> if type is listItem", async () => {
-	const field: prismic.RichTextField = [
+it("returns <ol> <li> </li> </ol> if type is oListItem", async () => {
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.oListItem,
-			text: "oListItem",
+			type: RichTextNodeType.oListItem,
+			text: "listItem",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<ol>
-			<li dir={undefined}>oListItem</li>
-		</ol>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<ol><li>listItem</li></ol>");
 });
 
-it("returns <image /> if type is image", async () => {
-	const url = "url";
-	const alt = "alt";
-	const copyright = "copyright";
+it("returns <img> if type is image", async ({ mock }) => {
+	const image = mock.value.image();
+	const field: RichTextField = [{ type: RichTextNodeType.image, ...image }];
 
-	const field: prismic.RichTextField = [
-		{
-			id: "",
-			edit: {
-				background: "transparent",
-				x: 0,
-				y: 0,
-				zoom: 1,
-			},
-			type: prismic.RichTextNodeType.image,
-			url,
-			alt,
-			copyright,
-			dimensions: {
-				width: 100,
-				height: 100,
-			},
-		},
+	const screen = render(<PrismicRichText field={field} />);
+
+	expect(screen.container).toContainHTML(
+		`<p class="block-img"><img src="${image.url}" alt="${image.alt}" data-copyright="${image.copyright}" /></p>`,
+	);
+});
+
+it("returns <image /> with undefined copyright if not provided", async ({
+	mock,
+}) => {
+	const image = mock.value.image();
+	image.copyright = null;
+	const field: RichTextField = [{ type: RichTextNodeType.image, ...image }];
+
+	const screen = render(<PrismicRichText field={field} />);
+
+	expect(screen.container).toContainHTML(
+		`<p class="block-img"><img src="${image.url}" alt="${image.alt}" /></p>`,
+	);
+});
+
+it("returns <img> wrapped in <PrismicLink> when an image has a link", async ({
+	mock,
+}) => {
+	const image = mock.value.image();
+	image.copyright = null;
+	const linkField = mock.value.link({ type: "Document" });
+	linkField.url = "/url";
+	const field: RichTextField = [
+		{ type: RichTextNodeType.image, linkTo: linkField, ...image },
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<p className="block-img">
-			<img src={url} alt={alt} data-copyright={copyright} />
-		</p>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML(
+		`<p class="block-img"><a href="${linkField.url}"><img src="${image.url}" alt="${image.alt}" /></></p>`,
+	);
 });
 
-it("returns <image /> with undefined copyright if not provided", async () => {
-	const url = "url";
-	const alt = "alt";
-
-	const field: prismic.RichTextField = [
+it("returns <div> with embedded HTML if type is embed", async ({ mock }) => {
+	const oembed = mock.value.embed({ html: "<div>oembed</div>" });
+	const field: RichTextField = [
 		{
-			id: "",
-			edit: {
-				background: "transparent",
-				x: 0,
-				y: 0,
-				zoom: 1,
-			},
-			type: prismic.RichTextNodeType.image,
-			url,
-			alt,
-			copyright: null,
-			dimensions: {
-				width: 100,
-				height: 100,
-			},
-		},
-	];
-
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<p className="block-img">
-			<img src={url} alt={alt} data-copyright={undefined} />
-		</p>,
-	);
-
-	expect(actual).toStrictEqual(expected);
-});
-
-it("returns <image /> wrapped in <PrismicLink />", async (ctx) => {
-	const url = "url";
-	const alt = "alt";
-	const copyright = "copyright";
-
-	const linkField = ctx.mock.value.link({ type: "Document" });
-
-	const field: prismic.RichTextField = [
-		{
-			id: "",
-			edit: {
-				background: "transparent",
-				x: 0,
-				y: 0,
-				zoom: 1,
-			},
-			type: prismic.RichTextNodeType.image,
-			url,
-			alt,
-			copyright,
-			dimensions: {
-				width: 100,
-				height: 100,
-			},
-			linkTo: linkField,
-		},
-	];
-
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<p className="block-img">
-			<PrismicLink field={linkField}>
-				<img src={url} alt={alt} data-copyright={copyright} />
-			</PrismicLink>
-		</p>,
-	);
-
-	expect(actual).toStrictEqual(expected);
-});
-
-it("returns <div /> with embedded html if type is embed", async () => {
-	const oembed: prismic.EmbedField<
-		prismic.RichOEmbed & { provider_name: string }
-	> = {
-		version: "1.0",
-		embed_url: "https://example.com",
-		type: "rich",
-		html: "<marquee>Prismic is fun</marquee>",
-		width: 100,
-		height: 100,
-		provider_name: "Prismic",
-	};
-	const field: prismic.RichTextField = [
-		{
-			type: prismic.RichTextNodeType.embed,
+			type: RichTextNodeType.embed,
 			oembed,
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<div
-			data-oembed={oembed.embed_url}
-			data-oembed-type={oembed.type}
-			data-oembed-provider={oembed.provider_name}
-			dangerouslySetInnerHTML={{ __html: oembed.html as string }}
-		/>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML(
+		`<div data-oembed="${oembed.embed_url}" data-oembed-type="${oembed.type}">${oembed.html}</div>`,
+	);
 });
 
-it("Returns <PrismicLink /> when type is hyperlink", async () => {
-	const data: prismic.FilledContentRelationshipField = {
-		id: "id",
-		uid: "uid",
-		lang: "lang",
-		tags: [],
-		type: "page",
-		link_type: prismic.LinkType.Document,
-		url: "/url",
-	};
-
-	const field: prismic.RichTextField = [
+it("Returns <PrismicLink> when type is hyperlink", async ({ mock }) => {
+	const data = mock.value.contentRelationship();
+	data.url = "/url";
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.paragraph,
+			type: RichTextNodeType.paragraph,
 			text: "hyperlink",
 			spans: [
 				{
 					start: 0,
 					end: "hyperlink".length,
-					type: prismic.RichTextNodeType.hyperlink,
+					type: RichTextNodeType.hyperlink,
 					data,
 				},
 			],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<p dir={undefined}>
-			<a href={data.url} rel={undefined} target={undefined}>
-				hyperlink
-			</a>
-		</p>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML(
+		`<p><a href="${data.url}">hyperlink</a></p>`,
+	);
 });
 
 // TODO update isInternalURL to support an internal URL like "url"
-it("Returns <PrismicLink /> with internalComponent from props", async () => {
-	const data: prismic.FilledContentRelationshipField = {
-		id: "id",
-		uid: "uid",
-		lang: "lang",
-		tags: [],
-		type: "page",
-		link_type: prismic.LinkType.Document,
-		url: "/url",
-	};
-
-	const field: prismic.RichTextField = [
+it("Returns <PrismicLink> with internalComponent from props", async ({
+	mock,
+}) => {
+	const data = mock.value.contentRelationship();
+	data.url = "/url";
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.paragraph,
+			type: RichTextNodeType.paragraph,
 			text: "hyperlink",
 			spans: [
 				{
 					start: 0,
 					end: "hyperlink".length,
-					type: prismic.RichTextNodeType.hyperlink,
+					type: RichTextNodeType.hyperlink,
 					data,
 				},
 			],
 		},
 	];
 
-	const actual = renderJSON(
-		<PrismicRichText internalLinkComponent={Link} field={field} />,
-	);
-	const expected = renderJSON(
-		<p dir={undefined}>
-			<a data-href="/url" data-rel={undefined} data-target={undefined}>
-				hyperlink
-			</a>
-		</p>,
+	const screen = render(
+		<PrismicRichText
+			field={field}
+			internalLinkComponent={() => <span>link</span>}
+		/>,
 	);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<p><span>link</span></p>");
 });
 
 it("returns <span /> with label className if type is label", async () => {
-	const data = {
-		label: "label",
-	};
-	const field: prismic.RichTextField = [
+	const data = { label: "label" };
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.paragraph,
+			type: RichTextNodeType.paragraph,
 			text: "label",
 			spans: [
 				{
-					type: prismic.RichTextNodeType.label,
+					type: RichTextNodeType.label,
 					start: 0,
 					end: 5,
 					data,
@@ -506,145 +359,130 @@ it("returns <span /> with label className if type is label", async () => {
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<p dir={undefined}>
-			<span className={data.label}>label</span>
-		</p>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML(
+		`<p><span class="${data.label}">label</span></p>`,
+	);
 });
 
 it("renders line breaks as <br />", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.paragraph,
+			type: RichTextNodeType.paragraph,
 			text: "line 1\nline 2",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<p dir={undefined}>
-			line 1<br />
-			line 2
-		</p>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML(`<p>line 1<br/>line 2</p>`);
 });
 
 it("includes `dir` attribute on right-to-left languages", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.heading1,
+			type: RichTextNodeType.heading1,
 			text: "Heading 1",
 			spans: [],
 			direction: "rtl",
 		},
 		{
-			type: prismic.RichTextNodeType.heading2,
+			type: RichTextNodeType.heading2,
 			text: "Heading 2",
 			spans: [],
 			direction: "rtl",
 		},
 		{
-			type: prismic.RichTextNodeType.heading3,
+			type: RichTextNodeType.heading3,
 			text: "Heading 3",
 			spans: [],
 			direction: "rtl",
 		},
 		{
-			type: prismic.RichTextNodeType.heading4,
+			type: RichTextNodeType.heading4,
 			text: "Heading 4",
 			spans: [],
 			direction: "rtl",
 		},
 		{
-			type: prismic.RichTextNodeType.heading5,
+			type: RichTextNodeType.heading5,
 			text: "Heading 5",
 			spans: [],
 			direction: "rtl",
 		},
 		{
-			type: prismic.RichTextNodeType.heading6,
+			type: RichTextNodeType.heading6,
 			text: "Heading 6",
 			spans: [],
 			direction: "rtl",
 		},
 		{
-			type: prismic.RichTextNodeType.paragraph,
+			type: RichTextNodeType.paragraph,
 			text: "Paragraph",
 			spans: [],
 			direction: "rtl",
 		},
 		{
-			type: prismic.RichTextNodeType.listItem,
+			type: RichTextNodeType.listItem,
 			text: "listItem",
 			spans: [],
 			direction: "rtl",
 		},
 		{
-			type: prismic.RichTextNodeType.oListItem,
+			type: RichTextNodeType.oListItem,
 			text: "oListItem",
 			spans: [],
 			direction: "rtl",
 		},
 	];
 
-	const actual = renderJSON(<PrismicRichText field={field} />);
-	const expected = renderJSON(
-		<>
-			<h1 dir="rtl">Heading 1</h1>
-			<h2 dir="rtl">Heading 2</h2>
-			<h3 dir="rtl">Heading 3</h3>
-			<h4 dir="rtl">Heading 4</h4>
-			<h5 dir="rtl">Heading 5</h5>
-			<h6 dir="rtl">Heading 6</h6>
-			<p dir="rtl">Paragraph</p>
-			<ul>
-				<li dir="rtl">listItem</li>
-			</ul>
-			<ol>
-				<li dir="rtl">oListItem</li>
-			</ol>
-		</>,
-	);
+	const screen = render(<PrismicRichText field={field} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML('<h1 dir="rtl">Heading 1</h1>');
+	expect(screen.container).toContainHTML('<h2 dir="rtl">Heading 2</h2>');
+	expect(screen.container).toContainHTML('<h3 dir="rtl">Heading 3</h3>');
+	expect(screen.container).toContainHTML('<h4 dir="rtl">Heading 4</h4>');
+	expect(screen.container).toContainHTML('<h5 dir="rtl">Heading 5</h5>');
+	expect(screen.container).toContainHTML('<h6 dir="rtl">Heading 6</h6>');
+	expect(screen.container).toContainHTML('<p dir="rtl">Paragraph</p>');
+	expect(screen.container).toContainHTML(
+		'<ul><li dir="rtl">listItem</li></ul>',
+	);
+	expect(screen.container).toContainHTML(
+		'<ol><li dir="rtl">oListItem</li></ul>',
+	);
 });
 
 it("renders components from components prop", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.paragraph,
+			type: RichTextNodeType.paragraph,
 			text: "paragraph",
 			spans: [],
 		},
 	];
 
-	const actual = renderJSON(
+	const screen = render(
 		<PrismicRichText
 			field={field}
-			components={{ paragraph: ({ key }) => <p key={key}>paragraph</p> }}
+			components={{ paragraph: ({ key }) => <p key={key}>custom</p> }}
 		/>,
 	);
-	const expected = renderJSON(<p>paragraph</p>);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<p>custom</p>");
 });
 
 it("keys are automatically applied to custom components", async () => {
-	const field: prismic.RichTextField = [
+	const field: RichTextField = [
 		{
-			type: prismic.RichTextNodeType.heading1,
+			type: RichTextNodeType.heading1,
 			text: "heading1",
 			spans: [],
 		},
 		{
-			type: prismic.RichTextNodeType.paragraph,
+			type: RichTextNodeType.paragraph,
 			text: "paragraph",
 			spans: [],
 		},
@@ -654,7 +492,7 @@ it("keys are automatically applied to custom components", async () => {
 		.spyOn(console, "error")
 		.mockImplementation(() => void 0);
 
-	renderJSON(
+	render(
 		<PrismicRichText
 			field={field}
 			components={{
@@ -672,17 +510,13 @@ it("keys are automatically applied to custom components", async () => {
 });
 
 it("warns if a className prop is provided", async () => {
-	const field: prismic.RichTextField = [];
-
-	// The warning only logs in "development".
-	const originalNodeEnv = process.env.NODE_ENV;
-	process.env.NODE_ENV = "development";
+	const field: RichTextField = [];
 
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
 
-	renderJSON(
+	render(
 		<PrismicRichText
 			field={field}
 			// @ts-expect-error - We are purposely passing an invalid prop to trigger the console wraning.
@@ -696,5 +530,4 @@ it("warns if a className prop is provided", async () => {
 	);
 
 	consoleWarnSpy.mockRestore();
-	process.env.NODE_ENV = originalNodeEnv;
 });

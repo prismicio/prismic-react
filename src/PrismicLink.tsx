@@ -175,8 +175,11 @@ export const PrismicLink = forwardRef(function PrismicLink<
 		defaultComponent) as ComponentType<LinkProps>;
 	const ExternalComponent = (externalComponent ||
 		defaultComponent) as ComponentType<LinkProps>;
-	const Component =
-		href && isInternalURL(href) ? InternalComponent : ExternalComponent;
+	const Component = href
+		? isInternalURL(href)
+			? InternalComponent
+			: ExternalComponent
+		: InternalComponent;
 
 	return (
 		<Component ref={ref} {...attrs} {...restProps} href={href} rel={rel}>

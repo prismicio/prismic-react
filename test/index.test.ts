@@ -1,5 +1,7 @@
-import { it, expect } from "vitest";
+import { expect } from "vitest";
 import { Element as ClientElement } from "@prismicio/client/richtext";
+
+import { it } from "./it";
 
 import { Element } from "../src";
 

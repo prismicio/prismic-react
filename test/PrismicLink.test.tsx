@@ -1,154 +1,130 @@
-import { it, expect, vi } from "vitest";
-import * as prismic from "@prismicio/client";
-import * as React from "react";
+import { describe, expect, vi } from "vitest";
+import { render } from "vitest-browser-react";
+import { forwardRef } from "react";
+import { PrismicDocument } from "@prismicio/client";
 
-import { renderJSON } from "./__testutils__/renderJSON";
+import { it } from "./it";
 
 import { PrismicLink, LinkProps } from "../src";
+import { isInternalURL } from "../src/PrismicLink";
 
-const Link = ({ href, rel, target }: LinkProps) => (
-	<a data-href={href} data-rel={rel} data-target={target} />
-);
-
-it("renders a link from a document link field", async (ctx) => {
-	const field = ctx.mock.value.link({ type: "Document" });
+it("renders a link from a document link field", async ({ mock }) => {
+	const field = mock.value.link({ type: "Document" });
 	field.url = "/url";
 
-	const actual = renderJSON(<PrismicLink field={field} />);
-	const expected = renderJSON(
-		<a href={field.url} rel={undefined} target={undefined} />,
-	);
+	const screen = render(<PrismicLink field={field} data-testid="link" />);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("href", field.url);
 });
 
-it("renders a link from a media link field", async (ctx) => {
-	const field = ctx.mock.value.link({
-		type: "Media",
-	});
+it("renders a link from a media link field", async ({ mock }) => {
+	const field = mock.value.link({ type: "Media" });
 	field.url = "/url";
 
-	const actual = renderJSON(<PrismicLink field={field} />);
-	const expected = renderJSON(
-		<a href={field.url} rel={undefined} target={undefined} />,
-	);
+	const screen = render(<PrismicLink field={field} data-testid="link" />);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("href", field.url);
 });
 
-it("renders a link from a web link field", async (ctx) => {
-	const field: prismic.FilledLinkToWebField = ctx.mock.value.link({
-		type: "Web",
-	});
+it("renders a link from a web link field", async ({ mock }) => {
+	const field = mock.value.link({ type: "Web" });
 	field.url = "/url";
 
-	const actual = renderJSON(<PrismicLink field={field} />);
-	const expected = renderJSON(
-		<a href={field.url} rel={undefined} target={undefined} />,
-	);
+	const screen = render(<PrismicLink field={field} data-testid="link" />);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("href", field.url);
 });
 
-it("renders a link from a document with a URL", async (ctx) => {
-	const document = ctx.mock.value.document();
-	document.url = "/url";
+it("renders a link from a document with a URL", async ({ mock }) => {
+	const doc = mock.value.document();
+	doc.url = "/url";
 
-	const actual = renderJSON(<PrismicLink document={document} />);
-	const expected = renderJSON(
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		<a href={document.url!} rel={undefined} target={undefined} />,
-	);
+	const screen = render(<PrismicLink document={doc} data-testid="link" />);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("href", doc.url);
 });
 
-it("renders a link from a document using a Link Resolver", async (ctx) => {
-	const document = ctx.mock.value.document({
+it("renders a link from a document using a Link Resolver", async ({ mock }) => {
+	const doc = mock.value.document({
 		withURL: false,
-		model: ctx.mock.model.customType({
+		model: mock.model.customType({
 			fields: {
-				uid: ctx.mock.model.uid(),
+				uid: mock.model.uid(),
 			},
 		}),
 	});
-	const linkResolver: prismic.LinkResolverFunction = (doc) => `/${doc.uid}`;
 
-	const actual = renderJSON(
-		<PrismicLink document={document} linkResolver={linkResolver} />,
+	const screen = render(
+		<PrismicLink
+			document={doc}
+			linkResolver={(doc) => `/${doc.uid}`}
+			data-testid="link"
+		/>,
 	);
-	const expected = renderJSON(
-		<a href={`/${document.uid}`} rel={undefined} target={undefined} />,
-	);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("href", `/${doc.uid}`);
 });
 
 it("renders link from an href", async () => {
-	const actual = renderJSON(<PrismicLink href="/href" />);
-	const expected = renderJSON(<a href="/href" rel={undefined} />);
+	const screen = render(<PrismicLink href="/href" data-testid="link" />);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("href", "/href");
 });
 
-it("prefers explicit href over field", async (ctx) => {
-	const field = ctx.mock.value.link();
+it("prefers explicit href over field", async ({ mock }) => {
+	const field = mock.value.link();
 	field.url = "/url";
 
-	const actual = renderJSON(<PrismicLink href="/href" field={field} />);
-	const expected = renderJSON(
-		<a href="/href" rel={undefined} target={undefined} />,
+	const screen = render(
+		<PrismicLink href="/href" field={field} data-testid="link" />,
 	);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("href", "/href");
 });
 
-it("uses link resolver provided via props", async (ctx) => {
-	const field = ctx.mock.value.link({ type: "Document" });
-	const linkResolver: prismic.LinkResolverFunction = (doc) => `/${doc.uid}`;
+it("uses link resolver provided via props", async ({ mock }) => {
+	const field = mock.value.link({ type: "Document" });
 
-	const actual = renderJSON(
-		<PrismicLink field={field} linkResolver={linkResolver} />,
+	const screen = render(
+		<PrismicLink
+			field={field}
+			linkResolver={(field) => `/${field.uid}`}
+			data-testid="link"
+		/>,
 	);
-	const expected = renderJSON(
-		<a href={`/${field.uid}`} rel={undefined} target={undefined} />,
-	);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("href", `/${field.uid}`);
 });
 
-it("allow overriding default rel", async (ctx) => {
-	const field = ctx.mock.value.link({
-		type: "Web",
-		withTargetBlank: true,
-	});
-	field.url = "/url";
+it("allow overriding default rel", async ({ mock }) => {
+	const field = mock.value.link();
 
-	const actual = renderJSON(<PrismicLink field={field} rel="rel" />);
-	const expected = renderJSON(
-		// eslint-disable-next-line react/jsx-no-target-blank
-		<a href={field.url} rel="rel" target="_blank" />,
+	const screen = render(
+		<PrismicLink field={field} rel="rel" data-testid="link" />,
 	);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("rel", "rel");
 });
 
-it("allow overriding default rel with a function", async (ctx) => {
-	const field = ctx.mock.value.link({
-		type: "Web",
-		withTargetBlank: true,
-	});
-	field.url = "https://prismic.io";
+it("allow overriding default rel with a function", async ({ mock }) => {
+	const field = mock.value.link({ type: "Web" });
+	const rel = vi.fn(() => "rel");
 
-	const rel = vi.fn(() => "foo");
-
-	const actual = renderJSON(<PrismicLink field={field} rel={rel} />);
-	const expected = renderJSON(
-		// eslint-disable-next-line react/jsx-no-target-blank
-		<a href={field.url} rel="foo" target="_blank" />,
+	const screen = render(
+		<PrismicLink field={field} rel={rel} data-testid="link" />,
 	);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("rel", "rel");
 	expect(rel).toHaveBeenCalledWith({
 		href: field.url,
 		target: field.target,
@@ -156,152 +132,178 @@ it("allow overriding default rel with a function", async (ctx) => {
 	});
 });
 
-it("allow overriding default target", async (ctx) => {
-	const field = ctx.mock.value.link({
-		type: "Web",
-		withTargetBlank: true,
-	});
-	field.url = "/url";
+it("allow overriding default target", async ({ mock }) => {
+	const field = mock.value.link();
 
-	const actual = renderJSON(<PrismicLink field={field} target="target" />);
-	const expected = renderJSON(
-		<a href={field.url} target="target" rel={undefined} />,
+	const screen = render(
+		<PrismicLink field={field} target="target" data-testid="link" />,
 	);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).toHaveAttribute("target", "target");
 });
 
 it("if target is not provided and the URL is external, target is not set", async () => {
-	const actual = renderJSON(<PrismicLink href="https://example.com" />);
-	const expected = renderJSON(<a href="https://example.com" rel={undefined} />);
+	const screen = render(
+		<PrismicLink href="https://example.com" data-testid="link" />,
+	);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link).not.toHaveAttribute("target");
 });
 
 it("if URL is internal and no internalComponent is given, render an <a>", async () => {
-	const actual = renderJSON(<PrismicLink href="/internal" />);
-	const expected = renderJSON(<a href="/internal" rel={undefined} />);
+	const screen = render(<PrismicLink href="/internal" data-testid="link" />);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link.tagName).toStrictEqual("A");
 });
 
 it("if URL is internal and internalComponent is given, render internalComponent", async () => {
-	const actual = renderJSON(
-		<PrismicLink href="/internal" internalComponent={Link} />,
+	const Comp = vi.fn(() => <div>foo</div>);
+	const screen = render(
+		<PrismicLink href="/internal" internalComponent={Comp} data-testid="link">
+			children
+		</PrismicLink>,
 	);
-	const expected = renderJSON(<Link href="/internal" rel={undefined} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<div>foo</div>");
+	expect(Comp).toHaveBeenCalledWith(
+		{
+			children: "children",
+			href: "/internal",
+			rel: undefined,
+			"data-testid": "link",
+		},
+		{},
+	);
 });
 
 it("if URL is external and no externalComponent is given, render an <a>", async () => {
-	const actual = renderJSON(<PrismicLink href="https://example.com" />);
-	const expected = renderJSON(<a href="https://example.com" rel={undefined} />);
+	const screen = render(
+		<PrismicLink href="https://example.com" data-testid="link" />,
+	);
+	const link = screen.getByTestId("link").element();
 
-	expect(actual).toStrictEqual(expected);
+	expect(link.tagName).toStrictEqual("A");
 });
 
 it("if URL is external and externalComponent is given, render externalComponent", async () => {
-	const actual = renderJSON(
-		<PrismicLink href="https://example.com" externalComponent={Link} />,
+	const Comp = vi.fn(() => <div>foo</div>);
+	const screen = render(
+		<PrismicLink
+			href="https://example.com"
+			externalComponent={Comp}
+			data-testid="link"
+		>
+			children
+		</PrismicLink>,
 	);
-	const expected = renderJSON(<Link href="https://example.com" />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<div>foo</div>");
+	expect(Comp).toHaveBeenCalledWith(
+		{
+			children: "children",
+			href: "https://example.com",
+			rel: undefined,
+			"data-testid": "link",
+		},
+		{},
+	);
 });
 
-it("renders internal component if provided field is undefined", async () => {
-	const actual = renderJSON(<PrismicLink field={undefined} />);
-	const expected = renderJSON(<a href="" rel={undefined} />);
+it("renders external component if provided field is undefined", async () => {
+	const Comp = vi.fn(() => <div>foo</div>);
+	const screen = render(
+		<PrismicLink field={undefined} internalComponent={Comp} />,
+	);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<div>foo</div>");
+	expect(Comp).toHaveBeenCalledWith(
+		{ children: undefined, href: "", rel: undefined },
+		{},
+	);
 });
 
 it("renders internal component if document is provided undefined", async () => {
-	const actual = renderJSON(<PrismicLink document={undefined} />);
-	const expected = renderJSON(<a href="" rel={undefined} />);
+	const Comp = vi.fn(() => <div>foo</div>);
+	const screen = render(
+		<PrismicLink document={undefined} internalComponent={Comp} />,
+	);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<div>foo</div>");
+	expect(Comp).toHaveBeenCalledWith(
+		{ children: undefined, href: "", rel: undefined },
+		{},
+	);
 });
 
 it("renders internal component if provided href is falsey", async () => {
-	const actual = renderJSON(<PrismicLink href="" />);
-	const expected = renderJSON(<a href="" rel={undefined} />);
+	const Comp = vi.fn(() => <div>foo</div>);
+	const screen = render(<PrismicLink href="" internalComponent={Comp} />);
 
-	expect(actual).toStrictEqual(expected);
+	expect(screen.container).toContainHTML("<div>foo</div>");
+	expect(Comp).toHaveBeenCalledWith(
+		{ children: undefined, href: "", rel: undefined },
+		{},
+	);
 });
 
-it("forwards ref to internal component", async () => {
-	const CustomComponent =
-		// eslint-disable-next-line react/display-name
-		React.forwardRef<HTMLInputElement, LinkProps>((props, ref) => {
-			return <input ref={ref} value={props.href} />;
-		});
+it("forwards ref", async () => {
+	let defaultRef = null as Element | null;
+	let internalRef = null as Element | null;
+	let externalRef = null as Element | null;
 
-	let aRef = null as Element | null;
-	let customComponentRef = null as Element | null;
+	const InternalComp = forwardRef<HTMLDivElement, LinkProps>((_, ref) => (
+		<div ref={ref} data-testid="internal" />
+	));
+	const ExternalComp = forwardRef<HTMLDivElement, LinkProps>((_, ref) => (
+		<div ref={ref} data-testid="external" />
+	));
 
-	renderJSON(
+	render(
 		<>
-			<PrismicLink ref={(el) => (aRef = el)} href="/" />
 			<PrismicLink
-				ref={(el) => (customComponentRef = el)}
-				internalComponent={CustomComponent}
+				ref={(el) => {
+					defaultRef = el;
+				}}
+				href="/"
+			/>
+			<PrismicLink
+				ref={(el) => {
+					internalRef = el;
+				}}
+				internalComponent={InternalComp}
+				href="/"
+			/>
+			<PrismicLink
+				ref={(el) => {
+					externalRef = el;
+				}}
+				internalComponent={ExternalComp}
 				href="/"
 			/>
 		</>,
-		{
-			createNodeMock: (element) => ({ tagName: element.type }),
-		},
 	);
 
-	expect(aRef?.tagName).toBe("a");
-	expect(customComponentRef?.tagName).toBe("input");
+	expect(defaultRef?.tagName).toBe("A");
+	expect(internalRef).toHaveAttribute("data-testid", "internal");
+	expect(externalRef).toHaveAttribute("data-testid", "external");
 });
 
-it("forwards ref to external component", async () => {
-	const CustomComponent =
-		// eslint-disable-next-line react/display-name
-		React.forwardRef<HTMLInputElement, LinkProps>((props, ref) => {
-			return <input ref={ref} value={props.href} />;
-		});
-
-	let aRef = null as Element | null;
-	let customComponentRef = null as Element | null;
-
-	renderJSON(
-		<>
-			<PrismicLink ref={(el) => (aRef = el)} href="https://prismic.io" />
-			<PrismicLink
-				ref={(el) => (customComponentRef = el)}
-				externalComponent={CustomComponent}
-				href="https://prismic.io"
-			/>
-		</>,
-		{
-			createNodeMock: (element) => ({ tagName: element.type }),
-		},
-	);
-
-	expect(aRef?.tagName).toBe("a");
-	expect(customComponentRef?.tagName).toBe("input");
-});
-
-it("throws error if `link_type` is missing from a given field", async (ctx) => {
-	const field = ctx.mock.value.link();
+it("throws error if `link_type` is missing from a given field", async ({
+	mock,
+}) => {
+	const field = mock.value.link();
 	// @ts-expect-error - We are purposely deleting a non-optional field.
 	delete field.link_type;
-
-	// The warning only logs in "development".
-	const originalNodeEnv = process.env.NODE_ENV;
-	process.env.NODE_ENV = "development";
 
 	const consoleErrorSpy = vi
 		.spyOn(console, "error")
 		.mockImplementation(() => void 0);
 
 	expect(() => {
-		renderJSON(<PrismicLink field={field} />);
+		render(<PrismicLink field={field} />);
 	}).throws(/missing-link-properties/);
 
 	expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -312,21 +314,16 @@ it("throws error if `link_type` is missing from a given field", async (ctx) => {
 	);
 
 	consoleErrorSpy.mockRestore();
-	process.env.NODE_ENV = originalNodeEnv;
 });
 
 it("warns if properties are missing from a given field", async () => {
-	const field = { link_type: prismic.LinkType.Web, target: "_blank" };
-
-	// The warning only logs in "development".
-	const originalNodeEnv = process.env.NODE_ENV;
-	process.env.NODE_ENV = "development";
+	const field = { link_type: "Web", target: "_blank" };
 
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
 
-	renderJSON(<PrismicLink field={field} />);
+	render(<PrismicLink field={field} />);
 
 	expect(consoleWarnSpy).toHaveBeenCalledWith(
 		expect.stringMatching(/missing-link-properties/),
@@ -334,39 +331,30 @@ it("warns if properties are missing from a given field", async () => {
 	);
 
 	consoleWarnSpy.mockRestore();
-	process.env.NODE_ENV = originalNodeEnv;
 });
 
-it("does not warn if given field is empty", async (ctx) => {
-	const field = ctx.mock.value.link({ state: "empty" });
-
-	// The warning only logs in "development".
-	const originalNodeEnv = process.env.NODE_ENV;
-	process.env.NODE_ENV = "development";
+it("does not warn if given field is empty", async ({ mock }) => {
+	const field = mock.value.link({ state: "empty" });
 
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
 
-	renderJSON(<PrismicLink field={field} />);
+	render(<PrismicLink field={field} />);
 
 	expect(consoleWarnSpy).not.toHaveBeenCalled();
 
 	consoleWarnSpy.mockRestore();
-	process.env.NODE_ENV = originalNodeEnv;
 });
 
 it("warns if properties are missing from a given document", async () => {
-	const document = {} as prismic.PrismicDocument;
+	const document = {} as PrismicDocument;
 
-	// The warning only logs in "development".
-	const originalNodeEnv = process.env.NODE_ENV;
-	process.env.NODE_ENV = "development";
 	const consoleWarnSpy = vi
 		.spyOn(console, "warn")
 		.mockImplementation(() => void 0);
 
-	renderJSON(<PrismicLink document={document} />);
+	render(<PrismicLink document={document} />);
 
 	expect(consoleWarnSpy).toHaveBeenCalledWith(
 		expect.stringMatching(/missing-link-properties/),
@@ -374,5 +362,22 @@ it("warns if properties are missing from a given document", async () => {
 	);
 
 	consoleWarnSpy.mockRestore();
-	process.env.NODE_ENV = originalNodeEnv;
+});
+
+describe("isInternalURL", () => {
+	it("returns true for internal URLs", () => {
+		expect(isInternalURL("/")).toBe(true);
+		expect(isInternalURL("/internal")).toBe(true);
+		expect(isInternalURL("#anchor")).toBe(true);
+	});
+
+	it("returns false for external URLs", () => {
+		expect(isInternalURL("//example.com")).toBe(false);
+		expect(isInternalURL("//example.com/image.png")).toBe(false);
+		expect(isInternalURL("//example.com#anchor")).toBe(false);
+		expect(isInternalURL("https://example.com")).toBe(false);
+		expect(isInternalURL("mailto:example.com")).toBe(false);
+		expect(isInternalURL("tel:example.com")).toBe(false);
+		expect(isInternalURL("ftp:example.com")).toBe(false);
+	});
 });

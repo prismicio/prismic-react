@@ -14,7 +14,7 @@
 		"declaration": true,
 		"outDir": "./dist",
 
-		"types": ["react"]
+		"types": ["react", "@vitest/browser/providers/playwright"]
 	},
 	"exclude": ["node_modules", "dist", "examples"]
 }

@@ -1,17 +1,16 @@
-import { it, expect } from "vitest";
+import { expect } from "vitest";
+import { render } from "vitest-browser-react";
 
-import { renderJSON } from "./__testutils__/renderJSON";
+import { it } from "./it";
 
 import { PrismicToolbar } from "../src";
 
-it("adds a script element with the correct attributes to document.body", () => {
-	const repositoryName = "repositoryName";
+it("adds a script element with the correct attributes to document.body", ({
+	repositoryName,
+}) => {
+	const screen = render(<PrismicToolbar repositoryName={repositoryName} />);
 
-	globalThis.fetch = async () => new Response();
-
-	renderJSON(<PrismicToolbar repositoryName={repositoryName} />);
-
-	const script = document.body.querySelector(
+	const script = screen.baseElement.querySelector(
 		`[data-prismic-toolbar=""][data-repository-name="${repositoryName}"]`,
 	);
 

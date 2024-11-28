@@ -32,7 +32,11 @@ export default defineConfig({
 		coverage: {
 			reporter: ["lcovonly", "text"],
 		},
-		environment: "happy-dom",
-		setupFiles: ["./test/__setup__.ts"],
+		browser: {
+			provider: "playwright",
+			enabled: true,
+			headless: true,
+			name: "chromium",
+		},
 	},
 });
