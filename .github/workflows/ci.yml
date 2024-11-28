@@ -35,7 +35,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Install Puppeteer
+      - name: Prepare Playwright
         run: npx playwright install
 
       - name: Lint
