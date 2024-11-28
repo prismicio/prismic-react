@@ -2,7 +2,6 @@
 	"name": "@prismicio/react",
 	"version": "2.9.1",
 	"description": "React components and hooks to fetch and present Prismic content",
-	"type": "module",
 	"keywords": [
 		"typescript",
 		"prismic",
@@ -15,6 +14,7 @@
 	"license": "Apache-2.0",
 	"author": "Prismic <contact@prismic.io> (https://prismic.io)",
 	"sideEffects": false,
+	"type": "module",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -38,16 +38,19 @@
 		"dev": "vite build --watch",
 		"format": "prettier --write .",
 		"lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-		"types": "tsc --noEmit",
 		"prepare": "npm run build",
 		"release": "npm run build && npm run test && standard-version && git push --follow-tags && npm run build && npm publish",
 		"release:alpha": "npm run build && npm run test && standard-version --release-as minor --prerelease alpha && git push --follow-tags && npm run build && npm publish --tag alpha",
 		"release:alpha:dry": "standard-version --release-as minor --prerelease alpha --dry-run",
 		"release:dry": "standard-version --dry-run",
-		"unit": "vitest run --coverage",
-		"unit:watch": "vitest watch",
 		"size": "size-limit",
-		"test": "npm run lint && npm run types && npm run unit && npm run build && npm run size"
+		"test": "npm run lint && npm run types && npm run unit && npm run build && npm run size",
+		"types": "tsc --noEmit",
+		"unit": "vitest run --coverage",
+		"unit:watch": "vitest watch"
+	},
+	"dependencies": {
+		"esm-env": "^1.1.4"
 	},
 	"devDependencies": {
 		"@prismicio/client": "^7.12.0",
@@ -90,8 +93,5 @@
 	},
 	"publishConfig": {
 		"access": "public"
-	},
-	"dependencies": {
-		"esm-env": "^1.1.4"
 	}
 }
