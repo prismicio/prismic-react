@@ -5,10 +5,18 @@ import {
 	asImageWidthSrcSet,
 	isFilled,
 } from "@prismicio/client";
-import type { ImgixURLParams } from "imgix-url-builder";
 import { DEV } from "esm-env";
 
 import { devMsg } from "./lib/devMsg.js";
+
+type ImgixURLParams = Omit<
+	NonNullable<Parameters<typeof asImageWidthSrcSet>[1]>,
+	"widths"
+> &
+	Omit<
+		NonNullable<Parameters<typeof asImagePixelDensitySrcSet>[1]>,
+		"pixelDensities"
+	>;
 
 /** Props for `<PrismicImage>`. */
 export type PrismicImageProps = Omit<
@@ -176,4 +184,6 @@ export const PrismicImage = forwardRef(function PrismicImage(
 			{...restProps}
 		/>
 	);
-});
+}) as (
+	props: PrismicImageProps & { ref?: ForwardedRef<HTMLImageElement> },
+) => JSX.Element | null;
