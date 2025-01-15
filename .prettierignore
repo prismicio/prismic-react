@@ -1,11 +1,9 @@
 # custom
-CHANGELOG.md
-
-# .gitignore copy
-
-# custom
 dist
 examples/**/package-lock.json
+*.tgz
+CHANGELOG.md
+e2e-projects/**/.next
 
 # os
 .DS_Store
@@ -41,3 +39,8 @@ coverage
 !.vscode/tasks.json
 !.vscode/launch.json
 *.code-workspace
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests/.storage-state.json

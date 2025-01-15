@@ -107,7 +107,7 @@ export const PrismicLink = forwardRef(function PrismicLink<
 >(
 	props: PrismicLinkProps<InternalComponentProps, ExternalComponentProps>,
 	ref: ForwardedRef<Element>,
-): JSX.Element {
+) {
 	const {
 		field,
 		document: doc,
@@ -193,7 +193,7 @@ export const PrismicLink = forwardRef(function PrismicLink<
 	props: PrismicLinkProps<InternalComponentProps, ExternalComponentProps> & {
 		ref?: ForwardedRef<Element>;
 	},
-) => JSX.Element;
+) => ReactNode;
 
 /**
  * Determines if a URL is internal or external.

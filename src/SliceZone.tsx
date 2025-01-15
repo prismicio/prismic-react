@@ -77,7 +77,6 @@ export type SliceZoneLike<TSlice extends SliceLike = SliceLike> =
  *   available to all Slice components.
  */
 export type SliceComponentProps<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TSlice extends SliceLike = SliceLike,
 	TContext = unknown,
 > = {
@@ -113,7 +112,7 @@ export type SliceComponentType<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TSlice extends SliceLike = any,
 	TContext = unknown,
-> = React.ComponentType<SliceComponentProps<TSlice, TContext>>;
+> = ComponentType<SliceComponentProps<TSlice, TContext>>;
 
 /**
  * A record of Slice types mapped to a React component. The component will be
@@ -183,7 +182,7 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
 	slice,
 }: {
 	slice: TSlice;
-}): JSX.Element | null => {
+}) => {
 	if (!DEV) {
 		return null;
 	}

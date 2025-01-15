@@ -24,7 +24,7 @@ export default defineConfig({
 			external: [
 				...Object.keys(dependencies),
 				...Object.keys(peerDependencies),
-			].map((name) => new RegExp(`^${name}(?:\/.*)?$`)),
+			].map((name) => new RegExp(`^${name}(?:/.*)?$`)),
 			plugins: [typescript({ rootDir: "./src" }), preserveDirectives()],
 		},
 	},

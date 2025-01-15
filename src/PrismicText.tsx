@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { asText, isFilled, RichTextField } from "@prismicio/client";
 import { DEV } from "esm-env";
 
@@ -39,7 +38,7 @@ export type PrismicTextProps = {
  *
  * @see Learn about Rich Text fields {@link https://io/docs/core-concepts/rich-text-title}
  */
-export function PrismicText(props: PrismicTextProps): JSX.Element | null {
+export function PrismicText(props: PrismicTextProps) {
 	const { field, fallback, separator } = props;
 
 	if (DEV) {
@@ -51,27 +50,24 @@ export function PrismicText(props: PrismicTextProps): JSX.Element | null {
 				props.field,
 			);
 		}
+	}
 
-		if (typeof props.field === "string") {
-			throw new Error(
+	if (typeof props.field === "string") {
+		if (DEV) {
+			console.error(
 				`[PrismicText] The "field" prop only accepts a Rich Text or Title field's value but was provided a different type of field instead (e.g. a Key Text or Select field). You can resolve this error by rendering the field value inline without <PrismicText>. For more details, see ${devMsg(
 					"prismictext-works-only-with-rich-text-and-title-fields",
 				)}`,
+				props.field,
 			);
 		}
+
+		return null;
 	}
-
-	const text = useMemo(() => {
-		if (!isFilled.richText(field)) {
-			return;
-		}
-
-		return asText(field, { separator });
-	}, [field, separator]);
 
 	if (!isFilled.richText(field)) {
 		return fallback != null ? <>{fallback}</> : null;
 	}
 
-	return <>{text}</>;
+	return <>{asText(field, { separator })}</>;
 }

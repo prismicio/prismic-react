@@ -16,7 +16,7 @@ export type PrismicToolbarProps = {
  * React component that injects the Prismic Toolbar into the app. This component
  * can be placed anywhere in the React tree.
  */
-export function PrismicToolbar(props: PrismicToolbarProps): null {
+export function PrismicToolbar(props: PrismicToolbarProps) {
 	const { repositoryName } = props;
 
 	const src = getToolbarSrc(repositoryName);

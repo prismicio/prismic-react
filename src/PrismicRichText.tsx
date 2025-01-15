@@ -4,7 +4,6 @@ import {
 	Fragment,
 	isValidElement,
 	ReactNode,
-	useMemo,
 } from "react";
 import {
 	isFilled,
@@ -31,7 +30,7 @@ import { LinkProps, PrismicLink } from "./PrismicLink.js";
  *
  * @see Templating rich text and title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
  */
-export type JSXFunctionSerializer = RichTextFunctionSerializer<JSX.Element>;
+export type JSXFunctionSerializer = RichTextFunctionSerializer<ReactNode>;
 
 /**
  * A map of Rich Text block types to React Components. It is used to render Rich
@@ -39,14 +38,10 @@ export type JSXFunctionSerializer = RichTextFunctionSerializer<JSX.Element>;
  *
  * @see Templating Rich Text and Title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
  */
-export type JSXMapSerializer = RichTextMapSerializer<JSX.Element>;
+export type JSXMapSerializer = RichTextMapSerializer<ReactNode>;
 
 /** Props for `<PrismicRichText>`. */
-export type PrismicRichTextProps<
-	TLinkResolverFunction extends
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		LinkResolverFunction<any> = LinkResolverFunction,
-> = {
+export type PrismicRichTextProps = {
 	/** The Prismic Rich Text field to render. */
 	field: RichTextField | null | undefined;
 
@@ -59,7 +54,7 @@ export type PrismicRichTextProps<
 	 *
 	 * @see Learn about Link Resolvers and Route Resolvers {@link https://io/docs/core-concepts/link-resolver-route-resolver}
 	 */
-	linkResolver?: TLinkResolverFunction;
+	linkResolver?: LinkResolverFunction;
 
 	/**
 	 * A map or function that maps a Rich Text block to a React component.
@@ -111,12 +106,8 @@ export type PrismicRichTextProps<
 	fallback?: ReactNode;
 };
 
-type CreateDefaultSerializerArgs<
-	TLinkResolverFunction extends
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		LinkResolverFunction<any> = LinkResolverFunction,
-> = {
-	linkResolver: TLinkResolverFunction | undefined;
+type CreateDefaultSerializerArgs = {
+	linkResolver: LinkResolverFunction | undefined;
 	internalLinkComponent?: ComponentType<LinkProps>;
 	externalLinkComponent?: ComponentType<LinkProps>;
 };
@@ -127,13 +118,10 @@ const getDir = (node: RTAnyNode): "rtl" | undefined => {
 	}
 };
 
-const createDefaultSerializer = <
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	TLinkResolverFunction extends LinkResolverFunction<any>,
->(
-	args: CreateDefaultSerializerArgs<TLinkResolverFunction>,
+const createDefaultSerializer = (
+	args: CreateDefaultSerializerArgs,
 ): JSXFunctionSerializer =>
-	wrapMapSerializer({
+	wrapMapSerializer<ReactNode>({
 		heading1: ({ node, children, key }) => (
 			<h1 key={key} dir={getDir(node)}>
 				{children}
@@ -291,10 +279,7 @@ const createDefaultSerializer = <
  * @see Learn about Rich Text fields {@link https://io/docs/core-concepts/rich-text-title}
  * @see Learn about Rich Text serializers {@link https://io/docs/core-concepts/html-serializer}
  */
-export function PrismicRichText<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	TLinkResolverFunction extends LinkResolverFunction<any>,
->(props: PrismicRichTextProps<TLinkResolverFunction>): JSX.Element | null {
+export function PrismicRichText(props: PrismicRichTextProps) {
 	const {
 		linkResolver,
 		field,
@@ -316,26 +301,25 @@ export function PrismicRichText<
 		}
 	}
 
-	const serialized = useMemo(() => {
-		if (!isFilled.richText(field)) {
-			return;
-		}
+	if (!isFilled.richText(field)) {
+		return fallback != null ? <>{fallback}</> : null;
+	}
 
-		const serializer = composeSerializers(
-			typeof components === "object"
-				? wrapMapSerializer(components)
-				: components,
-			createDefaultSerializer({
-				linkResolver,
-				internalLinkComponent,
-				externalLinkComponent,
-			}),
-		);
+	const serializer = composeSerializers<ReactNode>(
+		typeof components === "object" ? wrapMapSerializer(components) : components,
+		createDefaultSerializer({
+			linkResolver,
+			internalLinkComponent,
+			externalLinkComponent,
+		}),
+	);
 
-		// The serializer is wrapped in a higher-order function
-		// that automatically applies a key to React Elements
-		// if one is not already given.
-		return serialize<JSX.Element>(field, (type, node, text, children, key) => {
+	// The serializer is wrapped in a higher-order function that
+	// automatically applies a key to React Elements if one is not already
+	// given.
+	const serialized = serialize<ReactNode>(
+		field,
+		(type, node, text, children, key) => {
 			const result = serializer(type, node, text, children, key);
 
 			if (isValidElement(result) && result.key == null) {
@@ -343,14 +327,8 @@ export function PrismicRichText<
 			} else {
 				return result;
 			}
-		});
-	}, [
-		field,
-		internalLinkComponent,
-		externalLinkComponent,
-		components,
-		linkResolver,
-	]);
+		},
+	);
 
 	if (!serialized) {
 		return fallback != null ? <>{fallback}</> : null;
