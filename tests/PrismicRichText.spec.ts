@@ -252,14 +252,14 @@ test.describe("hyperlink", () => {
 		const scope = page.getByTestId("hyperlink");
 		const output = scope.getByTestId("custom-internal");
 		const component = output.getByTestId("internal");
-		expect(component).toHaveCount(1);
+		await expect(component).toHaveCount(1);
 	});
 
 	test("renders externalComponent when link is external", async ({ page }) => {
 		const scope = page.getByTestId("hyperlink");
 		const output = scope.getByTestId("custom-external");
 		const component = output.getByTestId("external");
-		expect(component).toHaveCount(1);
+		await expect(component).toHaveCount(1);
 	});
 });
 
