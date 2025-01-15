@@ -16,9 +16,9 @@ assignees: ""
 
 ### Versions
 
-- @prismicio/react: <!-- ex: v0.1.0 -->
-- react: <!-- ex: v17.0.0 -->
-- node: <!-- ex: v12.14.0 -->
+- `@prismicio/react`: <!-- ex: v0.1.0 -->
+- `react`: <!-- ex: v17.0.0 -->
+- Node.js: <!-- ex: v12.14.0 -->
 
 ### Reproduction
 
