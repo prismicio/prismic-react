@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as prismic from "@prismicio/client";
 import { PrismicLink, LinkProps } from "@prismicio/react";
 import { Link } from "react-router-dom";
@@ -17,7 +16,7 @@ const LinkShim = ({ href, ...props }: LinkProps) => {
 
 // We render the Link field using `<PrismicLink>`. Since the field contains an
 // internal URL, react-router-dom's `<Link>` component will render.
-export const App = (): JSX.Element => {
+export const App = () => {
 	return (
 		<main>
 			<PrismicLink field={field} internalComponent={LinkShim} />

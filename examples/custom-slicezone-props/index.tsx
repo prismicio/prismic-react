@@ -1,7 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/display-name */
-
-import * as React from "react";
 import {
 	SliceZone,
 	SliceComponentProps,
@@ -108,6 +104,6 @@ const components: Record<string, SliceComponentType> = {
 
 // We render the Slice Zone using the `<SliceZone>` component by passing the
 // list of Slices and component map.
-export const App = (): JSX.Element => {
+export const App = () => {
 	return <SliceZone slices={slices} components={components} />;
 };

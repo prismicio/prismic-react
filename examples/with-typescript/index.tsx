@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as prismic from "@prismicio/client";
 import { SliceZone, PrismicRichText, PrismicLink } from "@prismicio/react";
 
@@ -56,19 +55,19 @@ declare const page: PageDocument;
 // correct fields are passed.
 
 // Rendering a Rich Text or Title looks like this.
-export const WithRichText = (): JSX.Element => {
+export const WithRichText = () => {
 	return <PrismicRichText field={page.data.title} />;
 };
 
 // Rendering a link to a document looks like this.
-export const WithDocumentLink = (): JSX.Element => {
+export const WithDocumentLink = () => {
 	return <PrismicLink document={page} />;
 };
 
 // Rendering a group looks like this.
 // Using `isFilled.group()` and `isFilled.link()` from `@prismicio/helpers`
 // checks if the fields have a value.
-export const WithGroupFieldLink = (): JSX.Element => {
+export const WithGroupFieldLink = () => {
 	return (
 		<ul>
 			{prismic.isFilled.group(page.data.related_links) &&
@@ -93,7 +92,7 @@ export const WithGroupFieldLink = (): JSX.Element => {
 // Rendering a Slice Zone looks like this.
 // Note that the `components` object is typed to ensure a component is given
 // for each Slice type.
-export const WithSliceZone = (): JSX.Element => {
+export const WithSliceZone = () => {
 	return (
 		<SliceZone
 			slices={page.data.slices}

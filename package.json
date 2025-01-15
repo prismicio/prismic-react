@@ -1,8 +1,4 @@
 {
-	"workspaces": [
-		".",
-		"e2e-projects/*"
-	],
 	"name": "@prismicio/react",
 	"version": "2.9.1",
 	"description": "React components and hooks to fetch and present Prismic content",
@@ -37,9 +33,15 @@
 		"dist",
 		"src"
 	],
+	"workspaces": [
+		".",
+		"e2e-projects/*"
+	],
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite build --watch",
+		"e2e": "playwright test",
+		"e2e:ui": "npm run e2e -- --ui",
 		"format": "prettier --write .",
 		"lint": "eslint",
 		"prepare": "npm run build",
@@ -49,9 +51,7 @@
 		"release:dry": "standard-version --dry-run",
 		"size": "size-limit",
 		"test": "npm run lint && npm run types && npm run build && npm run e2e && npm run size && npm run e2e",
-		"types": "tsc --noEmit",
-		"e2e": "playwright test",
-		"e2e:ui": "npm run e2e -- --ui"
+		"types": "tsc --noEmit"
 	},
 	"dependencies": {
 		"esm-env": "^1.2.2"
@@ -83,8 +83,7 @@
 		"standard-version": "^9.5.0",
 		"typescript": "^5.7.3",
 		"typescript-eslint": "^8.20.0",
-		"vite": "^6.0.7",
-		"vitest-browser-react": "^0.0.4"
+		"vite": "^6.0.7"
 	},
 	"peerDependencies": {
 		"@prismicio/client": "^7",
