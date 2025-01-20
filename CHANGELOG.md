@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-alpha.0](https://github.com/prismicio/prismic-react/compare/v2.9.1...v3.0.0-alpha.0) (2025-01-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* v3
+
+### Features
+
+* cleanup and remove context + hooks ([b529909](https://github.com/prismicio/prismic-react/commit/b529909c1dec13b1d16594187a7b3c6e77fc119b))
+* v3 ([d253816](https://github.com/prismicio/prismic-react/commit/d25381690f675c8e700fa3dccdc2448b5be8ff85))
+
+
+### Bug Fixes
+
+* types ([69e3607](https://github.com/prismicio/prismic-react/commit/69e36075a9f9c700f5d08a36931a9732fbb134b8))
+
+
+### Chore
+
+* fix failing CI ([795e670](https://github.com/prismicio/prismic-react/commit/795e6708d0ed47ec036efbbc6f2ca340a21955c1))
+* release alpha as major ([56653b7](https://github.com/prismicio/prismic-react/commit/56653b7b7bcb0f3de419d5ef9ad5739f88357c02))
+* remove `vitest` config ([5788471](https://github.com/prismicio/prismic-react/commit/578847160b4f3eb05dba2e2440f55ec255a83bb1))
+* remove unused dev dependencies ([59f4ceb](https://github.com/prismicio/prismic-react/commit/59f4ceb4053ac344a5be05771094fb04c939556f))
+* simplify tsconfig + vitest ([8657f0c](https://github.com/prismicio/prismic-react/commit/8657f0ceae267c68881ebdece5dacc201064601c))
+* sort `package.json` ([22c377b](https://github.com/prismicio/prismic-react/commit/22c377bf9247fd23c85d0d8dcb49056cd96d2ff0))
+* update CONTRIBUTING.md ([9448bf1](https://github.com/prismicio/prismic-react/commit/9448bf13caef33183b4466472bff8451686e7a90))
+* update dependencies ([8849187](https://github.com/prismicio/prismic-react/commit/88491878bdd120911d09f392ffdd4faf2e427fef))
+* update GitHub templates ([1835b9d](https://github.com/prismicio/prismic-react/commit/1835b9da5fd8007b765fb863936c07e5d6bcf7b0))
+* update README.md ([dcd87b5](https://github.com/prismicio/prismic-react/commit/dcd87b55508a749b3c12d28898042c1b58e1e420))
+
 ### [2.9.1](https://github.com/prismicio/prismic-react/compare/v2.9.0...v2.9.1) (2024-10-30)
 
 
