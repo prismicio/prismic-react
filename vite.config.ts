@@ -28,15 +28,4 @@ export default defineConfig({
 			plugins: [typescript({ rootDir: "./src" }), preserveDirectives()],
 		},
 	},
-	test: {
-		coverage: {
-			reporter: ["lcovonly", "text"],
-		},
-		browser: {
-			provider: "playwright",
-			enabled: true,
-			headless: true,
-			name: "chromium",
-		},
-	},
 });
