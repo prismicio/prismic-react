@@ -43,7 +43,9 @@ export type PrismicTextProps = {
  *
  * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
  */
-export const PrismicText = (props: PrismicTextProps): JSX.Element | null => {
+export const PrismicText = (
+	props: PrismicTextProps,
+): React.JSX.Element | null => {
 	if (
 		typeof process !== "undefined" &&
 		process.env.NODE_ENV === "development"

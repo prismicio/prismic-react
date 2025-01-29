@@ -65,7 +65,7 @@ const MyComponent = () => {
 // `<PrismicProvider>`. We pass global Prismic configuration to the provider at
 // this level. By doing so, it becomes available automatically to all Prismic
 // components lower in the tree.
-export const App = (): JSX.Element => {
+export const App = (): React.JSX.Element => {
 	return (
 		<PrismicProvider
 			internalLinkComponent={LinkShim}
