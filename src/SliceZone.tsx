@@ -10,8 +10,8 @@ import { DEV } from "esm-env";
 type ExtractSliceType<TSlice extends SliceLike> = TSlice extends Slice
 	? TSlice["slice_type"]
 	: TSlice extends SliceLikeGraphQL
-	? TSlice["type"]
-	: never;
+		? TSlice["type"]
+		: never;
 
 /**
  * The minimum required properties to represent a Prismic Slice from the Prismic
@@ -80,19 +80,13 @@ export type SliceComponentProps<
 	TSlice extends SliceLike = SliceLike,
 	TContext = unknown,
 > = {
-	/**
-	 * Slice data for this component.
-	 */
+	/** Slice data for this component. */
 	slice: TSlice;
 
-	/**
-	 * The index of the Slice in the Slice Zone.
-	 */
+	/** The index of the Slice in the Slice Zone. */
 	index: number;
 
-	/**
-	 * All Slices from the Slice Zone to which the Slice belongs.
-	 */
+	/** All Slices from the Slice Zone to which the Slice belongs. */
 	// TODO: We have to keep this list of Slices general due to circular
 	// reference limtiations. If we had another generic to determine the full
 	// union of Slice types, it would include TSlice. This causes TypeScript to
@@ -126,6 +120,7 @@ export type SliceComponentType<
  *
  * @deprecated This type is no longer used by `@prismicio/react`. Prefer using
  *   `Record<string, SliceComponentType<any>>` instead.
+ *
  * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
  * @typeParam TContext - Arbitrary data made available to all Slice components.
  */
@@ -158,14 +153,10 @@ export type SliceZoneComponents<
  * @typeParam TContext - Arbitrary data made available to all Slice components.
  */
 export type SliceZoneProps<TContext = unknown> = {
-	/**
-	 * List of Slice data from the Slice Zone.
-	 */
+	/** List of Slice data from the Slice Zone. */
 	slices?: SliceZoneLike;
 
-	/**
-	 * A record mapping Slice types to React components.
-	 */
+	/** A record mapping Slice types to React components. */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	components?: Record<string, ComponentType<any>>;
 
@@ -176,9 +167,7 @@ export type SliceZoneProps<TContext = unknown> = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	defaultComponent?: ComponentType<SliceComponentProps<any, TContext>>;
 
-	/**
-	 * Arbitrary data made available to all Slice components.
-	 */
+	/** Arbitrary data made available to all Slice components. */
 	context?: TContext;
 };
 

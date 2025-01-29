@@ -24,16 +24,12 @@ type ImgixURLParams = Omit<
 		"pixelDensities"
 	>;
 
-/**
- * Props for `<PrismicImage>`.
- */
+/** Props for `<PrismicImage>`. */
 export type PrismicImageProps = Omit<
 	ComponentProps<"img">,
 	"src" | "srcset" | "alt"
 > & {
-	/**
-	 * The Prismic Image field or thumbnail to render.
-	 */
+	/** The Prismic Image field or thumbnail to render. */
 	field: ImageFieldImage | null | undefined;
 
 	/**
@@ -81,15 +77,11 @@ export type PrismicImageProps = Omit<
 				widths?:
 					| NonNullable<Parameters<typeof asImageWidthSrcSet>[1]>["widths"]
 					| "defaults";
-				/**
-				 * Not used when the `widths` prop is used.
-				 */
+				/** Not used when the `widths` prop is used. */
 				pixelDensities?: never;
 		  }
 		| {
-				/**
-				 * Not used when the `widths` prop is used.
-				 */
+				/** Not used when the `widths` prop is used. */
 				widths?: never;
 				/**
 				 * Pixel densities used to build a `srcset` value for the Image field.

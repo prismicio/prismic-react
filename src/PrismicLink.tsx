@@ -18,18 +18,12 @@ import { DEV } from "esm-env";
 
 import { devMsg } from "./lib/devMsg.js";
 
-/**
- * The default component rendered for internal and external links.
- */
+/** The default component rendered for internal and external links. */
 const defaultComponent = "a";
 
-/**
- * Props provided to a component when rendered with `<PrismicLink>`.
- */
+/** Props provided to a component when rendered with `<PrismicLink>`. */
 export interface LinkProps {
-	/**
-	 * The URL to link.
-	 */
+	/** The URL to link. */
 	href: string;
 
 	/**
@@ -44,9 +38,7 @@ export interface LinkProps {
 	 */
 	rel?: string;
 
-	/**
-	 * Children for the component. *
-	 */
+	/** Children for the component. * */
 	children?: ReactNode;
 }
 
@@ -70,6 +62,7 @@ export type PrismicLinkProps<
 	 * @remarks
 	 * If your app uses Route Resolvers when querying for your Prismic
 	 * repository's content, a Link Resolver does not need to be provided.
+	 *
 	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
 	 */
 	linkResolver?: LinkResolverFunction;
@@ -82,9 +75,7 @@ export type PrismicLinkProps<
 	 */
 	internalComponent?: ElementType<InternalComponentProps>;
 
-	/**
-	 * The component rendered for external URLs. Defaults to `<a>`.
-	 */
+	/** The component rendered for external URLs. Defaults to `<a>`. */
 	externalComponent?: ComponentType<ExternalComponentProps>;
 
 	/**
