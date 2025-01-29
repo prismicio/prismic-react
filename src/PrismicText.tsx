@@ -4,9 +4,13 @@ import { DEV } from "esm-env";
 
 import { devMsg } from "./lib/devMsg.js";
 
-/** Props for `<PrismicText>`. */
+/**
+ * Props for `<PrismicText>`.
+ */
 export type PrismicTextProps = {
-	/** The Prismic Rich Text field to render. */
+	/**
+	 * The Prismic Rich Text field to render.
+	 */
 	field: RichTextField | null | undefined;
 
 	/**
@@ -15,7 +19,9 @@ export type PrismicTextProps = {
 	 */
 	fallback?: string;
 
-	/** The separator used between blocks. Defaults to `\n`. */
+	/**
+	 * The separator used between blocks. Defaults to `\n`.
+	 */
 	separator?: string;
 };
 
@@ -26,7 +32,6 @@ export type PrismicTextProps = {
  * @remarks
  * This component returns a React fragment with no wrapping element around the
  * content. If you need a wrapper, add a component around `<PrismicText>`.
- *
  * @example Rendering a Rich Text field as plain text.
  *
  * ```jsx
