@@ -7,7 +7,7 @@ import { version } from "../../package.json";
  *
  * ```ts
  * devMsg("missing-param");
- * // => "https://prismic.dev/msg/react/v1.2.3/missing-param.md"
+ * // => "https://prismic.dev/msg/react/v1.2.3/missing-param"
  * ```
  *
  * @param slug - Slug for the message. This corresponds to a Markdown file in
@@ -15,6 +15,6 @@ import { version } from "../../package.json";
  *
  * @returns The `prismic.dev/msg` URL for the given slug.
  */
-export const devMsg = (slug: string) => {
+export function devMsg(slug: string) {
 	return `https://prismic.dev/msg/react/v${version}/${slug}`;
-};
+}

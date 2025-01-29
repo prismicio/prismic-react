@@ -1,6 +1,7 @@
 # custom
 dist
 examples/**/package-lock.json
+*.tgz
 
 # os
 .DS_Store
@@ -36,3 +37,8 @@ coverage
 !.vscode/tasks.json
 !.vscode/launch.json
 *.code-workspace
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests/infra/.storage-state.json

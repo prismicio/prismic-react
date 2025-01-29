@@ -1,16 +1,13 @@
-import * as React from "react";
-import * as prismic from "@prismicio/client";
+import { FC } from "react";
+import { asText, isFilled, RichTextField } from "@prismicio/client";
+import { DEV } from "esm-env";
 
-import { devMsg } from "./lib/devMsg";
+import { devMsg } from "./lib/devMsg.js";
 
-/**
- * Props for `<PrismicText>`.
- */
+/** Props for `<PrismicText>`. */
 export type PrismicTextProps = {
-	/**
-	 * The Prismic Rich Text field to render.
-	 */
-	field: prismic.RichTextField | null | undefined;
+	/** The Prismic Rich Text field to render. */
+	field: RichTextField | null | undefined;
 
 	/**
 	 * The string rendered when the field is empty. If a fallback is not given,
@@ -18,9 +15,7 @@ export type PrismicTextProps = {
 	 */
 	fallback?: string;
 
-	/**
-	 * The separator used between blocks. Defaults to `\n`.
-	 */
+	/** The separator used between blocks. Defaults to `\n`. */
 	separator?: string;
 };
 
@@ -31,6 +26,7 @@ export type PrismicTextProps = {
  * @remarks
  * This component returns a React fragment with no wrapping element around the
  * content. If you need a wrapper, add a component around `<PrismicText>`.
+ *
  * @example Rendering a Rich Text field as plain text.
  *
  * ```jsx
@@ -41,15 +37,12 @@ export type PrismicTextProps = {
  *
  * @returns The Rich Text field's content as plain text.
  *
- * @see Learn about Rich Text fields {@link https://prismic.io/docs/core-concepts/rich-text-title}
+ * @see Learn about Rich Text fields {@link https://io/docs/core-concepts/rich-text-title}
  */
-export const PrismicText = (
-	props: PrismicTextProps,
-): React.JSX.Element | null => {
-	if (
-		typeof process !== "undefined" &&
-		process.env.NODE_ENV === "development"
-	) {
+export const PrismicText: FC<PrismicTextProps> = (props) => {
+	const { field, fallback, separator } = props;
+
+	if (DEV) {
 		if ("className" in props) {
 			console.warn(
 				`[PrismicText] className cannot be passed to <PrismicText> since it renders plain text without a wrapping component. For more details, see ${devMsg(
@@ -58,23 +51,24 @@ export const PrismicText = (
 				props.field,
 			);
 		}
+	}
 
-		if (typeof props.field === "string") {
-			throw new Error(
+	if (typeof props.field === "string") {
+		if (DEV) {
+			console.error(
 				`[PrismicText] The "field" prop only accepts a Rich Text or Title field's value but was provided a different type of field instead (e.g. a Key Text or Select field). You can resolve this error by rendering the field value inline without <PrismicText>. For more details, see ${devMsg(
 					"prismictext-works-only-with-rich-text-and-title-fields",
 				)}`,
+				props.field,
 			);
 		}
+
+		return null;
 	}
 
-	return React.useMemo(() => {
-		if (prismic.isFilled.richText(props.field)) {
-			const text = prismic.asText(props.field, props.separator);
+	if (!isFilled.richText(field)) {
+		return fallback != null ? <>{fallback}</> : null;
+	}
 
-			return <>{text}</>;
-		} else {
-			return props.fallback != null ? <>{props.fallback}</> : null;
-		}
-	}, [props.field, props.fallback, props.separator]);
+	return <>{asText(field, { separator })}</>;
 };

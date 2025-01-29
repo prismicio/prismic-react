@@ -1,18 +1,17 @@
-import { ComponentType } from "react";
-import * as prismic from "@prismicio/client";
-
-import { pascalCase, PascalCase } from "./lib/pascalCase";
+import type { ComponentType, FC } from "react";
+import type { Slice } from "@prismicio/client";
+import { DEV } from "esm-env";
 
 /**
  * Returns the type of a `SliceLike` type.
  *
  * @typeParam Slice - The Slice from which the type will be extracted.
  */
-type ExtractSliceType<TSlice extends SliceLike> = TSlice extends prismic.Slice
+type ExtractSliceType<TSlice extends SliceLike> = TSlice extends Slice
 	? TSlice["slice_type"]
 	: TSlice extends SliceLikeGraphQL
-	? TSlice["type"]
-	: never;
+		? TSlice["type"]
+		: never;
 
 /**
  * The minimum required properties to represent a Prismic Slice from the Prismic
@@ -21,7 +20,7 @@ type ExtractSliceType<TSlice extends SliceLike> = TSlice extends prismic.Slice
  * @typeParam SliceType - Type name of the Slice.
  */
 export type SliceLikeRestV2<TSliceType extends string = string> = Pick<
-	prismic.Slice<TSliceType>,
+	Slice<TSliceType>,
 	"id" | "slice_type"
 >;
 
@@ -32,7 +31,7 @@ export type SliceLikeRestV2<TSliceType extends string = string> = Pick<
  * @typeParam SliceType - Type name of the Slice.
  */
 export type SliceLikeGraphQL<TSliceType extends string = string> = {
-	type: prismic.Slice<TSliceType>["slice_type"];
+	type: Slice<TSliceType>["slice_type"];
 };
 
 /**
@@ -78,23 +77,16 @@ export type SliceZoneLike<TSlice extends SliceLike = SliceLike> =
  *   available to all Slice components.
  */
 export type SliceComponentProps<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TSlice extends SliceLike = SliceLike,
 	TContext = unknown,
 > = {
-	/**
-	 * Slice data for this component.
-	 */
+	/** Slice data for this component. */
 	slice: TSlice;
 
-	/**
-	 * The index of the Slice in the Slice Zone.
-	 */
+	/** The index of the Slice in the Slice Zone. */
 	index: number;
 
-	/**
-	 * All Slices from the Slice Zone to which the Slice belongs.
-	 */
+	/** All Slices from the Slice Zone to which the Slice belongs. */
 	// TODO: We have to keep this list of Slices general due to circular
 	// reference limtiations. If we had another generic to determine the full
 	// union of Slice types, it would include TSlice. This causes TypeScript to
@@ -120,7 +112,7 @@ export type SliceComponentType<
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	TSlice extends SliceLike = any,
 	TContext = unknown,
-> = React.ComponentType<SliceComponentProps<TSlice, TContext>>;
+> = ComponentType<SliceComponentProps<TSlice, TContext>>;
 
 /**
  * A record of Slice types mapped to a React component. The component will be
@@ -128,6 +120,7 @@ export type SliceComponentType<
  *
  * @deprecated This type is no longer used by `@prismicio/react`. Prefer using
  *   `Record<string, SliceComponentType<any>>` instead.
+ *
  * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
  * @typeParam TContext - Arbitrary data made available to all Slice components.
  */
@@ -154,78 +147,18 @@ export type SliceZoneComponents<
 	};
 
 /**
- * Arguments for a `<SliceZone>` `resolver` function.
- */
-type SliceZoneResolverArgs<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	TSlice extends SliceLike = any,
-> = {
-	/**
-	 * The Slice to resolve to a React component.
-	 */
-	slice: TSlice;
-
-	/**
-	 * The name of the Slice.
-	 */
-	sliceName: PascalCase<ExtractSliceType<TSlice>>;
-
-	/**
-	 * The index of the Slice in the Slice Zone.
-	 */
-	i: number;
-};
-
-/**
- * A function that determines the rendered React component for each Slice in the
- * Slice Zone. If a nullish value is returned, the component will fallback to
- * the `components` or `defaultComponent` props to determine the rendered
- * component.
- *
- * @deprecated Use the `components` prop instead.
- *
- * @param args - Arguments for the resolver function.
- *
- * @returns The React component to render for a Slice.
- */
-export type SliceZoneResolver<
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	TSlice extends SliceLike = any,
-> = (
-	args: SliceZoneResolverArgs<TSlice>,
-) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
-ComponentType<any> | undefined | null;
-
-/**
  * React props for the `<SliceZone>` component.
  *
  * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
  * @typeParam TContext - Arbitrary data made available to all Slice components.
  */
 export type SliceZoneProps<TContext = unknown> = {
-	/**
-	 * List of Slice data from the Slice Zone.
-	 */
+	/** List of Slice data from the Slice Zone. */
 	slices?: SliceZoneLike;
 
-	/**
-	 * A record mapping Slice types to React components.
-	 */
+	/** A record mapping Slice types to React components. */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	components?: Record<string, ComponentType<any>>;
-
-	/**
-	 * A function that determines the rendered React component for each Slice in
-	 * the Slice Zone.
-	 *
-	 * @deprecated Use the `components` prop instead.
-	 *
-	 * @param args - Arguments for the resolver function.
-	 *
-	 * @returns The React component to render for a Slice.
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	resolver?: SliceZoneResolver<any>;
 
 	/**
 	 * The React component rendered if a component mapping from the `components`
@@ -234,9 +167,7 @@ export type SliceZoneProps<TContext = unknown> = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	defaultComponent?: ComponentType<SliceComponentProps<any, TContext>>;
 
-	/**
-	 * Arbitrary data made available to all Slice components.
-	 */
+	/** Arbitrary data made available to all Slice components. */
 	context?: TContext;
 };
 
@@ -251,27 +182,24 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
 	slice,
 }: {
 	slice: TSlice;
-}): React.JSX.Element | null => {
-	if (
-		typeof process !== "undefined" &&
-		process.env.NODE_ENV === "development"
-	) {
-		const type = "slice_type" in slice ? slice.slice_type : slice.type;
-
-		console.warn(
-			`[SliceZone] Could not find a component for Slice type "${type}"`,
-			slice,
-		);
-
-		return (
-			<section data-slice-zone-todo-component="" data-slice-type={type}>
-				Could not find a component for Slice type &ldquo;{type}
-				&rdquo;
-			</section>
-		);
-	} else {
+}) => {
+	if (!DEV) {
 		return null;
 	}
+
+	const type = "slice_type" in slice ? slice.slice_type : slice.type;
+
+	console.warn(
+		`[SliceZone] Could not find a component for Slice type "${type}"`,
+		slice,
+	);
+
+	return (
+		<section data-slice-zone-todo-component="" data-slice-type={type}>
+			Could not find a component for Slice type &ldquo;{type}
+			&rdquo;
+		</section>
+	);
 };
 
 /**
@@ -289,65 +217,45 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
  *
  * @see Learn about Prismic Slices and Slice Zones {@link https://prismic.io/docs/core-concepts/slices}
  */
-export function SliceZone<TContext>({
-	slices = [],
-	components = {},
-	resolver,
-	defaultComponent,
-	context = {} as TContext,
-}: SliceZoneProps<TContext>) {
-	// TODO: Remove in v3 when the `resolver` prop is removed.
-	if (process.env.NODE_ENV === "development") {
-		if (resolver) {
-			console.warn(
-				"The `resolver` prop is deprecated. Please replace it with a components map using the `components` prop.",
-			);
-		}
-	}
+export const SliceZone: FC<SliceZoneProps> = (props) => {
+	const {
+		slices = [],
+		components = {},
+		defaultComponent,
+		context = {},
+	} = props;
 
 	const renderedSlices = slices.map((slice, index) => {
 		const type = "slice_type" in slice ? slice.slice_type : slice.type;
-
-		let Comp = components[type as keyof typeof components] || defaultComponent;
-
-		// TODO: Remove `resolver` in v3 in favor of `components`.
-		if (resolver) {
-			const resolvedComp = resolver({
-				slice,
-				sliceName: pascalCase(type),
-				i: index,
-			});
-
-			if (resolvedComp) {
-				Comp = resolvedComp as typeof Comp;
-			}
-		}
 
 		const key =
 			"id" in slice && slice.id
 				? slice.id
 				: `${index}-${JSON.stringify(slice)}`;
 
-		if (Comp) {
-			if (slice.__mapped) {
-				const { __mapped, ...mappedProps } = slice;
+		const Comp =
+			components[type as keyof typeof components] || defaultComponent;
 
-				return <Comp key={key} {...mappedProps} />;
-			} else {
-				return (
-					<Comp
-						key={key}
-						slice={slice}
-						index={index}
-						slices={slices}
-						context={context}
-					/>
-				);
-			}
-		} else {
+		if (!Comp) {
 			return <TODOSliceComponent key={key} slice={slice} />;
 		}
+
+		if (slice.__mapped) {
+			const { __mapped, ...mappedProps } = slice;
+
+			return <Comp key={key} {...mappedProps} />;
+		}
+
+		return (
+			<Comp
+				key={key}
+				slice={slice}
+				index={index}
+				slices={slices}
+				context={context}
+			/>
+		);
 	});
 
 	return <>{renderedSlices}</>;
-}
+};
