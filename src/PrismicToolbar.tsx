@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { getToolbarSrc } from "@prismicio/client";
 
 /** Props for `<PrismicToolbar>`. */
@@ -16,7 +16,7 @@ export type PrismicToolbarProps = {
  * React component that injects the Prismic Toolbar into the app. This component
  * can be placed anywhere in the React tree.
  */
-export function PrismicToolbar(props: PrismicToolbarProps) {
+export const PrismicToolbar: FC<PrismicToolbarProps> = (props) => {
 	const { repositoryName } = props;
 
 	const src = getToolbarSrc(repositoryName);
@@ -42,4 +42,4 @@ export function PrismicToolbar(props: PrismicToolbarProps) {
 	}, [repositoryName, src]);
 
 	return null;
-}
+};

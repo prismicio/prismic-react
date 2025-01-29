@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, FC } from "react";
 import type { Slice } from "@prismicio/client";
 import { DEV } from "esm-env";
 
@@ -217,12 +217,12 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
  *
  * @see Learn about Prismic Slices and Slice Zones {@link https://prismic.io/docs/core-concepts/slices}
  */
-export function SliceZone<TContext>(props: SliceZoneProps<TContext>) {
+export const SliceZone: FC<SliceZoneProps> = (props) => {
 	const {
 		slices = [],
 		components = {},
 		defaultComponent,
-		context = {} as TContext,
+		context = {},
 	} = props;
 
 	const renderedSlices = slices.map((slice, index) => {
@@ -258,4 +258,4 @@ export function SliceZone<TContext>(props: SliceZoneProps<TContext>) {
 	});
 
 	return <>{renderedSlices}</>;
-}
+};

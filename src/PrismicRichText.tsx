@@ -1,6 +1,7 @@
 import {
 	cloneElement,
 	ComponentType,
+	FC,
 	Fragment,
 	isValidElement,
 	ReactNode,
@@ -279,7 +280,7 @@ const createDefaultSerializer = (
  * @see Learn about Rich Text fields {@link https://io/docs/core-concepts/rich-text-title}
  * @see Learn about Rich Text serializers {@link https://io/docs/core-concepts/html-serializer}
  */
-export function PrismicRichText(props: PrismicRichTextProps) {
+export const PrismicRichText: FC<PrismicRichTextProps> = (props) => {
 	const {
 		linkResolver,
 		field,
@@ -335,4 +336,4 @@ export function PrismicRichText(props: PrismicRichTextProps) {
 	}
 
 	return <>{serialized}</>;
-}
+};

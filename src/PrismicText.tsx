@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { asText, isFilled, RichTextField } from "@prismicio/client";
 import { DEV } from "esm-env";
 
@@ -38,7 +39,7 @@ export type PrismicTextProps = {
  *
  * @see Learn about Rich Text fields {@link https://io/docs/core-concepts/rich-text-title}
  */
-export function PrismicText(props: PrismicTextProps) {
+export const PrismicText: FC<PrismicTextProps> = (props) => {
 	const { field, fallback, separator } = props;
 
 	if (DEV) {
@@ -70,4 +71,4 @@ export function PrismicText(props: PrismicTextProps) {
 	}
 
 	return <>{asText(field, { separator })}</>;
-}
+};
