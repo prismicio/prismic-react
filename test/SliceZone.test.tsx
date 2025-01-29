@@ -24,7 +24,7 @@ const StringifySliceComponent = ({
 	slices,
 	context,
 	...restProps
-}: StringifySliceComponentProps): JSX.Element => (
+}: StringifySliceComponentProps): React.JSX.Element => (
 	<div data-id={id}>
 		<div data-slice={JSON.stringify(slice)} />
 		<div data-index={index} />

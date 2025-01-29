@@ -114,7 +114,7 @@ export const PrismicImage = React.forwardRef(function PrismicImage(
 		...restProps
 	}: PrismicImageProps,
 	ref: React.ForwardedRef<HTMLImageElement>,
-): JSX.Element | null {
+): React.JSX.Element | null {
 	if (
 		typeof process !== "undefined" &&
 		process.env.NODE_ENV === "development"

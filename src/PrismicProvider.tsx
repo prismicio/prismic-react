@@ -108,7 +108,7 @@ export const PrismicProvider = <
 	internalLinkComponent,
 	externalLinkComponent,
 	children,
-}: PrismicProviderProps<LinkResolverFunction>): JSX.Element => {
+}: PrismicProviderProps<LinkResolverFunction>): React.JSX.Element => {
 	const value = React.useMemo<PrismicContextValue<LinkResolverFunction>>(
 		() => ({
 			client,

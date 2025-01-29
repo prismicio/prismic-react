@@ -267,7 +267,7 @@ export function PrismicRichText<
 	externalLinkComponent,
 	internalLinkComponent,
 	...restProps
-}: PrismicRichTextProps<LinkResolverFunction>): JSX.Element | null {
+}: PrismicRichTextProps<LinkResolverFunction>): React.JSX.Element | null {
 	return React.useMemo(() => {
 		if (
 			typeof process !== "undefined" &&
@@ -298,7 +298,7 @@ export function PrismicRichText<
 			// The serializer is wrapped in a higher-order function
 			// that automatically applies a key to React Elements
 			// if one is not already given.
-			const serialized = prismicR.serialize<JSX.Element>(
+			const serialized = prismicR.serialize<React.JSX.Element>(
 				field,
 				(type, node, text, children, key) => {
 					const result = serializer(type, node, text, children, key);

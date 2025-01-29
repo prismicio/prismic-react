@@ -17,7 +17,7 @@ const LinkShim = ({ href, ...props }: LinkProps) => {
 
 // We render the Link field using `<PrismicLink>`. Since the field contains an
 // internal URL, react-router-dom's `<Link>` component will render.
-export const App = (): JSX.Element => {
+export const App = (): React.JSX.Element => {
 	return (
 		<main>
 			<PrismicLink field={field} internalComponent={LinkShim} />

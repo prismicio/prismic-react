@@ -38,4 +38,4 @@ export const PrismicLink = React.forwardRef(function PrismicLink<
 	props: PrismicLinkProps<InternalComponentProps, ExternalComponentProps> & {
 		ref?: React.ForwardedRef<Element>;
 	},
-) => JSX.Element;
+) => React.JSX.Element;

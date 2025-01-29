@@ -108,6 +108,6 @@ const components: Record<string, SliceComponentType> = {
 
 // We render the Slice Zone using the `<SliceZone>` component by passing the
 // list of Slices and component map.
-export const App = (): JSX.Element => {
+export const App = (): React.JSX.Element => {
 	return <SliceZone slices={slices} components={components} />;
 };

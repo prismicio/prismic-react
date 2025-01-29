@@ -251,7 +251,7 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
 	slice,
 }: {
 	slice: TSlice;
-}): JSX.Element | null => {
+}): React.JSX.Element | null => {
 	if (
 		typeof process !== "undefined" &&
 		process.env.NODE_ENV === "development"

@@ -11,7 +11,7 @@ function buildIncompatibleQueryHookInServerComponentsErrorMessage(
 	return `${fnName} is not supported in Server Components. Replace ${fnName} in Server Components with direct use of \`@prismicio/client\` (recommended) or add the "use client" directive to the component using the hook.`;
 }
 
-export function PrismicProvider(): JSX.Element {
+export function PrismicProvider(): React.JSX.Element {
 	throw new Error(
 		buildIncompatibleInServerComponentsErrorMessage("<PrismicProvider>"),
 	);

@@ -7,7 +7,7 @@ import * as prismicR from "@prismicio/richtext";
  * @see Templating rich text and title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
  */
 export type JSXFunctionSerializer =
-	prismicR.RichTextFunctionSerializer<JSX.Element>;
+	prismicR.RichTextFunctionSerializer<React.JSX.Element>;
 
 /**
  * A map of Rich Text block types to React Components. It is used to render Rich
@@ -15,7 +15,8 @@ export type JSXFunctionSerializer =
  *
  * @see Templating Rich Text and Title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
  */
-export type JSXMapSerializer = prismicR.RichTextMapSerializer<JSX.Element>;
+export type JSXMapSerializer =
+	prismicR.RichTextMapSerializer<React.JSX.Element>;
 
 /**
  * States of a `@prismicio/client` hook.
