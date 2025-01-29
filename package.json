@@ -1,6 +1,6 @@
 {
 	"name": "@prismicio/react",
-	"version": "3.0.0-alpha.0",
+	"version": "3.0.0-alpha.1",
 	"description": "React components and hooks to fetch and present Prismic content",
 	"keywords": [
 		"typescript",

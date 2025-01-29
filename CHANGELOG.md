@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0-alpha.1](https://github.com/prismicio/prismic-react/compare/v3.0.0-alpha.0...v3.0.0-alpha.1) (2025-01-29)
+
+
+### Chore
+
+* clean up peer dependency versions ([ede8485](https://github.com/prismicio/prismic-react/commit/ede848570506ea133a332384f182b6835a9f8f1e))
+
+
+### Refactor
+
+* use `FC` ([a45fc39](https://github.com/prismicio/prismic-react/commit/a45fc39a071c2cd4244c6ae38709fc67ac6bf75c))
+
 ## [3.0.0-alpha.0](https://github.com/prismicio/prismic-react/compare/v2.9.1...v3.0.0-alpha.0) (2025-01-20)
 
 
