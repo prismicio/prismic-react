@@ -1,6 +1,9 @@
 export { PrismicLink } from "./PrismicLink.js";
 export type { PrismicLinkProps, LinkProps } from "./PrismicLink.js";
 
+export { PrismicTable } from "./PrismicTable.js";
+export type { PrismicTableProps } from "./PrismicTable.js";
+
 export { PrismicText } from "./PrismicText.js";
 export type { PrismicTextProps } from "./PrismicText.js";
 
