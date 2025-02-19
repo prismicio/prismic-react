@@ -1,151 +1,116 @@
-import { JSX, ReactNode } from "react";
-import { isFilled, RichTextField, TableField } from "@prismicio/client";
-import { RichTextMapSerializer } from "@prismicio/client/richtext";
-import { PrismicRichText } from "./PrismicRichText.js";
+import { ReactNode } from "react";
+import { isFilled, TableField } from "@prismicio/client";
+import { JSXMapSerializer, PrismicRichText } from "./PrismicRichText.js";
 
-type TableSerializerFunction = (args: {
-	children: ReactNode;
-	key?: string;
-}) => JSX.Element;
-type CellContentFunction = (args: {
-	children: RichTextField | null;
-}) => JSX.Element;
+type TableFieldHead = NonNullable<TableField<"filled">["head"]>;
+type TableFieldBody = TableField<"filled">["body"];
+type TableFieldRow =
+	| TableFieldHead["rows"][number]
+	| TableFieldBody["rows"][number];
+type TableFieldCell = TableFieldRow["cells"][number];
+type TableFieldHeaderCell = Extract<TableFieldCell, { type: "header" }>;
+type TableFieldDataCell = Extract<TableFieldCell, { type: "data" }>;
 
-const tableSerializerOptions = [
-	"table",
-	"head",
-	"body",
-	"row",
-	"header",
-	"data",
-	"cellContent",
-] as const;
-
-type TableMapSerializerKey = (typeof tableSerializerOptions)[number];
-
-type TableMapSerializerFilled = {
-	[K in Exclude<TableMapSerializerKey, "cellContent">]: TableSerializerFunction;
-} & {
-	cellContent: CellContentFunction;
+type TableComponents = {
+	table?: (props: {
+		table: TableField<"filled">;
+		children: ReactNode;
+	}) => ReactNode;
+	thead?: (props: { head: TableFieldHead; children: ReactNode }) => ReactNode;
+	tbody?: (props: { body: TableFieldBody; children: ReactNode }) => ReactNode;
+	tr?: (props: { row: TableFieldRow; children: ReactNode }) => ReactNode;
+	th?: (props: {
+		cell: TableFieldHeaderCell;
+		children: ReactNode;
+	}) => ReactNode;
+	td?: (props: { cell: TableFieldDataCell; children: ReactNode }) => ReactNode;
 };
 
-type TableMapSerializer = Partial<TableMapSerializerFilled> &
-	RichTextMapSerializer<ReactNode>;
-
-const createDefaultTableSerializer = (
-	components?: TableMapSerializer,
-): TableMapSerializerFilled => {
-	// filter out table serializer options to get just the table cell (rich text) components
-	const tableCellComponents = components
-		? Object.fromEntries(
-				Object.entries(components).filter(([key]) => {
-					return !tableSerializerOptions.includes(key as TableMapSerializerKey);
-				}),
-			)
-		: {};
-
-	// filter out the table cell (rich text) options to get just the table options
-	const tableComponents = components
-		? Object.fromEntries(
-				Object.entries(components).filter(([key]) => {
-					return tableSerializerOptions.includes(key as TableMapSerializerKey);
-				}),
-			)
-		: null;
-
-	return {
-		table: ({ children }) => <table>{children}</table>,
-		head: ({ children }) => <thead>{children}</thead>,
-		body: ({ children }) => <tbody>{children}</tbody>,
-		row: ({ children, key }) => <tr key={key}>{children}</tr>,
-		header: ({ children, key }) => <th key={key}>{children}</th>,
-		data: ({ children, key }) => <td key={key}>{children}</td>,
-		cellContent: ({ children }) => (
-			<PrismicRichText field={children} components={tableCellComponents} />
-		),
-		...tableComponents,
-	};
+const defaultTableComponents: Required<TableComponents> = {
+	table: ({ children }) => <table>{children}</table>,
+	thead: ({ children }) => <thead>{children}</thead>,
+	tbody: ({ children }) => <tbody>{children}</tbody>,
+	tr: ({ children }) => <tr>{children}</tr>,
+	th: ({ children }) => <th>{children}</th>,
+	td: ({ children }) => <td>{children}</td>,
 };
 
 export type PrismicTableProps = {
 	field: TableField;
-	components?: TableMapSerializer;
-	fallback?: JSX.Element;
+	components?: JSXMapSerializer;
+	tableComponents?: TableComponents;
+	fallback?: ReactNode;
 };
 
-export function PrismicTable({
-	field,
-	components,
-	fallback,
-}: PrismicTableProps) {
-	const serializer = createDefaultTableSerializer(components);
+export function PrismicTable(props: PrismicTableProps) {
+	const { field, components, tableComponents, fallback = null } = props;
 
-	if (isFilled.table(field)) {
-		return serializer.table({
-			children: (
-				<>
-					<TableHead field={field} serializer={serializer} />
-					<TableBody field={field} serializer={serializer} />
-				</>
-			),
-		});
-	} else {
+	if (!isFilled.table(field)) {
 		return fallback ?? null;
 	}
+
+	const {
+		table: Table,
+		thead: Thead,
+		tbody: Tbody,
+	} = { ...defaultTableComponents, ...tableComponents };
+
+	return (
+		<Table table={field}>
+			{field.head && (
+				<Thead head={field.head}>
+					{field.head.rows.map((row) => (
+						<TableRow
+							key={JSON.stringify(row)}
+							row={row}
+							components={components}
+							tableComponents={tableComponents}
+						/>
+					))}
+				</Thead>
+			)}
+			<Tbody body={field.body}>
+				{field.body.rows.map((row) => (
+					<TableRow
+						key={JSON.stringify(row)}
+						row={row}
+						components={components}
+						tableComponents={tableComponents}
+					/>
+				))}
+			</Tbody>
+		</Table>
+	);
 }
 
-type TableHeadProps = {
-	field: TableField;
-	serializer: TableMapSerializerFilled;
+type TableRowProps = {
+	row: TableFieldRow;
+	components?: JSXMapSerializer;
+	tableComponents?: TableComponents;
 };
 
-function TableHead({ field, serializer }: TableHeadProps) {
-	return field && field.head
-		? serializer.head({
-				children: <TableRows rows={field?.head.rows} serializer={serializer} />,
-			})
-		: null;
-}
+function TableRow(props: TableRowProps) {
+	const { row, components, tableComponents } = props;
 
-type TableBodyProps = {
-	field: TableField;
-	serializer: TableMapSerializerFilled;
-};
+	const {
+		tr: Tr,
+		th: Th,
+		td: Td,
+	} = { ...defaultTableComponents, ...tableComponents };
 
-function TableBody({ field, serializer }: TableBodyProps) {
-	return field && field.body
-		? serializer.body({
-				children: <TableRows rows={field?.body.rows} serializer={serializer} />,
-			})
-		: null;
-}
-
-type TableRows = TableField<"filled">["body"]["rows"];
-
-type TableRowsProps = {
-	rows: TableRows;
-	serializer: TableMapSerializerFilled;
-};
-
-function TableRows({ rows, serializer }: TableRowsProps) {
-	return rows.map((row) => {
-		return serializer.row({
-			children: <TableCells cells={row.cells} serializer={serializer} />,
-			key: crypto.randomUUID(),
-		});
-	});
-}
-
-type TableCellsProps = {
-	cells: TableRows[0]["cells"];
-	serializer: TableMapSerializerFilled;
-};
-
-function TableCells({ cells, serializer }: TableCellsProps) {
-	return cells.map((cell) => {
-		return serializer[cell.type]({
-			children: serializer.cellContent({ children: cell.content }),
-			key: crypto.randomUUID(),
-		});
-	});
+	return (
+		<Tr row={row}>
+			{row.cells.map((cell) =>
+				cell.type === "header" ? (
+					<Th key={JSON.stringify(cell)} cell={cell}>
+						<PrismicRichText field={cell.content} components={components} />
+					</Th>
+				) : (
+					<Td key={JSON.stringify(cell)} cell={cell}>
+						<PrismicRichText field={cell.content} components={components} />
+					</Td>
+				),
+			)}
+		</Tr>
+	);
 }
