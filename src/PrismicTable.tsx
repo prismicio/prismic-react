@@ -1,15 +1,16 @@
 import { ReactNode } from "react";
-import { isFilled, TableField } from "@prismicio/client";
-import { JSXMapSerializer, PrismicRichText } from "./PrismicRichText.js";
+import {
+	isFilled,
+	TableField,
+	TableFieldHead,
+	TableFieldHeadRow,
+	TableFieldBody,
+	TableFieldBodyRow,
+	TableFieldHeaderCell,
+	TableFieldDataCell,
+} from "@prismicio/client";
 
-type TableFieldHead = NonNullable<TableField<"filled">["head"]>;
-type TableFieldBody = TableField<"filled">["body"];
-type TableFieldRow =
-	| TableFieldHead["rows"][number]
-	| TableFieldBody["rows"][number];
-type TableFieldCell = TableFieldRow["cells"][number];
-type TableFieldHeaderCell = Extract<TableFieldCell, { type: "header" }>;
-type TableFieldDataCell = Extract<TableFieldCell, { type: "data" }>;
+import { JSXMapSerializer, PrismicRichText } from "./PrismicRichText.js";
 
 type TableComponents = {
 	table?: (props: {
@@ -18,7 +19,10 @@ type TableComponents = {
 	}) => ReactNode;
 	thead?: (props: { head: TableFieldHead; children: ReactNode }) => ReactNode;
 	tbody?: (props: { body: TableFieldBody; children: ReactNode }) => ReactNode;
-	tr?: (props: { row: TableFieldRow; children: ReactNode }) => ReactNode;
+	tr?: (props: {
+		row: TableFieldHeadRow | TableFieldBodyRow;
+		children: ReactNode;
+	}) => ReactNode;
 	th?: (props: {
 		cell: TableFieldHeaderCell;
 		children: ReactNode;
@@ -26,7 +30,7 @@ type TableComponents = {
 	td?: (props: { cell: TableFieldDataCell; children: ReactNode }) => ReactNode;
 };
 
-const defaultTableComponents: Required<TableComponents> = {
+const defaultComponents: Required<TableComponents> = {
 	table: ({ children }) => <table>{children}</table>,
 	thead: ({ children }) => <thead>{children}</thead>,
 	tbody: ({ children }) => <tbody>{children}</tbody>,
@@ -37,23 +41,22 @@ const defaultTableComponents: Required<TableComponents> = {
 
 export type PrismicTableProps = {
 	field: TableField;
-	components?: JSXMapSerializer;
-	tableComponents?: TableComponents;
+	components?: JSXMapSerializer & TableComponents;
 	fallback?: ReactNode;
 };
 
 export function PrismicTable(props: PrismicTableProps) {
-	const { field, components, tableComponents, fallback = null } = props;
+	const { field, components, fallback = null } = props;
 
 	if (!isFilled.table(field)) {
-		return fallback ?? null;
+		return fallback;
 	}
 
 	const {
 		table: Table,
 		thead: Thead,
 		tbody: Tbody,
-	} = { ...defaultTableComponents, ...tableComponents };
+	} = { ...defaultComponents, ...components };
 
 	return (
 		<Table table={field}>
@@ -64,7 +67,6 @@ export function PrismicTable(props: PrismicTableProps) {
 							key={JSON.stringify(row)}
 							row={row}
 							components={components}
-							tableComponents={tableComponents}
 						/>
 					))}
 				</Thead>
@@ -75,7 +77,6 @@ export function PrismicTable(props: PrismicTableProps) {
 						key={JSON.stringify(row)}
 						row={row}
 						components={components}
-						tableComponents={tableComponents}
 					/>
 				))}
 			</Tbody>
@@ -84,19 +85,14 @@ export function PrismicTable(props: PrismicTableProps) {
 }
 
 type TableRowProps = {
-	row: TableFieldRow;
-	components?: JSXMapSerializer;
-	tableComponents?: TableComponents;
+	row: TableFieldHeadRow | TableFieldBodyRow;
+	components?: JSXMapSerializer & TableComponents;
 };
 
 function TableRow(props: TableRowProps) {
-	const { row, components, tableComponents } = props;
+	const { row, components } = props;
 
-	const {
-		tr: Tr,
-		th: Th,
-		td: Td,
-	} = { ...defaultTableComponents, ...tableComponents };
+	const { tr: Tr, th: Th, td: Td } = { ...defaultComponents, ...components };
 
 	return (
 		<Tr row={row}>
