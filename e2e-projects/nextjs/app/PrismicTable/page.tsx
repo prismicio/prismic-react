@@ -28,7 +28,7 @@ export default async function Page() {
 			<div data-testid="custom-table">
 				<PrismicTable
 					field={tests.filled}
-					tableComponents={{
+					components={{
 						table: ({ children }) => <div className="table">{children}</div>,
 						thead: ({ children }) => <div className="head">{children}</div>,
 						tbody: ({ children }) => <div className="body">{children}</div>,
@@ -42,12 +42,10 @@ export default async function Page() {
 			<div data-testid="custom-cell-content">
 				<PrismicTable
 					field={tests.filled}
-					tableComponents={{
+					components={{
 						table: ({ children }) => (
 							<table className="table">{children}</table>
 						),
-					}}
-					components={{
 						paragraph: ({ children }) => (
 							<p className="paragraph">{children}</p>
 						),
