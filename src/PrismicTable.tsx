@@ -39,12 +39,65 @@ const defaultComponents: Required<TableComponents> = {
 	td: ({ children }) => <td>{children}</td>,
 };
 
+/** Props for `<PrismicTable>`. */
 export type PrismicTableProps = {
+	/** The Prismic table field to render. */
 	field: TableField;
+
+	/**
+	 * An object that maps a table block to a React component.
+	 *
+	 * @example A map serializer.
+	 *
+	 * ```jsx
+	 * {
+	 *   table: ({children}) => <table>{children}</table>
+	 *   thead: ({children}) => <thead>{children}</thead>
+	 * }
+	 * ```
+	 */
 	components?: JSXMapSerializer & TableComponents;
+
+	/**
+	 * The value to be rendered when the field is empty. If a fallback is not
+	 * given, `null` will be rendered.
+	 */
 	fallback?: ReactNode;
 };
 
+/**
+ * React component that renders content from a Prismic table field. By default,
+ * HTML elements are rendered for each piece of content. A `tbody` block will
+ * render a `<tbody>` HTML element, for example.
+ *
+ * To customize the components that are rendered, provide a map serializer to
+ * the `components` prop.
+ *
+ * @example Rendering a table field using the default HTMl elements.
+ *
+ * ```jsx
+ * <PrismicTable field={document.data.my_table} />;
+ * ```
+ *
+ * @example Rendering a table field using a custom set of React components.
+ *
+ * ```jsx
+ * <PrismicTable
+ * 	field={document.data.my_table}
+ * 	components={{
+ * 		tbody: ({ children }) => (
+ * 			<tbody className="my-class">{children}</tbody>
+ * 		),
+ * 	}}
+ * />;
+ * ```
+ *
+ * @param props - Props for the component.
+ *
+ * @returns The table field's content as React components.
+ *
+ * @see Learn about table fields {@link https://prismic.io/docs/core-concepts/table}
+ */
 export function PrismicTable(props: PrismicTableProps) {
 	const { field, components, fallback = null } = props;
 
