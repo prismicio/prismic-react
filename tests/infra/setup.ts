@@ -67,4 +67,14 @@ setup("create repo", async ({ page, prismic }) => {
 		data: content.richText.content(),
 	});
 	await repository.publishDocument(richTextDocument.id);
+
+	await repository.addCustomType(content.table.model);
+	const tableDocument = await repository.createDocument({
+		custom_type_id: content.table.model.id,
+		title: content.table.model.label,
+		tags: [],
+		integration_field_ids: [],
+		data: content.table.content(),
+	});
+	await repository.publishDocument(tableDocument.id);
 });
