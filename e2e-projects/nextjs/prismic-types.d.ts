@@ -485,11 +485,53 @@ export type RichTextTestDocument<Lang extends string = string> =
 		Lang
 	>;
 
+/** Content for Table Test documents */
+interface TableTestDocumentData {
+	/**
+	 * Empty field in _Table Test_
+	 *
+	 * - **Field Type**: Table
+	 * - **Placeholder**: _None_
+	 * - **API ID Path**: table_test.empty
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#table
+	 */
+	empty: prismic.TableField;
+
+	/**
+	 * Filled field in _Table Test_
+	 *
+	 * - **Field Type**: Table
+	 * - **Placeholder**: _None_
+	 * - **API ID Path**: table_test.filled
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/field#table
+	 */
+	filled: prismic.TableField;
+}
+
+/**
+ * Table Test document from Prismic
+ *
+ * - **API ID**: `table_test`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TableTestDocument<Lang extends string = string> =
+	prismic.PrismicDocumentWithoutUID<
+		Simplify<TableTestDocumentData>,
+		"table_test",
+		Lang
+	>;
+
 export type AllDocumentTypes =
 	| ImageTestDocument
 	| LinkTestDocument
 	| PageDocument
-	| RichTextTestDocument;
+	| RichTextTestDocument
+	| TableTestDocument;
 
 /** Primary content in _Image → Default → Primary_ */
 export interface ImageSliceDefaultPrimary {
