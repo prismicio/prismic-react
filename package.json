@@ -59,7 +59,7 @@
 	"devDependencies": {
 		"@eslint/js": "^9.19.0",
 		"@playwright/test": "^1.50.0",
-		"@prismicio/client": "^7.16.1",
+		"@prismicio/client": "^7.17.0",
 		"@rollup/plugin-typescript": "^12.1.2",
 		"@size-limit/preset-small-lib": "^11.1.6",
 		"@types/react": "^19.0.8",

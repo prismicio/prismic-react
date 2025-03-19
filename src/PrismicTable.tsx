@@ -116,21 +116,13 @@ export function PrismicTable(props: PrismicTableProps) {
 			{field.head && (
 				<Thead head={field.head}>
 					{field.head.rows.map((row) => (
-						<TableRow
-							key={JSON.stringify(row)}
-							row={row}
-							components={components}
-						/>
+						<TableRow key={row.key} row={row} components={components} />
 					))}
 				</Thead>
 			)}
 			<Tbody body={field.body}>
 				{field.body.rows.map((row) => (
-					<TableRow
-						key={JSON.stringify(row)}
-						row={row}
-						components={components}
-					/>
+					<TableRow key={row.key} row={row} components={components} />
 				))}
 			</Tbody>
 		</Table>
@@ -151,11 +143,11 @@ function TableRow(props: TableRowProps) {
 		<Tr row={row}>
 			{row.cells.map((cell) =>
 				cell.type === "header" ? (
-					<Th key={JSON.stringify(cell)} cell={cell}>
+					<Th key={cell.key} cell={cell}>
 						<PrismicRichText field={cell.content} components={components} />
 					</Th>
 				) : (
-					<Td key={JSON.stringify(cell)} cell={cell}>
+					<Td key={cell.key} cell={cell}>
 						<PrismicRichText field={cell.content} components={components} />
 					</Td>
 				),
