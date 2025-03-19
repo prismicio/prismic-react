@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/prismicio/prismic-react/compare/v3.1.0...v3.2.0) (2025-03-19)
+
+
+### Features
+
+* support key for table field content ([#222](https://github.com/prismicio/prismic-react/issues/222)) ([8cf8fe2](https://github.com/prismicio/prismic-react/commit/8cf8fe2a95a2154518d2e10562f11da7673203e2))
+
+
+### Chore
+
+* add e2e tests to test script ([941d656](https://github.com/prismicio/prismic-react/commit/941d6566759abb7376b6c0c6fda9512407535994))
+
 ## [3.1.0](https://github.com/prismicio/prismic-react/compare/v3.0.0...v3.1.0) (2025-02-28)
 
 
