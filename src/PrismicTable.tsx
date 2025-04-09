@@ -1,4 +1,4 @@
-import { ComponentType, ReactNode } from "react";
+import { ComponentType, FC, ReactNode } from "react";
 import {
 	isFilled,
 	TableField,
@@ -92,7 +92,7 @@ export type PrismicTableProps = {
  *
  * @see Learn about table fields {@link https://prismic.io/docs/core-concepts/table}
  */
-export function PrismicTable(props: PrismicTableProps) {
+export const PrismicTable: FC<PrismicTableProps> = (props) => {
 	const { field, components, fallback = null } = props;
 
 	if (!isFilled.table(field)) {
@@ -121,7 +121,7 @@ export function PrismicTable(props: PrismicTableProps) {
 			</Tbody>
 		</Table>
 	);
-}
+};
 
 type TableRowProps = {
 	row: TableFieldHeadRow | TableFieldBodyRow;
