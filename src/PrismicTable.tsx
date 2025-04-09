@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ComponentType, ReactNode } from "react";
 import {
 	isFilled,
 	TableField,
@@ -13,21 +13,15 @@ import {
 import { JSXMapSerializer, PrismicRichText } from "./PrismicRichText.js";
 
 type TableComponents = {
-	table?: (props: {
-		table: TableField<"filled">;
-		children: ReactNode;
-	}) => ReactNode;
-	thead?: (props: { head: TableFieldHead; children: ReactNode }) => ReactNode;
-	tbody?: (props: { body: TableFieldBody; children: ReactNode }) => ReactNode;
-	tr?: (props: {
+	table?: ComponentType<{ table: TableField<"filled">; children: ReactNode }>;
+	thead?: ComponentType<{ head: TableFieldHead; children: ReactNode }>;
+	tbody?: ComponentType<{ body: TableFieldBody; children: ReactNode }>;
+	tr?: ComponentType<{
 		row: TableFieldHeadRow | TableFieldBodyRow;
 		children: ReactNode;
-	}) => ReactNode;
-	th?: (props: {
-		cell: TableFieldHeaderCell;
-		children: ReactNode;
-	}) => ReactNode;
-	td?: (props: { cell: TableFieldDataCell; children: ReactNode }) => ReactNode;
+	}>;
+	th?: ComponentType<{ cell: TableFieldHeaderCell; children: ReactNode }>;
+	td?: ComponentType<{ cell: TableFieldDataCell; children: ReactNode }>;
 };
 
 const defaultComponents: Required<TableComponents> = {
