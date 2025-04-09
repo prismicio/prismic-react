@@ -252,14 +252,15 @@ class AuthenticatedAPI {
 	): Promise<APIResponse> {
 		const request = await this.#wroomRequest;
 		const { cookies } = await request.storageState();
-		const xsrf = cookies.find((cookie) => cookie.name === "X_XSRF")?.value;
-		if (!xsrf) {
+		const auth = cookies.find((cookie) => cookie.name === "prismic-auth");
+		if (!auth?.value) {
 			await this.#logInWroom();
 			return await this.postWroom(...args);
 		}
 
 		const url = new URL(args[0]);
-		url.searchParams.set("_", xsrf);
+		const xsrf = cookies.find((cookie) => cookie.name === "X_XSRF");
+		if (xsrf) url.searchParams.set("_", xsrf.value);
 		return await request.post(url.toString(), args[1]);
 	}
 
