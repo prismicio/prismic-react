@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1-alpha.0](https://github.com/prismicio/prismic-react/compare/v3.2.0...v3.2.1-alpha.0) (2025-04-09)
+
+
+### Bug Fixes
+
+* **PrismicTable:** use React 18 and 19 compatible types ([accb41f](https://github.com/prismicio/prismic-react/commit/accb41f1b5e2bc2bcb8cd6635693d994aafbf662))
+* use `FC` ([892e66d](https://github.com/prismicio/prismic-react/commit/892e66dc09dbf779e0ddfc3d7a3e36127c828540))
+
+
+### Chore
+
+* remove `--release-as` from `release:alpha` scripts ([c435240](https://github.com/prismicio/prismic-react/commit/c4352401c96ba1dc408e6058580d5029fa9902b6))
+
 ## [3.2.0](https://github.com/prismicio/prismic-react/compare/v3.1.0...v3.2.0) (2025-03-19)
 
 
