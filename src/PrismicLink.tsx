@@ -1,7 +1,6 @@
 import {
 	ComponentProps,
 	ComponentType,
-	ElementType,
 	ForwardedRef,
 	HTMLAttributeAnchorTarget,
 	ReactNode,
@@ -73,7 +72,7 @@ export type PrismicLinkProps<
 	 * If your app uses a client-side router that requires a special Link
 	 * component, provide the Link component to this prop.
 	 */
-	internalComponent?: ElementType<InternalComponentProps>;
+	internalComponent?: ComponentType<InternalComponentProps>;
 
 	/** The component rendered for external URLs. Defaults to `<a>`. */
 	externalComponent?: ComponentType<ExternalComponentProps>;
