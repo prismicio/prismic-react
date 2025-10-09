@@ -47,13 +47,13 @@ export type PrismicRichTextProps = {
 	field: RichTextField | null | undefined;
 
 	/**
-	 * The Link Resolver used to resolve links.
+	 * The link resolver used to resolve links.
 	 *
 	 * @remarks
-	 * If your app uses Route Resolvers when querying for your Prismic
-	 * repository's content, a Link Resolver does not need to be provided.
+	 * If your app uses route resolvers when querying for your Prismic
+	 * repository's content, a link resolver does not need to be provided.
 	 *
-	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/routes}
+	 * @see Learn about link resolvers and route resolvers {@link https://prismic.io/docs/routes}
 	 */
 	linkResolver?: LinkResolverFunction;
 

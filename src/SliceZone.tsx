@@ -5,7 +5,7 @@ import { DEV } from "esm-env";
 /**
  * Returns the type of a `SliceLike` type.
  *
- * @typeParam Slice - The Slice from which the type will be extracted.
+ * @typeParam TSlice - The slice from which the type will be extracted.
  */
 type ExtractSliceType<TSlice extends SliceLike> = TSlice extends Slice
 	? TSlice["slice_type"]
@@ -203,7 +203,7 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
 };
 
 /**
- * Renders a slices in a slice zone as React components.
+ * Renders slices in a slice zone as React components.
  *
  * @example
  *
