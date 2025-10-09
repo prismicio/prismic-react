@@ -62,7 +62,7 @@ export type PrismicLinkProps<
 	 * If your app uses Route Resolvers when querying for your Prismic
 	 * repository's content, a Link Resolver does not need to be provided.
 	 *
-	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
+	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/route-resolver}
 	 */
 	linkResolver?: LinkResolverFunction;
 
@@ -100,6 +100,17 @@ export type PrismicLinkProps<
 		  }
 	);
 
+/**
+ * Renders a link from a Prismic link field or page.
+ *
+ * @example
+ *
+ * ```tsx
+ * <PrismicLink field={slice.primary.link}>Click here</PrismicLink>;
+ * ```
+ *
+ * @see Learn how to display links and use variants for styling: {@link https://prismic.io/docs/fields/link}
+ */
 export const PrismicLink = forwardRef(function PrismicLink<
 	InternalComponentProps = ComponentProps<typeof defaultComponent>,
 	ExternalComponentProps = ComponentProps<typeof defaultComponent>,

@@ -26,24 +26,24 @@ import { devMsg } from "./lib/devMsg.js";
 import { LinkProps, PrismicLink } from "./PrismicLink.js";
 
 /**
- * A function mapping Rich Text block types to React Components. It is used to
- * render Rich Text or Title fields.
+ * A function mapping rich text block types to React Components. It is used to
+ * render rich text or Title fields.
  *
- * @see Templating rich text and title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
+ * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
 export type JSXFunctionSerializer = RichTextFunctionSerializer<ReactNode>;
 
 /**
- * A map of Rich Text block types to React Components. It is used to render Rich
+ * A map of rich text block types to React Components. It is used to render Rich
  * Text or Title fields.
  *
- * @see Templating Rich Text and Title fields from Prismic {@link https://prismic.io/docs/technologies/templating-rich-text-and-title-fields-javascript}
+ * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
 export type JSXMapSerializer = RichTextMapSerializer<ReactNode>;
 
 /** Props for `<PrismicRichText>`. */
 export type PrismicRichTextProps = {
-	/** The Prismic Rich Text field to render. */
+	/** The Prismic rich text field to render. */
 	field: RichTextField | null | undefined;
 
 	/**
@@ -53,12 +53,12 @@ export type PrismicRichTextProps = {
 	 * If your app uses Route Resolvers when querying for your Prismic
 	 * repository's content, a Link Resolver does not need to be provided.
 	 *
-	 * @see Learn about Link Resolvers and Route Resolvers {@link https://io/docs/core-concepts/link-resolver-route-resolver}
+	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/route-resolver}
 	 */
 	linkResolver?: LinkResolverFunction;
 
 	/**
-	 * A map or function that maps a Rich Text block to a React component.
+	 * A map or function that maps a rich text block to a React component.
 	 *
 	 * @remarks
 	 * Prefer using a map serializer over the function serializer when possible.
@@ -243,42 +243,15 @@ const createDefaultSerializer = (
 	});
 
 /**
- * React component that renders content from a Prismic Rich Text field. By
- * default, HTML elements are rendered for each piece of content. A `heading1`
- * block will render an `<h1>` HTML element, for example. Links will use
- * `<PrismicLink>` by default which can be customized using the
- * `internalLinkComponent` and `externalLinkComponent` props.
+ * Renders content from a Prismic rich text field as React components.
  *
- * To customize the components that are rendered, provide a map or function
- * serializer to the `components` prop.
+ * @example
  *
- * @remarks
- * This component returns a React fragment with no wrapping element around the
- * content. If you need a wrapper, add a component around `<PrismicRichText>`.
- *
- * @example Rendering a Rich Text field using the default HTMl elements.
- *
- * ```jsx
- * <PrismicRichText field={document.data.content} />;
+ * ```tsx
+ * <PrismicRichText field={slice.primary.text} />;
  * ```
  *
- * @example Rendering a Rich Text field using a custom set of React components.
- *
- * ```jsx
- * <PrismicRichText
- * 	field={document.data.content}
- * 	components={{
- * 		heading1: ({ children }) => <Heading>{children}</Heading>,
- * 	}}
- * />;
- * ```
- *
- * @param props - Props for the component.
- *
- * @returns The Rich Text field's content as React components.
- *
- * @see Learn about Rich Text fields {@link https://io/docs/core-concepts/rich-text-title}
- * @see Learn about Rich Text serializers {@link https://io/docs/core-concepts/html-serializer}
+ * @see Learn how to style rich text, use custom components, and use labels for custom formatting: {@link https://prismic.io/docs/fields/rich-text}
  */
 export const PrismicRichText: FC<PrismicRichTextProps> = (props) => {
 	const {

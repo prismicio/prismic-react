@@ -13,8 +13,15 @@ export type PrismicToolbarProps = {
 };
 
 /**
- * React component that injects the Prismic Toolbar into the app. This component
- * can be placed anywhere in the React tree.
+ * Renders the Prismic Toolbar script to support draft previews.
+ *
+ * @example
+ *
+ * ```tsx
+ * <PrismicToolbar repositoryName="my-repo" />;
+ * ```
+ *
+ * @see Learn how to set up preview functionality and the toolbar's role in preview sessions: {@link https://prismic.io/docs/previews}
  */
 export const PrismicToolbar: FC<PrismicToolbarProps> = (props) => {
 	const { repositoryName } = props;

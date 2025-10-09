@@ -98,23 +98,15 @@ export type PrismicImageProps = Omit<
 	);
 
 /**
- * React component that renders an image from a Prismic Image field or one of
- * its thumbnails. It will automatically set the `alt` attribute using the Image
- * field's `alt` property.
+ * Renders an optimized image from a Prismic image field.
  *
- * By default, a widths-based srcset will be used to support responsive images.
- * This ensures only the smallest image needed for a browser is downloaded.
+ * @example
  *
- * To use a pixel-density-based srcset, use the `pixelDensities` prop. Default
- * pixel densities can be used by using `pixelDensities="defaults"`.
+ * ```tsx
+ * <PrismicImage field={slice.primary.photo} />;
+ * ```
  *
- * **Note**: If you are using a framework that has a native image component,
- * such as Next.js and Gatsby, prefer using those image components instead. They
- * can provide deeper framework integration than `<PrismicImage>`.
- *
- * @param props - Props for the component.
- *
- * @returns A responsive image component for the given Image field.
+ * @see Learn how to optimize images with imgix, use responsive images, and use framework-specific image components: {@link https://prismic.io/docs/fields/image}
  */
 export const PrismicImage: FC<PrismicImageProps> = forwardRef(
 	function PrismicImage(

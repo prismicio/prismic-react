@@ -203,19 +203,15 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
 };
 
 /**
- * Renders content from a Prismic Slice Zone using React components for each
- * type of Slice.
+ * Renders a slices in a slice zone as React components.
  *
- * If a component is not provided for a type of Slice, a default component can
- * be provided. A fallback component is provided by default that will not be
- * rendered in a production build of your app.
+ * @example
  *
- * @typeParam TSlice - The type(s) of a Slice in the Slice Zone.
- * @typeParam TContext - Arbitrary data made available to all Slice components.
+ * ```tsx
+ * <SliceZone slices={page.data.slices} components={components} />;
+ * ```
  *
- * @returns The Slice Zone's content as React components.
- *
- * @see Learn about Prismic Slices and Slice Zones {@link https://prismic.io/docs/core-concepts/slices}
+ * @see Learn how to create slices, use slice variations, and display slices: {@link https://prismic.io/docs/slices}
  */
 export const SliceZone: FC<SliceZoneProps> = (props) => {
 	const {
