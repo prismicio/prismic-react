@@ -27,15 +27,15 @@ import { LinkProps, PrismicLink } from "./PrismicLink.js";
 
 /**
  * A function mapping rich text block types to React Components. It is used to
- * render rich text or Title fields.
+ * render rich text fields.
  *
  * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
 export type JSXFunctionSerializer = RichTextFunctionSerializer<ReactNode>;
 
 /**
- * A map of rich text block types to React Components. It is used to render Rich
- * Text or Title fields.
+ * A map of rich text block types to React Components. It is used to render
+ * rich text fields.
  *
  * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
@@ -53,7 +53,7 @@ export type PrismicRichTextProps = {
 	 * If your app uses Route Resolvers when querying for your Prismic
 	 * repository's content, a Link Resolver does not need to be provided.
 	 *
-	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/route-resolver}
+	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/routes}
 	 */
 	linkResolver?: LinkResolverFunction;
 

@@ -6,7 +6,7 @@ import { devMsg } from "./lib/devMsg.js";
 
 /** Props for `<PrismicText>`. */
 export type PrismicTextProps = {
-	/** The Prismic Rich Text field to render. */
+	/** The Prismic rich text field to render. */
 	field: RichTextField | null | undefined;
 
 	/**
@@ -47,7 +47,7 @@ export const PrismicText: FC<PrismicTextProps> = (props) => {
 	if (typeof props.field === "string") {
 		if (DEV) {
 			console.error(
-				`[PrismicText] The "field" prop only accepts a Rich Text or Title field's value but was provided a different type of field instead (e.g. a Key Text or Select field). You can resolve this error by rendering the field value inline without <PrismicText>. For more details, see ${devMsg(
+				`[PrismicText] The "field" prop only accepts a rich text field's value but was provided a different type of field instead (e.g. a key text or select field). You can resolve this error by rendering the field value inline without <PrismicText>. For more details, see ${devMsg(
 					"prismictext-works-only-with-rich-text-and-title-fields",
 				)}`,
 				props.field,

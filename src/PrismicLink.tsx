@@ -62,7 +62,7 @@ export type PrismicLinkProps<
 	 * If your app uses Route Resolvers when querying for your Prismic
 	 * repository's content, a Link Resolver does not need to be provided.
 	 *
-	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/route-resolver}
+	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/routes}
 	 */
 	linkResolver?: LinkResolverFunction;
 
