@@ -1,9 +1,14 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
-import { Locator, Page, test as base, expect } from "@playwright/test";
+import {
+	type Locator,
+	type Page,
+	test as base,
+	expect,
+} from "@playwright/test";
 import { createClient } from "@prismicio/client";
 import assert from "assert";
 
-import { CoreAPIDocument, Prismic, Repo } from "./client";
+import { type CoreAPIDocument, Prismic, type Repo } from "./client";
 
 type Fixtures = {
 	prismic: Prismic;
