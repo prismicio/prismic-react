@@ -2,7 +2,7 @@ import { APIRequestContext, APIResponse, request } from "playwright/test";
 import {
 	CustomType,
 	SharedSlice,
-} from "@prismicio/types-internal/lib/customtypes";
+} from "@prismicio/types-internal/lib/customtypes/index.js";
 import { randomUUID } from "node:crypto";
 import assert from "node:assert";
 
