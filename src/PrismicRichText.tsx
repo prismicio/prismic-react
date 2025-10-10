@@ -34,8 +34,8 @@ import { LinkProps, PrismicLink } from "./PrismicLink.js";
 export type JSXFunctionSerializer = RichTextFunctionSerializer<ReactNode>;
 
 /**
- * A map of rich text block types to React Components. It is used to render
- * rich text fields.
+ * A map of rich text block types to React Components. It is used to render rich
+ * text fields.
  *
  * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */

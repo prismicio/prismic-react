@@ -64,7 +64,8 @@ export type PrismicImageProps = Omit<
 } & (
 		| {
 				/**
-				 * Widths (in pixels) used to build a `srcset` value for the image field.
+				 * Widths (in pixels) used to build a `srcset` value for the image
+				 * field.
 				 *
 				 * If omitted or set to `"defaults"`, the following widths will be used:
 				 * 640, 750, 828, 1080, 1200, 1920, 2048, 3840.
