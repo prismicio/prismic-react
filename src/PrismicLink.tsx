@@ -37,7 +37,7 @@ export interface LinkProps {
 	 */
 	rel?: string;
 
-	/** Children for the component. * */
+	/** Children for the component. */
 	children?: ReactNode;
 }
 
@@ -56,13 +56,13 @@ export type PrismicLinkProps<
 	rel?: string | AsLinkAttrsConfig["rel"];
 
 	/**
-	 * The Link Resolver used to resolve links.
+	 * The link resolver used to resolve links.
 	 *
 	 * @remarks
-	 * If your app uses Route Resolvers when querying for your Prismic
-	 * repository's content, a Link Resolver does not need to be provided.
+	 * If your app uses route resolvers when querying for your Prismic
+	 * repository's content, a link resolver does not need to be provided.
 	 *
-	 * @see Learn about Link Resolvers and Route Resolvers {@link https://prismic.io/docs/core-concepts/link-resolver-route-resolver}
+	 * @see Learn about link resolvers and route resolvers {@link https://prismic.io/docs/routes}
 	 */
 	linkResolver?: LinkResolverFunction;
 
@@ -100,6 +100,17 @@ export type PrismicLinkProps<
 		  }
 	);
 
+/**
+ * Renders a link from a Prismic link field or page.
+ *
+ * @example
+ *
+ * ```tsx
+ * <PrismicLink field={slice.primary.link}>Click here</PrismicLink>;
+ * ```
+ *
+ * @see Learn how to display links and use variants for styling: {@link https://prismic.io/docs/fields/link}
+ */
 export const PrismicLink = forwardRef(function PrismicLink<
 	InternalComponentProps = ComponentProps<typeof defaultComponent>,
 	ExternalComponentProps = ComponentProps<typeof defaultComponent>,

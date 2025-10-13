@@ -29,7 +29,7 @@ export type PrismicImageProps = Omit<
 	ComponentProps<"img">,
 	"src" | "srcset" | "alt"
 > & {
-	/** The Prismic Image field or thumbnail to render. */
+	/** The Prismic image field or thumbnail to render. */
 	field: ImageFieldImage | null | undefined;
 
 	/**
@@ -48,7 +48,7 @@ export type PrismicImageProps = Omit<
 	alt?: "";
 
 	/**
-	 * Declare an image as decorative only if the Image field does not have
+	 * Declare an image as decorative only if the image field does not have
 	 * alternative text by providing `fallbackAlt=""`.
 	 *
 	 * See:
@@ -64,13 +64,13 @@ export type PrismicImageProps = Omit<
 } & (
 		| {
 				/**
-				 * Widths used to build a `srcset` value for the Image field.
+				 * Widths (in pixels) used to build a `srcset` value for the image
+				 * field.
 				 *
-				 * If a `widths` prop is not given or `"defaults"` is passed, the
-				 * following widths will be used: 640, 750, 828, 1080, 1200, 1920, 2048,
-				 * 3840.
+				 * If omitted or set to `"defaults"`, the following widths will be used:
+				 * 640, 750, 828, 1080, 1200, 1920, 2048, 3840.
 				 *
-				 * If the Image field contains responsive views, each responsive view
+				 * If the image field contains responsive views, each responsive view
 				 * can be used as a width in the resulting `srcset` by passing
 				 * `"thumbnails"` as the `widths` prop.
 				 */
@@ -84,7 +84,7 @@ export type PrismicImageProps = Omit<
 				/** Not used when the `widths` prop is used. */
 				widths?: never;
 				/**
-				 * Pixel densities used to build a `srcset` value for the Image field.
+				 * Pixel densities used to build a `srcset` value for the image field.
 				 *
 				 * If a `pixelDensities` prop is passed `"defaults"`, the following
 				 * pixel densities will be used: 1, 2, 3.
@@ -98,23 +98,15 @@ export type PrismicImageProps = Omit<
 	);
 
 /**
- * React component that renders an image from a Prismic Image field or one of
- * its thumbnails. It will automatically set the `alt` attribute using the Image
- * field's `alt` property.
+ * Renders an optimized image from a Prismic image field.
  *
- * By default, a widths-based srcset will be used to support responsive images.
- * This ensures only the smallest image needed for a browser is downloaded.
+ * @example
  *
- * To use a pixel-density-based srcset, use the `pixelDensities` prop. Default
- * pixel densities can be used by using `pixelDensities="defaults"`.
+ * ```tsx
+ * <PrismicImage field={slice.primary.photo} />;
+ * ```
  *
- * **Note**: If you are using a framework that has a native image component,
- * such as Next.js and Gatsby, prefer using those image components instead. They
- * can provide deeper framework integration than `<PrismicImage>`.
- *
- * @param props - Props for the component.
- *
- * @returns A responsive image component for the given Image field.
+ * @see Learn how to optimize images with imgix, use responsive images, and use framework-specific image components: {@link https://prismic.io/docs/fields/image}
  */
 export const PrismicImage: FC<PrismicImageProps> = forwardRef(
 	function PrismicImage(

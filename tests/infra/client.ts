@@ -1,5 +1,9 @@
-import { APIRequestContext, APIResponse, request } from "playwright/test";
 import {
+	type APIRequestContext,
+	type APIResponse,
+	request,
+} from "@playwright/test";
+import type {
 	CustomType,
 	SharedSlice,
 } from "@prismicio/types-internal/lib/customtypes";

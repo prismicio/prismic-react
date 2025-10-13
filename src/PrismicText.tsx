@@ -6,7 +6,7 @@ import { devMsg } from "./lib/devMsg.js";
 
 /** Props for `<PrismicText>`. */
 export type PrismicTextProps = {
-	/** The Prismic Rich Text field to render. */
+	/** The Prismic rich text field to render. */
 	field: RichTextField | null | undefined;
 
 	/**
@@ -20,24 +20,15 @@ export type PrismicTextProps = {
 };
 
 /**
- * React component that renders content from a Prismic Rich Text field as plain
- * text.
+ * Renders content from a Prismic rich text field as plain text (no HTML).
  *
- * @remarks
- * This component returns a React fragment with no wrapping element around the
- * content. If you need a wrapper, add a component around `<PrismicText>`.
+ * @example
  *
- * @example Rendering a Rich Text field as plain text.
- *
- * ```jsx
- * <PrismicText field={document.data.content} />;
+ * ```tsx
+ * <PrismicText field={slice.primary.text} />;
  * ```
  *
- * @param props - Props for the component.
- *
- * @returns The Rich Text field's content as plain text.
- *
- * @see Learn about Rich Text fields {@link https://io/docs/core-concepts/rich-text-title}
+ * @see Learn how to display rich text as plain text or React components: {@link https://prismic.io/docs/fields/rich-text}
  */
 export const PrismicText: FC<PrismicTextProps> = (props) => {
 	const { field, fallback, separator } = props;
@@ -56,7 +47,7 @@ export const PrismicText: FC<PrismicTextProps> = (props) => {
 	if (typeof props.field === "string") {
 		if (DEV) {
 			console.error(
-				`[PrismicText] The "field" prop only accepts a Rich Text or Title field's value but was provided a different type of field instead (e.g. a Key Text or Select field). You can resolve this error by rendering the field value inline without <PrismicText>. For more details, see ${devMsg(
+				`[PrismicText] The "field" prop only accepts a rich text field's value but was provided a different type of field instead (e.g. a key text or select field). You can resolve this error by rendering the field value inline without <PrismicText>. For more details, see ${devMsg(
 					"prismictext-works-only-with-rich-text-and-title-fields",
 				)}`,
 				props.field,
