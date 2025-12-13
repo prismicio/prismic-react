@@ -23,6 +23,7 @@ import { DEV } from "esm-env";
 
 import { devMsg } from "./lib/devMsg.js";
 
+import { getGlobalConfig } from "./config.js";
 import { LinkProps, PrismicLink } from "./PrismicLink.js";
 
 /**
@@ -254,13 +255,15 @@ const createDefaultSerializer = (
  * @see Learn how to style rich text, use custom components, and use labels for custom formatting: {@link https://prismic.io/docs/fields/rich-text}
  */
 export const PrismicRichText: FC<PrismicRichTextProps> = (props) => {
+	const globalConfig = getGlobalConfig();
+
 	const {
 		linkResolver,
 		field,
 		fallback,
 		components,
 		externalLinkComponent,
-		internalLinkComponent,
+		internalLinkComponent = globalConfig.internalLinkComponent,
 		...restProps
 	} = props;
 

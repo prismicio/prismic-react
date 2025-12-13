@@ -17,6 +17,8 @@ import { DEV } from "esm-env";
 
 import { devMsg } from "./lib/devMsg.js";
 
+import { getGlobalConfig } from "./config.js";
+
 /** The default component rendered for internal and external links. */
 const defaultComponent = "a";
 
@@ -118,11 +120,13 @@ export const PrismicLink = forwardRef(function PrismicLink<
 	props: PrismicLinkProps<InternalComponentProps, ExternalComponentProps>,
 	ref: ForwardedRef<Element>,
 ) {
+	const globalConfig = getGlobalConfig();
+
 	const {
 		field,
 		document: doc,
 		linkResolver,
-		internalComponent,
+		internalComponent = globalConfig.internalLinkComponent,
 		externalComponent,
 		children,
 		...restProps

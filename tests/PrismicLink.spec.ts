@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 test.describe("web links", () => {
 	test("renders an internal web link", async ({ page }) => {
 		const link = page.getByTestId("internal-web");
-		await expect(link).toHaveAttribute("href", "/example");
+		await expect(link).toHaveAttribute("href", "/foo");
 		await expect(link).not.toHaveAttribute("rel");
 		await expect(link).not.toHaveAttribute("target");
 	});
@@ -115,7 +115,7 @@ test.describe("href", () => {
 
 	test("renders an internal href", async ({ page }) => {
 		const link = page.getByTestId("internal-href-prop");
-		await expect(link).toHaveAttribute("href", "/example");
+		await expect(link).toHaveAttribute("href", "/foo");
 		await expect(link).not.toHaveAttribute("rel");
 		await expect(link).not.toHaveAttribute("target");
 	});
@@ -153,5 +153,35 @@ test.describe("ref", () => {
 	test("forwards ref", async ({ page }) => {
 		const link = page.getByTestId("ref");
 		await expect(link).toContainText("tagname: A");
+	});
+});
+
+test.describe("global config", () => {
+	test.beforeEach(async ({ page }) => {
+		await page.goto("/PrismicLink/global-config");
+	});
+
+	test("uses global internalLinkComponent for internal links", async ({
+		page,
+	}) => {
+		const scope = page.getByTestId("uses-global");
+		const link = scope.getByTestId("global-internal-link");
+		await expect(link).toHaveCount(1);
+	});
+
+	test("prop-level internalComponent overrides global config", async ({
+		page,
+	}) => {
+		const scope = page.getByTestId("override");
+		const link = scope.getByTestId("override-internal-link");
+		await expect(link).toHaveCount(1);
+		await expect(scope.getByTestId("global-internal-link")).toHaveCount(0);
+	});
+
+	test("external links are not affected by global internalLinkComponent", async ({
+		page,
+	}) => {
+		const scope = page.getByTestId("external-unaffected");
+		await expect(scope.getByTestId("global-internal-link")).toHaveCount(0);
 	});
 });

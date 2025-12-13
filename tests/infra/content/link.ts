@@ -116,7 +116,7 @@ export function content(args: { documentLinkID: string }) {
 		},
 		internal_web: {
 			key: "69e09a1a-8d52-4172-810c-623fc13736b3",
-			url: "/example",
+			url: "/foo",
 		},
 		empty_TYPE: "Link",
 		internal_web_TYPE: "Link",

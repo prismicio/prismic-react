@@ -280,3 +280,31 @@ test.describe("label", () => {
 		);
 	});
 });
+
+test.describe("global config", () => {
+	test.beforeEach(async ({ page }) => {
+		await page.goto("/PrismicRichText/global-config");
+	});
+
+	test("uses global internalLinkComponent for internal hyperlinks", async ({
+		page,
+	}) => {
+		const scope = page.getByTestId("uses-global");
+		await expect(scope.getByTestId("global-internal-link")).toHaveCount(1);
+	});
+
+	test("prop-level internalLinkComponent overrides global config", async ({
+		page,
+	}) => {
+		const scope = page.getByTestId("override");
+		await expect(scope.getByTestId("override-internal-link")).toHaveCount(1);
+		await expect(scope.getByTestId("global-internal-link")).toHaveCount(0);
+	});
+
+	test("external links are not affected by global internalLinkComponent", async ({
+		page,
+	}) => {
+		const scope = page.getByTestId("external-unaffected");
+		await expect(scope.getByTestId("global-internal-link")).toHaveCount(0);
+	});
+});
