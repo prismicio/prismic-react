@@ -1,22 +1,20 @@
+import { ComponentType } from "react";
 import { isFilled } from "@prismicio/client";
 import { LinkProps, PrismicRichText } from "@prismicio/react";
 import assert from "assert";
 
 import { createClient } from "@/prismicio";
 
-const globalConfigKey = Symbol.for("@prismicio/react/config");
-
-type GlobalThis = {
-	[globalConfigKey]?: {
-		internalLinkComponent?: React.ComponentType<LinkProps>;
-	};
-};
-
-(globalThis as GlobalThis)[globalConfigKey] = {
-	internalLinkComponent: (props) => (
-		<a data-testid="global-internal-link" {...props} />
-	),
-};
+const defaultInternalComponentConfigKey = Symbol.for(
+	"@prismicio/react/PrismicLink/defaultInternalComponent",
+);
+(
+	globalThis as {
+		[defaultInternalComponentConfigKey]?: ComponentType<LinkProps>;
+	}
+)[defaultInternalComponentConfigKey] = (props) => (
+	<a data-testid="global-internal-link" {...props} />
+);
 
 export default async function Page() {
 	const client = await createClient();

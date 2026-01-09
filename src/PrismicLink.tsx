@@ -17,7 +17,9 @@ import { DEV } from "esm-env";
 
 import { devMsg } from "./lib/devMsg.js";
 
-import { getGlobalConfig } from "./config.js";
+const defaultInternalComponentConfigKey = Symbol.for(
+	"@prismicio/react/PrismicLink/defaultInternalComponent",
+);
 
 /** The default component rendered for internal and external links. */
 const defaultComponent = "a";
@@ -120,14 +122,16 @@ export const PrismicLink = forwardRef(function PrismicLink<
 	props: PrismicLinkProps<InternalComponentProps, ExternalComponentProps>,
 	ref: ForwardedRef<Element>,
 ) {
-	const globalConfig = getGlobalConfig();
-
 	const {
 		field,
 		document: doc,
 		linkResolver,
-		internalComponent = globalConfig.internalLinkComponent,
-		externalComponent,
+		internalComponent = (
+			globalThis as {
+				[defaultInternalComponentConfigKey]?: ComponentType<LinkProps>;
+			}
+		)[defaultInternalComponentConfigKey] || defaultComponent,
+		externalComponent = defaultComponent,
 		children,
 		...restProps
 	} = props;
@@ -185,15 +189,11 @@ export const PrismicLink = forwardRef(function PrismicLink<
 
 	const href = ("href" in restProps ? restProps.href : computedHref) || "";
 
-	const InternalComponent = (internalComponent ||
-		defaultComponent) as ComponentType<LinkProps>;
-	const ExternalComponent = (externalComponent ||
-		defaultComponent) as ComponentType<LinkProps>;
 	const Component = href
 		? isInternalURL(href)
-			? InternalComponent
-			: ExternalComponent
-		: InternalComponent;
+			? (internalComponent as ComponentType<LinkProps>)
+			: (externalComponent as ComponentType<LinkProps>)
+		: (internalComponent as ComponentType<LinkProps>);
 
 	return (
 		<Component ref={ref} {...attrs} {...restProps} href={href} rel={rel}>
