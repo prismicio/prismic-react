@@ -1,16 +1,16 @@
-import { ComponentType, FC, ReactNode } from "react";
+import type { ComponentType, FC, ReactNode } from "react";
 import {
 	isFilled,
-	TableField,
-	TableFieldHead,
-	TableFieldHeadRow,
-	TableFieldBody,
-	TableFieldBodyRow,
-	TableFieldHeaderCell,
-	TableFieldDataCell,
+	type TableField,
+	type TableFieldHead,
+	type TableFieldHeadRow,
+	type TableFieldBody,
+	type TableFieldBodyRow,
+	type TableFieldHeaderCell,
+	type TableFieldDataCell,
 } from "@prismicio/client";
 
-import { JSXMapSerializer, PrismicRichText } from "./PrismicRichText.js";
+import { type JSXMapSerializer, PrismicRichText } from "./PrismicRichText.js";
 
 type TableComponents = {
 	table?: ComponentType<{ table: TableField<"filled">; children: ReactNode }>;

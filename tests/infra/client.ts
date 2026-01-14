@@ -37,7 +37,10 @@ export class Prismic {
 		this.#auth = new AuthenticatedAPI({ urls: this.urls, auth, request });
 	}
 
-	async createRepository(args: { defaultLocale: string; prefix?: string }) {
+	async createRepository(args: {
+		defaultLocale: string;
+		prefix?: string;
+	}): Promise<Repo> {
 		const { defaultLocale, prefix = "e2e-tests" } = args;
 		const suffix = randomUUID().replace("-", "").slice(0, 16);
 		const data = {
@@ -57,7 +60,7 @@ export class Prismic {
 		return repo;
 	}
 
-	getRepo(domain: string) {
+	getRepo(domain: string): Repo {
 		return new Repo({ domain, urls: this.urls, auth: this.#auth });
 	}
 }
@@ -83,7 +86,7 @@ export class Repo {
 		this.#auth = auth;
 	}
 
-	async setDefaultLocale(locale: string) {
+	async setDefaultLocale(locale: string): Promise<void> {
 		const url = new URL(
 			`app/settings/multilanguages/${locale}/createMasterLang`,
 			this.urls.wroom,
@@ -92,7 +95,7 @@ export class Repo {
 		assert(res.ok, `Could not default locale to ${locale}.`);
 	}
 
-	async createPreview(args: { name: string; url: URL }) {
+	async createPreview(args: { name: string; url: URL }): Promise<void> {
 		const { name, url: previewURL } = args;
 		const url = new URL("previews/new", this.urls.wroom);
 		const data = {
@@ -128,7 +131,7 @@ export class Repo {
 		return await res.json();
 	}
 
-	async addCustomType(customType: CustomType) {
+	async addCustomType(customType: CustomType): Promise<void> {
 		const url = new URL("customtypes/insert", this.urls.customtypes);
 		const res = await this.#auth.post(url.toString(), {
 			data: customType,
@@ -137,7 +140,7 @@ export class Repo {
 		assert(res.ok, "Could not add custom type.");
 	}
 
-	async addSlice(slice: SharedSlice) {
+	async addSlice(slice: SharedSlice): Promise<void> {
 		const url = new URL("slices/insert", this.urls.customtypes);
 		const res = await this.#auth.post(url.toString(), {
 			data: slice,
@@ -162,7 +165,7 @@ export class Repo {
 		return await res.json();
 	}
 
-	async publishDocument(id: string) {
+	async publishDocument(id: string): Promise<void> {
 		const url = new URL(`documents/${id}/draft`, this.urls.core);
 		const data = { status: "published" };
 		const res = await this.#auth.patch(url.toString(), { data });
@@ -185,7 +188,10 @@ export class Repo {
 		return res.json();
 	}
 
-	async getDocumentByUID(type: string, uid: string) {
+	async getDocumentByUID(
+		type: string,
+		uid: string,
+	): Promise<CoreAPIDocument> {
 		const url = new URL("documents", this.urls.core);
 		url.searchParams.set("uid", uid);
 		const res = await this.#auth.get(url.toString());
@@ -196,7 +202,7 @@ export class Repo {
 		return doc;
 	}
 
-	async delete() {
+	async delete(): Promise<void> {
 		const res = await this.#unreliableDelete();
 		if (!res.ok) {
 			// sometimes the deletion returns 500 but actually succeeds
@@ -206,7 +212,7 @@ export class Repo {
 		}
 	}
 
-	async #unreliableDelete() {
+	async #unreliableDelete(): Promise<APIResponse> {
 		const url = new URL("app/settings/delete", this.urls.wroom);
 		const data = { confirm: this.domain, password: this.#auth.auth.password };
 		return await this.#auth.postWroom(url.toString(), { data });
@@ -231,22 +237,30 @@ class AuthenticatedAPI {
 		this.#wroomRequest = request.newContext();
 	}
 
-	async get(...args: Parameters<APIRequestContext["get"]>) {
+	async get(
+		...args: Parameters<APIRequestContext["get"]>
+	): Promise<APIResponse> {
 		const headers = await this.#headers(args[1]?.headers);
 		return await this.#request.get(args[0], { ...args[1], headers });
 	}
 
-	async post(...args: Parameters<APIRequestContext["post"]>) {
+	async post(
+		...args: Parameters<APIRequestContext["post"]>
+	): Promise<APIResponse> {
 		const headers = await this.#headers(args[1]?.headers);
 		return await this.#request.post(args[0], { ...args[1], headers });
 	}
 
-	async put(...args: Parameters<APIRequestContext["get"]>) {
+	async put(
+		...args: Parameters<APIRequestContext["get"]>
+	): Promise<APIResponse> {
 		const headers = await this.#headers(args[1]?.headers);
 		return await this.#request.put(args[0], { ...args[1], headers });
 	}
 
-	async patch(...args: Parameters<APIRequestContext["get"]>) {
+	async patch(
+		...args: Parameters<APIRequestContext["get"]>
+	): Promise<APIResponse> {
 		const headers = await this.#headers(args[1]?.headers);
 		return await this.#request.patch(args[0], { ...args[1], headers });
 	}
@@ -268,14 +282,14 @@ class AuthenticatedAPI {
 		return await request.post(url.toString(), args[1]);
 	}
 
-	async #logInWroom() {
+	async #logInWroom(): Promise<void> {
 		const request = await this.#wroomRequest;
 		const url = new URL("/authentication/signin", this.urls.wroom).toString();
 		const res = await request.post(url, { data: this.auth });
 		assert(res.ok, "Could not log in to Prismic. Check your credentials.");
 	}
 
-	async #token() {
+	async #token(): Promise<string> {
 		if (this.#cachedToken) return this.#cachedToken;
 		const url = new URL("login", this.urls.auth);
 		const res = await this.#request.post(url.toString(), { data: this.auth });
@@ -283,13 +297,15 @@ class AuthenticatedAPI {
 		return (this.#cachedToken = await res.text());
 	}
 
-	async #headers(existingHeaders?: Record<string, string>) {
+	async #headers(
+		existingHeaders?: Record<string, string>,
+	): Promise<Record<string, string>> {
 		const token = await this.#token();
 		return { authorization: `Bearer ${token}`, ...existingHeaders };
 	}
 }
 
-function withSubdomain(subdomain: string, url: URL | string) {
+function withSubdomain(subdomain: string, url: URL | string): URL {
 	const newURL = new URL(url);
 	newURL.hostname = `${subdomain}.${newURL.hostname}`;
 	return newURL;

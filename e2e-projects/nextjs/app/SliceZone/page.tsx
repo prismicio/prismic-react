@@ -1,10 +1,11 @@
+import type { ReactNode } from "react";
 import { isFilled, mapSliceZone } from "@prismicio/client";
-import { SliceComponentProps, SliceZone } from "@prismicio/react";
+import { type SliceComponentProps, SliceZone } from "@prismicio/react";
 import assert from "assert";
 
 import { createClient } from "@/prismicio";
 
-export default async function Page() {
+export default async function Page(): Promise<ReactNode> {
 	const client = await createClient();
 	const { data: tests } = await client.getSingle("page");
 

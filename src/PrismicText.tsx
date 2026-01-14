@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { asText, isFilled, RichTextField } from "@prismicio/client";
+import type { FC } from "react";
+import { asText, isFilled, type RichTextField } from "@prismicio/client";
 import { DEV } from "esm-env";
 
 import { devMsg } from "./lib/devMsg.js";

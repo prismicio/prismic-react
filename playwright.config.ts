@@ -64,17 +64,17 @@ declare global {
 	namespace NodeJS {
 		interface ProcessEnv {
 			CI: boolean;
-			PLAYWRIGHT_PRISMIC_EMAIL: string;
-			PLAYWRIGHT_PRISMIC_PASSWORD: string;
+			E2E_PRISMIC_EMAIL: string;
+			E2E_PRISMIC_PASSWORD: string;
 		}
 	}
 }
 
 assert.ok(
-	process.env.PLAYWRIGHT_PRISMIC_EMAIL,
-	"Missing PLAYWRIGHT_PRISMIC_EMAIL env variable.",
+	process.env.E2E_PRISMIC_EMAIL,
+	"Missing E2E_PRISMIC_EMAIL env variable.",
 );
 assert.ok(
-	process.env.PLAYWRIGHT_PRISMIC_PASSWORD,
-	"Missing PLAYWRIGHT_PRISMIC_PASSWORD env variable.",
+	process.env.E2E_PRISMIC_PASSWORD,
+	"Missing E2E_PRISMIC_PASSWORD env variable.",
 );

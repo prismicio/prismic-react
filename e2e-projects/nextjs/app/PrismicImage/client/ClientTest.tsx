@@ -1,10 +1,11 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useState } from "react";
-import { ImageField } from "@prismicio/client";
+import type { ImageField } from "@prismicio/client";
 import { PrismicImage } from "@prismicio/react";
 
-export function ClientTest(props: { field: ImageField }) {
+export function ClientTest(props: { field: ImageField }): ReactNode {
 	const { field } = props;
 
 	const [ref, setRef] = useState<Element | null>(null);

@@ -1,4 +1,4 @@
-import type { ComponentType, FC } from "react";
+import type { ComponentType, FC, ReactNode } from "react";
 import type { Slice } from "@prismicio/client";
 import { DEV } from "esm-env";
 
@@ -182,7 +182,7 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
 	slice,
 }: {
 	slice: TSlice;
-}) => {
+}): ReactNode => {
 	if (!DEV) {
 		return null;
 	}

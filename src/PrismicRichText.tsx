@@ -1,29 +1,29 @@
 import {
 	cloneElement,
-	ComponentType,
-	FC,
+	type ComponentType,
+	type FC,
 	Fragment,
 	isValidElement,
-	ReactNode,
+	type ReactNode,
 } from "react";
 import {
 	isFilled,
-	LinkResolverFunction,
-	RichTextField,
-	RTAnyNode,
+	type LinkResolverFunction,
+	type RichTextField,
+	type RTAnyNode,
 } from "@prismicio/client";
 import {
 	composeSerializers,
 	serialize,
 	wrapMapSerializer,
-	RichTextFunctionSerializer,
-	RichTextMapSerializer,
+	type RichTextFunctionSerializer,
+	type RichTextMapSerializer,
 } from "@prismicio/client/richtext";
 import { DEV } from "esm-env";
 
 import { devMsg } from "./lib/devMsg.js";
 
-import { LinkProps, PrismicLink } from "./PrismicLink.js";
+import { type LinkProps, PrismicLink } from "./PrismicLink.js";
 
 /**
  * A function mapping rich text block types to React Components. It is used to
