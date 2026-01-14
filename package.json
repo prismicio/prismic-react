@@ -19,6 +19,9 @@
 		".": "./dist/index.js",
 		"./package.json": "./package.json"
 	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"typesVersions": {
 		"*": {
 			"*": [
@@ -73,8 +76,5 @@
 	},
 	"publishConfig": {
 		"access": "public"
-	},
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"types": "./dist/index.d.ts"
+	}
 }
