@@ -25,8 +25,8 @@ export const test = base.extend<Fixtures>({
 		const prismic = new Prismic({
 			baseURL: "https://prismic.io",
 			auth: {
-				email: process.env.PLAYWRIGHT_PRISMIC_EMAIL,
-				password: process.env.PLAYWRIGHT_PRISMIC_PASSWORD,
+				email: process.env.E2E_PRISMIC_EMAIL,
+				password: process.env.E2E_PRISMIC_PASSWORD,
 			},
 			request: page.request,
 		});

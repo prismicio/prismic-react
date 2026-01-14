@@ -42,8 +42,8 @@ jobs:
       - run: npx playwright install --with-deps
       - run: npm run e2e
         env:
-          PLAYWRIGHT_PRISMIC_EMAIL: ${{ secrets.PLAYWRIGHT_PRISMIC_EMAIL }}
-          PLAYWRIGHT_PRISMIC_PASSWORD: ${{ secrets.PLAYWRIGHT_PRISMIC_PASSWORD }}
+          E2E_PRISMIC_EMAIL: ${{ secrets.E2E_PRISMIC_EMAIL }}
+          E2E_PRISMIC_PASSWORD: ${{ secrets.E2E_PRISMIC_PASSWORD }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
