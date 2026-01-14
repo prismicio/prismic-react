@@ -39,7 +39,12 @@ export type JSXFunctionSerializer = RichTextFunctionSerializer<ReactNode>;
  *
  * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
-export type JSXMapSerializer = RichTextMapSerializer<ReactNode>;
+export type RichTextComponents = RichTextMapSerializer<ReactNode>;
+
+/**
+ * @deprecated Use `RichTextComponents` instead.
+ */
+export type JSXMapSerializer = RichTextComponents;
 
 /** Props for `<PrismicRichText>`. */
 export type PrismicRichTextProps = {
@@ -84,7 +89,7 @@ export type PrismicRichTextProps = {
 	 * };
 	 * ```
 	 */
-	components?: JSXMapSerializer | JSXFunctionSerializer;
+	components?: RichTextComponents | JSXFunctionSerializer;
 
 	/**
 	 * The React component rendered for links when the URL is internal.

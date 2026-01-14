@@ -10,6 +10,7 @@ export type { PrismicTextProps } from "./PrismicText.js";
 export { PrismicRichText } from "./PrismicRichText.js";
 export type {
 	PrismicRichTextProps,
+	RichTextComponents,
 	JSXMapSerializer,
 	JSXFunctionSerializer,
 } from "./PrismicRichText.js";
