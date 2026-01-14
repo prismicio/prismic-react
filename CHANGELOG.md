@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/prismicio/prismic-react/compare/v3.2.2...v3.3.0) (2026-01-14)
+
+
+### Features
+
+* rename `JSXMapSerializer` to `RichTextComponents` ([#241](https://github.com/prismicio/prismic-react/issues/241)) ([f7485e5](https://github.com/prismicio/prismic-react/commit/f7485e57f1bb4d9e65b3042e3665277a9974776c))
+
 ### [3.2.2](https://github.com/prismicio/prismic-react/compare/v3.2.1...v3.2.2) (2025-10-14)
 
 
