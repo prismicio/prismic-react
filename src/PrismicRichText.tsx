@@ -1,11 +1,5 @@
-import {
-	cloneElement,
-	type ComponentType,
-	type FC,
-	Fragment,
-	isValidElement,
-	type ReactNode,
-} from "react";
+import { type LinkProps, PrismicLink } from "./PrismicLink.js";
+import { devMsg } from "./lib/devMsg.js";
 import {
 	isFilled,
 	type LinkResolverFunction,
@@ -20,10 +14,14 @@ import {
 	type RichTextMapSerializer,
 } from "@prismicio/client/richtext";
 import { DEV } from "esm-env";
-
-import { devMsg } from "./lib/devMsg.js";
-
-import { type LinkProps, PrismicLink } from "./PrismicLink.js";
+import {
+	cloneElement,
+	type ComponentType,
+	type FC,
+	Fragment,
+	isValidElement,
+	type ReactNode,
+} from "react";
 
 /**
  * A function mapping rich text block types to React Components. It is used to
@@ -39,7 +37,12 @@ export type JSXFunctionSerializer = RichTextFunctionSerializer<ReactNode>;
  *
  * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
-export type JSXMapSerializer = RichTextMapSerializer<ReactNode>;
+export type RichTextComponents = RichTextMapSerializer<ReactNode>;
+
+/**
+ * @deprecated Use `RichTextComponents` instead.
+ */
+export type JSXMapSerializer = RichTextComponents;
 
 /** Props for `<PrismicRichText>`. */
 export type PrismicRichTextProps = {
@@ -84,7 +87,7 @@ export type PrismicRichTextProps = {
 	 * };
 	 * ```
 	 */
-	components?: JSXMapSerializer | JSXFunctionSerializer;
+	components?: RichTextComponents | JSXFunctionSerializer;
 
 	/**
 	 * The React component rendered for links when the URL is internal.
