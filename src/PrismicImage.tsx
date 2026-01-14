@@ -1,9 +1,9 @@
 import {
-	ForwardedRef,
+	type ForwardedRef,
 	forwardRef,
 	type ComponentProps,
-	FC,
-	ReactNode,
+	type FC,
+	type ReactNode,
 } from "react";
 import {
 	type ImageFieldImage,

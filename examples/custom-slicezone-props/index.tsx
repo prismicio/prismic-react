@@ -1,10 +1,11 @@
+import type { ReactNode } from "react";
 import {
 	SliceZone,
-	SliceComponentProps,
-	SliceComponentType,
+	type SliceComponentProps,
+	type SliceComponentType,
 } from "@prismicio/react";
 
-import { HeroSlice, ExampleSliceZone } from "./types";
+import type { HeroSlice, ExampleSliceZone } from "./types";
 
 // This is the contents of a Slice Zone field.
 // Normally, this would be accessed at `document.data.body`, where `document`
@@ -104,6 +105,6 @@ const components: Record<string, SliceComponentType> = {
 
 // We render the Slice Zone using the `<SliceZone>` component by passing the
 // list of Slices and component map.
-export const App = () => {
+export const App = (): ReactNode => {
 	return <SliceZone slices={slices} components={components} />;
 };

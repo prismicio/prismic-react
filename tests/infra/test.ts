@@ -1,4 +1,4 @@
-/* eslint react-hooks/rules-of-hooks: 0 */
+/* oxlint-disable rules-of-hooks */
 import {
 	type Locator,
 	type Page,
