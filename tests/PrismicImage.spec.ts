@@ -52,7 +52,7 @@ test('renders a width-based srcset with the field\'s responsive views if widths 
 	);
 	await expect(image).toHaveAttribute(
 		"srcset",
-		"https://images.prismic.io/prismicio-next-test/Z1evSZbqstJ98PkD_image.jpg?auto=format%2Ccompress&width=800 800w, https://images.prismic.io/prismicio-next-test/Z1evSZbqstJ98PkD_image.jpg?auto=format%2Ccompress&rect=0%2C33%2C800%2C533&h=400&width=600 600w, https://images.prismic.io/prismicio-next-test/Z1evSZbqstJ98PkD_image.jpg?auto=format%2Ccompress&rect=0%2C0%2C800%2C600&h=600&width=800 800w",
+		"https://images.prismic.io/prismicio-next-test/Z1evSZbqstJ98PkD_image.jpg?auto=format%2Ccompress&width=800 800w, https://images.prismic.io/prismicio-next-test/Z1evSZbqstJ98PkD_image.jpg?auto=format%2Ccompress&rect=0%2C33%2C800%2C533&width=600 600w, https://images.prismic.io/prismicio-next-test/Z1evSZbqstJ98PkD_image.jpg?auto=format%2Ccompress&rect=0%2C0%2C800%2C600&width=800 800w",
 	);
 });
 

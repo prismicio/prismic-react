@@ -226,7 +226,7 @@ test.describe("embed", () => {
 		const scope = page.getByTestId("embed");
 		const output = scope.getByTestId("custom");
 		expect(await output.innerHTML()).toBe(
-			'<div data-bar="true" data-html="<div>html</div>"></div>',
+			'<div data-bar="true" data-html="&lt;div&gt;html&lt;/div&gt;"></div>',
 		);
 	});
 });
