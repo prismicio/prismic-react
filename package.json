@@ -19,8 +19,6 @@
 		".": "./dist/index.js",
 		"./package.json": "./package.json"
 	},
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"typesVersions": {
 		"*": {
@@ -52,19 +50,19 @@
 		"esm-env": "^1.2.2"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.50.0",
+		"@playwright/test": "^1.57.0",
 		"@prismicio/client": "^7.17.0",
-		"@trivago/prettier-plugin-sort-imports": "^6.0.0",
-		"@types/react": "^19.2.7",
+		"@trivago/prettier-plugin-sort-imports": "^6.0.2",
+		"@types/react": "^19.2.8",
 		"@types/react-dom": "^19.2.3",
-		"dotenv": "^16.4.7",
-		"oxlint": "^1.31.0",
-		"playwright": "^1.50.0",
+		"dotenv": "^17.2.3",
+		"oxlint": "^1.39.0",
+		"playwright": "^1.57.0",
 		"prettier": "^3.7.4",
-		"prettier-plugin-jsdoc": "^1.7.0",
+		"prettier-plugin-jsdoc": "^1.8.0",
 		"react": "^19.2.1",
-		"react-dom": "^19.2.1",
-		"tsdown": "^0.16.8",
+		"react-dom": "^19.2.3",
+		"tsdown": "^0.19.0",
 		"typescript": "^5.9.3"
 	},
 	"peerDependencies": {
