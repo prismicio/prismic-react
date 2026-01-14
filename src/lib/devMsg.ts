@@ -15,6 +15,6 @@ import { version } from "../../package.json";
  *
  * @returns The `prismic.dev/msg` URL for the given slug.
  */
-export function devMsg(slug: string) {
+export function devMsg(slug: string): string {
 	return `https://prismic.dev/msg/react/v${version}/${slug}`;
 }

@@ -1,9 +1,9 @@
 import {
-	ComponentProps,
-	ComponentType,
-	ForwardedRef,
-	HTMLAttributeAnchorTarget,
-	ReactNode,
+	type ComponentProps,
+	type ComponentType,
+	type ForwardedRef,
+	type HTMLAttributeAnchorTarget,
+	type ReactNode,
 	forwardRef,
 } from "react";
 import {

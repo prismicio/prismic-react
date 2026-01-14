@@ -1,10 +1,11 @@
+import type { ReactNode } from "react";
 import { isFilled } from "@prismicio/client";
 import { PrismicImage } from "@prismicio/react";
 import assert from "assert";
 
 import { createClient } from "@/prismicio";
 
-export default async function Page() {
+export default async function Page(): Promise<ReactNode> {
 	const client = await createClient();
 	const { data: tests } = await client.getSingle("image_test");
 

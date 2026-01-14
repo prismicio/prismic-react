@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { isFilled } from "@prismicio/client";
 import { PrismicLink } from "@prismicio/react";
@@ -5,7 +6,7 @@ import assert from "assert";
 
 import { createClient } from "@/prismicio";
 
-export default async function Page() {
+export default async function Page(): Promise<ReactNode> {
 	const client = await createClient();
 	const { data: tests } = await client.getSingle("link_test");
 	assert(
