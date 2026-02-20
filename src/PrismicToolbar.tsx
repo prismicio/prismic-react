@@ -13,7 +13,7 @@ export type PrismicToolbarProps = {
 
 	/**
 	 * Called when the Prismic toolbar triggers a preview update. This happens
-	 * when a preview session starts or the previewed content changes.
+	 * when the previewed content changes.
 	 *
 	 * The callback receives the full `CustomEvent`, giving access to
 	 * `event.detail.ref` (the preview ref) and `event.preventDefault()` to
