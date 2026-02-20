@@ -1,7 +1,7 @@
 "use client";
 
-import { type FC, useEffect, useRef } from "react";
 import { getToolbarSrc } from "@prismicio/client";
+import { type FC, useEffect, useRef } from "react";
 
 /** Props for `<PrismicToolbar>`. */
 export type PrismicToolbarProps = {
@@ -15,9 +15,10 @@ export type PrismicToolbarProps = {
 	 * Called when the Prismic toolbar triggers a preview update. This happens
 	 * when the previewed content changes.
 	 *
-	 * The callback receives the full `CustomEvent`, giving access to
-	 * `event.detail.ref` (the preview ref) and `event.preventDefault()` to
-	 * cancel the toolbar's default reload behavior.
+	 * The new ref can be read from `event.detail.ref`.
+	 *
+	 * The default page reload behavior can be cancelled with
+	 * `event.preventDefault()`.
 	 */
 	onPreviewUpdate?: (event: CustomEvent<{ ref: string }>) => void;
 
@@ -25,8 +26,8 @@ export type PrismicToolbarProps = {
 	 * Called when the Prismic toolbar triggers a preview end. This happens when
 	 * a preview session is closed.
 	 *
-	 * The callback receives the full `CustomEvent`, giving access to
-	 * `event.preventDefault()` to cancel the toolbar's default reload behavior.
+	 * The default page reload behavior can be cancelled with
+	 * `event.preventDefault()`.
 	 */
 	onPreviewEnd?: (event: CustomEvent<null>) => void;
 };
@@ -79,16 +80,13 @@ export const PrismicToolbar: FC<PrismicToolbarProps> = (props) => {
 		window.addEventListener(
 			"prismicPreviewUpdate",
 			(event) =>
-				onPreviewUpdateRef.current?.(
-					event as CustomEvent<{ ref: string }>,
-				),
+				onPreviewUpdateRef.current?.(event as CustomEvent<{ ref: string }>),
 			{ signal: controller.signal },
 		);
 
 		window.addEventListener(
 			"prismicPreviewEnd",
-			(event) =>
-				onPreviewEndRef.current?.(event as CustomEvent<null>),
+			(event) => onPreviewEndRef.current?.(event as CustomEvent<null>),
 			{ signal: controller.signal },
 		);
 
