@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/prismicio/prismic-react/compare/v3.3.0...v3.4.0) (2026-02-21)
+
+
+### Features
+
+* **PrismicToolbar:** add `onPreviewUpdate` and `onPreviewEnd` props ([#249](https://github.com/prismicio/prismic-react/issues/249)) ([af5bd80](https://github.com/prismicio/prismic-react/commit/af5bd80a9ca023f444075f5dd57b33def1e01f58))
+
 ## [3.3.0](https://github.com/prismicio/prismic-react/compare/v3.2.2...v3.3.0) (2026-01-14)
 
 
