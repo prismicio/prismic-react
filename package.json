@@ -50,20 +50,20 @@
 		"esm-env": "^1.2.2"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.57.0",
+		"@playwright/test": "^1.58.2",
 		"@prismicio/client": "^7.17.0",
 		"@trivago/prettier-plugin-sort-imports": "^6.0.2",
-		"@types/react": "^19.2.8",
+		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
-		"dotenv": "^17.2.3",
-		"oxlint": "^1.39.0",
-		"playwright": "^1.57.0",
-		"prettier": "^3.7.4",
+		"dotenv": "^17.3.1",
+		"oxlint": "^1.58.0",
+		"playwright": "^1.58.2",
+		"prettier": "^3.8.1",
 		"prettier-plugin-jsdoc": "^1.8.0",
-		"react": "^19.2.1",
-		"react-dom": "^19.2.3",
-		"tsdown": "^0.19.0",
-		"typescript": "^5.9.3"
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"tsdown": "^0.21.7",
+		"typescript": "^6.0.2"
 	},
 	"peerDependencies": {
 		"@prismicio/client": "^7",
