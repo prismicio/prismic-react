@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
 import * as prismic from "@prismicio/client";
 import { SliceZone, PrismicRichText, PrismicLink } from "@prismicio/react";
+import type { ReactNode } from "react";
 
 // Documents can be typed using `@prismicio/client`
 type PageDocument = prismic.PrismicDocumentWithUID<{
@@ -77,9 +77,7 @@ export const WithGroupFieldLink = (): ReactNode => {
 						prismic.isFilled.link(item.link) && (
 							<li
 								key={
-									item.link.link_type === prismic.LinkType.Document
-										? item.link.id
-										: item.link.url
+									item.link.link_type === prismic.LinkType.Document ? item.link.id : item.link.url
 								}
 							>
 								<PrismicLink field={item.link} />

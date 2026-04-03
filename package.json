@@ -3,22 +3,26 @@
 	"version": "3.4.0",
 	"description": "React components and hooks to fetch and present Prismic content",
 	"keywords": [
-		"typescript",
 		"prismic",
-		"react"
+		"react",
+		"typescript"
 	],
+	"license": "Apache-2.0",
+	"author": "Prismic <contact@prismic.io> (https://prismic.io)",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/prismicio/prismic-react.git"
 	},
-	"license": "Apache-2.0",
-	"author": "Prismic <contact@prismic.io> (https://prismic.io)",
-	"sideEffects": false,
+	"workspaces": [
+		".",
+		"e2e-projects/*"
+	],
+	"files": [
+		"dist",
+		"src"
+	],
 	"type": "module",
-	"exports": {
-		".": "./dist/index.js",
-		"./package.json": "./package.json"
-	},
+	"sideEffects": false,
 	"types": "./dist/index.d.ts",
 	"typesVersions": {
 		"*": {
@@ -27,20 +31,19 @@
 			]
 		}
 	},
-	"files": [
-		"dist",
-		"src"
-	],
-	"workspaces": [
-		".",
-		"e2e-projects/*"
-	],
+	"exports": {
+		".": "./dist/index.js",
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "tsdown",
 		"dev": "tsdown --watch",
 		"e2e": "playwright test",
 		"e2e:ui": "npm run e2e -- --ui",
-		"format": "prettier --write .",
+		"format": "oxfmt",
 		"lint": "oxlint --deny-warnings",
 		"prepare": "npm run build",
 		"test": "npm run lint && npm run types && npm run build && npm run e2e",
@@ -50,20 +53,18 @@
 		"esm-env": "^1.2.2"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.57.0",
+		"@playwright/test": "^1.59.1",
 		"@prismicio/client": "^7.17.0",
-		"@trivago/prettier-plugin-sort-imports": "^6.0.2",
-		"@types/react": "^19.2.8",
+		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
-		"dotenv": "^17.2.3",
-		"oxlint": "^1.39.0",
-		"playwright": "^1.57.0",
-		"prettier": "^3.7.4",
-		"prettier-plugin-jsdoc": "^1.8.0",
-		"react": "^19.2.1",
-		"react-dom": "^19.2.3",
-		"tsdown": "^0.19.0",
-		"typescript": "^5.9.3"
+		"dotenv": "^17.4.0",
+		"oxfmt": "^0.43.0",
+		"oxlint": "^1.58.0",
+		"playwright": "^1.59.1",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"tsdown": "^0.21.7",
+		"typescript": "^6.0.2"
 	},
 	"peerDependencies": {
 		"@prismicio/client": "^7",
@@ -71,8 +72,5 @@
 	},
 	"engines": {
 		"node": ">=20"
-	},
-	"publishConfig": {
-		"access": "public"
 	}
 }

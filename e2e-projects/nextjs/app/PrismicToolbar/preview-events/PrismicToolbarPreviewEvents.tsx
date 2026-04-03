@@ -1,11 +1,9 @@
 "use client";
 
-import { type ReactNode, useState } from "react";
 import { PrismicToolbar } from "@prismicio/react";
+import { type ReactNode, useState } from "react";
 
-export function PrismicToolbarPreviewEvents(props: {
-	repositoryName: string;
-}): ReactNode {
+export function PrismicToolbarPreviewEvents(props: { repositoryName: string }): ReactNode {
 	const [updateCount, setUpdateCount] = useState(0);
 	const [endCount, setEndCount] = useState(0);
 	const [updateRef, setUpdateRef] = useState<string>("");

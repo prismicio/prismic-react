@@ -56,9 +56,7 @@ test('renders a width-based srcset with the field\'s responsive views if widths 
 	);
 });
 
-test("renders pixel-density srcset with the given densities", async ({
-	page,
-}) => {
+test("renders pixel-density srcset with the given densities", async ({ page }) => {
 	const image = page.getByTestId("pixel-densities");
 	await expect(image).toHaveAttribute(
 		"src",
@@ -116,9 +114,7 @@ test("excludes alt text if the field does not have any", async ({ page }) => {
 	await expect(image).not.toHaveAttribute("alt");
 });
 
-test("renders an explicit decorative fallback alt value if given", async ({
-	page,
-}) => {
+test("renders an explicit decorative fallback alt value if given", async ({ page }) => {
 	const image = page.getByTestId("with-decorative-fallback-alt");
 	await expect(image).toHaveAttribute("alt", "");
 });

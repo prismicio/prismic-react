@@ -8,18 +8,14 @@ test("adds the Prismic toolbar", async ({ appPage }) => {
 	await expect(appPage.toolbarIframe).toHaveCount(1);
 });
 
-test("includes the repository name in the script element", async ({
-	appPage,
-}) => {
+test("includes the repository name in the script element", async ({ appPage }) => {
 	await expect(appPage.toolbarScript).toHaveAttribute(
 		"data-repository-name",
 		appPage.repository.domain,
 	);
 });
 
-test("calls onPreviewUpdate when prismicPreviewUpdate is dispatched", async ({
-	page,
-}) => {
+test("calls onPreviewUpdate when prismicPreviewUpdate is dispatched", async ({ page }) => {
 	await page.goto("/PrismicToolbar/preview-events");
 
 	const updateCount = page.getByTestId("update-count");
@@ -47,25 +43,19 @@ test("calls onPreviewUpdate when prismicPreviewUpdate is dispatched", async ({
 	await expect(updateRef).toHaveText("test-ref-2");
 });
 
-test("calls onPreviewEnd when prismicPreviewEnd is dispatched", async ({
-	page,
-}) => {
+test("calls onPreviewEnd when prismicPreviewEnd is dispatched", async ({ page }) => {
 	await page.goto("/PrismicToolbar/preview-events");
 
 	const endCount = page.getByTestId("end-count");
 	await expect(endCount).toHaveText("0");
 
 	await page.evaluate(() => {
-		window.dispatchEvent(
-			new CustomEvent("prismicPreviewEnd", { detail: null }),
-		);
+		window.dispatchEvent(new CustomEvent("prismicPreviewEnd", { detail: null }));
 	});
 	await expect(endCount).toHaveText("1");
 
 	await page.evaluate(() => {
-		window.dispatchEvent(
-			new CustomEvent("prismicPreviewEnd", { detail: null }),
-		);
+		window.dispatchEvent(new CustomEvent("prismicPreviewEnd", { detail: null }));
 	});
 	await expect(endCount).toHaveText("2");
 });

@@ -80,9 +80,7 @@ export const model = {
 	},
 } as const;
 
-export function content(args: {
-	documentLinkID: string;
-}): Record<string, unknown> {
+export function content(args: { documentLinkID: string }): Record<string, unknown> {
 	const { documentLinkID } = args;
 
 	return {

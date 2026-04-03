@@ -1,12 +1,10 @@
 import { STORAGE_STATE } from "../../playwright.config";
-import { test as setup } from "./test";
 import * as content from "./content";
+import { test as setup } from "./test";
 
 setup("create repo", async ({ page, prismic }) => {
 	const cookies = await page.context().cookies();
-	const repositoryName = cookies.find(
-		(cookie) => cookie.name === "repository-name",
-	)?.value;
+	const repositoryName = cookies.find((cookie) => cookie.name === "repository-name")?.value;
 
 	if (repositoryName) return;
 

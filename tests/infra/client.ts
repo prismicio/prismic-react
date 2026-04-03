@@ -1,14 +1,8 @@
-import {
-	type APIRequestContext,
-	type APIResponse,
-	request,
-} from "@playwright/test";
-import type {
-	CustomType,
-	SharedSlice,
-} from "@prismicio/types-internal/lib/customtypes";
-import { randomUUID } from "node:crypto";
 import assert from "node:assert";
+import { randomUUID } from "node:crypto";
+
+import { type APIRequestContext, type APIResponse, request } from "@playwright/test";
+import type { CustomType, SharedSlice } from "@prismicio/types-internal/lib/customtypes";
 
 type PrismicURLs = { wroom: URL; auth: URL; customtypes: URL };
 type RepoURLs = PrismicURLs & { cdn: URL; core: URL };
@@ -23,11 +17,7 @@ export class Prismic {
 	urls: PrismicURLs;
 	#auth: AuthenticatedAPI;
 
-	constructor(config: {
-		baseURL: string;
-		auth: Auth;
-		request: APIRequestContext;
-	}) {
+	constructor(config: { baseURL: string; auth: Auth; request: APIRequestContext }) {
 		const { baseURL, auth, request } = config;
 		this.urls = {
 			wroom: new URL(baseURL),
@@ -37,10 +27,7 @@ export class Prismic {
 		this.#auth = new AuthenticatedAPI({ urls: this.urls, auth, request });
 	}
 
-	async createRepository(args: {
-		defaultLocale: string;
-		prefix?: string;
-	}): Promise<Repo> {
+	async createRepository(args: { defaultLocale: string; prefix?: string }): Promise<Repo> {
 		const { defaultLocale, prefix = "e2e-tests" } = args;
 		const suffix = randomUUID().replace("-", "").slice(0, 16);
 		const data = {
@@ -70,11 +57,7 @@ export class Repo {
 	urls: RepoURLs;
 	#auth: AuthenticatedAPI;
 
-	constructor(config: {
-		domain: string;
-		urls: PrismicURLs;
-		auth: AuthenticatedAPI;
-	}) {
+	constructor(config: { domain: string; urls: PrismicURLs; auth: AuthenticatedAPI }) {
 		const { domain, auth, urls } = config;
 		this.domain = domain;
 		this.urls = {
@@ -87,10 +70,7 @@ export class Repo {
 	}
 
 	async setDefaultLocale(locale: string): Promise<void> {
-		const url = new URL(
-			`app/settings/multilanguages/${locale}/createMasterLang`,
-			this.urls.wroom,
-		);
+		const url = new URL(`app/settings/multilanguages/${locale}/createMasterLang`, this.urls.wroom);
 		const res = await this.#auth.postWroom(url.toString());
 		assert(res.ok, `Could not default locale to ${locale}.`);
 	}
@@ -107,9 +87,7 @@ export class Repo {
 		assert(res.ok, `Could not create preview ${name}.`);
 	}
 
-	async getPreviewConfigs(): Promise<
-		{ id: string; label: string; url: string }[]
-	> {
+	async getPreviewConfigs(): Promise<{ id: string; label: string; url: string }[]> {
 		const url = new URL("repository/preview_configs", this.urls.core);
 		const res = await this.#auth.get(url.toString());
 		assert(res.ok, `Could not get preview configs.`);
@@ -188,10 +166,7 @@ export class Repo {
 		return res.json();
 	}
 
-	async getDocumentByUID(
-		type: string,
-		uid: string,
-	): Promise<CoreAPIDocument> {
+	async getDocumentByUID(type: string, uid: string): Promise<CoreAPIDocument> {
 		const url = new URL("documents", this.urls.core);
 		url.searchParams.set("uid", uid);
 		const res = await this.#auth.get(url.toString());
@@ -226,48 +201,34 @@ class AuthenticatedAPI {
 	#wroomRequest: Promise<APIRequestContext>;
 	#cachedToken?: string;
 
-	constructor(config: {
-		urls: PrismicURLs;
-		auth: Auth;
-		request: APIRequestContext;
-	}) {
+	constructor(config: { urls: PrismicURLs; auth: Auth; request: APIRequestContext }) {
 		this.urls = config.urls;
 		this.auth = config.auth;
 		this.#request = config.request;
 		this.#wroomRequest = request.newContext();
 	}
 
-	async get(
-		...args: Parameters<APIRequestContext["get"]>
-	): Promise<APIResponse> {
+	async get(...args: Parameters<APIRequestContext["get"]>): Promise<APIResponse> {
 		const headers = await this.#headers(args[1]?.headers);
 		return await this.#request.get(args[0], { ...args[1], headers });
 	}
 
-	async post(
-		...args: Parameters<APIRequestContext["post"]>
-	): Promise<APIResponse> {
+	async post(...args: Parameters<APIRequestContext["post"]>): Promise<APIResponse> {
 		const headers = await this.#headers(args[1]?.headers);
 		return await this.#request.post(args[0], { ...args[1], headers });
 	}
 
-	async put(
-		...args: Parameters<APIRequestContext["get"]>
-	): Promise<APIResponse> {
+	async put(...args: Parameters<APIRequestContext["get"]>): Promise<APIResponse> {
 		const headers = await this.#headers(args[1]?.headers);
 		return await this.#request.put(args[0], { ...args[1], headers });
 	}
 
-	async patch(
-		...args: Parameters<APIRequestContext["get"]>
-	): Promise<APIResponse> {
+	async patch(...args: Parameters<APIRequestContext["get"]>): Promise<APIResponse> {
 		const headers = await this.#headers(args[1]?.headers);
 		return await this.#request.patch(args[0], { ...args[1], headers });
 	}
 
-	async postWroom(
-		...args: Parameters<APIRequestContext["post"]>
-	): Promise<APIResponse> {
+	async postWroom(...args: Parameters<APIRequestContext["post"]>): Promise<APIResponse> {
 		const request = await this.#wroomRequest;
 		const { cookies } = await request.storageState();
 		const auth = cookies.find((cookie) => cookie.name === "prismic-auth");
@@ -297,9 +258,7 @@ class AuthenticatedAPI {
 		return (this.#cachedToken = await res.text());
 	}
 
-	async #headers(
-		existingHeaders?: Record<string, string>,
-	): Promise<Record<string, string>> {
+	async #headers(existingHeaders?: Record<string, string>): Promise<Record<string, string>> {
 		const token = await this.#token();
 		return { authorization: `Bearer ${token}`, ...existingHeaders };
 	}

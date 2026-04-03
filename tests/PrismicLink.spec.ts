@@ -24,9 +24,7 @@ test.describe("web links", () => {
 		await expect(link).toHaveAttribute("target", "_blank");
 	});
 
-	test("renders an external web link with a provided target", async ({
-		page,
-	}) => {
+	test("renders an external web link with a provided target", async ({ page }) => {
 		const link = page.getByTestId("external-web-with-target-override");
 		await expect(link).toHaveAttribute("target", "foo");
 	});
@@ -41,9 +39,7 @@ test.describe("web links", () => {
 		await expect(link).not.toHaveAttribute("rel");
 	});
 
-	test("can render an external web link with rel derived from a function", async ({
-		page,
-	}) => {
+	test("can render an external web link with rel derived from a function", async ({ page }) => {
 		const link = page.getByTestId("external-web-with-rel-function");
 		await expect(link).toHaveAttribute(
 			"rel",
@@ -85,18 +81,14 @@ test.describe("media links", () => {
 });
 
 test.describe("documents", () => {
-	test("renders a document link with a route resolver via the document prop", async ({
-		page,
-	}) => {
+	test("renders a document link with a route resolver via the document prop", async ({ page }) => {
 		const link = page.getByTestId("document-prop-with-route-resolver");
 		await expect(link).toHaveAttribute("href", "/page");
 		await expect(link).not.toHaveAttribute("rel");
 		await expect(link).not.toHaveAttribute("target");
 	});
 
-	test("renders a document link with a link resolver via the document prop", async ({
-		page,
-	}) => {
+	test("renders a document link with a link resolver via the document prop", async ({ page }) => {
 		const link = page.getByTestId("document-prop-with-link-resolver");
 		await expect(link).toHaveAttribute("href", "/page");
 		await expect(link).not.toHaveAttribute("rel");
@@ -122,9 +114,7 @@ test.describe("href", () => {
 
 	test("renders default next/link href on falsy href", async ({ page }) => {
 		const link = page.getByTestId("falsy-href-prop");
-		const defaultHref = await page
-			.getByTestId("default-link-falsy-href")
-			.getAttribute("href");
+		const defaultHref = await page.getByTestId("default-link-falsy-href").getAttribute("href");
 		expect(await link.getAttribute("href")).toEqual(defaultHref);
 		await expect(link).not.toHaveAttribute("rel");
 		await expect(link).not.toHaveAttribute("target");
@@ -137,9 +127,7 @@ test.describe("with text", () => {
 		await expect(link).toContainText("foo");
 	});
 
-	test("renders the given children, overriding the link's text", async ({
-		page,
-	}) => {
+	test("renders the given children, overriding the link's text", async ({ page }) => {
 		const link = page.getByTestId("with-text-override");
 		await expect(link).toContainText("override");
 	});

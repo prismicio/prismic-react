@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
 import { PrismicToolbar } from "@prismicio/react";
+import type { ReactNode } from "react";
 
 import { createClient } from "@/prismicio";
 

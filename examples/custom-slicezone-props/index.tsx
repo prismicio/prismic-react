@@ -1,9 +1,5 @@
+import { SliceZone, type SliceComponentProps, type SliceComponentType } from "@prismicio/react";
 import type { ReactNode } from "react";
-import {
-	SliceZone,
-	type SliceComponentProps,
-	type SliceComponentType,
-} from "@prismicio/react";
 
 import type { HeroSlice, ExampleSliceZone } from "./types";
 
@@ -69,13 +65,7 @@ const HeroSlice = ({ slice }: SliceComponentProps<HeroSlice>) => {
 //
 // The SliceZome component will need to extract the content from within the
 // Slice object before rendering.
-const CallToActionSlice = ({
-	text,
-	disclaimer,
-}: {
-	text: string;
-	disclaimer: string;
-}) => {
+const CallToActionSlice = ({ text, disclaimer }: { text: string; disclaimer: string }) => {
 	return (
 		<section>
 			<p>{text}</p>
@@ -98,9 +88,7 @@ const components: Record<string, SliceComponentType> = {
 	// props it expects using content from within the Slice object.
 	//
 	// We can also pass arbitrary data as well, such as the `disclaimer` prop.
-	call_to_action: ({ slice }) => (
-		<CallToActionSlice text={slice.primary.text} disclaimer="foo" />
-	),
+	call_to_action: ({ slice }) => <CallToActionSlice text={slice.primary.text} disclaimer="foo" />,
 };
 
 // We render the Slice Zone using the `<SliceZone>` component by passing the

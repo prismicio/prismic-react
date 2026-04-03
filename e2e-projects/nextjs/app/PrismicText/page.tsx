@@ -1,7 +1,8 @@
-import type { ReactNode } from "react";
+import assert from "assert";
+
 import { isFilled } from "@prismicio/client";
 import { PrismicText } from "@prismicio/react";
-import assert from "assert";
+import type { ReactNode } from "react";
 
 import { createClient } from "@/prismicio";
 
