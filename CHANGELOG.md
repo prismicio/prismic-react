@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.1](https://github.com/prismicio/prismic-react/compare/v3.4.0...v3.4.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* force release ([#259](https://github.com/prismicio/prismic-react/issues/259)) ([2fb89d5](https://github.com/prismicio/prismic-react/commit/2fb89d5a7dc3c3795a1571f37ed6b0ccdb74c68c))
+
 ## [3.4.0](https://github.com/prismicio/prismic-react/compare/v3.3.0...v3.4.0) (2026-02-21)
 
 ### Features
