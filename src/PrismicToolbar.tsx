@@ -6,28 +6,26 @@ import { type FC, useEffect, useRef } from "react";
 /** Props for `<PrismicToolbar>`. */
 export type PrismicToolbarProps = {
 	/**
-	 * The name of the Prismic repository. For example, `"my-repo"` if the
-	 * repository URL is `my-repo.prismic.io`.
+	 * The name of the Prismic repository. For example, `"my-repo"` if the repository URL is
+	 * `my-repo.prismic.io`.
 	 */
 	repositoryName: string;
 
 	/**
-	 * Called when the Prismic toolbar triggers a preview update. This happens
-	 * when the previewed content changes.
+	 * Called when the Prismic toolbar triggers a preview update. This happens when the previewed
+	 * content changes.
 	 *
 	 * The new ref can be read from `event.detail.ref`.
 	 *
-	 * The default page reload behavior can be cancelled with
-	 * `event.preventDefault()`.
+	 * The default page reload behavior can be cancelled with `event.preventDefault()`.
 	 */
 	onPreviewUpdate?: (event: CustomEvent<{ ref: string }>) => void;
 
 	/**
-	 * Called when the Prismic toolbar triggers a preview end. This happens when
-	 * a preview session is closed.
+	 * Called when the Prismic toolbar triggers a preview end. This happens when a preview session is
+	 * closed.
 	 *
-	 * The default page reload behavior can be cancelled with
-	 * `event.preventDefault()`.
+	 * The default page reload behavior can be cancelled with `event.preventDefault()`.
 	 */
 	onPreviewEnd?: (event: CustomEvent<null>) => void;
 };
@@ -36,10 +34,9 @@ export type PrismicToolbarProps = {
  * Renders the Prismic Toolbar script to support draft previews.
  *
  * @example
- *
- * ```tsx
- * <PrismicToolbar repositoryName="my-repo" />;
- * ```
+ * 	```tsx
+ * 	<PrismicToolbar repositoryName="my-repo" />;
+ * 	```
  *
  * @see Learn how to set up preview functionality and the toolbar's role in preview sessions: {@link https://prismic.io/docs/previews}
  */
@@ -79,8 +76,7 @@ export const PrismicToolbar: FC<PrismicToolbarProps> = (props) => {
 
 		window.addEventListener(
 			"prismicPreviewUpdate",
-			(event) =>
-				onPreviewUpdateRef.current?.(event as CustomEvent<{ ref: string }>),
+			(event) => onPreviewUpdateRef.current?.(event as CustomEvent<{ ref: string }>),
 			{ signal: controller.signal },
 		);
 

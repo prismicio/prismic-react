@@ -7,17 +7,17 @@
 		"start": "next start --port=4321"
 	},
 	"dependencies": {
-		"@prismicio/client": "^7.16.0",
+		"@prismicio/client": "^7.21.7",
 		"@prismicio/react": "*",
-		"next": "15.1.9",
-		"react": "19.2.1",
-		"react-dom": "19.2.1"
+		"next": "16.2.2",
+		"react": "19.2.4",
+		"react-dom": "19.2.4"
 	},
 	"devDependencies": {
 		"@prismicio/types-internal": "^3.6.0",
-		"@types/node": "^22",
+		"@types/node": "^25",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
-		"typescript": "^5"
+		"typescript": "^6"
 	}
 }

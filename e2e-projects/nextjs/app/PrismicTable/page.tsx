@@ -1,7 +1,8 @@
-import type { ReactNode } from "react";
+import assert from "assert";
+
 import { isFilled } from "@prismicio/client";
 import { PrismicTable } from "@prismicio/react";
-import assert from "assert";
+import type { ReactNode } from "react";
 
 import { createClient } from "@/prismicio";
 
@@ -44,15 +45,9 @@ export default async function Page(): Promise<ReactNode> {
 				<PrismicTable
 					field={tests.filled}
 					components={{
-						table: ({ children }) => (
-							<table className="table">{children}</table>
-						),
-						paragraph: ({ children }) => (
-							<p className="paragraph">{children}</p>
-						),
-						strong: ({ children }) => (
-							<span className="strong">{children}</span>
-						),
+						table: ({ children }) => <table className="table">{children}</table>,
+						paragraph: ({ children }) => <p className="paragraph">{children}</p>,
+						strong: ({ children }) => <span className="strong">{children}</span>,
 						em: ({ children }) => <span className="em">{children}</span>,
 					}}
 				/>

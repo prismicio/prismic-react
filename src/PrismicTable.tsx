@@ -1,4 +1,3 @@
-import type { ComponentType, FC, ReactNode } from "react";
 import {
 	isFilled,
 	type TableField,
@@ -9,6 +8,7 @@ import {
 	type TableFieldHeaderCell,
 	type TableFieldDataCell,
 } from "@prismicio/client";
+import type { ComponentType, FC, ReactNode } from "react";
 
 import { type JSXMapSerializer, PrismicRichText } from "./PrismicRichText.js";
 
@@ -41,20 +41,21 @@ export type PrismicTableProps = {
 	/**
 	 * An object that maps a table block to a React component.
 	 *
-	 * @example A map serializer.
+	 * @example
+	 * 	A map serializer.
 	 *
-	 * ```jsx
-	 * {
-	 *   table: ({children}) => <table>{children}</table>
-	 *   thead: ({children}) => <thead>{children}</thead>
-	 * }
-	 * ```
+	 * 	```jsx
+	 * 	{
+	 * 	table: ({children}) => <table>{children}</table>
+	 * 	thead: ({children}) => <thead>{children}</thead>
+	 * 	}
+	 * 	```
 	 */
 	components?: JSXMapSerializer & TableComponents;
 
 	/**
-	 * The value to be rendered when the field is empty. If a fallback is not
-	 * given, `null` will be rendered.
+	 * The value to be rendered when the field is empty. If a fallback is not given, `null` will be
+	 * rendered.
 	 */
 	fallback?: ReactNode;
 };
@@ -63,10 +64,9 @@ export type PrismicTableProps = {
  * Renders content from a Prismic table field as React components.
  *
  * @example
- *
- * ```tsx
- * <PrismicTable field={slice.primary.pricing_table} />;
- * ```
+ * 	```tsx
+ * 	<PrismicTable field={slice.primary.pricing_table} />;
+ * 	```
  *
  * @see Learn how to style tables and customize table element components: {@link https://prismic.io/docs/fields/table}
  */
@@ -77,11 +77,7 @@ export const PrismicTable: FC<PrismicTableProps> = (props) => {
 		return fallback;
 	}
 
-	const {
-		table: Table,
-		thead: Thead,
-		tbody: Tbody,
-	} = { ...defaultComponents, ...components };
+	const { table: Table, thead: Thead, tbody: Tbody } = { ...defaultComponents, ...components };
 
 	return (
 		<Table table={field}>

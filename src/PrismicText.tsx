@@ -1,6 +1,6 @@
-import type { FC } from "react";
 import { asText, isFilled, type RichTextField } from "@prismicio/client";
 import { DEV } from "esm-env";
+import type { FC } from "react";
 
 import { devMsg } from "./lib/devMsg.js";
 
@@ -10,8 +10,8 @@ export type PrismicTextProps = {
 	field: RichTextField | null | undefined;
 
 	/**
-	 * The string rendered when the field is empty. If a fallback is not given,
-	 * `null` will be rendered.
+	 * The string rendered when the field is empty. If a fallback is not given, `null` will be
+	 * rendered.
 	 */
 	fallback?: string;
 
@@ -23,10 +23,9 @@ export type PrismicTextProps = {
  * Renders content from a Prismic rich text field as plain text (no HTML).
  *
  * @example
- *
- * ```tsx
- * <PrismicText field={slice.primary.text} />;
- * ```
+ * 	```tsx
+ * 	<PrismicText field={slice.primary.text} />;
+ * 	```
  *
  * @see Learn how to display rich text as plain text or React components: {@link https://prismic.io/docs/fields/rich-text}
  */

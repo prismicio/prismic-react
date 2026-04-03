@@ -1,16 +1,16 @@
+import assert from "node:assert";
+import { existsSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
 import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
-import assert from "node:assert";
-import { fileURLToPath } from "node:url";
-import { existsSync, writeFileSync } from "node:fs";
 
 dotenv.config({ path: ".env.test.local" });
 
 export const STORAGE_STATE = fileURLToPath(
 	new URL("./tests/infra/.storage-state.json", import.meta.url),
 );
-if (!existsSync(STORAGE_STATE))
-	writeFileSync(STORAGE_STATE, JSON.stringify({}));
+if (!existsSync(STORAGE_STATE)) writeFileSync(STORAGE_STATE, JSON.stringify({}));
 
 // https://playwright.dev/docs/test-configuration
 export default defineConfig({
@@ -70,11 +70,5 @@ declare global {
 	}
 }
 
-assert.ok(
-	process.env.E2E_PRISMIC_EMAIL,
-	"Missing E2E_PRISMIC_EMAIL env variable.",
-);
-assert.ok(
-	process.env.E2E_PRISMIC_PASSWORD,
-	"Missing E2E_PRISMIC_PASSWORD env variable.",
-);
+assert.ok(process.env.E2E_PRISMIC_EMAIL, "Missing E2E_PRISMIC_EMAIL env variable.");
+assert.ok(process.env.E2E_PRISMIC_PASSWORD, "Missing E2E_PRISMIC_PASSWORD env variable.");

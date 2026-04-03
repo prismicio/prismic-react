@@ -1,8 +1,10 @@
-import type { ReactNode } from "react";
-import { isFilled } from "@prismicio/client";
 import assert from "assert";
 
+import { isFilled } from "@prismicio/client";
+import type { ReactNode } from "react";
+
 import { createClient } from "@/prismicio";
+
 import { ClientTest } from "./ClientTest";
 
 export default async function Page(): Promise<ReactNode> {

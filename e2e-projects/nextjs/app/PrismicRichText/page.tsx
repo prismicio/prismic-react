@@ -1,7 +1,8 @@
-import type { ReactNode } from "react";
+import assert from "assert";
+
 import { isFilled } from "@prismicio/client";
 import { PrismicRichText } from "@prismicio/react";
-import assert from "assert";
+import type { ReactNode } from "react";
 
 import { createClient } from "@/prismicio";
 
@@ -218,9 +219,7 @@ export default async function Page(): Promise<ReactNode> {
 					<PrismicRichText
 						field={tests.embed}
 						components={{
-							embed: ({ node }) => (
-								<div data-bar data-html={node.oembed.html} />
-							),
+							embed: ({ node }) => <div data-bar data-html={node.oembed.html} />,
 						}}
 					/>
 				</div>

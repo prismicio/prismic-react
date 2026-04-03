@@ -1,7 +1,8 @@
-import type { ReactNode } from "react";
+import assert from "assert";
+
 import { isFilled, mapSliceZone } from "@prismicio/client";
 import { type SliceComponentProps, SliceZone } from "@prismicio/react";
-import assert from "assert";
+import type { ReactNode } from "react";
 
 import { createClient } from "@/prismicio";
 
@@ -33,17 +34,11 @@ export default async function Page(): Promise<ReactNode> {
 			</div>
 
 			<div data-testid="todo">
-				<SliceZone
-					slices={tests.filled}
-					components={{ text: components.text }}
-				/>
+				<SliceZone slices={tests.filled} components={{ text: components.text }} />
 			</div>
 
 			<div data-testid="graphql">
-				<SliceZone
-					slices={graphQL.data.allPages.edges[0].node.filled}
-					components={components}
-				/>
+				<SliceZone slices={graphQL.data.allPages.edges[0].node.filled} components={components} />
 			</div>
 
 			<div data-testid="mapped">
@@ -54,12 +49,8 @@ export default async function Page(): Promise<ReactNode> {
 }
 
 const components = {
-	text: (props: SliceComponentProps) => (
-		<div data-testid="text">{JSON.stringify(props)}</div>
-	),
-	image: (props: SliceComponentProps) => (
-		<div data-testid="image">{JSON.stringify(props)}</div>
-	),
+	text: (props: SliceComponentProps) => <div data-testid="text">{JSON.stringify(props)}</div>,
+	image: (props: SliceComponentProps) => <div data-testid="image">{JSON.stringify(props)}</div>,
 };
 
 const graphQLQuery = /* GraphQL */ `

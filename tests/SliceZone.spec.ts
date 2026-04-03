@@ -21,9 +21,7 @@ test("renders null by when passed an empty slice zone", async ({ page }) => {
 	await expect(output).toBeEmpty();
 });
 
-test("renders TODO component if component mapping is missing", async ({
-	page,
-}) => {
+test("renders TODO component if component mapping is missing", async ({ page }) => {
 	const output = page.getByTestId("todo");
 	const todo = output.locator("[data-slice-zone-todo-component]");
 	await expect(todo).toHaveAttribute("data-slice-type", "image");

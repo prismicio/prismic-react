@@ -22,9 +22,7 @@ To add a `className` to a specific block type when using `<PrismicRichText>`, pr
 <PrismicRichText
 	field={doc.data.richTextField}
 	components={{
-		heading1: ({ children }) => (
-			<h1 className="font-bold text-3xl">{children}</h1>
-		),
+		heading1: ({ children }) => <h1 className="font-bold text-3xl">{children}</h1>,
 	}}
 />
 ```

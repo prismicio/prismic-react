@@ -1,8 +1,8 @@
 "use client";
 
+import { PrismicLink } from "@prismicio/react";
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { PrismicLink } from "@prismicio/react";
 
 export default function Page(): ReactNode {
 	const [ref, setRef] = useState<Element | null>(null);

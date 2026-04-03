@@ -82,12 +82,11 @@ interface ImageTestDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type ImageTestDocument<Lang extends string = string> =
-	prismic.PrismicDocumentWithoutUID<
-		Simplify<ImageTestDocumentData>,
-		"image_test",
-		Lang
-	>;
+export type ImageTestDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+	Simplify<ImageTestDocumentData>,
+	"image_test",
+	Lang
+>;
 
 /** Content for Link Test documents */
 interface LinkTestDocumentData {
@@ -178,12 +177,11 @@ interface LinkTestDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type LinkTestDocument<Lang extends string = string> =
-	prismic.PrismicDocumentWithoutUID<
-		Simplify<LinkTestDocumentData>,
-		"link_test",
-		Lang
-	>;
+export type LinkTestDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+	Simplify<LinkTestDocumentData>,
+	"link_test",
+	Lang
+>;
 
 type PageDocumentDataFilledSlice = TextSlice | ImageSlice;
 
@@ -221,8 +219,11 @@ interface PageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type PageDocument<Lang extends string = string> =
-	prismic.PrismicDocumentWithoutUID<Simplify<PageDocumentData>, "page", Lang>;
+export type PageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+	Simplify<PageDocumentData>,
+	"page",
+	Lang
+>;
 
 /** Content for Rich Text Test documents */
 interface RichTextTestDocumentData {
@@ -478,12 +479,11 @@ interface RichTextTestDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type RichTextTestDocument<Lang extends string = string> =
-	prismic.PrismicDocumentWithoutUID<
-		Simplify<RichTextTestDocumentData>,
-		"rich_text_test",
-		Lang
-	>;
+export type RichTextTestDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+	Simplify<RichTextTestDocumentData>,
+	"rich_text_test",
+	Lang
+>;
 
 /** Content for Table Test documents */
 interface TableTestDocumentData {
@@ -519,12 +519,11 @@ interface TableTestDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type TableTestDocument<Lang extends string = string> =
-	prismic.PrismicDocumentWithoutUID<
-		Simplify<TableTestDocumentData>,
-		"table_test",
-		Lang
-	>;
+export type TableTestDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
+	Simplify<TableTestDocumentData>,
+	"table_test",
+	Lang
+>;
 
 export type AllDocumentTypes =
 	| ImageTestDocument

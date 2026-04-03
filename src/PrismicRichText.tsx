@@ -1,5 +1,3 @@
-import { type LinkProps, PrismicLink } from "./PrismicLink.js";
-import { devMsg } from "./lib/devMsg.js";
 import {
 	isFilled,
 	type LinkResolverFunction,
@@ -23,25 +21,25 @@ import {
 	type ReactNode,
 } from "react";
 
+import { devMsg } from "./lib/devMsg.js";
+import { type LinkProps, PrismicLink } from "./PrismicLink.js";
+
 /**
- * A function mapping rich text block types to React Components. It is used to
- * render rich text fields.
+ * A function mapping rich text block types to React Components. It is used to render rich text
+ * fields.
  *
  * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
 export type JSXFunctionSerializer = RichTextFunctionSerializer<ReactNode>;
 
 /**
- * A map of rich text block types to React Components. It is used to render rich
- * text fields.
+ * A map of rich text block types to React Components. It is used to render rich text fields.
  *
  * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
 export type RichTextComponents = RichTextMapSerializer<ReactNode>;
 
-/**
- * @deprecated Use `RichTextComponents` instead.
- */
+/** @deprecated Use `RichTextComponents` instead. */
 export type JSXMapSerializer = RichTextComponents;
 
 /** Props for `<PrismicRichText>`. */
@@ -53,9 +51,8 @@ export type PrismicRichTextProps = {
 	 * The link resolver used to resolve links.
 	 *
 	 * @remarks
-	 * If your app uses route resolvers when querying for your Prismic
-	 * repository's content, a link resolver does not need to be provided.
-	 *
+	 *   If your app uses route resolvers when querying for your Prismic repository's content, a link
+	 *   resolver does not need to be provided.
 	 * @see Learn about link resolvers and route resolvers {@link https://prismic.io/docs/routes}
 	 */
 	linkResolver?: LinkResolverFunction;
@@ -64,28 +61,29 @@ export type PrismicRichTextProps = {
 	 * A map or function that maps a rich text block to a React component.
 	 *
 	 * @remarks
-	 * Prefer using a map serializer over the function serializer when possible.
-	 * The map serializer is simpler to maintain.
+	 *   Prefer using a map serializer over the function serializer when possible. The map serializer
+	 *   is simpler to maintain.
+	 * @example
+	 * 	A map serializer.
 	 *
-	 * @example A map serializer.
-	 *
-	 * ```jsx
-	 * {
-	 *   heading1: ({children}) => <Heading>{children}</Heading>
-	 * }
-	 * ```
-	 *
-	 * @example A function serializer.
-	 *
-	 * ```jsx
-	 * (type, node, content, children) => {
-	 * 	switch (type) {
-	 * 		case "heading1": {
-	 * 			return <Heading>{children}</Heading>;
-	 * 		}
+	 * 	```jsx
+	 * 	{
+	 * 	heading1: ({children}) => <Heading>{children}</Heading>
 	 * 	}
-	 * };
-	 * ```
+	 * 	```
+	 *
+	 * @example
+	 * 	A function serializer.
+	 *
+	 * 	```jsx
+	 * 	(type, node, content, children) => {
+	 * 	switch (type) {
+	 * 	case "heading1": {
+	 * 	return <Heading>{children}</Heading>;
+	 * 	}
+	 * 	}
+	 * 	};
+	 * 	```
 	 */
 	components?: RichTextComponents | JSXFunctionSerializer;
 
@@ -104,8 +102,8 @@ export type PrismicRichTextProps = {
 	externalLinkComponent?: ComponentType<LinkProps>;
 
 	/**
-	 * The value to be rendered when the field is empty. If a fallback is not
-	 * given, `null` will be rendered.
+	 * The value to be rendered when the field is empty. If a fallback is not given, `null` will be
+	 * rendered.
 	 */
 	fallback?: ReactNode;
 };
@@ -122,9 +120,7 @@ const getDir = (node: RTAnyNode): "rtl" | undefined => {
 	}
 };
 
-const createDefaultSerializer = (
-	args: CreateDefaultSerializerArgs,
-): JSXFunctionSerializer =>
+const createDefaultSerializer = (args: CreateDefaultSerializerArgs): JSXFunctionSerializer =>
 	wrapMapSerializer<ReactNode>({
 		heading1: ({ node, children, key }) => (
 			<h1 key={key} dir={getDir(node)}>
@@ -249,10 +245,9 @@ const createDefaultSerializer = (
  * Renders content from a Prismic rich text field as React components.
  *
  * @example
- *
- * ```tsx
- * <PrismicRichText field={slice.primary.text} />;
- * ```
+ * 	```tsx
+ * 	<PrismicRichText field={slice.primary.text} />;
+ * 	```
  *
  * @see Learn how to style rich text, use custom components, and use labels for custom formatting: {@link https://prismic.io/docs/fields/rich-text}
  */
@@ -294,18 +289,15 @@ export const PrismicRichText: FC<PrismicRichTextProps> = (props) => {
 	// The serializer is wrapped in a higher-order function that
 	// automatically applies a key to React Elements if one is not already
 	// given.
-	const serialized = serialize<ReactNode>(
-		field,
-		(type, node, text, children, key) => {
-			const result = serializer(type, node, text, children, key);
+	const serialized = serialize<ReactNode>(field, (type, node, text, children, key) => {
+		const result = serializer(type, node, text, children, key);
 
-			if (isValidElement(result) && result.key == null) {
-				return cloneElement(result, { key });
-			} else {
-				return result;
-			}
-		},
-	);
+		if (isValidElement(result) && result.key == null) {
+			return cloneElement(result, { key });
+		} else {
+			return result;
+		}
+	});
 
 	if (!serialized) {
 		return fallback != null ? <>{fallback}</> : null;

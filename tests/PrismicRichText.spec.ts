@@ -141,9 +141,7 @@ test.describe("strong", () => {
 	test("custom", async ({ page }) => {
 		const scope = page.getByTestId("strong");
 		const output = scope.getByTestId("custom");
-		expect(await output.innerHTML()).toBe(
-			'<p><span data-bar="true">foo</span></p>',
-		);
+		expect(await output.innerHTML()).toBe('<p><span data-bar="true">foo</span></p>');
 	});
 });
 
@@ -157,9 +155,7 @@ test.describe("em", () => {
 	test("custom", async ({ page }) => {
 		const scope = page.getByTestId("em");
 		const output = scope.getByTestId("custom");
-		expect(await output.innerHTML()).toBe(
-			'<p><span data-bar="true">foo</span></p>',
-		);
+		expect(await output.innerHTML()).toBe('<p><span data-bar="true">foo</span></p>');
 	});
 });
 
@@ -267,9 +263,7 @@ test.describe("label", () => {
 	test("default", async ({ page }) => {
 		const scope = page.getByTestId("label");
 		const output = scope.getByTestId("default");
-		expect(await output.innerHTML()).toBe(
-			'<p><span class="bar">foo</span></p>',
-		);
+		expect(await output.innerHTML()).toBe('<p><span class="bar">foo</span></p>');
 	});
 
 	test("custom", async ({ page }) => {

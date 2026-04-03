@@ -1,12 +1,8 @@
-/* oxlint-disable rules-of-hooks */
-import {
-	type Locator,
-	type Page,
-	test as base,
-	expect,
-} from "@playwright/test";
-import { createClient } from "@prismicio/client";
 import assert from "assert";
+
+/* oxlint-disable rules-of-hooks */
+import { type Locator, type Page, test as base, expect } from "@playwright/test";
+import { createClient } from "@prismicio/client";
 
 import { type CoreAPIDocument, Prismic, type Repo } from "./client";
 
@@ -76,10 +72,9 @@ class AppPage {
 	}
 
 	async goToDocument(document: CoreAPIDocument, pathPrefix = "") {
-		const client = createClient(
-			new URL("/api/v2", this.repository.urls.cdn).toString(),
-			{ routes: [{ type: "page", path: "/:uid" }] },
-		);
+		const client = createClient(new URL("/api/v2", this.repository.urls.cdn).toString(), {
+			routes: [{ type: "page", path: "/:uid" }],
+		});
 		const apiDocument = await client.getByID(document.id);
 		return await this.page.goto(pathPrefix + apiDocument.url!);
 	}
