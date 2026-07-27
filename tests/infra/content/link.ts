@@ -78,10 +78,10 @@ export const model = {
 			},
 		},
 	},
-} as const;
+} as const
 
 export function content(args: { documentLinkID: string }): Record<string, unknown> {
-	const { documentLinkID } = args;
+	const { documentLinkID } = args
 
 	return {
 		external_web: {
@@ -125,5 +125,5 @@ export function content(args: { documentLinkID: string }): Record<string, unknow
 		document_TYPE: "Link",
 		media_TYPE: "Link",
 		with_text_TYPE: "Link",
-	};
+	}
 }

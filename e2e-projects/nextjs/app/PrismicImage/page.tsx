@@ -1,28 +1,28 @@
-import assert from "assert";
+import assert from "assert"
 
-import { isFilled } from "@prismicio/client";
-import { PrismicImage } from "@prismicio/react";
-import type { ReactNode } from "react";
+import { isFilled } from "@prismicio/client"
+import { PrismicImage } from "@prismicio/react"
+import type { ReactNode } from "react"
 
-import { createClient } from "@/prismicio";
+import { createClient } from "@/prismicio"
 
 export default async function Page(): Promise<ReactNode> {
-	const client = await createClient();
-	const { data: tests } = await client.getSingle("image_test");
+	const client = await createClient()
+	const { data: tests } = await client.getSingle("image_test")
 
-	assert(isFilled.image(tests.with_alt_text) && tests.with_alt_text.alt !== null);
-	assert(isFilled.image(tests.without_alt_text) && tests.without_alt_text.alt === null);
-	assert(isFilled.image(tests.filled));
-	assert(!isFilled.image(tests.empty));
+	assert(isFilled.image(tests.with_alt_text) && tests.with_alt_text.alt !== null)
+	assert(isFilled.image(tests.without_alt_text) && tests.without_alt_text.alt === null)
+	assert(isFilled.image(tests.filled))
+	assert(!isFilled.image(tests.empty))
 	assert(
 		isFilled.image(tests.with_crop) &&
 			new URL(tests.with_crop.url).searchParams.get("rect") !== null,
-	);
+	)
 	assert(
 		isFilled.image(tests.with_thumbnails) &&
 			isFilled.imageThumbnail(tests.with_thumbnails.foo) &&
 			isFilled.imageThumbnail(tests.with_thumbnails.bar),
-	);
+	)
 
 	return (
 		<>
@@ -72,5 +72,5 @@ export default async function Page(): Promise<ReactNode> {
 				imgixParams={{ rect: [0, 0, 100, 100] }}
 			/>
 		</>
-	);
+	)
 }

@@ -1,38 +1,38 @@
-import assert from "assert";
+import assert from "assert"
 
-import { isFilled } from "@prismicio/client";
-import { PrismicLink } from "@prismicio/react";
-import Link from "next/link";
-import type { ReactNode } from "react";
+import { isFilled } from "@prismicio/client"
+import { PrismicLink } from "@prismicio/react"
+import Link from "next/link"
+import type { ReactNode } from "react"
 
-import { createClient } from "@/prismicio";
+import { createClient } from "@/prismicio"
 
 export default async function Page(): Promise<ReactNode> {
-	const client = await createClient();
-	const { data: tests } = await client.getSingle("link_test");
+	const client = await createClient()
+	const { data: tests } = await client.getSingle("link_test")
 	assert(
 		isFilled.link(tests.document) && tests.document.link_type === "Document" && tests.document.url,
-	);
-	const doc = await client.getByID(tests.document.id);
+	)
+	const doc = await client.getByID(tests.document.id)
 
-	assert(isFilled.link(tests.media) && tests.media.link_type === "Media");
+	assert(isFilled.link(tests.media) && tests.media.link_type === "Media")
 	assert(
 		isFilled.link(tests.internal_web) &&
 			tests.internal_web.link_type === "Web" &&
 			!tests.internal_web.url.startsWith("http"),
-	);
+	)
 	assert(
 		isFilled.link(tests.external_web) &&
 			tests.external_web.link_type === "Web" &&
 			tests.external_web.url.startsWith("http"),
-	);
+	)
 	assert(
 		isFilled.link(tests.external_web_with_target) &&
 			tests.external_web_with_target.link_type === "Web" &&
 			tests.external_web_with_target.url.startsWith("http") &&
 			tests.external_web_with_target.target,
-	);
-	assert(isFilled.link(tests.with_text) && tests.with_text.text);
+	)
+	assert(isFilled.link(tests.with_text) && tests.with_text.text)
 
 	return (
 		<>
@@ -83,5 +83,5 @@ export default async function Page(): Promise<ReactNode> {
 				override
 			</PrismicLink>
 		</>
-	);
+	)
 }

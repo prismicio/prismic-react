@@ -1,17 +1,17 @@
-import assert from "assert";
+import assert from "assert"
 
-import { isFilled } from "@prismicio/client";
-import { PrismicTable } from "@prismicio/react";
-import type { ReactNode } from "react";
+import { isFilled } from "@prismicio/client"
+import { PrismicTable } from "@prismicio/react"
+import type { ReactNode } from "react"
 
-import { createClient } from "@/prismicio";
+import { createClient } from "@/prismicio"
 
 export default async function Page(): Promise<ReactNode> {
-	const client = await createClient();
-	const { data: tests } = await client.getSingle("table_test");
+	const client = await createClient()
+	const { data: tests } = await client.getSingle("table_test")
 
-	assert(isFilled.table(tests.filled));
-	assert(!isFilled.table(tests.empty));
+	assert(isFilled.table(tests.filled))
+	assert(!isFilled.table(tests.empty))
 
 	return (
 		<>
@@ -53,5 +53,5 @@ export default async function Page(): Promise<ReactNode> {
 				/>
 			</div>
 		</>
-	);
+	)
 }

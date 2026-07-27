@@ -1,36 +1,36 @@
-import { asText, isFilled, type RichTextField } from "@prismicio/client";
-import { DEV } from "esm-env";
-import type { FC } from "react";
+import { asText, isFilled, type RichTextField } from "@prismicio/client"
+import { DEV } from "esm-env"
+import type { FC } from "react"
 
-import { devMsg } from "./lib/devMsg.js";
+import { devMsg } from "./lib/devMsg.js"
 
 /** Props for `<PrismicText>`. */
 export type PrismicTextProps = {
 	/** The Prismic rich text field to render. */
-	field: RichTextField | null | undefined;
+	field: RichTextField | null | undefined
 
 	/**
 	 * The string rendered when the field is empty. If a fallback is not given, `null` will be
 	 * rendered.
 	 */
-	fallback?: string;
+	fallback?: string
 
 	/** The separator used between blocks. Defaults to `\n`. */
-	separator?: string;
-};
+	separator?: string
+}
 
 /**
  * Renders content from a Prismic rich text field as plain text (no HTML).
  *
  * @example
- * 	```tsx
+ * 	;```tsx
  * 	<PrismicText field={slice.primary.text} />;
  * 	```
  *
  * @see Learn how to display rich text as plain text or React components: {@link https://prismic.io/docs/fields/rich-text}
  */
 export const PrismicText: FC<PrismicTextProps> = (props) => {
-	const { field, fallback, separator } = props;
+	const { field, fallback, separator } = props
 
 	if (DEV) {
 		if ("className" in props) {
@@ -39,7 +39,7 @@ export const PrismicText: FC<PrismicTextProps> = (props) => {
 					"classname-is-not-a-valid-prop",
 				)}.`,
 				props.field,
-			);
+			)
 		}
 	}
 
@@ -50,15 +50,15 @@ export const PrismicText: FC<PrismicTextProps> = (props) => {
 					"prismictext-works-only-with-rich-text-and-title-fields",
 				)}`,
 				props.field,
-			);
+			)
 		}
 
-		return null;
+		return null
 	}
 
 	if (!isFilled.richText(field)) {
-		return fallback != null ? <>{fallback}</> : null;
+		return fallback != null ? <>{fallback}</> : null
 	}
 
-	return <>{asText(field, { separator })}</>;
-};
+	return <>{asText(field, { separator })}</>
+}

@@ -1,19 +1,19 @@
-import assert from "assert";
+import assert from "assert"
 
-import { isFilled } from "@prismicio/client";
-import { PrismicText } from "@prismicio/react";
-import type { ReactNode } from "react";
+import { isFilled } from "@prismicio/client"
+import { PrismicText } from "@prismicio/react"
+import type { ReactNode } from "react"
 
-import { createClient } from "@/prismicio";
+import { createClient } from "@/prismicio"
 
 export default async function Page(): Promise<ReactNode> {
-	const client = await createClient();
-	const { data: tests } = await client.getSingle("rich_text_test");
+	const client = await createClient()
+	const { data: tests } = await client.getSingle("rich_text_test")
 
-	assert(isFilled.richText(tests.filled));
-	assert(!isFilled.richText(tests.empty));
-	assert(isFilled.keyText(tests.keytext));
-	assert(isFilled.select(tests.select));
+	assert(isFilled.richText(tests.filled))
+	assert(!isFilled.richText(tests.empty))
+	assert(isFilled.keyText(tests.keytext))
+	assert(isFilled.select(tests.select))
 
 	return (
 		<>
@@ -42,5 +42,5 @@ export default async function Page(): Promise<ReactNode> {
 				<PrismicText field={tests.filled} separator="x" />
 			</div>
 		</>
-	);
+	)
 }

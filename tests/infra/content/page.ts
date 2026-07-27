@@ -38,7 +38,7 @@ export const model = {
 			},
 		},
 	},
-} as const;
+} as const
 
 export const slices = {
 	text: {
@@ -94,7 +94,7 @@ export const slices = {
 			},
 		],
 	},
-} as const;
+} as const
 
 export function content(): Record<string, unknown> {
 	return {
@@ -153,5 +153,5 @@ export function content(): Record<string, unknown> {
 		"filled.text.variations.default.primary.content_TYPE": "StructuredText",
 		"filled.image_TYPE": "SharedSlice",
 		"filled.image.variations.default.primary.content_TYPE": "Image",
-	};
+	}
 }
