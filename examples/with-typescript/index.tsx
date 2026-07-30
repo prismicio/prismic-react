@@ -102,3 +102,22 @@ export const WithSliceZone = (): ReactNode => {
 		/>
 	);
 };
+
+// Rendering a Slice Zone with a specific context contract looks like this.
+// Note that the `context` prop is required when the `SliceZone` is supplied with a generic.
+type RichContext = { name: string; age: number };
+export const WithContextRichSliceZone = (): ReactNode => {
+	return (
+		<SliceZone<RichContext>
+			slices={page.data.slices}
+			components={{
+				hero: () => <div>Hero Slice</div>,
+				call_to_action: () => <div>Call to Action Slice</div>,
+			}}
+			context={{
+				name: "Bo",
+				age: 25,
+			}}
+		/>
+	);
+};
