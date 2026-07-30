@@ -137,7 +137,7 @@ export type SliceZoneComponents<TSlice extends SliceLike = SliceLike, TContext =
  * @typeParam TSlice - The type(s) of a slice in the slice zone.
  * @typeParam TContext - Arbitrary data made available to all slice components.
  */
-export type SliceZoneProps<TContext = never> = {
+export type SliceZoneProps<TContext = unknown> = {
 	/** List of slice data from the slice zone. */
 	slices?: SliceZoneLike;
 
@@ -150,7 +150,7 @@ export type SliceZoneProps<TContext = never> = {
 	defaultComponent?: ComponentType<SliceComponentProps<any, TContext>>;
 
 	/** Arbitrary data made available to all slice components. */
-} & ([TContext] extends [never] ? { context?: never } : { context: TContext });
+} & (unknown extends TContext ? { context?: TContext } : { context: TContext });
 
 /**
  * This slice component can be used as a reminder to provide a proper implementation.
