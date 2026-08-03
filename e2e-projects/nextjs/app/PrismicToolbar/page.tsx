@@ -1,10 +1,10 @@
-import { PrismicToolbar } from "@prismicio/react";
-import type { ReactNode } from "react";
+import { PrismicToolbar } from "@prismicio/react"
+import type { ReactNode } from "react"
 
-import { createClient } from "@/prismicio";
+import { createClient } from "@/prismicio"
 
 export default async function Page(): Promise<ReactNode> {
-	const client = await createClient();
+	const client = await createClient()
 
-	return <PrismicToolbar repositoryName={client.repositoryName} />;
+	return <PrismicToolbar repositoryName={client.repositoryName} />
 }

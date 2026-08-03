@@ -1,17 +1,17 @@
-import assert from "assert";
+import assert from "assert"
 
-import { isFilled } from "@prismicio/client";
-import type { ReactNode } from "react";
+import { isFilled } from "@prismicio/client"
+import type { ReactNode } from "react"
 
-import { createClient } from "@/prismicio";
+import { createClient } from "@/prismicio"
 
-import { ClientTest } from "./ClientTest";
+import { ClientTest } from "./ClientTest"
 
 export default async function Page(): Promise<ReactNode> {
-	const client = await createClient();
-	const { data: tests } = await client.getSingle("image_test");
+	const client = await createClient()
+	const { data: tests } = await client.getSingle("image_test")
 
-	assert(isFilled.image(tests.filled));
+	assert(isFilled.image(tests.filled))
 
-	return <ClientTest field={tests.filled} />;
+	return <ClientTest field={tests.filled} />
 }

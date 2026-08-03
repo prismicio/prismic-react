@@ -1,20 +1,20 @@
-"use client";
+"use client"
 
-import { PrismicToolbar } from "@prismicio/react";
-import { type ReactNode, useState } from "react";
+import { PrismicToolbar } from "@prismicio/react"
+import { type ReactNode, useState } from "react"
 
 export function PrismicToolbarPreviewEvents(props: { repositoryName: string }): ReactNode {
-	const [updateCount, setUpdateCount] = useState(0);
-	const [endCount, setEndCount] = useState(0);
-	const [updateRef, setUpdateRef] = useState<string>("");
+	const [updateCount, setUpdateCount] = useState(0)
+	const [endCount, setEndCount] = useState(0)
+	const [updateRef, setUpdateRef] = useState<string>("")
 
 	return (
 		<>
 			<PrismicToolbar
 				repositoryName={props.repositoryName}
 				onPreviewUpdate={(event) => {
-					setUpdateCount((c) => c + 1);
-					setUpdateRef(event.detail.ref);
+					setUpdateCount((c) => c + 1)
+					setUpdateRef(event.detail.ref)
 				}}
 				onPreviewEnd={() => setEndCount((c) => c + 1)}
 			/>
@@ -22,5 +22,5 @@ export function PrismicToolbarPreviewEvents(props: { repositoryName: string }): 
 			<span data-testid="end-count">{endCount}</span>
 			<span data-testid="update-ref">{updateRef}</span>
 		</>
-	);
+	)
 }

@@ -4,8 +4,8 @@ import {
 	type PrismicDocument,
 	asLinkAttrs,
 	type AsLinkAttrsConfig,
-} from "@prismicio/client";
-import { DEV } from "esm-env";
+} from "@prismicio/client"
+import { DEV } from "esm-env"
 import {
 	type ComponentProps,
 	type ComponentType,
@@ -13,32 +13,32 @@ import {
 	type HTMLAttributeAnchorTarget,
 	type ReactNode,
 	forwardRef,
-} from "react";
+} from "react"
 
-import { devMsg } from "./lib/devMsg.js";
+import { devMsg } from "./lib/devMsg.js"
 
 /** The default component rendered for internal and external links. */
-const defaultComponent = "a";
+const defaultComponent = "a"
 
 /** Props provided to a component when rendered with `<PrismicLink>`. */
 export interface LinkProps {
 	/** The URL to link. */
-	href: string;
+	href: string
 
 	/**
 	 * The `target` attribute for anchor elements. If the Prismic field is configured to open in a new
 	 * window, this prop defaults to `_blank`.
 	 */
-	target?: HTMLAttributeAnchorTarget;
+	target?: HTMLAttributeAnchorTarget
 
 	/**
 	 * The `rel` attribute for anchor elements. If the `target` prop is set to `"_blank"`, this prop
 	 * defaults to `"noopener noreferrer"`.
 	 */
-	rel?: string;
+	rel?: string
 
 	/** Children for the component. */
-	children?: ReactNode;
+	children?: ReactNode
 }
 
 export type PrismicLinkProps<
@@ -50,7 +50,7 @@ export type PrismicLinkProps<
 	 * external. This prop can be provided a function to use the link's metadata to determine the
 	 * `rel` value.
 	 */
-	rel?: string | AsLinkAttrsConfig["rel"];
+	rel?: string | AsLinkAttrsConfig["rel"]
 
 	/**
 	 * The link resolver used to resolve links.
@@ -60,7 +60,7 @@ export type PrismicLinkProps<
 	 *   resolver does not need to be provided.
 	 * @see Learn about link resolvers and route resolvers {@link https://prismic.io/docs/routes}
 	 */
-	linkResolver?: LinkResolverFunction;
+	linkResolver?: LinkResolverFunction
 
 	/**
 	 * The component rendered for internal URLs. Defaults to `<a>`.
@@ -68,39 +68,39 @@ export type PrismicLinkProps<
 	 * If your app uses a client-side router that requires a special Link component, provide the Link
 	 * component to this prop.
 	 */
-	internalComponent?: ComponentType<InternalComponentProps>;
+	internalComponent?: ComponentType<InternalComponentProps>
 
 	/** The component rendered for external URLs. Defaults to `<a>`. */
-	externalComponent?: ComponentType<ExternalComponentProps>;
+	externalComponent?: ComponentType<ExternalComponentProps>
 
 	/**
 	 * The children to render for the link. If no children are provided, the link's `text` property
 	 * will be used.
 	 */
-	children?: ReactNode;
+	children?: ReactNode
 } & (
 		| {
-				document: PrismicDocument | null | undefined;
-				href?: never;
-				field?: never;
+				document: PrismicDocument | null | undefined
+				href?: never
+				field?: never
 		  }
 		| {
-				field: LinkField | null | undefined;
-				href?: never;
-				document?: never;
+				field: LinkField | null | undefined
+				href?: never
+				document?: never
 		  }
 		| {
-				href: LinkProps["href"];
-				field?: LinkField | null | undefined;
-				document?: never;
+				href: LinkProps["href"]
+				field?: LinkField | null | undefined
+				document?: never
 		  }
-	);
+	)
 
 /**
  * Renders a link from a Prismic link field or page.
  *
  * @example
- * 	```tsx
+ * 	;```tsx
  * 	<PrismicLink field={slice.primary.link}>Click here</PrismicLink>;
  * 	```
  *
@@ -121,7 +121,7 @@ export const PrismicLink = forwardRef(function PrismicLink<
 		externalComponent,
 		children,
 		...restProps
-	} = props;
+	} = props
 
 	if (DEV) {
 		if (field) {
@@ -129,12 +129,12 @@ export const PrismicLink = forwardRef(function PrismicLink<
 				console.error(
 					`[PrismicLink] This "field" prop value caused an error to be thrown.\n`,
 					field,
-				);
+				)
 				throw new Error(
 					`[PrismicLink] The provided field is missing required properties to properly render a link. The link will not render. For more details, see ${devMsg(
 						"missing-link-properties",
 					)}`,
-				);
+				)
 			} else if (
 				("text" in field ? Object.keys(field).length > 2 : Object.keys(field).length > 1) &&
 				!("url" in field || "uid" in field || "id" in field)
@@ -144,7 +144,7 @@ export const PrismicLink = forwardRef(function PrismicLink<
 						"missing-link-properties",
 					)}`,
 					field,
-				);
+				)
 			}
 		} else if (doc) {
 			if (!("url" in doc || "id" in doc)) {
@@ -153,7 +153,7 @@ export const PrismicLink = forwardRef(function PrismicLink<
 						"missing-link-properties",
 					)}`,
 					doc,
-				);
+				)
 			}
 		}
 	}
@@ -165,36 +165,36 @@ export const PrismicLink = forwardRef(function PrismicLink<
 	} = asLinkAttrs(field ?? doc, {
 		linkResolver,
 		rel: typeof restProps.rel === "function" ? restProps.rel : undefined,
-	});
+	})
 
-	let rel: string | undefined = computedRel;
+	let rel: string | undefined = computedRel
 	if ("rel" in restProps && typeof restProps.rel !== "function") {
-		rel = restProps.rel;
+		rel = restProps.rel
 	}
 
-	const href = ("href" in restProps ? restProps.href : computedHref) || "";
+	const href = ("href" in restProps ? restProps.href : computedHref) || ""
 
-	const InternalComponent = (internalComponent || defaultComponent) as ComponentType<LinkProps>;
-	const ExternalComponent = (externalComponent || defaultComponent) as ComponentType<LinkProps>;
+	const InternalComponent = (internalComponent || defaultComponent) as ComponentType<LinkProps>
+	const ExternalComponent = (externalComponent || defaultComponent) as ComponentType<LinkProps>
 	const Component = href
 		? isInternalURL(href)
 			? InternalComponent
 			: ExternalComponent
-		: InternalComponent;
+		: InternalComponent
 
 	return (
 		<Component ref={ref} {...attrs} {...restProps} href={href} rel={rel}>
 			{"children" in props ? children : field?.text}
 		</Component>
-	);
+	)
 }) as <
 	InternalComponentProps = ComponentProps<typeof defaultComponent>,
 	ExternalComponentProps = ComponentProps<typeof defaultComponent>,
 >(
 	props: PrismicLinkProps<InternalComponentProps, ExternalComponentProps> & {
-		ref?: ForwardedRef<Element>;
+		ref?: ForwardedRef<Element>
 	},
-) => ReactNode;
+) => ReactNode
 
 /**
  * Determines if a URL is internal or external.
@@ -204,8 +204,8 @@ export const PrismicLink = forwardRef(function PrismicLink<
  */
 // TODO: This does not detect all relative URLs as internal such as `about` or `./about`. This function assumes relative URLs start with a "/" or "#"`.
 export function isInternalURL(url: string): boolean {
-	const isInternal = /^(\/(?!\/)|#)/.test(url);
-	const isSpecialLink = !isInternal && !/^https?:\/\//.test(url);
+	const isInternal = /^(\/(?!\/)|#)/.test(url)
+	const isSpecialLink = !isInternal && !/^https?:\/\//.test(url)
 
-	return isInternal && !isSpecialLink;
+	return isInternal && !isSpecialLink
 }

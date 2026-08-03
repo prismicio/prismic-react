@@ -67,7 +67,7 @@ export const model = {
 			},
 		},
 	},
-} as const;
+} as const
 
 export function content(): Record<string, unknown> {
 	return {
@@ -226,5 +226,5 @@ export function content(): Record<string, unknown> {
 		without_alt_text_TYPE: "Image",
 		with_crop_TYPE: "Image",
 		with_thumbnails_TYPE: "Image",
-	};
+	}
 }

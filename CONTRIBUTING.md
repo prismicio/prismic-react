@@ -1,6 +1,6 @@
 # Contributing
 
-This package is primarily maintained by [Prismic](https://prismic.io)[^1]. External contributions are welcome. Ask for help by [opening an issue](https://github.com/prismicio/prismic-client/issues/new/choose), or request a review by opening a pull request.
+This package is primarily maintained by [Prismic](https://prismic.io)[^1]. External contributions are welcome. Ask for help by [opening an issue](https://github.com/prismicio/prismic-react/issues/new/choose), or request a review by opening a pull request.
 
 ## :gear: Setup
 
@@ -8,7 +8,7 @@ This package is primarily maintained by [Prismic](https://prismic.io)[^1]. Exter
 
 The following setup is required to work on this project:
 
-- Node.js
+- Node.js 24 or later
 - npm CLI
 
 ## :memo: Project-specific notes
@@ -28,7 +28,7 @@ The following setup is required to work on this project:
 ## :construction_worker: Develop
 
 > [!NOTE]
-> It's highly recommended to discuss your changes with the Prismic team before starting by [opening an issue](https://github.com/prismicio/prismic-client/issues/new/choose).[^2]
+> It's highly recommended to discuss your changes with the Prismic team before starting by [opening an issue](https://github.com/prismicio/prismic-react/issues/new/choose).[^2]
 >
 > A short discussion can accellerate your work and ship it faster.
 
@@ -43,19 +43,19 @@ git checkout -b <your-initials>/<feature-or-fix-description>
 
 # Start the development watcher.
 # Run this command while you are working on your changes.
-npm run dev
+node --run dev
 
 # Build the project for production.
 # Run this command when you want to see the production version.
-npm run build
+node --run build
 
 # Lint your changes before requesting a review. No errors are allowed.
-npm run lint
+node --run lint
 # Some errors can be fixed automatically:
-npm run lint -- --fix
+node --run lint -- --fix
 
 # Format your changes before requesting a review. No errors are allowed.
-npm run format
+node --run format
 
 # Create a .env.test.local file and provide a Prismic username and password.
 # They will be used to run E2E tests.
@@ -64,12 +64,12 @@ cp .env.test.example .env.test.local
 
 # Test your changes before requesting a review.
 # All changes should be tested. No failing tests are allowed.
-npm run test
+node --run test
 # Run only E2E tests (optionally in UI mode):
-npm run e2e
-npm run e2e:ui
+node --run e2e
+node --run e2e:ui
 # Run only type tests
-npm run types
+node --run types
 ```
 
 ## :building_construction: Submit a pull request
@@ -86,6 +86,10 @@ gh pr create
 # Someone from the Prismic team will review your work. This review will at
 # least consider the PR's general direction, code style, and test coverage.
 
+# Prereleases are published to npm automatically to upon pushing commits.
+# Install the prerelease using the `pr-${number}` tag.
+npm install @prismicio/react@pr-101
+
 # When ready, PRs should be merged using the "Squash and merge" option.
 ```
 
@@ -94,28 +98,9 @@ gh pr create
 > [!CAUTION]
 > Publishing is restricted to the Prismic team.[^4]
 
-```sh
-# Checkout the main branch and pull the latest changes.
-git checkout main
-git pull
+This repository uses [Release Please](https://github.com/googleapis/release-please). To publish changes in `master`, merge [the pending Release Please PR](https://github.com/prismicio/prismic-react/pulls?q=is%3Apr+is%3Aopen+label%3A%22autorelease%3A+pending%22).
 
-# Perform a dry-run and verify the output.
-# If it looks good, release a new version.
-npm run release:dry
-npm run release
-
-# Or release an alpha.
-# Perform a dry-run and verify the output.
-# If it looks good, release a new alpha version.
-npm run release:alpha:dry
-npm run release:alpha
-```
-
-After publishing a new release, publish the tags as releases. This will show the latest release on the repository's homepage.
-
-1. Go to the repository's [Tags page](https://github.com/prismicio/prismic-react/tags).
-2. Open the options for the tag you just published to NPM and select "Create release."
-3. Ensure that the "Set as the latest release" box is checked, then publish the release.
+If you don't see a pending PR, there are no changes to publish from `master`.
 
 [^1]: This package is maintained by the DevX team. Prismic employees can ask for help or a review in the [#team-devx](https://prismic-team.slack.com/archives/C014VAACCQL) Slack channel.
 

@@ -1,17 +1,17 @@
-import { STORAGE_STATE } from "../../playwright.config";
-import * as content from "./content";
-import { test as setup } from "./test";
+import { STORAGE_STATE } from "../../playwright.config"
+import * as content from "./content"
+import { test as setup } from "./test"
 
 setup("create repo", async ({ page, prismic }) => {
-	const cookies = await page.context().cookies();
-	const repositoryName = cookies.find((cookie) => cookie.name === "repository-name")?.value;
+	const cookies = await page.context().cookies()
+	const repositoryName = cookies.find((cookie) => cookie.name === "repository-name")?.value
 
-	if (repositoryName) return;
+	if (repositoryName) return
 
 	const repository = await prismic.createRepository({
 		prefix: "prismicio-react",
 		defaultLocale: "fr-fr",
-	});
+	})
 	await page.context().addCookies([
 		{
 			name: "repository-name",
@@ -19,22 +19,22 @@ setup("create repo", async ({ page, prismic }) => {
 			domain: "localhost",
 			path: "/",
 		},
-	]);
-	await page.context().storageState({ path: STORAGE_STATE });
+	])
+	await page.context().storageState({ path: STORAGE_STATE })
 
-	await repository.addCustomType(content.page.model);
-	await repository.addSlice(content.page.slices.text);
-	await repository.addSlice(content.page.slices.image);
+	await repository.addCustomType(content.page.model)
+	await repository.addSlice(content.page.slices.text)
+	await repository.addSlice(content.page.slices.image)
 	const pageDocument = await repository.createDocument({
 		custom_type_id: content.page.model.id,
 		title: content.page.model.label,
 		tags: [],
 		integration_field_ids: [],
 		data: content.page.content(),
-	});
-	await repository.publishDocument(pageDocument.id);
+	})
+	await repository.publishDocument(pageDocument.id)
 
-	await repository.addCustomType(content.link.model);
+	await repository.addCustomType(content.link.model)
 	const linkDocument = await repository.createDocument({
 		custom_type_id: content.link.model.id,
 		title: content.link.model.label,
@@ -43,36 +43,36 @@ setup("create repo", async ({ page, prismic }) => {
 		data: content.link.content({
 			documentLinkID: pageDocument.id,
 		}),
-	});
-	await repository.publishDocument(linkDocument.id);
+	})
+	await repository.publishDocument(linkDocument.id)
 
-	await repository.addCustomType(content.image.model);
+	await repository.addCustomType(content.image.model)
 	const imageDocument = await repository.createDocument({
 		custom_type_id: content.image.model.id,
 		title: content.image.model.label,
 		tags: [],
 		integration_field_ids: [],
 		data: content.image.content(),
-	});
-	await repository.publishDocument(imageDocument.id);
+	})
+	await repository.publishDocument(imageDocument.id)
 
-	await repository.addCustomType(content.richText.model);
+	await repository.addCustomType(content.richText.model)
 	const richTextDocument = await repository.createDocument({
 		custom_type_id: content.richText.model.id,
 		title: content.richText.model.label,
 		tags: [],
 		integration_field_ids: [],
 		data: content.richText.content(),
-	});
-	await repository.publishDocument(richTextDocument.id);
+	})
+	await repository.publishDocument(richTextDocument.id)
 
-	await repository.addCustomType(content.table.model);
+	await repository.addCustomType(content.table.model)
 	const tableDocument = await repository.createDocument({
 		custom_type_id: content.table.model.id,
 		title: content.table.model.label,
 		tags: [],
 		integration_field_ids: [],
 		data: content.table.content(),
-	});
-	await repository.publishDocument(tableDocument.id);
-});
+	})
+	await repository.publishDocument(tableDocument.id)
+})
