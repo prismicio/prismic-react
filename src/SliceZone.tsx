@@ -1,6 +1,6 @@
 import type { Slice } from "@prismicio/client"
 import { DEV } from "esm-env"
-import type { ComponentType, FC, ReactNode } from "react"
+import type { ComponentType, ReactNode } from "react"
 
 /**
  * Returns the type of a `SliceLike` type.
@@ -150,8 +150,7 @@ export type SliceZoneProps<TContext = unknown> = {
 	defaultComponent?: ComponentType<SliceComponentProps<any, TContext>>
 
 	/** Arbitrary data made available to all slice components. */
-	context?: TContext
-}
+} & (unknown extends TContext ? { context?: TContext } : { context: TContext })
 
 /**
  * This slice component can be used as a reminder to provide a proper implementation.
@@ -190,7 +189,7 @@ export const TODOSliceComponent = <TSlice extends SliceLike>({
  *
  * @see Learn how to create slices, use slice variations, and display slices: {@link https://prismic.io/docs/slices}
  */
-export const SliceZone: FC<SliceZoneProps> = (props) => {
+export const SliceZone = <T = never>(props: SliceZoneProps<T>): ReactNode | Promise<ReactNode> => {
 	const { slices = [], components = {}, defaultComponent, context = {} } = props
 
 	const renderedSlices = slices.map((slice, index) => {
