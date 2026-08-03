@@ -20,7 +20,7 @@ export const model = {
 			},
 		},
 	},
-} as const;
+} as const
 
 export function content(): Record<string, unknown> {
 	return {
@@ -131,5 +131,5 @@ export function content(): Record<string, unknown> {
 		},
 		empty_TYPE: "Table",
 		filled_TYPE: "Table",
-	};
+	}
 }

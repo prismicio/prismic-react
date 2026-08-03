@@ -165,7 +165,7 @@ export const model = {
 			},
 		},
 	},
-} as const;
+} as const
 
 export function content(): Record<string, unknown> {
 	return {
@@ -467,5 +467,5 @@ export function content(): Record<string, unknown> {
 		hyperlink_external_TYPE: "StructuredText",
 		label_TYPE: "StructuredText",
 		rtl_TYPE: "StructuredText",
-	};
+	}
 }

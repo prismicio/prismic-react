@@ -1,7 +1,7 @@
-import { SliceZone, type SliceComponentProps, type SliceComponentType } from "@prismicio/react";
-import type { ReactNode } from "react";
+import { SliceZone, type SliceComponentProps, type SliceComponentType } from "@prismicio/react"
+import type { ReactNode } from "react"
 
-import type { HeroSlice, ExampleSliceZone } from "./types";
+import type { HeroSlice, ExampleSliceZone } from "./types"
 
 // This is the contents of a Slice Zone field.
 // Normally, this would be accessed at `document.data.body`, where `document`
@@ -40,7 +40,7 @@ const slices: ExampleSliceZone = [
 		items: [],
 		version: "2",
 	},
-];
+]
 
 // This React component is rendered for Hero Slices.
 // It accepts a Slice object as a prop.
@@ -56,8 +56,8 @@ const HeroSlice = ({ slice }: SliceComponentProps<HeroSlice>) => {
 				</div>
 			))}
 		</section>
-	);
-};
+	)
+}
 
 // This React component is rendered for Call To Action Slices.
 //
@@ -71,8 +71,8 @@ const CallToActionSlice = ({ text, disclaimer }: { text: string; disclaimer: str
 			<p>{text}</p>
 			<small>{disclaimer}</small>
 		</section>
-	);
-};
+	)
+}
 
 // This object contains a component for each type of Slice that can be rendered
 // by `<SliceZone>`.
@@ -89,10 +89,10 @@ const components: Record<string, SliceComponentType> = {
 	//
 	// We can also pass arbitrary data as well, such as the `disclaimer` prop.
 	call_to_action: ({ slice }) => <CallToActionSlice text={slice.primary.text} disclaimer="foo" />,
-};
+}
 
 // We render the Slice Zone using the `<SliceZone>` component by passing the
 // list of Slices and component map.
 export const App = (): ReactNode => {
-	return <SliceZone slices={slices} components={components} />;
-};
+	return <SliceZone slices={slices} components={components} />
+}

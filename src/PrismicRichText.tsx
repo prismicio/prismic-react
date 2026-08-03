@@ -3,15 +3,15 @@ import {
 	type LinkResolverFunction,
 	type RichTextField,
 	type RTAnyNode,
-} from "@prismicio/client";
+} from "@prismicio/client"
 import {
 	composeSerializers,
 	serialize,
 	wrapMapSerializer,
 	type RichTextFunctionSerializer,
 	type RichTextMapSerializer,
-} from "@prismicio/client/richtext";
-import { DEV } from "esm-env";
+} from "@prismicio/client/richtext"
+import { DEV } from "esm-env"
 import {
 	cloneElement,
 	type ComponentType,
@@ -19,10 +19,10 @@ import {
 	Fragment,
 	isValidElement,
 	type ReactNode,
-} from "react";
+} from "react"
 
-import { devMsg } from "./lib/devMsg.js";
-import { type LinkProps, PrismicLink } from "./PrismicLink.js";
+import { devMsg } from "./lib/devMsg.js"
+import { type LinkProps, PrismicLink } from "./PrismicLink.js"
 
 /**
  * A function mapping rich text block types to React Components. It is used to render rich text
@@ -30,22 +30,22 @@ import { type LinkProps, PrismicLink } from "./PrismicLink.js";
  *
  * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
-export type JSXFunctionSerializer = RichTextFunctionSerializer<ReactNode>;
+export type JSXFunctionSerializer = RichTextFunctionSerializer<ReactNode>
 
 /**
  * A map of rich text block types to React Components. It is used to render rich text fields.
  *
  * @see Templating rich text fields {@link https://prismic.io/docs/fields/rich-text}
  */
-export type RichTextComponents = RichTextMapSerializer<ReactNode>;
+export type RichTextComponents = RichTextMapSerializer<ReactNode>
 
 /** @deprecated Use `RichTextComponents` instead. */
-export type JSXMapSerializer = RichTextComponents;
+export type JSXMapSerializer = RichTextComponents
 
 /** Props for `<PrismicRichText>`. */
 export type PrismicRichTextProps = {
 	/** The Prismic rich text field to render. */
-	field: RichTextField | null | undefined;
+	field: RichTextField | null | undefined
 
 	/**
 	 * The link resolver used to resolve links.
@@ -55,7 +55,7 @@ export type PrismicRichTextProps = {
 	 *   resolver does not need to be provided.
 	 * @see Learn about link resolvers and route resolvers {@link https://prismic.io/docs/routes}
 	 */
-	linkResolver?: LinkResolverFunction;
+	linkResolver?: LinkResolverFunction
 
 	/**
 	 * A map or function that maps a rich text block to a React component.
@@ -85,40 +85,40 @@ export type PrismicRichTextProps = {
 	 * 	};
 	 * 	```
 	 */
-	components?: RichTextComponents | JSXFunctionSerializer;
+	components?: RichTextComponents | JSXFunctionSerializer
 
 	/**
 	 * The React component rendered for links when the URL is internal.
 	 *
 	 * @defaultValue `<a>`
 	 */
-	internalLinkComponent?: ComponentType<LinkProps>;
+	internalLinkComponent?: ComponentType<LinkProps>
 
 	/**
 	 * The React component rendered for links when the URL is external.
 	 *
 	 * @defaultValue `<a>`
 	 */
-	externalLinkComponent?: ComponentType<LinkProps>;
+	externalLinkComponent?: ComponentType<LinkProps>
 
 	/**
 	 * The value to be rendered when the field is empty. If a fallback is not given, `null` will be
 	 * rendered.
 	 */
-	fallback?: ReactNode;
-};
+	fallback?: ReactNode
+}
 
 type CreateDefaultSerializerArgs = {
-	linkResolver: LinkResolverFunction | undefined;
-	internalLinkComponent?: ComponentType<LinkProps>;
-	externalLinkComponent?: ComponentType<LinkProps>;
-};
+	linkResolver: LinkResolverFunction | undefined
+	internalLinkComponent?: ComponentType<LinkProps>
+	externalLinkComponent?: ComponentType<LinkProps>
+}
 
 const getDir = (node: RTAnyNode): "rtl" | undefined => {
 	if ("direction" in node && node.direction === "rtl") {
-		return "rtl";
+		return "rtl"
 	}
-};
+}
 
 const createDefaultSerializer = (args: CreateDefaultSerializerArgs): JSXFunctionSerializer =>
 	wrapMapSerializer<ReactNode>({
@@ -179,7 +179,7 @@ const createDefaultSerializer = (args: CreateDefaultSerializerArgs): JSXFunction
 					alt={node.alt ?? undefined}
 					data-copyright={node.copyright ? node.copyright : undefined}
 				/>
-			);
+			)
 
 			return (
 				<p key={key} className="block-img">
@@ -196,7 +196,7 @@ const createDefaultSerializer = (args: CreateDefaultSerializerArgs): JSXFunction
 						img
 					)}
 				</p>
-			);
+			)
 		},
 		embed: ({ node, key }) => (
 			<div
@@ -224,28 +224,28 @@ const createDefaultSerializer = (args: CreateDefaultSerializerArgs): JSXFunction
 			</span>
 		),
 		span: ({ text, key }) => {
-			const result: ReactNode[] = [];
+			const result: ReactNode[] = []
 
-			let i = 0;
+			let i = 0
 			for (const line of text.split("\n")) {
 				if (i > 0) {
-					result.push(<br key={`${i}__break`} />);
+					result.push(<br key={`${i}__break`} />)
 				}
 
-				result.push(<Fragment key={`${i}__line`}>{line}</Fragment>);
+				result.push(<Fragment key={`${i}__line`}>{line}</Fragment>)
 
-				i++;
+				i++
 			}
 
-			return <Fragment key={key}>{result}</Fragment>;
+			return <Fragment key={key}>{result}</Fragment>
 		},
-	});
+	})
 
 /**
  * Renders content from a Prismic rich text field as React components.
  *
  * @example
- * 	```tsx
+ * 	;```tsx
  * 	<PrismicRichText field={slice.primary.text} />;
  * 	```
  *
@@ -260,7 +260,7 @@ export const PrismicRichText: FC<PrismicRichTextProps> = (props) => {
 		externalLinkComponent,
 		internalLinkComponent,
 		...restProps
-	} = props;
+	} = props
 
 	if (DEV) {
 		if ("className" in restProps) {
@@ -269,12 +269,12 @@ export const PrismicRichText: FC<PrismicRichTextProps> = (props) => {
 					"classname-is-not-a-valid-prop",
 				)}.`,
 				field,
-			);
+			)
 		}
 	}
 
 	if (!isFilled.richText(field)) {
-		return fallback != null ? <>{fallback}</> : null;
+		return fallback != null ? <>{fallback}</> : null
 	}
 
 	const serializer = composeSerializers<ReactNode>(
@@ -284,24 +284,24 @@ export const PrismicRichText: FC<PrismicRichTextProps> = (props) => {
 			internalLinkComponent,
 			externalLinkComponent,
 		}),
-	);
+	)
 
 	// The serializer is wrapped in a higher-order function that
 	// automatically applies a key to React Elements if one is not already
 	// given.
 	const serialized = serialize<ReactNode>(field, (type, node, text, children, key) => {
-		const result = serializer(type, node, text, children, key);
+		const result = serializer(type, node, text, children, key)
 
 		if (isValidElement(result) && result.key == null) {
-			return cloneElement(result, { key });
+			return cloneElement(result, { key })
 		} else {
-			return result;
+			return result
 		}
-	});
+	})
 
 	if (!serialized) {
-		return fallback != null ? <>{fallback}</> : null;
+		return fallback != null ? <>{fallback}</> : null
 	}
 
-	return <>{serialized}</>;
-};
+	return <>{serialized}</>
+}

@@ -16,6 +16,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    env:
+      MODE: production
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6

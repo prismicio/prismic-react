@@ -18,8 +18,8 @@
 		"e2e-projects/*"
 	],
 	"files": [
-		"dist",
-		"src"
+		"./dist",
+		"./src"
 	],
 	"type": "module",
 	"sideEffects": false,

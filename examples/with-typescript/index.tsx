@@ -1,14 +1,14 @@
-import * as prismic from "@prismicio/client";
-import { SliceZone, PrismicRichText, PrismicLink } from "@prismicio/react";
-import type { ReactNode } from "react";
+import * as prismic from "@prismicio/client"
+import { SliceZone, PrismicRichText, PrismicLink } from "@prismicio/react"
+import type { ReactNode } from "react"
 
 // Documents can be typed using `@prismicio/client`
 type PageDocument = prismic.PrismicDocumentWithUID<{
-	title: prismic.TitleField;
-	meta_description: prismic.RichTextField;
+	title: prismic.TitleField
+	meta_description: prismic.RichTextField
 	related_links: prismic.GroupField<{
-		link: prismic.LinkField;
-	}>;
+		link: prismic.LinkField
+	}>
 
 	// Each Slice in a Slice Zone can be typed using `prismic.SharedSlice`
 	slices: prismic.SliceZone<
@@ -19,11 +19,11 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 					"default",
 					// Fields
 					{
-						heading: prismic.KeyTextField;
-						body: prismic.RichTextField;
+						heading: prismic.KeyTextField
+						body: prismic.RichTextField
 						buttons: prismic.GroupField<{
-							link: prismic.LinkField;
-						}>;
+							link: prismic.LinkField
+						}>
 					}
 				>
 		  >
@@ -34,15 +34,15 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 					"default",
 					// Fields
 					{
-						text: prismic.RichTextField;
+						text: prismic.RichTextField
 						buttons: prismic.GroupField<{
-							link: prismic.LinkField;
-						}>;
+							link: prismic.LinkField
+						}>
 					}
 				>
 		  >
-	>;
-}>;
+	>
+}>
 
 // Let's assume we have a full document from the Prismic Rest API V2.
 //
@@ -50,20 +50,20 @@ type PageDocument = prismic.PrismicDocumentWithUID<{
 // without needing to type it out for this example.
 //
 // In your real project, this would come from the API via `@prismicio/client`.
-declare const page: PageDocument;
+declare const page: PageDocument
 
 // Components from `@prismicio/react` will work with this type to ensure the
 // correct fields are passed.
 
 // Rendering a Rich Text or Title looks like this.
 export const WithRichText = (): ReactNode => {
-	return <PrismicRichText field={page.data.title} />;
-};
+	return <PrismicRichText field={page.data.title} />
+}
 
 // Rendering a link to a document looks like this.
 export const WithDocumentLink = (): ReactNode => {
-	return <PrismicLink document={page} />;
-};
+	return <PrismicLink document={page} />
+}
 
 // Rendering a group looks like this.
 // Using `isFilled.group()` and `isFilled.link()` from `@prismicio/helpers`
@@ -85,8 +85,8 @@ export const WithGroupFieldLink = (): ReactNode => {
 						),
 				)}
 		</ul>
-	);
-};
+	)
+}
 
 // Rendering a Slice Zone looks like this.
 // Note that the `components` object is typed to ensure a component is given
@@ -100,8 +100,8 @@ export const WithSliceZone = (): ReactNode => {
 				call_to_action: () => <div>Call to Action Slice</div>,
 			}}
 		/>
-	);
-};
+	)
+}
 
 // Rendering a Slice Zone with a specific context contract looks like this.
 // Note that the `context` prop is required when the `SliceZone` is supplied with a generic.
@@ -119,5 +119,5 @@ export const WithContextRichSliceZone = (): ReactNode => {
 				age: 25,
 			}}
 		/>
-	);
-};
+	)
+}

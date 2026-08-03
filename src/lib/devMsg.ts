@@ -1,10 +1,10 @@
-import { version } from "../../package.json";
+import { version } from "../../package.json"
 
 /**
  * Returns a `prismic.dev/msg` URL for a given message slug.
  *
  * @example
- * 	```ts
+ * 	;```ts
  * 	devMsg("missing-param");
  * 	// => "https://prismic.dev/msg/react/v1.2.3/missing-param"
  * 	```
@@ -14,5 +14,5 @@ import { version } from "../../package.json";
  * @returns The `prismic.dev/msg` URL for the given slug.
  */
 export function devMsg(slug: string): string {
-	return `https://prismic.dev/msg/react/v${version}/${slug}`;
+	return `https://prismic.dev/msg/react/v${version}/${slug}`
 }

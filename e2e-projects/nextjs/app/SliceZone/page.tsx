@@ -1,27 +1,27 @@
-import assert from "assert";
+import assert from "assert"
 
-import { isFilled, mapSliceZone } from "@prismicio/client";
-import { type SliceComponentProps, SliceZone } from "@prismicio/react";
-import type { ReactNode } from "react";
+import { isFilled, mapSliceZone } from "@prismicio/client"
+import { type SliceComponentProps, SliceZone } from "@prismicio/react"
+import type { ReactNode } from "react"
 
-import { createClient } from "@/prismicio";
+import { createClient } from "@/prismicio"
 
 export default async function Page(): Promise<ReactNode> {
-	const client = await createClient();
-	const { data: tests } = await client.getSingle("page");
+	const client = await createClient()
+	const { data: tests } = await client.getSingle("page")
 
-	assert(isFilled.sliceZone(tests.filled));
-	assert(!isFilled.sliceZone(tests.empty));
+	assert(isFilled.sliceZone(tests.filled))
+	assert(!isFilled.sliceZone(tests.empty))
 
-	const graphQLURL = new URL("/graphql", client.documentAPIEndpoint);
-	graphQLURL.searchParams.set("query", graphQLQuery);
-	const graphQLRes = await client.graphQLFetch(graphQLURL.toString());
-	const graphQL = await graphQLRes.json();
+	const graphQLURL = new URL("/graphql", client.documentAPIEndpoint)
+	graphQLURL.searchParams.set("query", graphQLQuery)
+	const graphQLRes = await client.graphQLFetch(graphQLURL.toString())
+	const graphQL = await graphQLRes.json()
 
 	const mapped = await mapSliceZone(tests.filled, {
 		text: () => ({ foo: "bar" }),
 		image: () => ({ bar: "baz" }),
-	});
+	})
 
 	return (
 		<>
@@ -45,13 +45,13 @@ export default async function Page(): Promise<ReactNode> {
 				<SliceZone slices={mapped} components={components} />
 			</div>
 		</>
-	);
+	)
 }
 
 const components = {
 	text: (props: SliceComponentProps) => <div data-testid="text">{JSON.stringify(props)}</div>,
 	image: (props: SliceComponentProps) => <div data-testid="image">{JSON.stringify(props)}</div>,
-};
+}
 
 const graphQLQuery = /* GraphQL */ `
 	query Foo {
@@ -88,4 +88,4 @@ const graphQLQuery = /* GraphQL */ `
 			}
 		}
 	}
-`;
+`
