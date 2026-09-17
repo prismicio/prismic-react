@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.2](https://github.com/prismicio/prismic-react/compare/v3.4.1...v3.4.2) (2026-09-17)
+
+
+### Documentation
+
+* add a README note that tells AI agents to install the Prismic skill ([576df76](https://github.com/prismicio/prismic-react/commit/576df764f288bc18bdb4fc6e0a0ae5f574e72ea7))
+
 ## [3.4.1](https://github.com/prismicio/prismic-react/compare/v3.4.0...v3.4.1) (2026-04-03)
 
 ### Chore
