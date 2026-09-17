@@ -22,9 +22,9 @@ npm install @prismicio/react
 
 Using an AI agent? Teach it how to use `@prismicio/react` by installing the Prismic skill:
 
-~~~bash
+```bash
 npx skills add --global --yes prismicio/skills
-~~~
+```
 
 ## Documentation
 
