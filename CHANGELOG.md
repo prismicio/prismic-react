@@ -5,9 +5,9 @@ All notable changes to this project will be documented in this file. See [standa
 ## [3.4.2](https://github.com/prismicio/prismic-react/compare/v3.4.1...v3.4.2) (2026-09-17)
 
 
-### Miscellaneous Chores
+### Documentation
 
-* release 3.4.2 ([f90c522](https://github.com/prismicio/prismic-react/commit/f90c522af683e5d46e2061bc6c53329c0736de19))
+* add a README note that tells AI agents to install the Prismic skill ([576df76](https://github.com/prismicio/prismic-react/commit/576df764f288bc18bdb4fc6e0a0ae5f574e72ea7))
 
 ## [3.4.1](https://github.com/prismicio/prismic-react/compare/v3.4.0...v3.4.1) (2026-04-03)
 
