@@ -1,7 +1,7 @@
 # custom
+*.tgz
 dist
 examples/**/package-lock.json
-*.tgz
 
 # os
 .DS_Store
