@@ -1,6 +1,8 @@
 import type { Slice } from "@prismicio/client"
 import { DEV } from "esm-env"
-import type { ComponentType, FC, ReactNode } from "react"
+import { Fragment, type ComponentType, type FC, type ReactNode } from "react"
+
+import { SliceBoundary } from "./SliceBoundary.js"
 
 /**
  * Returns the type of a `SliceLike` type.
@@ -199,18 +201,27 @@ export const SliceZone: FC<SliceZoneProps> = (props) => {
 		const key = "id" in slice && slice.id ? slice.id : `${index}-${JSON.stringify(slice)}`
 
 		const Comp = components[type as keyof typeof components] || defaultComponent
+		let renderedSlice: ReactNode
 
 		if (!Comp) {
-			return <TODOSliceComponent key={key} slice={slice} />
-		}
-
-		if (slice.__mapped) {
+			renderedSlice = <TODOSliceComponent slice={slice} />
+		} else if (slice.__mapped) {
 			const { __mapped, ...mappedProps } = slice
 
-			return <Comp key={key} {...mappedProps} />
+			renderedSlice = <Comp {...mappedProps} />
+		} else {
+			renderedSlice = <Comp slice={slice} index={index} slices={slices} context={context} />
 		}
 
-		return <Comp key={key} slice={slice} index={index} slices={slices} context={context} />
+		if ("id" in slice && slice.id) {
+			return (
+				<SliceBoundary key={key} sliceId={slice.id}>
+					{renderedSlice}
+				</SliceBoundary>
+			)
+		}
+
+		return <Fragment key={key}>{renderedSlice}</Fragment>
 	})
 
 	return <>{renderedSlices}</>
