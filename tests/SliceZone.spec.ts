@@ -1,3 +1,5 @@
+import type { Locator } from "@playwright/test"
+
 import { test, expect } from "./infra"
 
 test.beforeEach(async ({ page }) => {
@@ -50,3 +52,74 @@ test("supports mapped slices from mapSliceZone()", async ({ page }) => {
 		'{"id":"image$a7f3e5f0-5726-41fc-9603-90c52e76e5d1","slice_type":"image","bar":"baz"}',
 	)
 })
+
+test("adds comment boundaries around slices with IDs", async ({ page }) => {
+	const filled = page.getByTestId("filled")
+	await expect
+		.poll(() => getSliceComments(filled))
+		.toEqual([
+			"prismic-slice-start:text$877e9385-8cbd-4af2-bd65-f31d3a2588cf",
+			"prismic-slice-end:text$877e9385-8cbd-4af2-bd65-f31d3a2588cf",
+			"prismic-slice-start:image$a7f3e5f0-5726-41fc-9603-90c52e76e5d1",
+			"prismic-slice-end:image$a7f3e5f0-5726-41fc-9603-90c52e76e5d1",
+		])
+
+	expect(await getSliceComments(page.getByTestId("graphql"))).toEqual([])
+})
+
+test("keeps comment boundaries aligned when slices change", async ({ page }) => {
+	const response = await page.request.get("/SliceZone/markers")
+	expect(await response.text()).not.toContain("<!--prismic-slice-")
+
+	await page.goto("/SliceZone/markers")
+
+	const client = page.getByTestId("client")
+	const output = client.getByTestId("client-output")
+
+	await expect
+		.poll(() => getSliceComments(output))
+		.toEqual([
+			"prismic-slice-start:element-id",
+			"prismic-slice-end:element-id",
+			"prismic-slice-start:fragment-id",
+			"prismic-slice-end:fragment-id",
+			"prismic-slice-start:empty-id",
+			"prismic-slice-end:empty-id",
+		])
+
+	await client.getByRole("button", { name: "Reverse" }).click()
+	await expect
+		.poll(() => getSliceComments(output))
+		.toEqual([
+			"prismic-slice-start:empty-id",
+			"prismic-slice-end:empty-id",
+			"prismic-slice-start:fragment-id",
+			"prismic-slice-end:fragment-id",
+			"prismic-slice-start:element-id",
+			"prismic-slice-end:element-id",
+		])
+
+	await client.getByRole("button", { name: "Remove first" }).click()
+	await expect
+		.poll(() => getSliceComments(output))
+		.toEqual([
+			"prismic-slice-start:fragment-id",
+			"prismic-slice-end:fragment-id",
+			"prismic-slice-start:element-id",
+			"prismic-slice-end:element-id",
+		])
+})
+
+function getSliceComments(locator: Locator) {
+	return locator.evaluate((element) => {
+		const comments: string[] = []
+		const walker = document.createTreeWalker(element, NodeFilter.SHOW_COMMENT)
+
+		while (walker.nextNode()) {
+			const value = walker.currentNode.textContent
+			if (value?.startsWith("prismic-slice-")) comments.push(value)
+		}
+
+		return comments
+	})
+}
