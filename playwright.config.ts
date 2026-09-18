@@ -63,7 +63,7 @@ declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace NodeJS {
 		interface ProcessEnv {
-			CI: boolean
+			CI: string
 			E2E_PRISMIC_EMAIL: string
 			E2E_PRISMIC_PASSWORD: string
 		}

@@ -46,10 +46,12 @@ export const PrismicToolbar: FC<PrismicToolbarProps> = (props) => {
 	const src = getToolbarSrc(repositoryName)
 
 	const onPreviewUpdateRef = useRef(onPreviewUpdate)
-	onPreviewUpdateRef.current = onPreviewUpdate
-
 	const onPreviewEndRef = useRef(onPreviewEnd)
-	onPreviewEndRef.current = onPreviewEnd
+
+	useEffect(() => {
+		onPreviewUpdateRef.current = onPreviewUpdate
+		onPreviewEndRef.current = onPreviewEnd
+	})
 
 	useEffect(() => {
 		const existingScript = document.querySelector(`script[src="${src}"]`)
