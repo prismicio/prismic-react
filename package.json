@@ -53,18 +53,19 @@
 		"esm-env": "^1.2.2"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.59.1",
-		"@prismicio/client": "^7.17.0",
-		"@types/react": "^19.2.14",
-		"@types/react-dom": "^19.2.3",
-		"dotenv": "^17.4.0",
-		"oxfmt": "^0.43.0",
-		"oxlint": "^1.58.0",
-		"playwright": "^1.59.1",
-		"react": "^19.2.4",
-		"react-dom": "^19.2.4",
-		"tsdown": "^0.21.7",
-		"typescript": "^6.0.2"
+		"@playwright/test": "^1.63.0",
+		"@prismicio/client": "^7.22.1",
+		"@prismicio/types-internal": "^3.17.2",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
+		"dotenv": "^18.0.0",
+		"oxfmt": "^0.68.0",
+		"oxlint": "^1.83.0",
+		"playwright": "^1.63.0",
+		"react": "^19.3.0",
+		"react-dom": "^19.3.0",
+		"tsdown": "^0.23.0",
+		"typescript": "^7.0.2"
 	},
 	"peerDependencies": {
 		"@prismicio/client": "^7",

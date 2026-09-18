@@ -127,8 +127,8 @@ export const PrismicImage: FC<PrismicImageProps> = forwardRef(function PrismicIm
 		return <>{fallback}</>
 	}
 
-	const resolvedImgixParams = imgixParams
-	for (const x in imgixParams) {
+	const resolvedImgixParams = { ...imgixParams }
+	for (const x in resolvedImgixParams) {
 		if (resolvedImgixParams[x as keyof typeof resolvedImgixParams] === null) {
 			resolvedImgixParams[x as keyof typeof resolvedImgixParams] = undefined
 		}
