@@ -34,6 +34,13 @@ export function ClientTest(): ReactNode {
 		<div data-testid="client">
 			<button onClick={() => setSlices((current) => current.toReversed())}>Reverse</button>
 			<button onClick={() => setSlices((current) => current.slice(1))}>Remove first</button>
+			<button
+				onClick={() =>
+					setSlices((current) => current.map((slice) => ({ ...slice, id: `${slice.id}-updated` })))
+				}
+			>
+				Replace IDs
+			</button>
 
 			<div data-testid="client-output">
 				<SliceZone slices={slices} components={components} />
