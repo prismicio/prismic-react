@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/prismicio/prismic-react/compare/v3.4.2...v3.5.0) (2026-09-25)
+
+
+### Features
+
+* make rendered Slices discoverable in the DOM ([#270](https://github.com/prismicio/prismic-react/issues/270)) ([bcaa9a9](https://github.com/prismicio/prismic-react/commit/bcaa9a9f2dc20ab8afee4dad3e26373121bc9d9a))
+
 ## [3.4.2](https://github.com/prismicio/prismic-react/compare/v3.4.1...v3.4.2) (2026-09-17)
 
 
