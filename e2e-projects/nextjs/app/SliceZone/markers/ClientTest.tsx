@@ -1,7 +1,7 @@
 "use client"
 
 import { type SliceComponentProps, SliceZone } from "@prismicio/react"
-import { type ReactNode, useState } from "react"
+import { type ReactNode, Suspense, use, useState } from "react"
 
 type TestSlice = {
 	id: string
@@ -29,9 +29,11 @@ const components = {
 
 export function ClientTest(): ReactNode {
 	const [slices, setSlices] = useState(initialSlices)
+	const [suspendCount, setSuspendCount] = useState(0)
 
 	return (
 		<div data-testid="client">
+			<button onClick={() => setSuspendCount((current) => current + 1)}>Suspend</button>
 			<button onClick={() => setSlices((current) => current.toReversed())}>Reverse</button>
 			<button onClick={() => setSlices((current) => current.slice(1))}>Remove first</button>
 			<button
@@ -43,8 +45,28 @@ export function ClientTest(): ReactNode {
 			</button>
 
 			<div data-testid="client-output">
-				<SliceZone slices={slices} components={components} />
+				<Suspense fallback={<div data-testid="fallback">Loading</div>}>
+					<Suspender count={suspendCount} />
+					<SliceZone slices={slices} components={components} />
+				</Suspense>
 			</div>
 		</div>
 	)
+}
+
+const delays = new Map<number, Promise<void>>()
+
+function Suspender(props: { count: number }): ReactNode {
+	const { count } = props
+	if (count === 0) return null
+
+	let delay = delays.get(count)
+	if (!delay) {
+		delay = new Promise((resolve) => setTimeout(resolve, 100))
+		delays.set(count, delay)
+	}
+
+	use(delay)
+
+	return null
 }

@@ -28,17 +28,19 @@ function CommentMarker(props: CommentMarkerProps) {
 	const id = useId()
 	const isClient = useIsClient()
 	const anchorRef = useRef<Text>(null)
+	const anchorValue = `__prismic_react_internal_comment_anchor_${id}__`
 
 	useLayoutEffect(() => {
 		let anchor = anchorRef.current
 
 		if (!anchor?.isConnected) {
-			anchor = findTextNode(id)
+			anchor = findTextNode(anchorValue)
 			if (!anchor) return
-
-			anchor.data = ""
 			anchorRef.current = anchor
 		}
+
+		// React restores the text when a hidden Suspense or Activity subtree is shown again.
+		if (anchor.data !== "") anchor.data = ""
 
 		const comment = document.createComment(value)
 		anchor.after(comment)
@@ -46,7 +48,7 @@ function CommentMarker(props: CommentMarkerProps) {
 		return () => comment.remove()
 	})
 
-	return isClient ? id : null
+	return isClient ? anchorValue : null
 }
 
 function useIsClient() {

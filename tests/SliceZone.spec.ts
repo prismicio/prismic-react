@@ -116,6 +116,25 @@ test("keeps comment boundaries aligned when slices change", async ({ page }) => 
 	await expect.poll(() => getSliceNodes(output)).toEqual([])
 })
 
+test("keeps anchors hidden after a Suspense boundary re-suspends", async ({ page }) => {
+	await page.goto("/SliceZone/markers")
+
+	const client = page.getByTestId("client")
+	const output = client.getByTestId("client-output")
+
+	await expect
+		.poll(() => getSliceNodes(output))
+		.toEqual([...elementNodes, ...fragmentNodes, ...emptyNodes])
+
+	await client.getByRole("button", { name: "Suspend" }).click()
+	await expect(client.getByTestId("fallback")).toBeVisible()
+	await expect(client.getByTestId("fallback")).toBeHidden()
+
+	await expect
+		.poll(() => getSliceNodes(output))
+		.toEqual([...elementNodes, ...fragmentNodes, ...emptyNodes])
+})
+
 test("replaces old comment boundaries when Slice IDs change", async ({ page }) => {
 	await page.goto("/SliceZone/markers")
 
