@@ -1,7 +1,7 @@
 "use client"
 
 import { type SliceComponentProps, SliceZone } from "@prismicio/react"
-import { type ReactNode, Suspense, use, useState } from "react"
+import { type ReactNode, Activity, Suspense, use, useState } from "react"
 
 type TestSlice = {
 	id: string
@@ -30,6 +30,7 @@ const components = {
 export function ClientTest(): ReactNode {
 	const [slices, setSlices] = useState(initialSlices)
 	const [suspendCount, setSuspendCount] = useState(0)
+	const [isActivityVisible, setIsActivityVisible] = useState(true)
 
 	return (
 		<div data-testid="client">
@@ -49,6 +50,15 @@ export function ClientTest(): ReactNode {
 					<Suspender count={suspendCount} />
 					<SliceZone slices={slices} components={components} />
 				</Suspense>
+			</div>
+
+			<button onClick={() => setIsActivityVisible((current) => !current)}>
+				{isActivityVisible ? "Hide Activity" : "Show Activity"}
+			</button>
+			<div data-testid="activity-output">
+				<Activity mode={isActivityVisible ? "visible" : "hidden"}>
+					<SliceZone slices={initialSlices} components={components} />
+				</Activity>
 			</div>
 		</div>
 	)

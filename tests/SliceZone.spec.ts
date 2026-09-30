@@ -135,6 +135,26 @@ test("keeps anchors hidden after a Suspense boundary re-suspends", async ({ page
 		.toEqual([...elementNodes, ...fragmentNodes, ...emptyNodes])
 })
 
+test("keeps anchors hidden after an Activity boundary is shown again", async ({ page }) => {
+	await page.goto("/SliceZone/markers")
+
+	const client = page.getByTestId("client")
+	const output = client.getByTestId("activity-output")
+
+	await expect
+		.poll(() => getSliceNodes(output))
+		.toEqual([...elementNodes, ...fragmentNodes, ...emptyNodes])
+
+	await client.getByRole("button", { name: "Hide Activity" }).click()
+	await expect(output.getByTestId("element-slice")).toBeHidden()
+
+	await client.getByRole("button", { name: "Show Activity" }).click()
+	await expect(output.getByTestId("element-slice")).toBeVisible()
+	await expect
+		.poll(() => getSliceNodes(output))
+		.toEqual([...elementNodes, ...fragmentNodes, ...emptyNodes])
+})
+
 test("replaces old comment boundaries when Slice IDs change", async ({ page }) => {
 	await page.goto("/SliceZone/markers")
 
