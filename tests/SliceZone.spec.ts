@@ -116,6 +116,45 @@ test("keeps comment boundaries aligned when slices change", async ({ page }) => 
 	await expect.poll(() => getSliceNodes(output)).toEqual([])
 })
 
+test("keeps anchors hidden after a Suspense boundary re-suspends", async ({ page }) => {
+	await page.goto("/SliceZone/markers")
+
+	const client = page.getByTestId("client")
+	const output = client.getByTestId("client-output")
+
+	await expect
+		.poll(() => getSliceNodes(output))
+		.toEqual([...elementNodes, ...fragmentNodes, ...emptyNodes])
+
+	await client.getByRole("button", { name: "Suspend" }).click()
+	await expect(client.getByTestId("fallback")).toBeVisible()
+	await expect(client.getByTestId("fallback")).toBeHidden()
+
+	await expect
+		.poll(() => getSliceNodes(output))
+		.toEqual([...elementNodes, ...fragmentNodes, ...emptyNodes])
+})
+
+test("keeps anchors hidden after an Activity boundary is shown again", async ({ page }) => {
+	await page.goto("/SliceZone/markers")
+
+	const client = page.getByTestId("client")
+	const output = client.getByTestId("activity-output")
+
+	await expect
+		.poll(() => getSliceNodes(output))
+		.toEqual([...elementNodes, ...fragmentNodes, ...emptyNodes])
+
+	await client.getByRole("button", { name: "Hide Activity" }).click()
+	await expect(output.getByTestId("element-slice")).toBeHidden()
+
+	await client.getByRole("button", { name: "Show Activity" }).click()
+	await expect(output.getByTestId("element-slice")).toBeVisible()
+	await expect
+		.poll(() => getSliceNodes(output))
+		.toEqual([...elementNodes, ...fragmentNodes, ...emptyNodes])
+})
+
 test("replaces old comment boundaries when Slice IDs change", async ({ page }) => {
 	await page.goto("/SliceZone/markers")
 
