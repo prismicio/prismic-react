@@ -1,15 +1,20 @@
 name: publish
 
+# PRs use `pull_request_target`, so they run this file from `master`, not from the PR.
+# Only reviewed code can use the `npm` environment, which is limited to `master`.
+# PR code runs only in `build-pr`, which has no npm access.
+
 on:
   push:
     branches: [master]
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened, closed]
 
 jobs:
   release:
     if: github.event_name == 'push' && github.repository_owner == 'prismicio'
     runs-on: ubuntu-latest
+    environment: npm
     permissions:
       contents: write
       issues: write
@@ -38,25 +43,21 @@ jobs:
         if: steps.release.outputs.release_created == 'true'
         run: npm publish
 
-  prerelease:
-    if: "!cancelled() && github.repository_owner == 'prismicio'"
+  canary:
     needs: [release]
+    if: needs.release.outputs.release_created != 'true'
     runs-on: ubuntu-latest
+    environment: npm
     permissions:
       contents: read
       id-token: write
-    env:
-      MODE: production
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: 26
           registry-url: "https://registry.npmjs.org"
-
-      # Canary
       - name: "Deprecate previous canary"
-        if: github.event_name == 'push' && needs.release.outputs.release_created != 'true'
         continue-on-error: true
         run: |
           PACKAGE_NAME=$(jq -r ".name" package.json)
@@ -66,9 +67,7 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: "Publish canary"
-        if: github.event_name == 'push' && needs.release.outputs.release_created != 'true'
         run: |
           SHORT_SHA=$(git rev-parse --short HEAD)
           CURRENT_VERSION=$(jq -r '.version' package.json)
@@ -76,31 +75,76 @@ jobs:
           npm version "${CURRENT_VERSION}-canary.${SHORT_SHA}" --no-git-tag-version
           npm publish --tag canary
 
-      # Pull request
+  build-pr:
+    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+      - run: npm ci
+      - run: npm version "$(jq -r .version package.json)-pr.${{ github.event.number }}.$(git rev-parse --short HEAD)" --no-git-tag-version
+      - run: npm pack
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: "*.tgz"
+
+  publish-pr:
+    needs: [build-pr]
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      TAG: pr-${{ github.event.number }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          registry-url: "https://registry.npmjs.org"
+      - uses: actions/download-artifact@v4
+        with:
+          name: package
       - name: "Deprecate previous PR prerelease"
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         continue-on-error: true
         run: |
           PACKAGE_NAME=$(jq -r ".name" package.json)
-          TAG="pr-${{ github.event.number }}"
           PREVIOUS_VERSION=$(npm view "$PACKAGE_NAME" dist-tags."$TAG" 2>/dev/null || true)
           if [ -n "$PREVIOUS_VERSION" ]; then
             npm deprecate "$PACKAGE_NAME@$PREVIOUS_VERSION" "Replaced by newer prerelease version"
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: "Publish PR prerelease"
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: |
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          CURRENT_VERSION=$(jq -r '.version' package.json)
-          npm ci
-          npm version "${CURRENT_VERSION}-pr.${{ github.event.number }}.${SHORT_SHA}" --no-git-tag-version
-          npm publish --tag pr-${{ github.event.number }}
+          # The package was built from unreviewed code: only publish it as this PR's prerelease.
+          PACKAGE=$(tar -xOzf *.tgz package/package.json)
+          [ "$(jq -r .name <<< "$PACKAGE")" = "$(jq -r .name package.json)" ]
+          jq -r .version <<< "$PACKAGE" | grep -Eq "^[^-]+-pr\.${{ github.event.number }}\.[0-9a-f]+$"
+          npm publish *.tgz --tag "$TAG" --ignore-scripts
 
+  cleanup-pr:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          registry-url: "https://registry.npmjs.org"
       - name: "Clean up PR prerelease"
-        if: github.event_name == 'pull_request' && github.event.action == 'closed'
         continue-on-error: true
         run: |
           PACKAGE_NAME=$(jq -r ".name" package.json)
