@@ -90,8 +90,8 @@ limitations under the License.
 [npm-version-href]: https://npmjs.com/package/@prismicio/react
 [npm-downloads-src]: https://img.shields.io/npm/dm/@prismicio/react.svg
 [npm-downloads-href]: https://npmjs.com/package/@prismicio/react
-[github-actions-ci-src]: https://github.com/prismicio/prismic-react/workflows/ci/badge.svg
-[github-actions-ci-href]: https://github.com/prismicio/prismic-react/actions?query=workflow%3Aci
+[github-actions-ci-src]: https://github.com/prismicio/prismic-react/actions/workflows/validate.yml/badge.svg
+[github-actions-ci-href]: https://github.com/prismicio/prismic-react/actions/workflows/validate.yml
 [codecov-src]: https://img.shields.io/codecov/c/github/prismicio/prismic-react.svg
 [codecov-href]: https://codecov.io/gh/prismicio/prismic-react
 [conventional-commits-src]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
