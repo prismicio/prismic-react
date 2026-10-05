@@ -1,7 +1,7 @@
 import assert from "assert"
 
 /* oxlint-disable rules-of-hooks */
-import { type Locator, type Page, test as base, expect } from "@playwright/test"
+import { type Locator, type Page, test as base } from "@playwright/test"
 import { createClient } from "@prismicio/client"
 
 import { type CoreAPIDocument, Prismic, type Repo } from "./client"
@@ -57,7 +57,6 @@ class AppPage {
 	repository: Repo
 	toolbarScript: Locator
 	toolbarIframe: Locator
-	toolbar: Locator
 	payload: Locator
 
 	constructor(page: Page, repository: Repo) {
@@ -67,7 +66,6 @@ class AppPage {
 		this.toolbarIframe = page.locator(
 			'iframe[src*="prismic.io/prismic-toolbar"][src$="iframe.html"]',
 		)
-		this.toolbar = page.locator("#prismic-toolbar-v2 .PreviewMenu")
 		this.payload = page.getByTestId("payload")
 	}
 
@@ -82,12 +80,6 @@ class AppPage {
 	async preview(document: CoreAPIDocument) {
 		const previewSession = await this.repository.createPreviewSession(document)
 		await this.page.goto(previewSession.preview_url)
-	}
-
-	async exitPreview() {
-		const closeButton = this.toolbar.locator("img.Icon.x")
-		await closeButton.click()
-		await expect(this.toolbar).toHaveCount(0)
 	}
 
 	async getToolbarScriptParam(name: string) {
