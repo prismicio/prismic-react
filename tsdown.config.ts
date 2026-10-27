@@ -7,5 +7,4 @@ export default defineConfig({
 	unbundle: true,
 	sourcemap: true,
 	exports: true,
-	dts: { generator: "oxc" },
 })
