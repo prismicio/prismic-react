@@ -64,7 +64,7 @@ class AppPage {
 		this.repository = repository
 		this.toolbarScript = page.locator('script[src*="prismic.io/prismic.js"]')
 		this.toolbarIframe = page.locator(
-			'iframe[src*="prismic.io/prismic-toolbar"][src$="iframe.html"]',
+			'iframe[src*="prismic.io/prismic-toolbar"][src$="shell.html"]',
 		)
 		this.payload = page.getByTestId("payload")
 	}
