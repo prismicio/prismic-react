@@ -21,9 +21,6 @@ export default defineConfig({
 	retries: process.env.CI ? 2 : 0,
 	workers: process.env.CI ? 1 : undefined,
 	reporter: "html",
-	use: {
-		trace: "on-first-retry",
-	},
 	projects: [
 		{
 			name: "setup",
@@ -31,8 +28,6 @@ export default defineConfig({
 			teardown: "teardown",
 			use: {
 				storageState: STORAGE_STATE,
-				// Traces record request bodies, which include the account's credentials.
-				trace: "off",
 			},
 		},
 		{
@@ -49,7 +44,6 @@ export default defineConfig({
 			testMatch: "teardown.ts",
 			use: {
 				storageState: STORAGE_STATE,
-				trace: "off",
 			},
 		},
 	],
