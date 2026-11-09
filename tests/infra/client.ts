@@ -40,7 +40,7 @@ export class Prismic {
 
 		const url = new URL("authentication/newrepository", this.urls.wroom)
 		const res = await this.#auth.postWroom(url.toString(), { data })
-		assert(res.ok, `Could not create repository ${data.domain}.`)
+		assert(res.ok(), `Could not create repository ${data.domain}.`)
 
 		const repo = this.getRepo(data.domain)
 		await repo.setDefaultLocale(defaultLocale)
@@ -72,7 +72,7 @@ export class Repo {
 	async setDefaultLocale(locale: string): Promise<void> {
 		const url = new URL(`app/settings/multilanguages/${locale}/createMasterLang`, this.urls.wroom)
 		const res = await this.#auth.postWroom(url.toString())
-		assert(res.ok, `Could not default locale to ${locale}.`)
+		assert(res.ok(), `Could not default locale to ${locale}.`)
 	}
 
 	async createPreview(args: { name: string; url: URL }): Promise<void> {
@@ -84,13 +84,13 @@ export class Repo {
 			resolverPath: previewURL.pathname,
 		}
 		const res = await this.#auth.postWroom(url.toString(), { data })
-		assert(res.ok, `Could not create preview ${name}.`)
+		assert(res.ok(), `Could not create preview ${name}.`)
 	}
 
 	async getPreviewConfigs(): Promise<{ id: string; label: string; url: string }[]> {
 		const url = new URL("repository/preview_configs", this.urls.core)
 		const res = await this.#auth.get(url.toString())
-		assert(res.ok, `Could not get preview configs.`)
+		assert(res.ok(), `Could not get preview configs.`)
 		const json = await res.json()
 		return json.results
 	}
@@ -115,7 +115,7 @@ export class Repo {
 			data: customType,
 			headers: { repository: this.domain },
 		})
-		assert(res.ok, "Could not add custom type.")
+		assert(res.ok(), "Could not add custom type.")
 	}
 
 	async addSlice(slice: SharedSlice): Promise<void> {
@@ -124,7 +124,7 @@ export class Repo {
 			data: slice,
 			headers: { repository: this.domain },
 		})
-		assert(res.ok, "Could not add slice.")
+		assert(res.ok(), "Could not add slice.")
 	}
 
 	async createDocument(document: {
@@ -170,7 +170,7 @@ export class Repo {
 		const url = new URL("documents", this.urls.core)
 		url.searchParams.set("uid", uid)
 		const res = await this.#auth.get(url.toString())
-		assert(res.ok, "Could not fetch documents.")
+		assert(res.ok(), "Could not fetch documents.")
 		const json: { results: CoreAPIDocument[] } = await res.json()
 		const doc = json.results.find((result) => result.custom_type_id === type)
 		assert(doc, `Could not find document with type ${type} and UID ${uid}.`)
@@ -179,11 +179,14 @@ export class Repo {
 
 	async delete(): Promise<void> {
 		const res = await this.#unreliableDelete()
-		if (!res.ok) {
+		if (!res.ok()) {
 			// sometimes the deletion returns 500 but actually succeeds
 			// we run the query again and check the repo is actually deleted (404)
 			const retry = await this.#unreliableDelete()
-			assert(!retry.ok, `Could not delete repository ${this.domain}`)
+			assert(
+				retry.ok() || retry.status() === 404,
+				`Could not delete repository ${this.domain} (${retry.status()}).`,
+			)
 		}
 	}
 
@@ -247,14 +250,19 @@ class AuthenticatedAPI {
 		const request = await this.#wroomRequest
 		const url = new URL("/authentication/signin", this.urls.wroom).toString()
 		const res = await request.post(url, { data: this.auth })
-		assert(res.ok, "Could not log in to Prismic. Check your credentials.")
+		assert(res.ok(), "Could not log in to Prismic. Check your credentials.")
+		const { cookies } = await request.storageState()
+		assert(
+			cookies.some((cookie) => cookie.name === "prismic-auth"),
+			"Logging in to Prismic did not return a session.",
+		)
 	}
 
 	async #token(): Promise<string> {
 		if (this.#cachedToken) return this.#cachedToken
 		const url = new URL("login", this.urls.auth)
 		const res = await this.#request.post(url.toString(), { data: this.auth })
-		assert(res.ok, "Authentication failed. No token received.")
+		assert(res.ok(), "Authentication failed. No token received.")
 		return (this.#cachedToken = await res.text())
 	}
 
