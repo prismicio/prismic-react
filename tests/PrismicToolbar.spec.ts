@@ -1,5 +1,9 @@
 import { test, expect } from "./infra"
 
+// The `appPage` fixture logs in to Prismic, and traces record request bodies,
+// which include the account's credentials.
+test.use({ trace: "off" })
+
 test.beforeEach(async ({ page }) => {
 	await page.goto("/PrismicToolbar")
 })
