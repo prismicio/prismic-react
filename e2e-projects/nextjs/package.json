@@ -9,7 +9,7 @@
 	"dependencies": {
 		"@prismicio/client": "^7.23.0",
 		"@prismicio/react": "*",
-		"next": "16.4.5",
+		"next": "16.4.6",
 		"react": "19.3.1",
 		"react-dom": "19.3.1"
 	},
